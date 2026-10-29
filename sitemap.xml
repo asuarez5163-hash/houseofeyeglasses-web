@@ -1,16 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://houseofeyeglasses.com/</loc></url>
-  <url><loc>https://houseofeyeglasses.com/catalogo.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/men.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/women.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/kids.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/sunglasses.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/contacts.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/receta.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/lentes.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/talla.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/quiz.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/ayuda.html</loc></url>
-  <url><loc>https://houseofeyeglasses.com/legal.html</loc></url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>https://houseofeyeglasses.com/sitemap-pages.xml</loc><lastmod>2026-10-29</lastmod></sitemap>
+  <sitemap><loc>https://houseofeyeglasses.com/sitemap-products.xml</loc><lastmod>2026-10-29</lastmod></sitemap>
+</sitemapindex>
