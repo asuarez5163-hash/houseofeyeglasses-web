@@ -1,0 +1,87 @@
+/* Carrito (carrito.html) — C-cine: la tienda a oscuras. Cabecera de página (kicker · display · cuenta), dos columnas en escritorio:
+   las líneas (loseta --paper de 96 px con el dibujo, nombre Jost 300, lentes y receta, Editar / Quitar) y el resumen pegajoso en
+   hairlines (armazones · lentes · envío · total) con el único botón primario; vacío: el par de círculos, una frase y el botón.
+   Radios 0, sin sombras, dorado como hilo. Tokens: css/styles.css :root. Prefix: cart- (main.cart-page) */
+
+main.cart-page { padding-bottom: 0; }
+.cart-wrap { padding-top: clamp(32px, 5vw, 72px); padding-bottom: var(--sec-y); }
+.cart-pg-head .lead { min-height: 1.5em; }
+.cart-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(40px, 5vw, 64px); margin-top: clamp(36px, 5vw, 72px); }
+
+/* ---------- one line per package ---------- */
+.cart-list { border-top: 1px solid var(--gold); }
+.cart-line { display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: clamp(20px, 3vw, 36px); padding: clamp(22px, 3vw, 32px) 0; border-bottom: 1px solid var(--line); }
+.cart-line-art { display: grid; place-items: center; aspect-ratio: 4 / 3; background: var(--paper); --ink: var(--ink-paper); }
+.cart-line-art svg { width: 86%; height: auto; }
+.cart-line-main { min-width: 0; display: grid; gap: 6px; align-content: start; }
+.cart-line-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; }
+.cart-line-name { font: 300 var(--fs-title)/1.2 var(--font-ui); color: var(--ink); }
+.cart-line-price { flex: none; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); white-space: nowrap; }
+.cart-line-meta { margin: 0; font-size: var(--fs-small); line-height: 1.55; color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; }
+.cart-line-meta .k { color: var(--ink-3); }
+.cart-line-rx b { font-weight: 400; color: var(--ink); }
+.cart-line-edit { margin-left: 12px; font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); white-space: nowrap; background: linear-gradient(var(--gold), var(--gold)) 0 100% / 0 1px no-repeat; transition: background-size .25s var(--ease-out); }
+.cart-line-edit:hover { background-size: 100% 1px; }
+.cart-line-actions { margin: 6px 0 0; }
+.cart-line-actions button { font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); transition: color .2s; }
+.cart-line-actions button:hover { color: var(--ink); }
+.cart-confirm { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-size: var(--fs-small); color: var(--ink-2); }
+.cart-confirm:not([hidden]) { animation: cart-fade 200ms var(--ease-out); }
+.cart-confirm button { font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
+.cart-confirm button[data-no] { color: var(--ink-3); }
+@keyframes cart-fade { from { opacity: 0; } }
+.cart-line.is-leaving { transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); opacity: 0; transform: translateX(-8px); }
+
+/* ---------- the summary: hairline rows, the total under a gold rule, one button, two lines, what happens next ---------- */
+.cart-aside { display: grid; align-content: start; gap: 0; }
+.cart-sum-h { margin: 0 0 6px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
+.cart-sum { margin: 0; display: grid; }
+.cart-sum > div { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; }
+.cart-sum dt { margin: 0; color: var(--ink-2); }
+.cart-sum dd { margin: 0; color: var(--ink); text-align: right; font-variant-numeric: lining-nums tabular-nums; }
+.cart-sum-total { border-top: 1px solid var(--gold); margin-top: 8px; }
+.cart-sum > .cart-sum-total { padding: 18px 0 20px; border-bottom: 0; }
+.cart-sum-total dt { font: 300 22px/1.2 var(--font-ui); color: var(--ink); }
+.cart-sum-total dd { font: 300 22px/1.2 var(--font-ui); color: var(--gold); }
+.cart-checkout { margin-top: 8px; width: 100%; }
+.cart-note { margin: 18px 0 0; display: flex; align-items: flex-start; gap: 12px; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); }
+.cart-note + .cart-note { margin-top: 10px; }
+.cart-note svg { flex: none; width: 20px; height: 20px; color: var(--gold); stroke-width: 1.4; margin-top: 1px; }
+.cart-next-wrap { margin-top: clamp(32px, 4vw, 48px); }
+.cart-next-h { margin: 0 0 8px; font: 300 var(--fs-title)/1.2 var(--font-ui); color: var(--ink); }
+.cart-next { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--gold); }
+.cart-next li { display: grid; grid-template-columns: 36px minmax(0, 1fr); align-items: baseline; column-gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.cart-next-n { font: 200 26px/1 var(--font-ui); color: var(--gold); font-variant-numeric: lining-nums; }
+
+/* ---------- empty · the frames you looked at · checkout note ---------- */
+.cart-page-empty, .cart-proto { display: grid; justify-items: center; gap: 20px; padding-top: clamp(72px, 10vw, 140px); padding-bottom: var(--sec-y); text-align: center; }
+.cart-page-empty > svg { width: 160px; height: 80px; color: var(--gold); stroke-width: .9; }
+.cart-page-empty h1, .cart-proto h2 { margin: 0; max-width: 20ch; font: 300 var(--fs-display)/1.05 var(--font-ui); letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+.cart-page-empty .lead, .cart-proto .lead { max-width: 40ch; text-align: center; }
+.cart-page-empty .btn, .cart-proto-actions { margin-top: 12px; }
+.cart-proto > svg { width: 64px; height: 64px; color: var(--gold); stroke-width: 1.2; }
+.cart-proto:not([hidden]) { animation: cart-fade 280ms var(--ease-out); }
+.cart-proto:focus { outline: none; }
+.cart-proto-actions { display: grid; justify-items: center; gap: 18px; }
+.cart-proto .btn { white-space: nowrap; }
+.cart-seen .sec-head { align-items: end; }
+
+/* ---------- layout ---------- */
+@media (min-width: 1100px) {
+  .cart-layout { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: clamp(48px, 7vw, 120px); align-items: start; }
+  .cart-aside { position: sticky; top: calc(var(--header-h) + 32px); }
+}
+@media (max-width: 860px) {
+  .cart-pg-head.offset-1 { margin-left: 0; }
+}
+@media (max-width: 600px) {
+  .cart-line { grid-template-columns: 96px minmax(0, 1fr); column-gap: 16px; padding: 18px 0; }
+  .cart-line-top { flex-direction: column; gap: 4px; }
+  .cart-line-edit { margin-left: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cart-line.is-leaving { transition: none !important; }
+  .cart-confirm:not([hidden]), .cart-proto:not([hidden]) { animation: none; }
+  .cart-line-edit { transition: none; }
+}

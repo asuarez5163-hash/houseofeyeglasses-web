@@ -1,0 +1,241 @@
+/* Ficha de armazón + configurador en 3 pasos (producto.html) — C-cine: la tienda a oscuras.
+   Galería = loseta --paper 1:1 grande (la única superficie clara) con el dibujo y una placa; columna de compra con jerarquía:
+   kicker → nombre display → precio → swatches 28 px con aro dorado → medida → botón primario → promesa → Details → 3 pasos.
+   Radios 0, sin sombras, hairlines --line, dorado como hilo. Tokens: css/styles.css :root.
+   Prefix: pdp- (ficha), cfg- (selector de lentes), rxf- (receta dentro del paso 2). Los campos (.rx-select/.rx-input/.rx-field)
+   vienen de css/pages/receta.css y aquí se ponen sobre --bg-3 con borde --line (foco dorado). */
+
+main.pdp { padding-bottom: 0; }
+.pdp-top { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 24px; padding-top: 16px; padding-bottom: var(--sec-y); }
+
+/* =========================================================
+   1 · the drawing: a 1:1 paper tile, the frame at 84 %, a plate at the foot (sample · size)
+   ========================================================= */
+.pdp-gallery { min-width: 0; }
+.pdp-views { position: relative; }
+.pdp-view { position: relative; margin: 0; display: grid; place-items: center; aspect-ratio: 1 / 1; overflow: hidden; --bg: var(--paper); }   /* --bg on paper: the temple's numbers print in paper on the dark arm */
+.pdp-art { display: grid; place-items: center; width: 100%; }
+.pdp-art > svg.frame { width: 84%; height: auto; }
+.pdp-art .temple-art { width: 84%; }
+.pdp-view .temple-arm, .pdp-view .temple-hinge { fill: var(--ink-paper); }
+.pdp-view .temple-core { stroke: rgba(239, 233, 223, .3); }
+.pdp-plate { position: absolute; left: clamp(16px, 3%, 28px); right: clamp(16px, 3%, 28px); bottom: clamp(14px, 2.6%, 24px); display: flex; justify-content: space-between; gap: 16px; font: 500 11px/1.3 var(--font-ui); letter-spacing: .16em; text-transform: uppercase; color: rgba(20, 19, 18, .52); font-variant-numeric: lining-nums tabular-nums; }
+/* view change: a crossfade with a touch of blur, so the swap reads as one object coming into focus */
+.pdp-view:not([hidden]) { animation: pdp-fade 320ms var(--ease-out); }
+@keyframes pdp-fade { from { opacity: 0; filter: blur(3px); } to { opacity: 1; filter: blur(0); } }
+.pdp-view--face { grid-template-rows: minmax(0, 1fr) auto; align-items: center; }
+.pdp-face { position: relative; width: 58%; max-height: 100%; margin: 0 auto; color: rgba(20, 19, 18, .45); }
+.pdp-face > svg.face { display: block; width: 100%; height: auto; }
+.pdp-face .face-line { fill: none; stroke: rgba(20, 19, 18, .5); stroke-width: 1.6; }
+.pdp-face .face-fill { fill: var(--paper); stroke: rgba(20, 19, 18, .5); stroke-width: 1.6; }
+.pdp-face .face-soft { fill: none; stroke: rgba(20, 19, 18, .5); stroke-width: 1.2; opacity: .7; }
+/* the frame on the face: its width is the medium face; narrow / wide scale it with a spring (js, transform only) */
+.pdp-face-frame { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -54%); transform-origin: 50% 54%; will-change: transform; }
+.pdp-face-frame svg.frame { display: block; width: 100%; height: auto; }
+.pdp-face-size { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 24px; padding: 0 12px 20px; }
+.pdp-face-size label { position: relative; display: inline-flex; min-height: 40px; align-items: center; cursor: pointer; }
+.pdp-face-size input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.pdp-face-size span { padding: 4px 0; font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: rgba(20, 19, 18, .55); border-bottom: 1px solid transparent; transition: color .2s, border-color .25s var(--ease-out); }
+.pdp-face-size input:checked + span { color: var(--ink-paper); border-bottom-color: var(--gold-2); }
+.pdp-face-size input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 4px; }
+/* the three views as hairline tabs under the tile */
+.pdp-thumbs { display: flex; flex-wrap: wrap; gap: 4px 28px; margin-top: 2px; border-bottom: 1px solid var(--line); }
+.pdp-thumbs button { position: relative; padding: 16px 0 14px; font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); transition: color .2s; }
+.pdp-thumbs button::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: 0 50%; transition: transform var(--t-hover) var(--ease-out); }
+.pdp-thumbs button[aria-selected="true"] { color: var(--ink); }
+.pdp-thumbs button[aria-selected="true"]::after, .pdp-thumbs button:hover::after { transform: scaleX(1); }
+.pdp-thumbs button:hover { color: var(--ink); }
+
+/* =========================================================
+   2 · buy column
+   ========================================================= */
+.pdp-buy { min-width: 0; display: grid; gap: 0; align-content: start; }
+.pdp-kicker { margin: 0; }
+.pdp-name { margin: 16px 0 0; font: 300 var(--fs-display)/1.02 var(--font-ui); letter-spacing: -.015em; color: var(--ink); text-wrap: balance; }
+.pdp-price { margin: 16px 0 0; font: 300 var(--fs-lead)/1.4 var(--font-ui); color: var(--ink-2); }
+.pdp-price__v { color: var(--gold); }
+.pdp-price__sep { color: var(--ink-3); }
+.pdp-lbl { margin: 0 0 14px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); }
+.pdp-lbl .pdp-lbl-sep { color: var(--ink-3); }
+.pdp-lbl #pdp-color-name { color: var(--ink); }
+.pdp-color { margin-top: 36px; }
+/* swatches: 28 px, a gold ring 4 px out when chosen; hover rings in --ink-3 */
+.pdp-swatches { display: flex; flex-wrap: wrap; gap: 16px; padding: 4px; }
+.pdp-swatches button { width: 28px; height: 28px; border-radius: 50%; background: var(--c); border: 1px solid rgba(244, 242, 238, .22); background-clip: padding-box; outline: 1px solid transparent; outline-offset: 4px; transition: outline-color .25s var(--ease-out), transform var(--t-release) var(--ease-out); }
+.pdp-swatches button[aria-checked="true"] { outline-color: var(--gold); }
+.pdp-swatches button:hover { outline-color: var(--ink-3); }
+.pdp-swatches button[aria-checked="true"]:hover { outline-color: var(--gold); }
+.pdp-swatches button:active, .pdp-swatches button.is-pressed { transform: scale(.92); transition-duration: .25s, var(--t-press); }
+.pdp-swatches button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+/* size: the band in caps, the millimetres in Jost 300 tabular */
+.pdp-size { margin: 28px 0 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 12px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); }
+.pdp-size .pdp-size-mm { font: 300 24px/1.2 var(--font-ui); letter-spacing: .02em; text-transform: none; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.pdp-cta { margin-top: 36px; justify-self: stretch; width: 100%; }
+.pdp-cta[aria-expanded="true"] svg { transform: rotate(90deg); }
+.pdp-trust { display: flex; align-items: flex-start; gap: 12px; margin: 20px 0 0; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); }
+.pdp-trust svg { flex: none; width: 20px; height: 20px; color: var(--gold); stroke-width: 1.4; margin-top: 1px; }
+
+/* "Details": one accordion, 0fr → 1fr rows, a gold rule on top */
+details.pdp-det { display: grid; grid-template-rows: auto 0fr; margin-top: 32px; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--line); transition: grid-template-rows 280ms var(--ease-out); }
+details.pdp-det[open]:not(.is-closing) { grid-template-rows: auto 1fr; }
+details.pdp-det::details-content { min-height: 0; overflow: hidden; }
+.pdp-det summary { display: grid; grid-template-columns: minmax(0, 1fr) 16px; align-items: center; gap: 20px; min-height: 60px; padding: 6px 2px 6px 0; cursor: pointer; list-style: none; font: 300 var(--fs-title)/1.3 var(--font-ui); color: var(--ink); transition: color .2s; }
+.pdp-det summary::-webkit-details-marker { display: none; }
+.pdp-det summary:hover { color: var(--gold); }
+.pdp-det summary:active, .pdp-det summary.is-pressed { color: var(--gold); transition-duration: 0ms; }
+.det-ico { position: relative; width: 16px; height: 16px; }
+.det-ico::before, .det-ico::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; margin-top: -.5px; background: var(--gold); transition: transform .25s var(--ease-out); }
+.det-ico::after { transform: rotate(90deg); }
+.pdp-det[open] .det-ico::after { transform: rotate(0deg); }
+.det-body { min-height: 0; overflow: hidden; font-size: 15px; line-height: 1.65; color: var(--ink-2); opacity: 0; transition: opacity 200ms var(--ease-out); }
+.det-body::after { content: ""; display: block; height: 24px; }
+details.pdp-det[open]:not(.is-closing) .det-body { opacity: 1; transition-delay: 60ms; }
+.pdp-dl { margin: 4px 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 24px; }
+.pdp-dl dt { color: var(--ink-3); font-size: var(--fs-small); }
+.pdp-dl dd { margin: 0; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+
+.pdp-404 { display: grid; justify-items: center; gap: 20px; padding: var(--sec-y) var(--gutter); text-align: center; }
+.pdp-404 > svg { width: 140px; height: 70px; color: var(--gold); stroke-width: 1; }
+.pdp-404 p { margin: 0; font: 300 var(--fs-lead)/1.3 var(--font-ui); }
+
+/* =========================================================
+   3 · configurator: under "Details", a title, then three closed rows. The bar only exists while a step is open.
+   ========================================================= */
+.cfg { margin-top: 8px; scroll-margin-top: calc(var(--header-h) + 8px); }
+.cfg-bar { position: sticky; top: var(--header-h); z-index: 20; display: none; align-items: center; justify-content: space-between; gap: 16px; height: 56px; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--line); background: rgba(11, 11, 13, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); transition: top .32s var(--ease-out); }
+@media (prefers-reduced-transparency: reduce) { .cfg-bar { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; } }
+.site-header.is-hidden ~ main .cfg-bar { top: 0; }                                 /* the phone bar slid away: ours takes the edge */
+.cfg.is-active .cfg-bar { display: flex; }
+.cfg-bar-name { min-width: 0; font: 300 var(--fs-lead)/1.2 var(--font-ui); color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.cfg-bar-price { flex: none; font: 400 var(--fs-small)/1.2 var(--font-ui); letter-spacing: .04em; color: var(--gold); white-space: nowrap; }
+.cfg-head { padding: clamp(36px, 4vw, 56px) 0 clamp(16px, 2vw, 24px); }
+.cfg-title { margin: 0; font: 300 clamp(26px, 1.2rem + 1.2vw, 34px)/1.1 var(--font-ui); letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+.cfg-lead { margin: 10px 0 0; max-width: 44ch; font-size: 15px; line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+
+details.cfg-step { display: grid; grid-template-rows: auto 0fr; border-top: 1px solid var(--line); scroll-margin-top: calc(var(--header-h) + 56px + 8px); transition: grid-template-rows 280ms var(--ease-out); }
+details.cfg-step:first-of-type { border-top-color: var(--gold); }
+details.cfg-step:last-of-type { border-bottom: 1px solid var(--line); }
+details.cfg-step[open]:not(.is-closing) { grid-template-rows: auto 1fr; }
+details.cfg-step::details-content { min-height: 0; overflow: hidden; }
+.cfg-step summary { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: center; column-gap: 14px; min-height: 76px; padding: 12px 2px; cursor: pointer; list-style: none; }
+.cfg-step summary::-webkit-details-marker { display: none; }
+.cfg-n { grid-row: 1 / span 2; align-self: start; font: 200 34px/1 var(--font-ui); color: var(--gold); font-variant-numeric: lining-nums tabular-nums; transition: color .2s; }
+.cfg-step-t { font: 300 var(--fs-title)/1.2 var(--font-ui); color: var(--ink); transition: color .2s; }
+.cfg-step summary:hover .cfg-step-t { color: var(--gold); }
+.cfg-sum { grid-column: 2; margin-top: 4px; font-size: var(--fs-small); color: var(--ink-2); font-variant-numeric: lining-nums tabular-nums; }
+.cfg-sum:empty { display: none; }
+.cfg-edit { grid-column: 3; grid-row: 1 / span 2; font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); opacity: 0; transition: opacity .2s; }
+.cfg-step.is-done:not([open]) .cfg-edit { opacity: 1; }
+.cfg-step.is-done .cfg-n { color: var(--ink-3); }
+.cfg-step.is-done .cfg-n::after { content: " ✓"; font-size: 16px; color: var(--gold); }
+/* the step opens 0fr → 1fr (280 ms) and its content fades in 200 ms, 60 ms behind, so the rows lead and the text follows */
+.cfg-body { min-height: 0; overflow: hidden; opacity: 0; transition: opacity 200ms var(--ease-out); }
+details.cfg-step[open]:not(.is-closing) .cfg-body { opacity: 1; transition-delay: 60ms; }
+.cfg-body-in { padding: 4px 0 32px 58px; }
+.cfg-next { margin-top: 24px; }
+
+/* options: a radio or checkbox drawn as one hairline row (name · "+ price at launch"). No boxes. */
+.cfg-opts { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.cfg-opt { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; column-gap: 16px; align-items: center; min-height: 60px; padding: 12px 6px 12px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: background-color .2s; }
+.cfg-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.cfg-opt .dot { width: 18px; height: 18px; border: 1px solid var(--ink-3); border-radius: 50%; display: grid; place-items: center; transition: border-color .2s; }
+.cfg-opt .dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); transform: scale(0); transition: transform .2s var(--ease-out); }
+.cfg-opt.is-check .dot { border-radius: 0; }
+.cfg-opt.is-check .dot::after { border-radius: 0; }
+.cfg-opt input:checked ~ .dot { border-color: var(--gold); }
+.cfg-opt input:checked ~ .dot::after { transform: scale(1); }
+.cfg-opt input:focus-visible ~ .dot { outline: 2px solid var(--gold); outline-offset: 3px; }
+.cfg-opt .txt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; min-width: 0; }
+.cfg-opt .txt b { font: 300 var(--fs-lead)/1.3 var(--font-ui); color: var(--ink); }
+.cfg-opt .txt .rec { font: 500 11px/1 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.cfg-opt .price { font-size: 13px; color: var(--ink-3); white-space: nowrap; font-variant-numeric: lining-nums tabular-nums; }
+@media (hover: hover) and (pointer: fine) { .cfg-opt:hover { background: var(--bg-2); } }
+.cfg-opt.is-pressed { background: var(--bg-3); transition-duration: 0ms; }
+
+/* step 3: the sample lens first, the options under it (it reacts to the option marked or under the pointer) */
+.cfg-body-in--lenses { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px 48px; }
+.cfg-demo { order: -1; display: grid; align-content: start; }
+.cfg-demo .lens-demo { margin: 8px auto 0; max-width: 300px; }
+.cfg-demo .lens-demo figcaption { min-height: 0; text-align: center; }
+.cfg-demo .demo-name { display: block; font: 300 var(--fs-lead)/1.3 var(--font-ui); color: var(--ink); }
+.cfg-demo .demo-hint-touch { display: none; }
+@media (hover: none) { .cfg-demo .demo-hint-touch { display: inline; } .cfg-demo .demo-hint-mouse { display: none; } }
+.cfg-add { grid-column: 1; }
+.cfg-body-in--lenses #cfg-errs3 { grid-column: 1; }
+
+/* step 2: the prescription (same fields as receta.html), on --bg-3 with a --line rule, gold on focus */
+.cfg .rx-select, .cfg .rx-input { height: 48px; padding-left: 12px; background-color: var(--bg-3); border-bottom-color: var(--line); color: var(--ink); caret-color: var(--gold); }
+.cfg .rx-select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 6 8 10.5 12.5 6' fill='none' stroke='%23c9a35a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-position: right 10px center; background-size: 14px; background-repeat: no-repeat; }
+.cfg .rx-select:hover, .cfg .rx-input:hover:not(:disabled) { background-color: var(--bg-3); border-bottom-color: var(--gold-2); }
+.cfg .rx-select:focus-visible, .cfg .rx-input:focus-visible { outline: none; border-bottom-color: var(--gold); }
+.cfg .rx-input:disabled { border-bottom-style: dashed; border-bottom-color: var(--line); color: var(--ink-3); background-color: transparent; }
+.cfg .rx-input::placeholder { color: var(--ink-3); }
+.cfg .rx-field label { color: var(--ink-2); }
+.rxf-none { margin: 0; padding: 8px 0 4px; font-size: 15px; color: var(--ink-2); }
+.rxf-one { max-width: 220px; padding: 4px 0; }
+.rxf-eye { display: grid; grid-template-columns: 44px minmax(0, 1fr); column-gap: 20px; align-items: end; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.rxf-eye-h { margin: 0 0 12px; font: 300 var(--fs-title)/1 var(--font-ui); color: var(--ink); }
+.rxf-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 460px; }
+.rxf-eye + .rxf-one, .rxf-eye + .rxf-pd { margin-top: 8px; }
+.rxf-pd { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 22px; padding: 16px 0 4px; }
+.rxf-pd-lbl { font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: .08em; color: var(--ink); }
+.rxf-pd-opt { position: relative; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 15px; color: var(--ink); }
+.rxf-pd-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.rxf-pd-opt .dot, .rxf-confirm .dot { flex: none; width: 18px; height: 18px; border: 1px solid var(--ink-3); border-radius: 50%; display: grid; place-items: center; transition: border-color .2s; }
+.rxf-pd-opt .dot::after, .rxf-confirm .dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--gold); transform: scale(0); transition: transform .2s var(--ease-out); }
+.rxf-pd-opt input:checked ~ .dot, .rxf-confirm input:checked ~ .dot { border-color: var(--gold); }
+.rxf-pd-opt input:checked ~ .dot::after, .rxf-confirm input:checked ~ .dot::after { transform: scale(1); }
+.rxf-pd-opt input:focus-visible ~ .dot, .rxf-confirm input:focus-visible ~ .dot { outline: 2px solid var(--gold); outline-offset: 3px; }
+.rxf-pd-own { display: inline-flex; align-items: center; gap: 10px; }
+.cfg .rxf-pd-in { width: 80px; height: 40px; font-size: 16px; }
+.rxf-confirm { position: relative; display: flex; align-items: center; gap: 12px; margin-top: 12px; min-height: 44px; cursor: pointer; font-size: 15px; color: var(--ink); }
+.rxf-confirm input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.rxf-confirm .dot { border-radius: 0; }
+.rxf-confirm .dot::after { border-radius: 0; }
+.rxf-help { margin: 8px 0 0; font-size: var(--fs-small); }
+.cfg .rxf-errs { margin: 16px 0 0; padding-left: 14px; border-left: 1px solid #e38b78; color: #e38b78; font-size: var(--fs-small); }
+.cfg .rxf-errs ul { list-style: disc; margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+
+/* ---------- second read: "You may also like" (three .fcard of the same category, the global card) ---------- */
+.pdp-more .sec-head { align-items: end; }
+
+/* =========================================================
+   layout
+   ========================================================= */
+@media (min-width: 1100px) {
+  .pdp-top { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); column-gap: clamp(40px, 5vw, 96px); row-gap: 0; align-items: start; padding-top: 32px; }
+  .pdp-gallery { position: sticky; top: calc(var(--header-h) + 24px); }
+  .pdp-buy { padding-top: 8px; }
+}
+@media (max-width: 1099px) and (min-width: 861px) {
+  .pdp-top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 40px; align-items: start; padding-top: 24px; }
+}
+@media (max-width: 860px) {
+  .pdp-top { padding-top: 8px; row-gap: 20px; }
+  .pdp-art > svg.frame { width: 88%; }
+  .pdp-view--face { aspect-ratio: auto; min-height: 320px; padding-top: 12px; }
+  .pdp-face { width: 54%; }
+  .pdp-plate { left: 16px; right: 16px; bottom: 12px; font-size: 10px; letter-spacing: .12em; }
+  .pdp-thumbs { gap: 4px 20px; }
+  .pdp-thumbs button { padding: 14px 0 12px; }
+  .pdp-color { margin-top: 24px; }
+  .pdp-size { margin-top: 20px; }
+  .pdp-cta { margin-top: 24px; }
+  .cfg-bar-name { font-size: 15px; }
+  .cfg-step summary { grid-template-columns: 36px minmax(0, 1fr) auto; column-gap: 12px; min-height: 68px; }
+  .cfg-n { font-size: 28px; }
+  .cfg-body-in { padding-left: 0; }
+  .cfg-demo .lens-demo { max-width: 250px; }
+  .rxf-eye { grid-template-columns: 1fr; row-gap: 6px; }
+  .rxf-eye-h { margin-bottom: 0; }
+  .rxf-fields { max-width: none; }
+}
+@media (max-width: 400px) {
+  .rxf-fields { gap: 8px; }
+  .rxf-pd { gap: 4px 14px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  details.pdp-det, details.cfg-step, .det-body, .cfg-body, .pdp-face-frame, .cfg-opt .dot::after, .rxf-pd-opt .dot::after, .rxf-confirm .dot::after, .pdp-thumbs button, .pdp-thumbs button::after, .cfg-bar { transition: none !important; }
+  .pdp-view:not([hidden]) { animation: none; }
+}

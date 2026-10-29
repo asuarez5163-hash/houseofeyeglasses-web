@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>House of Eyeglasses — Eyewear &amp; Contact Lenses</title>
+  <meta name="description" content="Quality prescription eyeglasses and sunglasses for men, women and kids, plus contact lenses. An optician in Tampa checks every prescription.">
+  <meta name="theme-color" content="#fbf9f7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="House of Eyeglasses">
+  <meta property="og:title" content="House of Eyeglasses — Eyewear &amp; Contact Lenses">
+  <meta property="og:description" content="Quality prescription eyeglasses and sunglasses for men, women and kids, plus contact lenses. An optician in Tampa checks every prescription.">
+  <meta property="og:url" content="https://houseofeyeglasses.com/clasica/">
+  <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="header-bar">
+      <button class="icon-btn menu-btn" type="button" aria-controls="drawer" aria-expanded="false" data-i18n-aria="openMenu" aria-label="Open menu">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 7.5h22M3 14h22M3 20.5h22"/></svg>
+      </button>
+
+      <a class="brand" href="index.html" aria-label="House of Eyeglasses — Home">
+        <img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses — Eyewear and contact lenses">
+      </a>
+
+      <div class="header-actions">
+        <div class="lang-switch" role="group" data-i18n-aria="language" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <span aria-hidden="true">|</span>
+          <button type="button" data-lang="es" aria-pressed="false">ES</button>
+        </div>
+        <button class="icon-btn" type="button" data-open="search" aria-controls="search-panel" aria-expanded="false" data-i18n-aria="search" aria-label="Search">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+        </button>
+        <a class="icon-btn" href="ayuda.html#orders" data-i18n-aria="account" aria-label="Account">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="9" r="5"/><path d="M4.5 25c.8-5.2 4.6-8.5 9.5-8.5s8.7 3.3 9.5 8.5"/></svg>
+        </a>
+        <button class="icon-btn cart-btn" type="button" data-open="cart" aria-controls="cart" aria-expanded="false" data-i18n-aria="cart" aria-label="Cart">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 9h18l-1.4 16H6.4z"/><path d="M10 12V7.5a4 4 0 0 1 8 0V12"/></svg>
+          <span class="cart-count" aria-hidden="true">0</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="main-nav" data-i18n-aria="mainNav" aria-label="Main">
+      <ul>
+        <li><a href="men.html" data-i18n="nav.men">Shop Men</a></li>
+        <li><a href="women.html" data-i18n="nav.women">Shop Women</a></li>
+        <li><a href="kids.html" data-i18n="nav.kids">Shop Kids</a></li>
+        <li><a href="sunglasses.html" data-i18n="nav.sun">Sunglasses</a></li>
+        <li><a href="contacts.html" data-i18n="nav.contacts">Contacts</a></li>
+        <li><a href="index.html#coming-soon" class="is-gold" data-i18n="nav.soon">Coming Soon</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ============ SEARCH PANEL ============ -->
+  <div class="search-panel" id="search-panel" hidden>
+    <form class="search-form" role="search" action="#" id="search-form">
+      <label class="visually-hidden" for="q" data-i18n="search">Search</label>
+      <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+      <input id="q" name="q" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" data-i18n-ph="searchPh" placeholder="Search lenses, prescriptions, sizes…">
+      <button type="button" class="text-btn" data-close="search" data-i18n="close">Close</button>
+    </form>
+    <div class="search-suggest">
+      <p class="suggest-title" id="search-title" data-i18n="popular">Popular searches</p>
+      <ul id="search-results" class="search-results" role="listbox" aria-labelledby="search-title"></ul>
+      <p class="search-empty" id="search-empty" hidden></p>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- ============ MAIN ============ -->
+<main id="main">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media">
+        <img src="assets/img/hero-woman.jpg" width="876" height="465" alt="" fetchpriority="high">
+      </div>
+      <div class="hero-copy">
+        <p class="hero-tagline" data-i18n-html="hero.tagline">See better<br>Look greater</p>
+        <span class="rule" aria-hidden="true"></span>
+        <h1 id="hero-title" data-i18n-html="hero.title">Quality Eyewear<br>for Every Moment</h1>
+        <a class="btn btn-gold" href="#shop-by-shape">
+          <span data-i18n="hero.cta">Shop now</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+        </a>
+      </div>
+    </section>
+
+    <section class="categories" aria-labelledby="cat-title">
+      <h2 id="cat-title" class="visually-hidden" data-i18n="cat.title">Shop by category</h2>
+      <ul class="cat-grid">
+        <li><a class="cat" href="men.html">
+          <span class="cat-img"><img src="assets/img/tile-men.jpg" width="220" height="177" alt="" loading="lazy"></span>
+          <span class="cat-label"><span data-i18n="nav.men">Shop Men</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+        <li><a class="cat" href="women.html">
+          <span class="cat-img"><img src="assets/img/tile-women.jpg" width="220" height="177" alt="" loading="lazy"></span>
+          <span class="cat-label"><span data-i18n="nav.women">Shop Women</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+        <li><a class="cat" href="kids.html">
+          <span class="cat-img"><img src="assets/img/tile-kids.jpg" width="220" height="177" alt="" loading="lazy"></span>
+          <span class="cat-label"><span data-i18n="nav.kids">Shop Kids</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+        <li><a class="cat" href="sunglasses.html">
+          <span class="cat-img"><img src="assets/img/tile-sunglasses.jpg" width="220" height="177" alt="" loading="lazy"></span>
+          <span class="cat-label"><span data-i18n="nav.sun">Sunglasses</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+        <li><a class="cat" href="contacts.html">
+          <span class="cat-img"><img src="assets/img/tile-contacts.jpg" width="220" height="177" alt="" loading="lazy"></span>
+          <span class="cat-label"><span data-i18n="cat.contacts">Contact Lenses</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+        <li><a class="cat cat-soon" href="#coming-soon">
+          <span class="cat-img">
+            <svg class="envelope" viewBox="0 0 64 44" aria-hidden="true"><rect x="2" y="2" width="60" height="40" rx="3"/><path d="m3 4 29 22L61 4"/></svg>
+          </span>
+          <span class="cat-label"><span data-i18n="nav.soon">Coming Soon</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+      </ul>
+    </section>
+
+    <section class="trust" aria-label="Our promise" data-i18n-aria="trust.label">
+      <ul class="trust-list">
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 11h21v16H3zM24 16h7l5 6v5h-12"/><circle cx="10" cy="29" r="3"/><circle cx="29" cy="29" r="3"/></svg>
+          <span data-i18n-html="trust.track">Tracking<br>on every order</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 7 9v9c0 8.5 5.6 15 13 18 7.4-3 13-9.5 13-18V9z"/><path d="m14 20 4.5 4.5L27 16"/></svg>
+          <span data-i18n-html="trust.rx">An optician checks<br>every prescription</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 34S5 25.3 5 14.8A7.8 7.8 0 0 1 20 11a7.8 7.8 0 0 1 15 3.8C35 25.3 20 34 20 34z"/></svg>
+          <span data-i18n-html="trust.wa">Real people<br>on WhatsApp</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- best sellers (hidden until the catalog exists) -->
+    <section class="sec best" id="best-sellers" aria-labelledby="best-title">
+      <div class="sec-head">
+        <h2 id="best-title" class="sec-title" data-i18n="best.title">Best sellers</h2>
+        <div class="rail-ctrl">
+          <a class="link-u" href="quiz.html" data-i18n="best.all">Shop all frames</a>
+          <button class="round-btn" type="button" data-rail="-1" data-i18n-aria="prev" aria-label="Previous">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M8.5 5.5 4 10l4.5 4.5"/></svg>
+          </button>
+          <button class="round-btn" type="button" data-rail="1" data-i18n-aria="next" aria-label="Next">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+          </button>
+        </div>
+      </div>
+      <ul class="rail" id="rail" tabindex="0" data-i18n-aria="best.title" aria-label="Best sellers"></ul>
+    </section>
+
+    <!-- shop by shape: hover or touch a shape and the lens darkens like a photochromic in the sun -->
+    <section class="sec shapes" id="shop-by-shape" aria-labelledby="shape-title">
+      <h2 id="shape-title" class="sec-title sec-title--center" data-i18n="drawer.shape">Shop by shape</h2>
+      <ul class="shape-row" id="shape-row"></ul>
+    </section>
+
+    <!-- how an order works: one line, three stops -->
+    <section class="sec how" id="how" aria-labelledby="how-title">
+      <h2 id="how-title" class="sec-title" data-i18n="how.title">How an order works</h2>
+      <ol class="steps">
+        <li>
+          <svg class="step-art" viewBox="0 0 56 56" aria-hidden="true"><rect x="5" y="19" width="20" height="16" rx="5"/><rect x="31" y="19" width="20" height="16" rx="5"/><path d="M25 25c1-2 5-2 6 0"/><path class="acc" d="M5 24H1M51 24h4"/></svg>
+          <span class="step-n" aria-hidden="true">1</span>
+          <h3 data-i18n="how.s1">Choose your frame</h3>
+          <p data-i18n="how.s1d">Filter by shape, size and material. Every frame lists its exact measurements.</p>
+        </li>
+        <li>
+          <svg class="step-art" viewBox="0 0 56 56" aria-hidden="true"><path d="M10 6h24l8 8v36H10z"/><path d="M34 6v8h8"/><path d="M16 24h20M16 30h20M16 36h12"/><path class="acc" d="M16 44h10"/></svg>
+          <span class="step-n" aria-hidden="true">2</span>
+          <h3 data-i18n="how.s2">Add lenses &amp; prescription</h3>
+          <p data-i18n="how.s2d">Type it in or upload a photo, and our optician reviews it. Every lens option shows its price before you add it.</p>
+        </li>
+        <li>
+          <svg class="step-art" viewBox="0 0 56 56" aria-hidden="true"><path d="M8 20l20-9 20 9v20l-20 9-20-9z"/><path d="M8 20l20 9 20-9M28 29v20"/><path class="acc" d="M18 15.5l20 9"/></svg>
+          <span class="step-n" aria-hidden="true">3</span>
+          <h3 data-i18n="how.s3">Delivered to your door</h3>
+          <p data-i18n="how.s3d">Track your order from the lab to your door.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- before you order: four guides -->
+    <section class="sec tools" id="tools" aria-labelledby="tools-title">
+      <div class="sec-head">
+        <h2 id="tools-title" class="sec-title" data-i18n="tools.title">Before you order.</h2>
+        <p class="tools-lead" data-i18n="tools.lead">Four free guides. No account needed.</p>
+      </div>
+      <ol class="tool-grid">
+        <li><a href="receta.html">
+          <svg class="tool-art" viewBox="0 0 76 56" aria-hidden="true"><path d="M14 4h36l10 10v38H14z"/><path d="M50 4v10h10"/><path d="M22 22h32M22 30h8M34 30h8M46 30h8M22 38h8M34 38h8M46 38h8"/><path class="acc" d="M22 46c3-3 6-3 9 0s6 3 9 0"/></svg>
+          <span class="tool-name" data-i18n="tools.rx">Understand your prescription</span>
+          <span class="tool-text" data-i18n="tools.rxd">Type in your numbers and see what they mean, which lenses fit and how thin they can be.</span>
+          <span class="tool-go" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+        <li><a href="lentes.html">
+          <svg class="tool-art" viewBox="0 0 76 56" aria-hidden="true"><path d="M8 10c12 10 30 10 42 0v36c-12-10-30-10-42 0z"/><path class="acc" d="M58 14c3 3 8 3 11 0v28c-3-3-8-3-11 0z"/><path d="M8 28h4M46 28h4"/></svg>
+          <span class="tool-name" data-i18n="tools.lenses">Compare lens options</span>
+          <span class="tool-text" data-i18n="tools.lensesd">Every lens type, material and coating, and who each one is for.</span>
+          <span class="tool-go" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+        <li><a href="talla.html">
+          <svg class="tool-art" viewBox="0 0 76 56" aria-hidden="true"><rect x="12" y="16" width="22" height="18" rx="5"/><rect x="42" y="16" width="22" height="18" rx="5"/><path d="M34 23c2-2 6-2 8 0M12 22H5M64 22h7"/><path class="acc" d="M12 44h22M12 41v6M34 41v6M34 8h8M34 5v6M42 5v6"/></svg>
+          <span class="tool-name" data-i18n="tools.fit">Find your size and face shape</span>
+          <span class="tool-text" data-i18n="tools.fitd">Use the numbers on your current glasses, or measure your face, and see the shapes that suit you.</span>
+          <span class="tool-go" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+        <li><a href="quiz.html">
+          <svg class="tool-art" viewBox="0 0 76 56" aria-hidden="true"><circle cx="20" cy="30" r="13"/><rect x="32" y="8" width="26" height="22" rx="6"/><path class="acc" d="M40 42c8-6 24-6 32 0-2 8-8 12-16 12s-14-4-16-12z"/></svg>
+          <span class="tool-name" data-i18n="tools.quiz">Style quiz</span>
+          <span class="tool-text" data-i18n="tools.quizd">Six quick questions and we suggest shapes, materials and lenses. No email required.</span>
+          <span class="tool-go" aria-hidden="true"><svg viewBox="0 0 20 20"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></span>
+        </a></li>
+      </ol>
+    </section>
+
+    <!-- which lenses: the sample lens does what each option says -->
+    <section class="sec lenses" id="lenses" aria-labelledby="lens-title">
+      <div class="lenses-intro">
+        <h2 id="lens-title" class="sec-title" data-i18n="lensg.title">Which lenses do you need?</h2>
+        <p data-i18n="lensg.lead">A short guide to the lenses we make, so you can choose before you shop.</p>
+        <a class="link-u" href="lentes.html" data-i18n="lensg.cta">Read the full lens guide</a>
+
+        <figure class="lens-demo" id="lens-demo" data-mode="">
+          <svg viewBox="0 0 220 180" role="img" aria-labelledby="demo-cap">
+            <defs>
+              <clipPath id="demo-clip"><path d="M18 62C18 34 44 22 110 22s92 12 92 40v46c0 34-30 50-92 50S18 142 18 108z"/></clipPath>
+              <linearGradient id="demo-glass-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e6ded2"/></linearGradient>
+              <linearGradient id="demo-glare-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".95"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/></linearGradient>
+              <linearGradient id="demo-prog-g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b28834" stop-opacity="0"/><stop offset=".5" stop-color="#b28834" stop-opacity=".08"/><stop offset="1" stop-color="#b28834" stop-opacity=".26"/></linearGradient>
+            </defs>
+            <path class="demo-glass" d="M18 62C18 34 44 22 110 22s92 12 92 40v46c0 34-30 50-92 50S18 142 18 108z"/>
+            <g clip-path="url(#demo-clip)">
+              <path class="demo-layer demo-blue" d="M0 0h220v180H0z"/>
+              <path class="demo-layer demo-dark" d="M0 0h220v180H0z"/>
+              <g class="demo-layer demo-prog">
+                <rect class="zone" x="0" y="0" width="220" height="180"/>
+                <path class="zone-line" d="M30 78h160M44 120h132"/>
+                <text x="110" y="56" text-anchor="middle" data-i18n="demo.far">Far</text>
+                <text x="110" y="104" text-anchor="middle" data-i18n="demo.mid">Middle</text>
+                <text x="110" y="148" text-anchor="middle" data-i18n="demo.near">Near</text>
+              </g>
+              <g class="demo-layer demo-single">
+                <circle cx="110" cy="90" r="9"/>
+                <path d="M110 66v16M110 98v16M86 90h16M118 90h16"/>
+                <text x="110" y="128" text-anchor="middle" data-i18n="demo.one">One power</text>
+                <text x="110" y="144" text-anchor="middle" data-i18n="demo.one2">edge to edge</text>
+              </g>
+              <ellipse class="demo-glare" cx="66" cy="52" rx="44" ry="13" transform="rotate(-16 66 52)"/>
+            </g>
+            <path class="demo-edge" d="M18 62C18 34 44 22 110 22s92 12 92 40v46c0 34-30 50-92 50S18 142 18 108z"/>
+          </svg>
+          <figcaption id="demo-cap">
+            <span class="demo-name" id="demo-name"></span>
+            <span class="demo-what" id="demo-what"><span class="demo-hint-mouse" data-i18n="demo.hintMouse">Move over an option to see what the lens does.</span><span class="demo-hint-touch" data-i18n="demo.hintTouch">Tap an option to see what the lens does.</span></span>
+          </figcaption>
+        </figure>
+      </div>
+      <dl class="lens-list" id="lens-list">
+        <div id="lens-single" data-demo="single"><dt><a href="lentes.html#lens-single" data-i18n="lens.single">Single vision</a></dt><dd data-i18n="lensg.single">One prescription across the whole lens, for seeing far or near.</dd></div>
+        <div id="lens-progressive" data-demo="progressive"><dt><a href="lentes.html#lens-progressive" data-i18n="lens.prog">Progressive lenses</a></dt><dd data-i18n="lensg.prog">Distance, middle and reading zones in one lens, with no visible line.</dd></div>
+        <div id="blue-light" data-demo="blue"><dt><a href="lentes.html#lens-blue-light" data-i18n="lens.blue">Blue-light lenses</a></dt><dd data-i18n="lensg.blue">A filter for long hours in front of phones and computers.</dd></div>
+        <div id="lens-light" data-demo="light"><dt><a href="lentes.html#lens-light-responsive" data-i18n="lens.light">Light-responsive lenses</a></dt><dd data-i18n="lensg.light">Clear indoors, they darken in sunlight, so one pair covers both.</dd></div>
+        <div id="lens-ar" data-demo="ar"><dt><a href="lentes.html#lens-anti-reflective" data-i18n="lens.ar">Anti-reflective coating</a></dt><dd data-i18n="lensg.ar">Takes the shine off the lens: less glare from headlights and screens, and people see your eyes in photos.</dd></div>
+      </dl>
+    </section>
+
+    <!-- find your fit: a sand band, a real temple, the three numbers marked on it -->
+    <section class="sec fit" id="find-your-fit" aria-labelledby="fit-title">
+      <div class="fit-inner">
+        <h2 id="fit-title" class="sec-title sec-title--center" data-i18n="fit.title">Find your fit</h2>
+        <figure class="temple">
+          <div id="fit-temple" role="img" aria-labelledby="temple-cap"></div>
+          <figcaption id="temple-cap" data-i18n="fit.cap">Look inside the arm of the glasses you own now: those three numbers are your size.</figcaption>
+        </figure>
+        <dl class="fit-nums">
+          <div><dt>52</dt><dd><strong data-i18n="fit.lw">Lens width</strong><span data-i18n="fit.lwd">Width of each lens, in millimeters.</span></dd></div>
+          <div><dt>18</dt><dd><strong data-i18n="fit.br">Bridge</strong><span data-i18n="fit.brd">Space between the lenses, over your nose.</span></dd></div>
+          <div><dt>140</dt><dd><strong data-i18n="fit.tl">Temple length</strong><span data-i18n="fit.tld">Length of the arm, from hinge to tip.</span></dd></div>
+        </dl>
+        <ul class="fit-links">
+          <li><a class="link-u" href="talla.html" data-i18n="fit.calc">Work out your size</a></li>
+          <li><a class="link-u" href="receta.html#pd" data-i18n="lens.pd">Measure your PD</a></li>
+          <li><a class="link-u" href="talla.html#face" data-i18n="fit.face">Frames for your face shape</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- coming soon: WhatsApp until the mailing list is connected -->
+    <section class="sec soon" id="coming-soon" aria-labelledby="soon-title">
+      <div class="soon-inner">
+        <svg class="envelope" viewBox="0 0 64 44" aria-hidden="true"><rect x="2" y="2" width="60" height="40" rx="3"/><path d="m3 4 29 22L61 4"/></svg>
+        <h2 id="soon-title" class="sec-title" data-i18n="soon.title">Contact lenses are coming soon</h2>
+        <p data-i18n="soon.lead">Message us on WhatsApp and we will tell you the day they arrive, plus new frames as they land.</p>
+        <a class="btn btn-gold" href="https://wa.me/17866148629" target="_blank" rel="noopener">
+          <span data-i18n="soon.wa">Tell me on WhatsApp</span>
+          <span class="visually-hidden" data-i18n="newTab">(opens in a new tab)</span>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="contact">
+    <div class="foot-band">
+      <div class="foot-band-in">
+        <div class="foot-band-row">
+          <a class="foot-brand" href="index.html"><img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses" loading="lazy"></a>
+        </div>
+        <p class="foot-line" data-i18n="foot.line">An optical shop in Tampa. Lenses made to your prescription.</p>
+      </div>
+    </div>
+    <div class="foot-top">
+      <nav class="foot-cols" data-i18n-aria="footer" aria-label="Footer">
+        <div>
+          <h3 data-i18n="foot.shop">Shop</h3>
+          <ul>
+            <li><a href="men.html" data-i18n="nav.men">Shop Men</a></li>
+            <li><a href="women.html" data-i18n="nav.women">Shop Women</a></li>
+            <li><a href="kids.html" data-i18n="nav.kids">Shop Kids</a></li>
+            <li><a href="sunglasses.html" data-i18n="nav.sun">Sunglasses</a></li>
+            <li><a href="contacts.html" data-i18n="cat.contacts">Contact Lenses</a></li>
+            <li><a href="index.html#best-sellers" data-i18n="drawer.best">Best sellers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.help">Help</h3>
+          <ul>
+            <li><a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a></li>
+            <li><a href="legal.html#shipping" data-i18n="foot.ship">Shipping</a></li>
+            <li><a href="legal.html#returns" data-i18n="foot.returns">Returns</a></li>
+            <li><a href="ayuda.html#track-order" data-i18n="foot.track">Track your order</a></li>
+            <li><a href="ayuda.html#contacto" data-i18n="drawer.contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.learn">Learn</h3>
+          <ul>
+            <li><a href="lentes.html" data-i18n="nav.lensOptions">Lens options</a></li>
+            <li><a href="talla.html" data-i18n="fit.title">Find your fit</a></li>
+            <li><a href="receta.html" data-i18n="lens.rx">How to read your prescription</a></li>
+            <li><a href="receta.html#pd" data-i18n="lens.pd">Measure your PD</a></li>
+            <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.contact">Contact us</h3>
+          <ul class="foot-contact">
+            <li><a href="mailto:amm@houseofeyeglasses.com">amm@houseofeyeglasses.com</a></li>
+            <li><a href="tel:+17866148629">(786) 614-8629</a></li>
+            <li><address>16064 Dawnview Dr<br>Tampa, FL 33624</address></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year">2026</span> House of Eyeglasses</p>
+      <ul class="legal">
+        <li><a href="legal.html#privacy" data-i18n="foot.privacy">Privacy Policy</a></li>
+        <li><a href="legal.html#terms" data-i18n="foot.terms">Terms of Use</a></li>
+        <li><a href="legal.html#cookies" data-i18n="foot.cookies">Cookie Policy</a></li>
+        <li><a href="legal.html#ccpa" data-i18n="foot.ccpa">CA Privacy Notice</a></li>
+        <li><a href="legal.html#accessibility" data-i18n="foot.a11y">Accessibility</a></li>
+        <li><a href="legal.html#do-not-sell" data-i18n="foot.dns">Do Not Sell or Share My Personal Information</a></li>
+      </ul>
+      <div class="lang-switch lang-switch--foot" role="group" data-i18n-aria="language" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">English</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-lang="es" aria-pressed="false">Español</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ DRAWER MENU (mockup 2) ============ -->
+  <div class="scrim" data-close="all" hidden></div>
+
+  <aside class="drawer" id="drawer" aria-label="Menu" data-i18n-aria="menu" tabindex="-1" inert>
+    <div class="drawer-head">
+      <a class="drawer-brand" href="index.html" aria-label="House of Eyeglasses — Home">
+        <img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses">
+      </a>
+      <button class="icon-btn close-btn" type="button" data-close="drawer" data-i18n-aria="closeMenu" aria-label="Close menu">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+
+    <div class="lang-switch lang-switch--drawer" role="group" data-i18n-aria="language" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">English</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-lang="es" aria-pressed="false">Español</button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Shop" data-i18n-aria="shop">
+      <ul class="drawer-primary">
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-shape">
+            <svg class="acc-ico" viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0M3.5 9 1 7.5M44.5 9 47 7.5"/></svg>
+            <span data-i18n="drawer.shape">Shop by shape</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-shape" hidden>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.round">Round</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.square">Square</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.rect">Rectangle</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.cateye">Cat-eye</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.aviator">Aviator</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.browline">Browline</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.oval">Oval</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.geo">Geometric</a></li>
+          </ul>
+        </li>
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-material">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 5 13l15 8 15-8z"/><path d="m5 20 15 8 15-8M5 27l15 8 15-8"/></svg>
+            <span data-i18n="drawer.material">Shop by material</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-material" hidden>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.acetate">Acetate</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.metal">Metal</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.titanium">Titanium</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.tr90">TR-90 (flexible)</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.mixed">Mixed materials</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="acc-btn" href="index.html#best-sellers">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 36c-7 0-12-4.6-12-11.2 0-6.9 5.6-10 6.8-17.3 4.3 2.7 6.4 6.3 6.2 10.5 1.8-1.2 2.9-3.1 3.2-5.5 4.2 3.6 7.8 7.7 7.8 12.6C32 31.5 27 36 20 36z"/><path d="M20 36c-3.2 0-5.4-2.1-5.4-5.2 0-3 2.1-4.8 4-7.6 1 1.7 1.3 3 1 4.6 1.4-.4 2.4-1.4 3-2.9 1.9 1.8 2.8 3.6 2.8 5.9 0 3.1-2.2 5.2-5.4 5.2z"/></svg>
+            <span data-i18n="drawer.best">Best sellers</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </a>
+        </li>
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-lenses">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 9c5.5-1.5 11-1 16 2v23c-5-3-10.5-3.5-16-2zM36 9c-5.5-1.5-11-1-16 2v23c5-3 10.5-3.5 16-2z"/><path d="M25 5v7l2.5-1.8L30 12V4.4"/></svg>
+            <span data-i18n="drawer.lenses">Lenses education</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-lenses" hidden>
+            <li><a href="lentes.html" data-i18n="nav.lensOptions">Lens options</a></li>
+            <li><a href="receta.html" data-i18n="lens.rx">How to read your prescription</a></li>
+            <li><a href="receta.html#pd" data-i18n="lens.pd">Measure your PD</a></li>
+            <li><a href="lentes.html#lens-index" data-i18n="lens.index">Lens thickness guide</a></li>
+            <li><a href="talla.html" data-i18n="fit.title">Find your fit</a></li>
+            <li><a href="talla.html#face" data-i18n="fit.face">Frames for your face shape</a></li>
+            <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="acc-btn is-soon" href="contacts.html">
+            <svg class="acc-ico lens-ico" viewBox="0 0 40 40" aria-hidden="true"><ellipse cx="20" cy="20" rx="16" ry="9" transform="rotate(-28 20 20)"/><path d="M8.5 26.5c7 2 17-3.5 22-12"/></svg>
+            <span><span data-i18n="nav.contacts">Contacts</span><small data-i18n="drawer.soon">(Coming soon)</small></span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="drawer-secondary">
+        <li><a href="index.html#best-sellers" data-i18n="drawer.all">Shop all</a></li>
+        <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+        <li><a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a></li>
+        <li><a href="ayuda.html#contacto" data-i18n="drawer.contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="drawer-foot">
+      <ul class="trust-list trust-list--drawer">
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 11h21v16H3zM24 16h7l5 6v5h-12"/><circle cx="10" cy="29" r="3"/><circle cx="29" cy="29" r="3"/></svg>
+          <span data-i18n-html="trust.track">Tracking<br>on every order</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 7 9v9c0 8.5 5.6 15 13 18 7.4-3 13-9.5 13-18V9z"/><path d="m14 20 4.5 4.5L27 16"/></svg>
+          <span data-i18n-html="trust.rx">An optician checks<br>every prescription</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 34S5 25.3 5 14.8A7.8 7.8 0 0 1 20 11a7.8 7.8 0 0 1 15 3.8C35 25.3 20 34 20 34z"/></svg>
+          <span data-i18n-html="trust.wa">Real people<br>on WhatsApp</span>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ============ CART DRAWER ============ -->
+  <aside class="cart" id="cart" aria-label="Cart" data-i18n-aria="cart" tabindex="-1" inert>
+    <div class="cart-head">
+      <h2 data-i18n="cart.title">Your cart</h2>
+      <button class="icon-btn" type="button" data-close="cart" data-i18n-aria="close" aria-label="Close">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+    <div class="cart-empty">
+      <svg viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0"/></svg>
+      <p data-i18n="cart.empty">Your cart is empty.</p>
+      <a class="btn btn-gold" href="quiz.html" data-close="cart"><span data-i18n="cart.cta">Find your frames</span></a>
+    </div>
+  </aside>
+
+
+  <script src="js/i18n.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/data/search.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

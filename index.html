@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>House of Eyeglasses — Eyewear &amp; Contact Lenses</title>
+  <meta name="description" content="Quality prescription eyeglasses and sunglasses for men, women and kids, plus contact lenses. An optician in Tampa checks every prescription.">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="canonical" href="https://houseofeyeglasses.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="House of Eyeglasses">
+  <meta property="og:title" content="House of Eyeglasses — Eyewear &amp; Contact Lenses">
+  <meta property="og:description" content="Quality prescription eyeglasses and sunglasses for men, women and kids, plus contact lenses. An optician in Tampa checks every prescription.">
+  <meta property="og:url" content="https://houseofeyeglasses.com/">
+  <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=20261029">
+  <link rel="preload" as="image" href="assets/img/hero-woman-2x.jpg" fetchpriority="high">
+  <script>
+    document.documentElement.classList.add('js');
+    // home, first visit of the session, motion allowed: the headline, button and price line wait for the load choreography
+    // (js/main.js). The class falls on its own after 2.6 s, so nothing can stay hidden if a script never runs.
+    try { if (/(\/|index\.html)$/.test(location.pathname) && !sessionStorage.getItem('hoe-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) { document.documentElement.classList.add('intro'); setTimeout(function () { document.documentElement.classList.remove('intro'); }, 2600); } } catch (e) {}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+
+  <!-- ============ HEADER: one 72 px row, transparent over the hero, glass once the page moves (main.js .is-glass) ============ -->
+  <header class="site-header" id="top">
+    <div class="hdr-in">
+      <div class="header-bar">
+        <button class="icon-btn menu-btn" type="button" aria-controls="drawer" aria-expanded="false" data-i18n-aria="openMenu" aria-label="Open menu">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 8h22M3 14h22M3 20h22"/></svg>
+        </button>
+
+        <a class="brand" href="index.html" aria-label="House of Eyeglasses — Home">
+          <img class="brand-mark" src="assets/brand/logo-mark-light.png" width="462" height="360" alt="">
+          <span class="brand-name">House of Eyeglasses</span>
+        </a>
+
+        <nav class="main-nav" data-i18n-aria="mainNav" aria-label="Main">
+          <ul>
+            <li><a href="catalogo.html?cat=men" data-i18n="nav.men">Shop Men</a></li>
+            <li><a href="catalogo.html?cat=women" data-i18n="nav.women">Shop Women</a></li>
+            <li><a href="catalogo.html?cat=kids" data-i18n="nav.kids">Shop Kids</a></li>
+            <li><a href="catalogo.html?cat=sun" data-i18n="nav.sun">Sunglasses</a></li>
+            <li><a href="contacts.html" data-i18n="nav.contacts">Contacts</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <div class="lang-switch" role="group" data-i18n-aria="language" aria-label="Language">
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            <span aria-hidden="true">|</span>
+            <button type="button" data-lang="es" aria-pressed="false">ES</button>
+          </div>
+          <button class="icon-btn" type="button" data-open="search" aria-controls="search-panel" aria-expanded="false" data-i18n-aria="search" aria-label="Search">
+            <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+          </button>
+          <a class="icon-btn" href="ayuda.html#orders" data-i18n-aria="account" aria-label="Account">
+            <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="9" r="5"/><path d="M4.5 25c.8-5.2 4.6-8.5 9.5-8.5s8.7 3.3 9.5 8.5"/></svg>
+          </a>
+          <button class="icon-btn cart-btn" type="button" data-open="cart" aria-controls="cart" aria-expanded="false" data-i18n-aria="cart" aria-label="Cart">
+            <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 9h18l-1.4 16H6.4z"/><path d="M10 12V7.5a4 4 0 0 1 8 0V12"/></svg>
+            <span class="cart-count" aria-hidden="true">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ SEARCH PANEL ============ -->
+  <div class="search-panel" id="search-panel" hidden>
+    <form class="search-form" role="search" action="#" id="search-form">
+      <label class="visually-hidden" for="q" data-i18n="search">Search</label>
+      <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+      <input id="q" name="q" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" data-i18n-ph="searchPh" placeholder="Search lenses, prescriptions, sizes…">
+      <button type="button" class="text-btn" data-close="search" data-i18n="close">Close</button>
+    </form>
+    <div class="search-suggest">
+      <p class="suggest-title" id="search-title" data-i18n="popular">Popular searches</p>
+      <ul id="search-results" class="search-results" role="listbox" aria-labelledby="search-title"></ul>
+      <p class="search-empty" id="search-empty" hidden></p>
+    </div>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+<main id="main">
+    <!-- 1 · HERO: the owner's model full screen, the headline on the diffuse side, one primary button -->
+    <section class="hero grain" aria-labelledby="hero-title">
+      <div class="hero-media">
+        <img src="assets/img/hero-woman-2x.jpg" width="1752" height="930" alt="" fetchpriority="high" decoding="async">
+      </div>
+      <div class="hero-veil" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <div class="hero-text">
+          <p class="kicker" data-i18n="hero.kicker">House of Eyeglasses · Tampa, FL</p>
+          <h1 id="hero-title" data-i18n-html="hero.title">Quality Eyewear<br>for Every Moment</h1>
+          <p class="hero-lead" data-i18n="hero.lead">Frames fitted by an optician. Lenses made to your prescription. Delivered anywhere in the U.S.</p>
+          <div class="hero-actions">
+            <a class="btn" href="catalogo.html">
+              <span data-i18n="hero.cta">See the frames</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+            </a>
+            <a class="link-arrow" href="#fit">
+              <span data-i18n="hero.how">How it works</span>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="hero-scroll" aria-hidden="true"><i></i><span data-i18n="hero.scroll">Scroll</span></div>
+    </section>
+
+    <!-- 2 · CATEGORIES: the owner's five photos at their real size, one row, a hairline 6 px out -->
+    <section class="sec cats" aria-labelledby="cats-title">
+      <div class="page-head offset-1">
+        <p class="kicker" data-i18n="cats.kicker">Shop by</p>
+        <h2 id="cats-title" data-i18n="cats.title">Who are the glasses for?</h2>
+      </div>
+      <ul class="cat-row" data-reveal="stagger">
+        <li><a class="tile" href="catalogo.html?cat=men"><span class="tile-ph"><img src="assets/img/tile-men.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.men">Men</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="catalogo.html?cat=women"><span class="tile-ph"><img src="assets/img/tile-women.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.women">Women</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="catalogo.html?cat=kids"><span class="tile-ph"><img src="assets/img/tile-kids.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.kids">Kids</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="catalogo.html?cat=sun"><span class="tile-ph"><img src="assets/img/tile-sunglasses.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.sun">Sunglasses</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="contacts.html"><span class="tile-ph"><img src="assets/img/tile-contacts.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.contacts">Contact lenses</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+      </ul>
+    </section>
+
+    <!-- 3 · VIDEO BAND "Your prescription": the video plays only on screen (hoeMotion.band); the text sits on the right -->
+    <section class="media-band media-band--text-right grain" id="lenses" aria-labelledby="band1-title" style="--fade: var(--bg-2)">
+      <div class="media-band__media" data-gs-trigger>
+        <video data-band src="assets/video/video-mujer.mp4" poster="assets/video/video-mujer-poster.jpg" width="1280" height="720" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+      </div>
+      <div class="media-band__veil" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="media-band__copy" data-reveal-self>
+          <p class="kicker" data-i18n="band1.kicker">Lenses</p>
+          <h2 id="band1-title" class="display" data-i18n="band1.title">Made to your prescription</h2>
+          <ul class="hairline-list">
+            <li><span data-i18n="band1.l1">Single vision</span></li>
+            <li><span data-i18n="band1.l2">Progressive</span></li>
+            <li><span data-i18n="band1.l3">Blue light</span></li>
+          </ul>
+          <div class="media-band__actions">
+            <a class="btn btn--ghost" href="lentes.html"><span data-i18n="band1.cta">Read the lens guide</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></a>
+            <a class="link-u" href="receta.html" data-i18n="band1.rx">Send your prescription</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 · FIRST LOOK: six sample frames on paper tiles, 3 × 2 (js/main.js hoeFrameCard) -->
+    <section class="sec sec--alt look" id="samples" aria-labelledby="samples-title">
+      <div class="wrap">
+        <div class="sec-head" data-reveal-self>
+          <div class="page-head">
+            <p class="kicker" data-i18n="look.kicker">First look</p>
+            <h2 id="samples-title" data-i18n="home.samples">A first look at the frames</h2>
+            <p class="lead" data-i18n="home.samplesLead">Sample frames drawn to size. The collection arrives at launch.</p>
+          </div>
+          <a class="link-u" href="catalogo.html" data-i18n="home.samplesAll">See all frames</a>
+        </div>
+        <ul class="look-grid" id="home-samples" data-reveal="stagger" style="--rv-step:60ms"></ul>
+      </div>
+    </section>
+
+    <!-- 5 · FIT: the big photo bleeding left; the promise, the three promises and the three figures on the right -->
+    <section class="fit-sec" id="fit" aria-labelledby="promise-title">
+      <div class="fit-photo">
+        <img src="assets/img/foto-encaje.jpg" width="1200" height="1500" alt="" loading="lazy" decoding="async">
+      </div>
+      <div class="fit-copy" data-reveal>
+        <p class="kicker" data-i18n="fit.kicker">Fit</p>
+        <h2 id="promise-title" class="display" data-i18n="promise.title">An optician in Tampa checks every pair</h2>
+        <ul class="hairline-list">
+          <li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 7 9v9c0 8.5 5.6 15 13 18 7.4-3 13-9.5 13-18V9z"/><path d="m14 20 4.5 4.5L27 16"/></svg><span data-i18n="trust.rx1">An optician checks your prescription</span></li>
+          <li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 36s-11-7.5-11-17a11 11 0 0 1 22 0c0 9.5-11 17-11 17z"/><circle cx="20" cy="19" r="4"/></svg><span data-i18n="trust.tampa">Free fitting in Tampa</span></li>
+          <li><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 34S5 25.3 5 14.8A7.8 7.8 0 0 1 20 11a7.8 7.8 0 0 1 15 3.8C35 25.3 20 34 20 34z"/></svg><span><span data-i18n="trust.wa1">Real people on WhatsApp</span> <a href="https://wa.me/17866148629" target="_blank" rel="noopener">(786) 614-8629<span class="visually-hidden" data-i18n="newTab">(opens in a new tab)</span></a></span></li>
+        </ul>
+        <div class="fit">
+          <figure class="temple" id="fit-temple" role="img" aria-labelledby="temple-cap"></figure>
+          <p id="temple-cap" class="visually-hidden" data-i18n="fit.cap">Look inside the arm of the glasses you own now: those three numbers are your size.</p>
+          <dl class="fit-nums" id="fit-nums">
+            <div><dt class="num" data-count="52">52</dt><dd data-i18n="fit.lw">Lens width</dd></div>
+            <div><dt class="num" data-count="18">18</dt><dd data-i18n="fit.br">Bridge</dd></div>
+            <div><dt class="num" data-count="140">140</dt><dd data-i18n="fit.tl">Temple length</dd></div>
+          </dl>
+        </div>
+        <p class="fit-more"><a class="btn" href="talla.html"><span data-i18n="fit.cta">Find your fit</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></a></p>
+      </div>
+    </section>
+
+    <!-- 6 · VIDEO BAND "Sun": the text on the left, the one primary button of the screen -->
+    <section class="media-band media-band--text-left grain" id="sun" aria-labelledby="band2-title" style="--fade: var(--bg-2)">
+      <div class="media-band__media" data-gs-trigger style="--media-pos: 50% 40%">
+        <video data-band src="assets/video/video-sol.mp4" poster="assets/video/video-sol-poster.jpg" width="1280" height="720" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+      </div>
+      <div class="media-band__veil" aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="media-band__copy" data-reveal-self>
+          <p class="kicker" data-i18n="band2.kicker">Sunglasses</p>
+          <h2 id="band2-title" class="display" data-i18n="band2.title">Built for Florida light</h2>
+          <div class="media-band__actions">
+            <a class="btn" href="catalogo.html?cat=sun"><span data-i18n="band2.cta">Shop sunglasses</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · THREE PORTRAITS: Men · Kids · Contacts, each photo owns its block -->
+    <section class="sec sec--alt" id="more" aria-labelledby="trio-title">
+      <div class="wrap">
+        <div class="page-head offset-1" data-reveal-self>
+          <p class="kicker" data-i18n="trio.kicker">Also at the house</p>
+          <h2 id="trio-title" data-i18n="trio.title">For him, for the kids, for your eyes</h2>
+        </div>
+        <ul class="trio" data-reveal="stagger">
+          <li><a class="portrait" href="men.html"><img src="assets/img/foto-hombre-retrato.jpg" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.men">Men</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
+          <li><a class="portrait" href="kids.html"><img src="assets/img/foto-ninos-retrato.jpg" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.kids">Kids</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
+          <li><a class="portrait" href="contacts.html"><img src="assets/img/foto-contacto-retrato.jpg" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.contacts">Contact lenses</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 8 · CLOSING (the dark footer follows) -->
+    <section class="sec closing" aria-labelledby="close-title">
+      <div data-reveal-self>
+        <h2 id="close-title" data-i18n="close.title">Come see us in Tampa, or order from anywhere in the U.S.</h2>
+        <a class="btn" href="ayuda.html#contacto"><span data-i18n="close.cta">Contact us</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></a>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="contact">
+    <div class="foot-band">
+      <div class="foot-band-in">
+        <div class="foot-band-row">
+          <a class="foot-brand" href="index.html"><img src="assets/brand/logo-900-light.png" width="900" height="702" alt="House of Eyeglasses" loading="lazy"></a>
+        </div>
+        <p class="foot-line" data-i18n="foot.line">An optical shop in Tampa. Lenses made to your prescription.</p>
+      </div>
+    </div>
+    <div class="foot-top">
+      <nav class="foot-mini" data-i18n-aria="footer" aria-label="Footer">
+        <a href="catalogo.html" data-i18n="foot.frames">Frames</a>
+        <a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a>
+        <a href="https://wa.me/17866148629" target="_blank" rel="noopener">WhatsApp <span class="visually-hidden" data-i18n="newTab">(opens in a new tab)</span></a>
+        <a href="ayuda.html#contacto" data-i18n="drawer.contact">Contact</a>
+      </nav>
+      <nav class="foot-cols" data-i18n-aria="footer" aria-label="Footer">
+        <div>
+          <h3 data-i18n="foot.shop">Shop</h3>
+          <ul>
+            <li><a href="men.html" data-i18n="nav.men">Shop Men</a></li>
+            <li><a href="women.html" data-i18n="nav.women">Shop Women</a></li>
+            <li><a href="kids.html" data-i18n="nav.kids">Shop Kids</a></li>
+            <li><a href="sunglasses.html" data-i18n="nav.sun">Sunglasses</a></li>
+            <li><a href="contacts.html" data-i18n="cat.contacts">Contact Lenses</a></li>
+            <li><a href="catalogo.html" data-i18n="best.all">Shop all frames</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.help">Help</h3>
+          <ul>
+            <li><a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a></li>
+            <li><a href="legal.html#shipping" data-i18n="foot.ship">Shipping</a></li>
+            <li><a href="legal.html#returns" data-i18n="foot.returns">Returns</a></li>
+            <li><a href="ayuda.html#track-order" data-i18n="foot.track">Track your order</a></li>
+            <li><a href="ayuda.html#contacto" data-i18n="drawer.contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.learn">Learn</h3>
+          <ul>
+            <li><a href="lentes.html" data-i18n="nav.lensOptions">Lens options</a></li>
+            <li><a href="talla.html" data-i18n="fit.title">Find your fit</a></li>
+            <li><a href="receta.html" data-i18n="lens.rx">How to read your prescription</a></li>
+            <li><a href="receta.html#pd" data-i18n="lens.pd">Measure your PD</a></li>
+            <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.contact">Contact us</h3>
+          <ul class="foot-contact">
+            <li><a href="mailto:amm@houseofeyeglasses.com">amm@houseofeyeglasses.com</a></li>
+            <li><a href="tel:+17866148629">(786) 614-8629</a></li>
+            <li><address>16064 Dawnview Dr<br>Tampa, FL 33624</address></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year">2026</span> House of Eyeglasses</p>
+      <ul class="legal legal-full">
+        <li><a href="legal.html#privacy" data-i18n="foot.privacy">Privacy Policy</a></li>
+        <li><a href="legal.html#terms" data-i18n="foot.terms">Terms of Use</a></li>
+        <li><a href="legal.html#cookies" data-i18n="foot.cookies">Cookie Policy</a></li>
+        <li><a href="legal.html#ccpa" data-i18n="foot.ccpa">CA Privacy Notice</a></li>
+        <li><a href="legal.html#accessibility" data-i18n="foot.a11y">Accessibility</a></li>
+        <li><a href="legal.html#do-not-sell" data-i18n="foot.dns">Do Not Sell or Share My Personal Information</a></li>
+      </ul>
+      <ul class="legal legal-mini">
+        <li><a href="legal.html#privacy" data-i18n="foot.privacyS">Privacy</a></li>
+        <li><a href="legal.html#terms" data-i18n="foot.termsS">Terms</a></li>
+        <li><a href="legal.html" data-i18n="foot.allPolicies">All policies</a></li>
+      </ul>
+      <div class="lang-switch lang-switch--foot" role="group" data-i18n-aria="language" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">English</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-lang="es" aria-pressed="false">Español</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ DRAWER MENU (mockup 2) ============ -->
+  <div class="scrim" data-close="all" hidden></div>
+
+  <aside class="drawer" id="drawer" aria-label="Menu" data-i18n-aria="menu" tabindex="-1" inert>
+    <div class="drawer-head">
+      <a class="drawer-brand" href="index.html" aria-label="House of Eyeglasses — Home">
+        <img src="assets/brand/logo-900-light.png" width="900" height="702" alt="House of Eyeglasses" decoding="async">
+      </a>
+      <button class="icon-btn close-btn" type="button" data-close="drawer" data-i18n-aria="closeMenu" aria-label="Close menu">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+
+    <div class="lang-switch lang-switch--drawer" role="group" data-i18n-aria="language" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">English</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-lang="es" aria-pressed="false">Español</button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Shop" data-i18n-aria="shop">
+      <ul class="drawer-cats">
+        <li><a href="catalogo.html?cat=men" data-i18n="nav.men">Shop Men</a></li>
+        <li><a href="catalogo.html?cat=women" data-i18n="nav.women">Shop Women</a></li>
+        <li><a href="catalogo.html?cat=kids" data-i18n="nav.kids">Shop Kids</a></li>
+        <li><a href="catalogo.html?cat=sun" data-i18n="nav.sun">Sunglasses</a></li>
+      </ul>
+      <ul class="drawer-secondary drawer-all">
+        <li><a href="catalogo.html" data-i18n="home.samplesAll">See all frames</a></li>
+      </ul>
+
+      <p class="drawer-h" id="drawer-guides" data-i18n="drawer.guides">Guides</p>
+      <ul class="drawer-secondary" aria-labelledby="drawer-guides">
+        <li><a href="receta.html" data-i18n="drawer.rx">Read your prescription</a></li>
+        <li><a href="lentes.html" data-i18n="nav.lensOptions">Lens options</a></li>
+        <li><a href="talla.html" data-i18n="fit.title">Find your fit</a></li>
+        <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+      </ul>
+
+      <p class="drawer-h" id="drawer-help" data-i18n="foot.help">Help</p>
+      <ul class="drawer-secondary" aria-labelledby="drawer-help">
+        <li><a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a></li>
+        <li><a href="https://wa.me/17866148629" target="_blank" rel="noopener"><span data-i18n="drawer.wa">Help on WhatsApp</span> <span class="visually-hidden" data-i18n="newTab">(opens in a new tab)</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ============ CART DRAWER ============ -->
+  <aside class="cart" id="cart" aria-label="Cart" data-i18n-aria="cart" tabindex="-1" inert>
+    <div class="cart-head">
+      <h2 data-i18n="cart.title">Your cart</h2>
+      <button class="icon-btn" type="button" data-close="cart" data-i18n-aria="close" aria-label="Close">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+    <div class="cart-empty">
+      <svg viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0"/></svg>
+      <p data-i18n="cart.empty">Your cart is empty.</p>
+      <a class="btn btn-gold" href="catalogo.html" data-close="cart"><span data-i18n="cart.cta">Find your frames</span></a>
+    </div>
+  </aside>
+
+
+  <script src="js/i18n.js?v=20261029"></script>
+  <script src="js/catalog.js?v=20261029"></script>
+  <script src="js/data/frames.js?v=20261029"></script>
+  <script src="js/data/search.js?v=20261029"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/motion.js?v=20261029"></script>
+  <script src="js/main.js?v=20261029"></script>
+  <script src="js/data/lenses.js?v=20261029"></script>
+  <script src="js/cart.js?v=20261029"></script>
+</body>
+</html>

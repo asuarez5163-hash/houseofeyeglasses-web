@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Help Center — House of Eyeglasses</title>
+  <meta name="description" content="Answers about prescriptions, PD, lenses, coatings, frame fit, orders and vision insurance. Contact us by email, phone or WhatsApp.">
+  <meta name="theme-color" content="#fbf9f7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="House of Eyeglasses">
+  <meta property="og:title" content="Help Center — House of Eyeglasses">
+  <meta property="og:description" content="Answers about prescriptions, PD, lenses, coatings, frame fit, orders and vision insurance. Contact us by email, phone or WhatsApp.">
+  <meta property="og:url" content="https://houseofeyeglasses.com/clasica/ayuda.html">
+  <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/pages/ayuda.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="header-bar">
+      <button class="icon-btn menu-btn" type="button" aria-controls="drawer" aria-expanded="false" data-i18n-aria="openMenu" aria-label="Open menu">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 7.5h22M3 14h22M3 20.5h22"/></svg>
+      </button>
+
+      <a class="brand" href="index.html" aria-label="House of Eyeglasses — Home">
+        <img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses — Eyewear and contact lenses">
+      </a>
+
+      <div class="header-actions">
+        <div class="lang-switch" role="group" data-i18n-aria="language" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <span aria-hidden="true">|</span>
+          <button type="button" data-lang="es" aria-pressed="false">ES</button>
+        </div>
+        <button class="icon-btn" type="button" data-open="search" aria-controls="search-panel" aria-expanded="false" data-i18n-aria="search" aria-label="Search">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+        </button>
+        <a class="icon-btn" href="ayuda.html#orders" data-i18n-aria="account" aria-label="Account">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="9" r="5"/><path d="M4.5 25c.8-5.2 4.6-8.5 9.5-8.5s8.7 3.3 9.5 8.5"/></svg>
+        </a>
+        <button class="icon-btn cart-btn" type="button" data-open="cart" aria-controls="cart" aria-expanded="false" data-i18n-aria="cart" aria-label="Cart">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 9h18l-1.4 16H6.4z"/><path d="M10 12V7.5a4 4 0 0 1 8 0V12"/></svg>
+          <span class="cart-count" aria-hidden="true">0</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="main-nav" data-i18n-aria="mainNav" aria-label="Main">
+      <ul>
+        <li><a href="men.html" data-i18n="nav.men">Shop Men</a></li>
+        <li><a href="women.html" data-i18n="nav.women">Shop Women</a></li>
+        <li><a href="kids.html" data-i18n="nav.kids">Shop Kids</a></li>
+        <li><a href="sunglasses.html" data-i18n="nav.sun">Sunglasses</a></li>
+        <li><a href="contacts.html" data-i18n="nav.contacts">Contacts</a></li>
+        <li><a href="index.html#coming-soon" class="is-gold" data-i18n="nav.soon">Coming Soon</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ============ SEARCH PANEL ============ -->
+  <div class="search-panel" id="search-panel" hidden>
+    <form class="search-form" role="search" action="#" id="search-form">
+      <label class="visually-hidden" for="q" data-i18n="search">Search</label>
+      <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+      <input id="q" name="q" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" data-i18n-ph="searchPh" placeholder="Search lenses, prescriptions, sizes…">
+      <button type="button" class="text-btn" data-close="search" data-i18n="close">Close</button>
+    </form>
+    <div class="search-suggest">
+      <p class="suggest-title" id="search-title" data-i18n="popular">Popular searches</p>
+      <ul id="search-results" class="search-results" role="listbox" aria-labelledby="search-title"></ul>
+      <p class="search-empty" id="search-empty" hidden></p>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- ============ MAIN ============ -->
+<main id="main" class="help">
+    <header class="help-head">
+      <h1 data-i18n="ayuda.title">Questions about your glasses</h1>
+      <p class="help-lead" data-i18n="ayuda.lead">Answers about prescriptions, lenses, frames and insurance.</p>
+
+      <form class="help-search" id="help-search" role="search" action="#">
+        <label class="visually-hidden" for="help-q" data-i18n="ayuda.searchLabel">Search help</label>
+        <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+        <input id="help-q" name="q" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search" aria-controls="help-results" aria-describedby="help-status" data-i18n-ph="ayuda.searchPh" placeholder="Try “prescription”, “PD” or “progressives”">
+        <button type="button" class="text-btn help-clear" id="help-clear" data-i18n="ayuda.clear" hidden>Clear</button>
+      </form>
+      <div class="help-pop">
+        <span class="help-pop-k" id="help-pop-k" data-i18n="ayuda.pop">Popular</span>
+        <ul aria-labelledby="help-pop-k">
+          <li><button type="button" class="help-pop-btn" data-i18n="ayuda.pop.1">PD</button></li>
+          <li><button type="button" class="help-pop-btn" data-i18n="ayuda.pop.2">prescription</button></li>
+          <li><button type="button" class="help-pop-btn" data-i18n="ayuda.pop.3">progressives</button></li>
+          <li><button type="button" class="help-pop-btn" data-i18n="ayuda.pop.4">insurance</button></li>
+        </ul>
+      </div>
+      <p class="help-status" id="help-status" role="status" aria-live="polite"></p>
+    </header>
+
+    <div class="help-wrap">
+      <nav class="help-toc" aria-labelledby="help-toc-title">
+        <p class="help-toc-title" id="help-toc-title" data-i18n="ayuda.topics">Topics</p>
+        <ul>
+          <li><a href="#prescriptions" data-cat="prescriptions" data-i18n="ayuda.cat.rx">Prescriptions &amp; PD</a></li>
+          <li><a href="#lenses" data-cat="lenses" data-i18n="ayuda.cat.lenses">Lenses &amp; coatings</a></li>
+          <li><a href="#frames" data-cat="frames" data-i18n="ayuda.cat.frames">Frames &amp; fit</a></li>
+          <li><a href="#orders" data-cat="orders" data-i18n="ayuda.cat.orders">Orders &amp; your account</a></li>
+          <li><a href="#insurance-fsa" data-cat="insurance-fsa" data-i18n="ayuda.cat.ins">Insurance &amp; FSA/HSA</a></li>
+          <li><a href="#contacto" data-i18n="ayuda.emptyContact">Contact us</a></li>
+        </ul>
+      </nav>
+
+      <div class="help-body" id="help-results">
+        <section class="help-cat" id="prescriptions" aria-labelledby="h-prescriptions">
+          <h2 id="h-prescriptions" data-i18n="ayuda.cat.rx">Prescriptions &amp; PD</h2>
+          <div class="faq">
+            <details class="faq-item" id="read-prescription" data-k="od os ou sph cyl axis add esf cil eje astigmatism astigmatismo numbers numeros abbreviations abreviaturas">
+              <summary><span class="faq-q" data-i18n="ayuda.q.rxRead">How do I read my eyeglass prescription?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.rxRead">OD is your right eye and OS your left (OU means both). SPH is the main lens power, CYL and AXIS correct astigmatism, and ADD is the extra reading power used in progressive and reading lenses.</div>
+            </details>
+            <details class="faq-item" id="send-prescription" data-k="upload subir photo foto type escribir send enviar mandar checkout pagar">
+              <summary><span class="faq-q" data-i18n="ayuda.q.rxSend">How do I send you my prescription?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.rxSend">Type the numbers in when you choose your lenses, or upload a photo of your prescription. We check every prescription before your lenses are made.</div>
+            </details>
+            <details class="faq-item" id="expired-prescription" data-k="expired vencida caducada old vieja exam examen doctor medico">
+              <summary><span class="faq-q" data-i18n="ayuda.q.rxExpired">Can I use an expired prescription?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.rxExpired">Your eye doctor sets an expiration date because vision can change over time. If yours has expired, we recommend a new eye exam before you order; if you're not sure, contact us.</div>
+            </details>
+            <details class="faq-item" id="pd" data-k="pd dp pupillary pupilar distance distancia measure medir ruler regla mirror espejo dual monocular">
+              <summary><span class="faq-q" data-i18n="ayuda.q.pd">What is PD and how do I measure it?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.pd">PD (pupillary distance) is the space in millimeters between the centers of your pupils, and it tells the lab where to center each lens. Many eye doctors write it on the prescription; if yours doesn't have it, measure it with a millimeter ruler in front of a mirror, or ask your eye doctor. Two numbers, like 31.5/32, are a dual PD (one per eye): send us both.</div>
+            </details>
+          </div>
+        </section>
+
+        <section class="help-cat" id="lenses" aria-labelledby="h-lenses">
+          <h2 id="h-lenses" data-i18n="ayuda.cat.lenses">Lenses &amp; coatings</h2>
+          <div class="faq">
+            <details class="faq-item" id="lens-types" data-k="single vision monofocal monofocales progressive progresivos bifocal multifocal readers lectura add">
+              <summary><span class="faq-q" data-i18n="ayuda.q.lensTypes">Single vision, progressive or readers: which do I need?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.lensTypes">Single vision has one power across the whole lens, for distance or for near. Progressives blend distance, computer and reading zones with no visible line and need an ADD value on your prescription; readers only magnify and need no prescription. More in the <a href="lentes.html">lens guide</a>.</div>
+            </details>
+            <details class="faq-item" id="blue-light" data-k="blue light luz azul screen pantalla computer computadora digital">
+              <summary><span class="faq-q" data-i18n="ayuda.q.blue">Do I need a blue-light filter?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.blue">It's optional. A blue-light filter is meant for long hours on phones and computers, and an anti-reflective coating also cuts screen glare. You can add it with or without a prescription.</div>
+            </details>
+            <details class="faq-item" id="thin-lenses" data-k="thin delgado index indice high alto thickness grosor strong fuerte polycarbonate policarbonato">
+              <summary><span class="faq-q" data-i18n="ayuda.q.thin">Which lens material is best for a strong prescription?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.thin">The stronger your prescription, the more a high-index lens (1.61, 1.67 or 1.74) thins and lightens the edges. For kids and sports we recommend polycarbonate, which resists impact.</div>
+            </details>
+            <details class="faq-item" id="coatings" data-k="coating tratamiento antirreflejo antirrayas scratch uv photochromic fotocromaticos transitions polarized polarizados">
+              <summary><span class="faq-q" data-i18n="ayuda.q.coatings">What do anti-reflective, scratch-resistant and UV coatings do?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.coatings">Anti-reflective cuts glare and reflections, scratch-resistant adds a hard protective layer, and UV protection blocks ultraviolet light. For the sun, light-responsive lenses darken outdoors and polarized lenses remove glare from water and the road.</div>
+            </details>
+          </div>
+        </section>
+
+        <section class="help-cat" id="frames" aria-labelledby="h-frames">
+          <h2 id="h-frames" data-i18n="ayuda.cat.frames">Frames &amp; fit</h2>
+          <div class="faq">
+            <details class="faq-item" id="frame-size" data-k="size talla measurements medidas width ancho bridge puente temple patilla">
+              <summary><span class="faq-q" data-i18n="ayuda.q.size">How do I know my frame size?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.size">Look inside the arm of a pair you already own: the three numbers (for example 52-18-140) are lens width, bridge and temple length, in millimeters. Frames with similar numbers will fit in a similar way; the <a href="talla.html">fit guide</a> explains each one.</div>
+            </details>
+            <details class="faq-item" id="face-shape" data-k="face cara rostro shape forma quiz round redonda square cuadrada oval ovalada">
+              <summary><span class="faq-q" data-i18n="ayuda.q.face">Which frames suit my face shape?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.face">As a rule of thumb, angular frames add definition to round faces and rounded frames soften square ones. Take the <a href="quiz.html">style quiz</a> for three shapes matched to your face and taste, or see the <a href="talla.html#face">face-shape guide</a>.</div>
+            </details>
+            <details class="faq-item" id="adjustments" data-k="adjust ajustar ajuste loose flojos tight aprietan slide resbalan nose pads plaquetas">
+              <summary><span class="faq-q" data-i18n="ayuda.q.adjust">My glasses slide down or feel tight. Can they be adjusted?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.adjust">Usually, yes. Metal frames with nose pads are the easiest to adjust, and an optician can reshape acetate arms with gentle heat. Contact us and we'll help you find the best fix.</div>
+            </details>
+            <details class="faq-item" id="kids" data-k="kids ninos children child hijos polycarbonate policarbonato tr90 flexible">
+              <summary><span class="faq-q" data-i18n="ayuda.q.kids">Do you make glasses for kids?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.kids">Yes. For kids we recommend polycarbonate lenses, which are light and impact-resistant, in frames sized for smaller faces; flexible materials like TR-90 hold up well to everyday play.</div>
+            </details>
+          </div>
+        </section>
+
+        <section class="help-cat" id="orders" aria-labelledby="h-orders">
+          <h2 id="h-orders" data-i18n="ayuda.cat.orders">Orders &amp; your account</h2>
+          <div class="faq">
+            <details class="faq-item" id="shipping-times" data-k="shipping envio delivery entrega cost costo time tiempo tarda">
+              <summary><span class="faq-q" data-i18n="ayuda.q.shipping">How long does delivery take, and what does shipping cost?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.shipping">Prescription glasses are made to order, so timing depends on the lenses you choose. Current shipping options, times and costs are in our <a href="legal.html#shipping">Shipping policy</a>.</div>
+            </details>
+            <details class="faq-item" id="track-order" data-k="track rastrear tracking seguimiento order pedido number numero status estado">
+              <summary><span class="faq-q" data-i18n="ayuda.q.track">How do I track my order?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.track">When your order ships, we email you a tracking link. If you can't find it, contact us with your order number and the email you used, and we'll look it up.</div>
+            </details>
+            <details class="faq-item" id="changes-returns" data-k="return devolucion refund reembolso exchange cambio cancel cancelar change modificar">
+              <summary><span class="faq-q" data-i18n="ayuda.q.returns">Can I change my order or return my glasses?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.returns">Contact us as soon as possible with your order number: lenses are made to your prescription, so changes are easiest before the lab starts. Return and exchange terms are in our <a href="legal.html#returns">Returns policy</a>.</div>
+            </details>
+            <details class="faq-item" id="spanish" data-k="spanish espanol english ingles language idioma whatsapp">
+              <summary><span class="faq-q" data-i18n="ayuda.q.spanish">Can I get help in Spanish?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.spanish">Yes. Switch the site to Spanish at the top of any page, and write or call us in Spanish whenever you like.</div>
+            </details>
+          </div>
+        </section>
+
+        <section class="help-cat" id="insurance-fsa" aria-labelledby="h-insurance-fsa">
+          <h2 id="h-insurance-fsa" data-i18n="ayuda.cat.ins">Insurance &amp; FSA/HSA</h2>
+          <div class="faq">
+            <details class="faq-item" id="insurance" data-k="insurance seguro vision plan network red reimbursement reembolso claim reclamo receipt recibo">
+              <summary><span class="faq-q" data-i18n="ayuda.q.insurance">Can I use my vision insurance?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.insurance"><p>Many vision plans reimburse glasses bought out of network; how much depends on your plan. It works in three steps.</p><ol><li>Check your out-of-network benefits with your insurer.</li><li>Place your order and save the itemized receipt.</li><li>Send the receipt with your plan's claim form to your insurer, who reimburses you directly.</li></ol></div>
+            </details>
+            <details class="faq-item" id="fsa-hsa" data-k="fsa hsa flexible spending health savings cuenta pay pagar card tarjeta receipt recibo">
+              <summary><span class="faq-q" data-i18n="ayuda.q.fsa">Can I pay with FSA or HSA?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.fsa">Prescription eyeglasses are generally an eligible expense for FSA and HSA accounts. Whether we accept FSA/HSA cards at checkout will be confirmed at launch; meanwhile, you can pay another way and submit your itemized receipt to your plan.</div>
+            </details>
+          </div>
+        </section>
+
+        <div class="help-empty" id="help-empty" hidden>
+          <p data-i18n="ayuda.emptyText">Try a simpler word, like “prescription”, “PD” or “insurance”, or ask us directly.</p>
+          <div class="help-empty-actions">
+            <button type="button" class="link-u" id="help-empty-clear" data-i18n="ayuda.emptyClear">Clear search</button>
+            <a class="link-u" href="#contacto" data-i18n="ayuda.emptyContact">Contact us</a>
+          </div>
+        </div>
+
+        <section class="help-contact" id="contacto" aria-labelledby="h-contacto">
+          <h2 id="h-contacto" data-i18n="ayuda.c.title">Talk to us</h2>
+          <p class="help-contact-lead" data-i18n="ayuda.c.lead">Email, call or message us on WhatsApp. Hablamos español.</p>
+          <ul class="contact-rows">
+            <li><a href="mailto:amm@houseofeyeglasses.com">
+              <svg class="cr-ico" viewBox="0 0 28 28" aria-hidden="true"><rect x="3.5" y="6.5" width="21" height="15" rx="1.5"/><path d="m4.5 8 9.5 7 9.5-7"/></svg>
+              <span class="cr-k" data-i18n="ayuda.c.email">Email</span>
+              <span class="cr-v">amm@houseofeyeglasses.com</span>
+              <svg class="cr-go" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+            </a></li>
+            <li><a href="tel:+17866148629">
+              <svg class="cr-ico" viewBox="0 0 28 28" aria-hidden="true"><path d="M10.2 4.5 7 4.5C5.6 4.5 4.5 5.7 4.6 7.1 5.4 16.1 11.9 22.6 20.9 23.4c1.4.1 2.6-1 2.6-2.4v-3.2l-4.6-1.8-2.3 2.3a13.2 13.2 0 0 1-6-6l2.3-2.3z"/></svg>
+              <span class="cr-k" data-i18n="ayuda.c.phone">Phone</span>
+              <span class="cr-v">(786) 614-8629</span>
+              <svg class="cr-go" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+            </a></li>
+            <li><a href="https://wa.me/17866148629" target="_blank" rel="noopener">
+              <svg class="cr-ico" viewBox="0 0 28 28" aria-hidden="true"><path d="M5 23.5 6.4 19A10 10 0 1 1 10 22.3z"/><path d="M10 12.5h8M10 16h5"/></svg>
+              <span class="cr-k" data-i18n="ayuda.c.wa">WhatsApp</span>
+              <span class="cr-v">(786) 614-8629 <span class="visually-hidden" data-i18n="newTab">(opens in a new tab)</span></span>
+              <svg class="cr-go" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+            </a></li>
+          </ul>
+          <ul class="help-notes">
+            <li data-i18n="ayuda.c.tip">About an order? Include your order number and the email you used.</li>
+            <li data-i18n="ayuda.c.safe">We will never ask for your full card number by email, phone or WhatsApp.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="contact">
+    <div class="foot-band">
+      <div class="foot-band-in">
+        <div class="foot-band-row">
+          <a class="foot-brand" href="index.html"><img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses" loading="lazy"></a>
+        </div>
+        <p class="foot-line" data-i18n="foot.line">An optical shop in Tampa. Lenses made to your prescription.</p>
+      </div>
+    </div>
+    <div class="foot-top">
+      <nav class="foot-cols" data-i18n-aria="footer" aria-label="Footer">
+        <div>
+          <h3 data-i18n="foot.shop">Shop</h3>
+          <ul>
+            <li><a href="men.html" data-i18n="nav.men">Shop Men</a></li>
+            <li><a href="women.html" data-i18n="nav.women">Shop Women</a></li>
+            <li><a href="kids.html" data-i18n="nav.kids">Shop Kids</a></li>
+            <li><a href="sunglasses.html" data-i18n="nav.sun">Sunglasses</a></li>
+            <li><a href="contacts.html" data-i18n="cat.contacts">Contact Lenses</a></li>
+            <li><a href="index.html#best-sellers" data-i18n="drawer.best">Best sellers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.help">Help</h3>
+          <ul>
+            <li><a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a></li>
+            <li><a href="legal.html#shipping" data-i18n="foot.ship">Shipping</a></li>
+            <li><a href="legal.html#returns" data-i18n="foot.returns">Returns</a></li>
+            <li><a href="ayuda.html#track-order" data-i18n="foot.track">Track your order</a></li>
+            <li><a href="ayuda.html#contacto" data-i18n="drawer.contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.learn">Learn</h3>
+          <ul>
+            <li><a href="lentes.html" data-i18n="nav.lensOptions">Lens options</a></li>
+            <li><a href="talla.html" data-i18n="fit.title">Find your fit</a></li>
+            <li><a href="receta.html" data-i18n="lens.rx">How to read your prescription</a></li>
+            <li><a href="receta.html#pd" data-i18n="lens.pd">Measure your PD</a></li>
+            <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.contact">Contact us</h3>
+          <ul class="foot-contact">
+            <li><a href="mailto:amm@houseofeyeglasses.com">amm@houseofeyeglasses.com</a></li>
+            <li><a href="tel:+17866148629">(786) 614-8629</a></li>
+            <li><address>16064 Dawnview Dr<br>Tampa, FL 33624</address></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year">2026</span> House of Eyeglasses</p>
+      <ul class="legal">
+        <li><a href="legal.html#privacy" data-i18n="foot.privacy">Privacy Policy</a></li>
+        <li><a href="legal.html#terms" data-i18n="foot.terms">Terms of Use</a></li>
+        <li><a href="legal.html#cookies" data-i18n="foot.cookies">Cookie Policy</a></li>
+        <li><a href="legal.html#ccpa" data-i18n="foot.ccpa">CA Privacy Notice</a></li>
+        <li><a href="legal.html#accessibility" data-i18n="foot.a11y">Accessibility</a></li>
+        <li><a href="legal.html#do-not-sell" data-i18n="foot.dns">Do Not Sell or Share My Personal Information</a></li>
+      </ul>
+      <div class="lang-switch lang-switch--foot" role="group" data-i18n-aria="language" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">English</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-lang="es" aria-pressed="false">Español</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ DRAWER MENU (mockup 2) ============ -->
+  <div class="scrim" data-close="all" hidden></div>
+
+  <aside class="drawer" id="drawer" aria-label="Menu" data-i18n-aria="menu" tabindex="-1" inert>
+    <div class="drawer-head">
+      <a class="drawer-brand" href="index.html" aria-label="House of Eyeglasses — Home">
+        <img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses">
+      </a>
+      <button class="icon-btn close-btn" type="button" data-close="drawer" data-i18n-aria="closeMenu" aria-label="Close menu">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+
+    <div class="lang-switch lang-switch--drawer" role="group" data-i18n-aria="language" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">English</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-lang="es" aria-pressed="false">Español</button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Shop" data-i18n-aria="shop">
+      <ul class="drawer-primary">
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-shape">
+            <svg class="acc-ico" viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0M3.5 9 1 7.5M44.5 9 47 7.5"/></svg>
+            <span data-i18n="drawer.shape">Shop by shape</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-shape" hidden>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.round">Round</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.square">Square</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.rect">Rectangle</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.cateye">Cat-eye</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.aviator">Aviator</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.browline">Browline</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.oval">Oval</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.geo">Geometric</a></li>
+          </ul>
+        </li>
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-material">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 5 13l15 8 15-8z"/><path d="m5 20 15 8 15-8M5 27l15 8 15-8"/></svg>
+            <span data-i18n="drawer.material">Shop by material</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-material" hidden>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.acetate">Acetate</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.metal">Metal</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.titanium">Titanium</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.tr90">TR-90 (flexible)</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.mixed">Mixed materials</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="acc-btn" href="index.html#best-sellers">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 36c-7 0-12-4.6-12-11.2 0-6.9 5.6-10 6.8-17.3 4.3 2.7 6.4 6.3 6.2 10.5 1.8-1.2 2.9-3.1 3.2-5.5 4.2 3.6 7.8 7.7 7.8 12.6C32 31.5 27 36 20 36z"/><path d="M20 36c-3.2 0-5.4-2.1-5.4-5.2 0-3 2.1-4.8 4-7.6 1 1.7 1.3 3 1 4.6 1.4-.4 2.4-1.4 3-2.9 1.9 1.8 2.8 3.6 2.8 5.9 0 3.1-2.2 5.2-5.4 5.2z"/></svg>
+            <span data-i18n="drawer.best">Best sellers</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </a>
+        </li>
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-lenses">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 9c5.5-1.5 11-1 16 2v23c-5-3-10.5-3.5-16-2zM36 9c-5.5-1.5-11-1-16 2v23c5-3 10.5-3.5 16-2z"/><path d="M25 5v7l2.5-1.8L30 12V4.4"/></svg>
+            <span data-i18n="drawer.lenses">Lenses education</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-lenses" hidden>
+            <li><a href="lentes.html" data-i18n="nav.lensOptions">Lens options</a></li>
+            <li><a href="receta.html" data-i18n="lens.rx">How to read your prescription</a></li>
+            <li><a href="receta.html#pd" data-i18n="lens.pd">Measure your PD</a></li>
+            <li><a href="lentes.html#lens-index" data-i18n="lens.index">Lens thickness guide</a></li>
+            <li><a href="talla.html" data-i18n="fit.title">Find your fit</a></li>
+            <li><a href="talla.html#face" data-i18n="fit.face">Frames for your face shape</a></li>
+            <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="acc-btn is-soon" href="contacts.html">
+            <svg class="acc-ico lens-ico" viewBox="0 0 40 40" aria-hidden="true"><ellipse cx="20" cy="20" rx="16" ry="9" transform="rotate(-28 20 20)"/><path d="M8.5 26.5c7 2 17-3.5 22-12"/></svg>
+            <span><span data-i18n="nav.contacts">Contacts</span><small data-i18n="drawer.soon">(Coming soon)</small></span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="drawer-secondary">
+        <li><a href="index.html#best-sellers" data-i18n="drawer.all">Shop all</a></li>
+        <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+        <li><a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a></li>
+        <li><a href="ayuda.html#contacto" data-i18n="drawer.contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="drawer-foot">
+      <ul class="trust-list trust-list--drawer">
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 11h21v16H3zM24 16h7l5 6v5h-12"/><circle cx="10" cy="29" r="3"/><circle cx="29" cy="29" r="3"/></svg>
+          <span data-i18n-html="trust.track">Tracking<br>on every order</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 7 9v9c0 8.5 5.6 15 13 18 7.4-3 13-9.5 13-18V9z"/><path d="m14 20 4.5 4.5L27 16"/></svg>
+          <span data-i18n-html="trust.rx">An optician checks<br>every prescription</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 34S5 25.3 5 14.8A7.8 7.8 0 0 1 20 11a7.8 7.8 0 0 1 15 3.8C35 25.3 20 34 20 34z"/></svg>
+          <span data-i18n-html="trust.wa">Real people<br>on WhatsApp</span>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ============ CART DRAWER ============ -->
+  <aside class="cart" id="cart" aria-label="Cart" data-i18n-aria="cart" tabindex="-1" inert>
+    <div class="cart-head">
+      <h2 data-i18n="cart.title">Your cart</h2>
+      <button class="icon-btn" type="button" data-close="cart" data-i18n-aria="close" aria-label="Close">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+    <div class="cart-empty">
+      <svg viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0"/></svg>
+      <p data-i18n="cart.empty">Your cart is empty.</p>
+      <a class="btn btn-gold" href="quiz.html" data-close="cart"><span data-i18n="cart.cta">Find your frames</span></a>
+    </div>
+  </aside>
+
+
+  <script src="js/i18n.js"></script>
+  <script src="js/i18n/ayuda.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/data/search.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/pages/ayuda.js"></script>
+</body>
+</html>

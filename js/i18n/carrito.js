@@ -1,0 +1,40 @@
+// Carrito (carrito.html) — bilingual copy. Keys prefixed "cart.". Shared cart keys (cart.title, cart.empty, cart.cta,
+// cart.view, cart.remove, cart.total, cart.proto, cart.rxNone, cart.pdStore, rx.od/rx.os) live in js/i18n.js because the header drawer uses them.
+Object.assign(window.HOE_I18N.en, {
+  "cart.meta": "Your cart — House of Eyeglasses",
+  "cart.lenses": "Lenses", "cart.rx": "Prescription", "cart.pd": "PD", "cart.readers": "Reading +{p}",
+  "cart.edit": "Edit", "cart.removeQ": "Remove this frame?", "cart.yes": "Yes, remove", "cart.no": "Keep it",
+  "cart.checkout": "Continue to checkout",
+  "cart.guarantee": "If the prescription isn’t right, we remake it free",
+  "cart.returnsLine": "Returns on unworn frames · details at launch",
+  "cart.protoTitle": "Checkout opens at launch",
+  "cart.protoLead": "Message us on WhatsApp to reserve your frames. We confirm the price the day the store opens.",
+  "cart.protoWa": "Reserve on WhatsApp", "cart.protoBack": "Back to the cart",
+  "cart.next.title": "What happens next",
+  "cart.next.1": "We receive your order", "cart.next.2": "An optician in Tampa checks your prescription", "cart.next.3": "Your glasses are ready in a few business days",
+  "cart.seen": "Frames you looked at", "cart.seenAll": "See all frames",
+  // C-cine: page head, the summary column and the empty state
+  "cart.kicker": "Your selection", "cart.count": "{n} frames · lenses included", "cart.count1": "1 frame · lenses included",
+  "cart.summary": "Summary", "cart.sumFrames": "Frames", "cart.sumLenses": "Lenses", "cart.sumLensesV": "Included",
+  "cart.sumShip": "Shipping", "cart.sumShipV": "Set at launch",
+  "cart.emptyLead": "Every pair starts with a frame. Pick one and we take it from there.",
+});
+
+Object.assign(window.HOE_I18N.es, {
+  "cart.meta": "Tu carrito — House of Eyeglasses",
+  "cart.lenses": "Lentes", "cart.rx": "Receta", "cart.pd": "DP", "cart.readers": "Lectura +{p}",
+  "cart.edit": "Editar", "cart.removeQ": "¿Quitar este armazón?", "cart.yes": "Sí, quitar", "cart.no": "Dejarlo",
+  "cart.checkout": "Continuar al pago",
+  "cart.guarantee": "Si la graduación no está bien, la rehacemos gratis",
+  "cart.returnsLine": "Devoluciones en armazones sin usar · detalles al lanzamiento",
+  "cart.protoTitle": "El pago se activa al abrir la tienda",
+  "cart.protoLead": "Escríbenos por WhatsApp para apartar tus armazones. Te confirmamos el precio el día que abra la tienda.",
+  "cart.protoWa": "Apartar por WhatsApp", "cart.protoBack": "Volver al carrito",
+  "cart.next.title": "Qué pasa después",
+  "cart.next.1": "Recibimos tu pedido", "cart.next.2": "Un óptico en Tampa revisa tu receta", "cart.next.3": "Tus lentes quedan listos en pocos días hábiles",
+  "cart.seen": "Armazones que viste", "cart.seenAll": "Ver todos los armazones",
+  "cart.kicker": "Tu selección", "cart.count": "{n} armazones · lentes incluidos", "cart.count1": "1 armazón · lentes incluidos",
+  "cart.summary": "Resumen", "cart.sumFrames": "Armazones", "cart.sumLenses": "Lentes", "cart.sumLensesV": "Incluidos",
+  "cart.sumShip": "Envío", "cart.sumShipV": "Se define al lanzamiento",
+  "cart.emptyLead": "Cada par empieza por un armazón. Elige uno y nosotros seguimos.",
+});

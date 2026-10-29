@@ -1,0 +1,145 @@
+/* Ayuda / Help — "C-cine": the dark stage, gold hairlines, Jost. The search is a lit field (--bg-3, hairline, gold on focus);
+   the topics stick on the left; every answer opens by height. No cards. Prefix: help- / faq- / cr- */
+
+.help { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter) var(--sec-y); }
+.help [id] { scroll-margin-top: calc(var(--header-h, 72px) + 20px); }
+
+/* ---------- head: kicker + display + lead, then the search ---------- */
+.help-head { padding: var(--sec-y-sm) 0 0; }
+.help-find { max-width: var(--read); margin-top: var(--block); }
+.help-search {
+  display: flex; align-items: center; gap: 16px; min-height: 64px; padding: 0 20px;
+  background: var(--bg-3); border: 1px solid var(--line);
+  transition: border-color .25s var(--ease-out), box-shadow .25s var(--ease-out);
+}
+.help-search:focus-within { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+.help-search svg { width: 24px; height: 24px; flex: none; color: var(--ink-3); stroke-width: 1.4; transition: color .2s; }
+.help-search:focus-within svg { color: var(--gold); }
+.help-search input {
+  flex: 1; min-width: 0; min-height: 44px; border: 0; padding: 0; background: transparent; outline: none;
+  font: 300 clamp(19px, 2vw, 24px)/1.3 var(--font-ui); color: var(--ink); caret-color: var(--gold);
+}
+.help-search input::placeholder { color: var(--ink-3); opacity: 1; }
+.help-search input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
+.help-clear { flex: none; min-height: 44px; }
+
+.help-pop { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin-top: 18px; }
+.help-pop-k { font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); }
+.help-pop ul { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.help-pop-btn {
+  position: relative; display: inline-flex; align-items: center; min-height: 44px; font-size: 15px; color: var(--ink-2);
+  background: linear-gradient(var(--gold), var(--gold)) 0 calc(100% - 9px) / 100% 1px no-repeat;
+  transition: color .2s, background-size .3s var(--ease-out), transform .16s var(--ease-out);
+}
+.help-pop-btn::before { content: ""; position: absolute; inset: 0 -9px; }
+.help-pop-btn:active, .help-pop-btn.is-pressed { transform: scale(.97); transition-duration: .2s, .3s, 100ms; }
+
+.help-status { min-height: 1.6em; margin: 18px 0 0; font-size: 14px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.help-status.is-empty { font: 300 var(--fs-title)/1.35 var(--font-ui); color: var(--ink); }
+
+/* ---------- layout: topics + answers ---------- */
+.help-wrap { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; margin-top: var(--sec-y-sm); }
+.help-toc { position: sticky; top: calc(var(--header-h, 72px) + 28px); }
+.help-toc-title { margin: 0; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
+.help-toc ul { position: relative; margin-top: 14px; border-top: 1px solid var(--gold); }
+.help-toc li { border-bottom: 1px solid var(--line); }
+.help-toc a { display: block; padding: 13px 0 13px 16px; font-size: 15px; line-height: 1.4; color: var(--ink-2); transition: color .2s, transform .25s var(--ease-out); }
+.help-toc a[aria-current="true"] { color: var(--ink); }
+.help-toc-bar {
+  position: absolute; left: 0; top: 0; width: 1px; height: 46px; background: var(--gold); transform-origin: 0 0;
+  transform: translateY(var(--y, 0px)) scaleY(var(--s, 1)); transition: transform .35s var(--ease-out), opacity .2s;
+  opacity: 0; pointer-events: none;
+}
+.help-toc-bar.is-on { opacity: 1; }
+
+.help-cat + .help-cat { margin-top: var(--sec-y-sm); }
+.help-cat h2 { margin: 0 0 18px; font: 300 var(--fs-display)/1.05 var(--font-ui); letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+
+/* ---------- Q&A: hairline rows, the question in Jost 300 at the title size ---------- */
+.faq { border-top: 1px solid var(--gold); }
+.faq-item { border-bottom: 1px solid var(--line); }
+details.faq-item { display: grid; grid-template-rows: auto 0fr; transition: grid-template-rows 240ms var(--ease-out); }
+details.faq-item[hidden] { display: none; }
+details.faq-item[open]:not(.is-closing) { grid-template-rows: auto 1fr; }
+details.faq-item.is-closing { transition-duration: 180ms; }
+details.faq-item::details-content { min-height: 0; overflow: hidden; }
+.help.is-searching .faq-item, .help.is-searching .faq-a, .help.is-bulk .faq-item, .help.is-bulk .faq-a { transition: none; }
+.faq-item summary {
+  display: grid; grid-template-columns: minmax(0, 1fr) 16px; align-items: center; gap: 24px;
+  padding: 22px 4px 22px 0; cursor: pointer; list-style: none;
+  font: 300 var(--fs-title)/1.3 var(--font-ui); letter-spacing: -.005em; color: var(--ink);
+  transition: color .2s, background-color .2s var(--ease-out);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:active, .faq-item summary.is-pressed { background: var(--bg-2); color: var(--gold); transition-duration: 0ms; }
+.faq-ico { position: relative; width: 16px; height: 16px; }
+.faq-ico::before, .faq-ico::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--gold); transition: transform .25s var(--ease-out); }
+.faq-ico::after { transform: rotate(90deg); }
+.faq-item[open] .faq-ico::after { transform: rotate(0deg); }
+.faq-a { min-height: 0; overflow: hidden; padding: 0 44px 0 0; max-width: var(--measure); color: var(--ink-2); font-size: calc(var(--fs-body) + 1px); line-height: 1.65; opacity: 0; transition: opacity 200ms var(--ease-out); }
+.faq-a::after { content: ""; display: block; height: 26px; }
+details.faq-item[open]:not(.is-closing) .faq-a { opacity: 1; }
+details.faq-item.is-closing .faq-a { transition-duration: 180ms; }
+.faq-a p { margin: 0 0 12px; }
+.faq-a a { color: var(--gold); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; transition: color .2s; }
+.faq-a ol { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 10px; }
+.faq-a ol li { counter-increment: step; display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: baseline; }
+.faq-a ol li::before { content: counter(step); font: 200 22px/1 var(--font-ui); color: var(--gold); font-variant-numeric: lining-nums; }
+
+/* ---------- empty state ---------- */
+.help-empty { max-width: 60ch; padding: 4px 0 8px; }
+.help-empty p { margin: 0 0 16px; color: var(--ink-2); font-size: 17px; }
+.help-empty-actions { display: flex; flex-wrap: wrap; gap: 12px 32px; }
+
+/* ---------- contact (id="contacto"): kicker + display, then four hairline rows ---------- */
+.help-contact { margin-top: var(--sec-y-sm); }
+.help-empty:not([hidden]) + .help-contact { margin-top: clamp(32px, 4vw, 48px); }
+.help-contact-head { margin-bottom: var(--block); }
+.contact-rows { border-top: 1px solid var(--gold); }
+.contact-rows li { border-bottom: 1px solid var(--line); }
+.contact-rows a { display: grid; grid-template-columns: 40px minmax(0, 5fr) minmax(0, 6fr) 20px; align-items: center; gap: 20px; padding: 20px 4px; min-height: 64px; transition: background-color .25s var(--ease-out); }
+.contact-rows a:active, .contact-rows a.is-pressed { background: var(--bg-3); transition-duration: 0ms; }
+.cr-ico { width: 26px; height: 26px; color: var(--gold); stroke-width: 1.4; justify-self: center; }
+.cr-k { font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-3); }
+.cr-v { font: 300 var(--fs-title)/1.3 var(--font-ui); color: var(--ink); overflow-wrap: anywhere; font-variant-numeric: lining-nums tabular-nums; }
+.cr-go { width: 18px; height: 18px; color: var(--gold); stroke-width: 1.6; transition: transform .25s var(--ease-out); }
+.help-notes { margin-top: 20px; display: grid; gap: 6px; }
+.help-notes li { position: relative; padding-left: 18px; font-size: 14px; color: var(--ink-3); }
+.help-notes li::before { content: ""; position: absolute; left: 0; top: .78em; width: 8px; height: 1px; background: var(--gold); }
+
+/* ---------- responsive ---------- */
+@media (max-width: 860px) {
+  .help-head { padding-top: var(--block); }
+  .help-head .offset-1 { margin-left: 0; }
+  .help-wrap { grid-template-columns: 1fr; gap: 28px; margin-top: 36px; }
+  .help-toc { position: static; }
+  .help-toc-bar { display: none; }
+  .help-toc a { padding-left: 0; }
+  .help.is-searching .help-toc { display: none; }
+  .help-toc ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
+  .faq-a { padding-right: 8px; }
+  .contact-rows a { grid-template-columns: 32px minmax(0, 1fr) 18px; gap: 2px 14px; padding: 16px 2px; }
+  .cr-ico { grid-row: 1 / span 2; }
+  .cr-k { grid-column: 2; }
+  .cr-v { grid-column: 2; }
+  .cr-go { grid-column: 3; grid-row: 1 / span 2; }
+}
+@media (max-width: 560px) {
+  .help-search { padding: 0 14px; gap: 12px; }
+  .faq-item summary { gap: 16px; padding: 18px 2px 18px 0; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .help-search:hover { border-color: rgba(201, 163, 90, .5); }
+  .help-pop-btn:hover { color: var(--gold); background-size: 40% 1px; }
+  .help-toc a:hover { color: var(--gold); transform: translateX(4px); }
+  .faq-item summary:hover { color: var(--gold); }
+  .faq-a a:hover { color: var(--ink); }
+  .contact-rows a:hover { background: var(--bg-2); }
+  .contact-rows a:hover .cr-go { transform: translateX(5px); }
+}
+
+/* ---------- reduced motion: no height motion on the answers, no press scale ---------- */
+@media (prefers-reduced-motion: reduce) {
+  details.faq-item, .faq-a, .help-pop-btn, .contact-rows a, .faq-ico::before, .faq-ico::after, .help-toc a, .cr-go, .help-toc-bar, .help-search { transition: none !important; }
+  .help-pop-btn:active, .help-toc a:hover, .contact-rows a:hover .cr-go { transform: none; }
+}

@@ -1,0 +1,61 @@
+/* Category pages (men, women, kids, sunglasses, contacts) and the 404 — "C-cine".
+   The photo owns the top of the page edge to edge (21:9), under the side veil and the grain; the headline sits on the
+   diffuse side; the sample frames follow on paper tiles (the global .look-grid / .fcard). Prefix: cp- (404: nf-) */
+
+/* ---------- the photo head: 21:9, pulled under the transparent header, the copy at the bottom left ---------- */
+.cp-hero {
+  position: relative; margin-top: calc(-1 * var(--hdr-h)); aspect-ratio: 21 / 9; min-height: clamp(440px, 64svh, 760px); max-height: 86svh;
+  display: grid; align-items: end; overflow: hidden; isolation: isolate; background: var(--bg-2);
+}
+.cp-hero__media { position: absolute; inset: -8% 0; z-index: -3; }                  /* taller than the band: room for the parallax */
+.cp-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: var(--media-pos, 50% 35%); }
+.cp-hero__veil { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: var(--veil-side), var(--veil-down), linear-gradient(180deg, rgba(11, 11, 13, .6) 0, transparent 200px); }
+.cp-hero__copy { position: relative; display: grid; gap: 18px; width: 100%; max-width: var(--maxw); margin: 0 auto; padding: calc(var(--hdr-h) + 48px) var(--gutter) clamp(48px, 6vw, 96px); }
+.cp-hero__copy .display { max-width: 14ch; font-size: clamp(40px, 1.6rem + 4vw, 92px); line-height: .98; letter-spacing: -.015em; }
+.cp-hero__copy .lead { max-width: 44ch; }
+.cp-hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 36px; margin-top: 14px; }
+/* the copy rises on load (GSAP-free: a css entrance, once; reduced motion keeps it still) */
+.js .cp-hero__copy > * { animation: cp-rise .9s var(--ease-out) both; }
+.js .cp-hero__copy > :nth-child(2) { animation-delay: 80ms; }
+.js .cp-hero__copy > :nth-child(3) { animation-delay: 160ms; }
+.js .cp-hero__copy > :nth-child(4) { animation-delay: 240ms; }
+@keyframes cp-rise { from { opacity: 0; transform: translateY(18px); } }
+
+/* ---------- the sample frames ---------- */
+.cp-frames .sec-head { align-items: end; }
+.cp-frames .page-head .lead { max-width: 52ch; }
+.cp-count { color: var(--ink-3); }
+.cp-count::before { content: "·"; margin: 0 .6em; color: var(--gold); }
+.cp-count:empty { display: none; }
+
+/* ---------- the guides underneath (global .tool-list rows) ---------- */
+.cp-guides .page-head { margin-bottom: var(--block); }
+.cp-guides .tool-list { max-width: var(--read); }
+
+/* ---------- contacts: the WhatsApp button lives in the head; the two guides follow ---------- */
+.cp--contacts .cp-hero__copy .display { max-width: 12ch; }
+
+/* ---------- 404: the copy and a round frame with the left lens darkened, side by side ---------- */
+.nf { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: center; min-height: calc(100svh - var(--hdr-h) - 2 * var(--sec-y)); }
+.nf-copy { grid-column: 2 / 8; }
+.nf-copy .display { font-size: clamp(40px, 1.6rem + 4vw, 92px); line-height: .98; letter-spacing: -.015em; }
+.nf-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 36px; margin-top: 14px; }
+.nf-art { grid-column: 8 / 12; margin: 0; align-self: center; }
+.nf-art svg.frame { display: block; width: 100%; height: auto; overflow: visible; --fc: var(--ink); --fc2: var(--ink-2); }
+.nf-art .is-sun { --lens: var(--lens-dark); }
+.nf-art .frame .glass { fill: rgba(244, 242, 238, .2); }
+
+/* ---------- phones and small tablets ---------- */
+@media (max-width: 860px) {
+  .cp-hero { aspect-ratio: auto; min-height: clamp(420px, 70svh, 640px); }
+  .cp-hero__media { inset: 0; }
+  .cp-hero__veil { background: linear-gradient(180deg, rgba(11, 11, 13, .55) 0, rgba(11, 11, 13, .1) 22%, rgba(11, 11, 13, .22) 36%, rgba(11, 11, 13, .84) 56%, rgba(11, 11, 13, .94) 80%, var(--bg) 100%); }
+  .cp-hero__copy { padding-bottom: 48px; }
+  .cp-hero__actions .btn { width: 100%; }
+  .nf { display: block; min-height: 0; }
+  .nf-art { width: min(360px, 100%); margin: 48px 0 0; }
+  .nf-actions .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .js .cp-hero__copy > * { animation: none; }
+}

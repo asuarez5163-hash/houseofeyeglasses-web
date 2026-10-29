@@ -1,0 +1,153 @@
+// Ayuda / Help — textos EN/ES. Respuestas cortas y verificables: sin precios, plazos ni horarios inventados.
+// Los envíos y devoluciones se detallan SOLO en legal.html (#shipping, #returns); aquí se enlazan.
+Object.assign(window.HOE_I18N.en, {
+  "ayuda.metaTitle": "Help Center — House of Eyeglasses",
+  "ayuda.title": "Questions about your glasses",
+  "ayuda.lead": "Answers about prescriptions, lenses, frames and insurance.",
+  "ayuda.searchLabel": "Search help",
+  "ayuda.searchPh": "Try “prescription”, “PD” or “progressives”",
+  "ayuda.clear": "Clear",
+  "ayuda.pop": "Popular",
+  "ayuda.pop.1": "PD", "ayuda.pop.2": "prescription", "ayuda.pop.3": "progressives", "ayuda.pop.4": "insurance",
+  "ayuda.count1": "1 answer for “{q}”",
+  "ayuda.countN": "{n} answers for “{q}”",
+  "ayuda.none": "No answers for “{q}” yet.",
+  "ayuda.emptyText": "Try a simpler word, like “prescription”, “PD” or “insurance”, or ask us directly.",
+  "ayuda.emptyClear": "Clear search",
+  "ayuda.emptyContact": "Contact us",
+  "ayuda.topics": "Topics",
+
+  "ayuda.cat.rx": "Prescriptions & PD",
+  "ayuda.cat.lenses": "Lenses & coatings",
+  "ayuda.cat.frames": "Frames & fit",
+  "ayuda.cat.orders": "Orders & your account",
+  "ayuda.cat.ins": "Insurance & FSA/HSA",
+
+  // Prescriptions & PD
+  "ayuda.q.rxRead": "How do I read my eyeglass prescription?",
+  "ayuda.a.rxRead": "OD is your right eye and OS your left (OU means both). SPH is the main lens power, CYL and AXIS correct astigmatism, and ADD is the extra reading power used in progressive and reading lenses.",
+  "ayuda.q.rxSend": "How do I send you my prescription?",
+  "ayuda.a.rxSend": "Type the numbers in when you choose your lenses, or upload a photo of your prescription. We check every prescription before your lenses are made.",
+  "ayuda.q.rxExpired": "Can I use an expired prescription?",
+  "ayuda.a.rxExpired": "Your eye doctor sets an expiration date because vision can change over time. If yours has expired, we recommend a new eye exam before you order; if you're not sure, contact us.",
+  "ayuda.q.pd": "What is PD and how do I measure it?",
+  "ayuda.a.pd": "PD (pupillary distance) is the space in millimeters between the centers of your pupils, and it tells the lab where to center each lens. Many eye doctors write it on the prescription; if yours doesn't have it, measure it with a millimeter ruler in front of a mirror, or ask your eye doctor. Two numbers, like 31.5/32, are a dual PD (one per eye): send us both.",
+
+  // Lenses & coatings
+  "ayuda.q.lensTypes": "Single vision, progressive or readers: which do I need?",
+  "ayuda.a.lensTypes": "Single vision has one power across the whole lens, for distance or for near. Progressives blend distance, computer and reading zones with no visible line and need an ADD value on your prescription; readers only magnify and need no prescription. More in the <a href=\"lentes.html\">lens guide</a>.",
+  "ayuda.q.blue": "Do I need a blue-light filter?",
+  "ayuda.a.blue": "It's optional. A blue-light filter is meant for long hours on phones and computers, and an anti-reflective coating also cuts screen glare. You can add it with or without a prescription.",
+  "ayuda.q.thin": "Which lens material is best for a strong prescription?",
+  "ayuda.a.thin": "The stronger your prescription, the more a high-index lens (1.61, 1.67 or 1.74) thins and lightens the edges. For kids and sports we recommend polycarbonate, which resists impact.",
+  "ayuda.q.coatings": "What do anti-reflective, scratch-resistant and UV coatings do?",
+  "ayuda.a.coatings": "Anti-reflective cuts glare and reflections, scratch-resistant adds a hard protective layer, and UV protection blocks ultraviolet light. For the sun, light-responsive lenses darken outdoors and polarized lenses remove glare from water and the road.",
+
+  // Frames & fit
+  "ayuda.q.size": "How do I know my frame size?",
+  "ayuda.a.size": "Look inside the arm of a pair you already own: the three numbers (for example 52-18-140) are lens width, bridge and temple length, in millimeters. Frames with similar numbers will fit in a similar way; the <a href=\"talla.html\">fit guide</a> explains each one.",
+  "ayuda.q.face": "Which frames suit my face shape?",
+  "ayuda.a.face": "As a rule of thumb, angular frames add definition to round faces and rounded frames soften square ones. Take the <a href=\"quiz.html\">style quiz</a> for three shapes matched to your face and taste, or see the <a href=\"talla.html#face\">face-shape guide</a>.",
+  "ayuda.q.adjust": "My glasses slide down or feel tight. Can they be adjusted?",
+  "ayuda.a.adjust": "Usually, yes. Metal frames with nose pads are the easiest to adjust, and an optician can reshape acetate arms with gentle heat. Contact us and we'll help you find the best fix.",
+  "ayuda.q.kids": "Do you make glasses for kids?",
+  "ayuda.a.kids": "Yes. For kids we recommend polycarbonate lenses, which are light and impact-resistant, in frames sized for smaller faces; flexible materials like TR-90 hold up well to everyday play.",
+
+  // Orders & your account
+  "ayuda.q.shipping": "How long does delivery take, and what does shipping cost?",
+  "ayuda.a.shipping": "Prescription glasses are made to order, so timing depends on the lenses you choose. Current shipping options, times and costs are in our <a href=\"legal.html#shipping\">Shipping policy</a>.",
+  "ayuda.q.track": "How do I track my order?",
+  "ayuda.a.track": "When your order ships, we email you a tracking link. If you can't find it, contact us with your order number and the email you used, and we'll look it up.",
+  "ayuda.q.returns": "Can I change my order or return my glasses?",
+  "ayuda.a.returns": "Contact us as soon as possible with your order number: lenses are made to your prescription, so changes are easiest before the lab starts. Return and exchange terms are in our <a href=\"legal.html#returns\">Returns policy</a>.",
+  "ayuda.q.spanish": "Can I get help in Spanish?",
+  "ayuda.a.spanish": "Yes. Switch the site to Spanish at the top of any page, and write or call us in Spanish whenever you like.",
+
+  // Insurance & FSA/HSA
+  "ayuda.q.insurance": "Can I use my vision insurance?",
+  "ayuda.a.insurance": "<p>Many vision plans reimburse glasses bought out of network; how much depends on your plan. It works in three steps.</p><ol><li>Check your out-of-network benefits with your insurer.</li><li>Place your order and save the itemized receipt.</li><li>Send the receipt with your plan's claim form to your insurer, who reimburses you directly.</li></ol>",
+  "ayuda.q.fsa": "Can I pay with FSA or HSA?",
+  "ayuda.a.fsa": "Prescription eyeglasses are generally an eligible expense for FSA and HSA accounts. Whether we accept FSA/HSA cards at checkout will be confirmed at launch; meanwhile, you can pay another way and submit your itemized receipt to your plan.",
+
+  // Contact
+  "ayuda.c.title": "Talk to us",
+  "ayuda.c.lead": "Email, call or message us on WhatsApp. Hablamos español.",
+  "ayuda.c.email": "Email",
+  "ayuda.c.phone": "Phone",
+  "ayuda.c.wa": "WhatsApp",
+  "ayuda.c.tip": "About an order? Include your order number and the email you used.",
+  "ayuda.c.safe": "We will never ask for your full card number by email, phone or WhatsApp."
+});
+
+Object.assign(window.HOE_I18N.es, {
+  "ayuda.metaTitle": "Centro de ayuda — House of Eyeglasses",
+  "ayuda.title": "Preguntas sobre tus lentes",
+  "ayuda.lead": "Respuestas sobre recetas, lentes, armazones y seguros.",
+  "ayuda.searchLabel": "Buscar en la ayuda",
+  "ayuda.searchPh": "Prueba con “receta”, “DP” o “progresivos”",
+  "ayuda.clear": "Borrar",
+  "ayuda.pop": "Lo más buscado",
+  "ayuda.pop.1": "DP", "ayuda.pop.2": "receta", "ayuda.pop.3": "progresivos", "ayuda.pop.4": "seguro",
+  "ayuda.count1": "1 respuesta para “{q}”",
+  "ayuda.countN": "{n} respuestas para “{q}”",
+  "ayuda.none": "Todavía no hay respuestas para “{q}”.",
+  "ayuda.emptyText": "Prueba con una palabra más simple, como “receta”, “DP” o “seguro”, o pregúntanos directamente.",
+  "ayuda.emptyClear": "Borrar búsqueda",
+  "ayuda.emptyContact": "Contáctanos",
+  "ayuda.topics": "Temas",
+
+  "ayuda.cat.rx": "Recetas y distancia pupilar",
+  "ayuda.cat.lenses": "Lentes y tratamientos",
+  "ayuda.cat.frames": "Armazones y medida",
+  "ayuda.cat.orders": "Pedidos y tu cuenta",
+  "ayuda.cat.ins": "Seguros y FSA/HSA",
+
+  "ayuda.q.rxRead": "¿Cómo leo mi receta de lentes?",
+  "ayuda.a.rxRead": "OD es el ojo derecho y OI (u OS) el izquierdo; OU significa ambos. ESF (SPH) es la graduación principal, CIL y EJE corrigen el astigmatismo, y ADD es el aumento extra para leer que usan los lentes progresivos y de lectura.",
+  "ayuda.q.rxSend": "¿Cómo les envío mi receta?",
+  "ayuda.a.rxSend": "Escribe los números al elegir tus lentes o sube una foto de tu receta. Revisamos cada receta antes de fabricar tus lentes.",
+  "ayuda.q.rxExpired": "¿Puedo usar una receta vencida?",
+  "ayuda.a.rxExpired": "Tu médico de la vista le pone fecha de vencimiento porque la vista cambia con el tiempo. Si la tuya ya venció, te recomendamos un examen de la vista nuevo antes de pedir; si tienes dudas, escríbenos.",
+  "ayuda.q.pd": "¿Qué es la distancia pupilar (DP) y cómo la mido?",
+  "ayuda.a.pd": "La distancia pupilar (DP, o PD en inglés) es la separación en milímetros entre el centro de tus pupilas, y le dice al laboratorio dónde centrar cada lente. Muchos médicos de la vista la anotan en la receta; si la tuya no la trae, mídela con una regla en milímetros frente a un espejo o pídesela a tu médico. Dos números, como 31.5/32, son una DP dual (uno por ojo): mándanos los dos.",
+
+  "ayuda.q.lensTypes": "¿Monofocales, progresivos o de lectura: cuáles necesito?",
+  "ayuda.a.lensTypes": "Los monofocales tienen una sola graduación en todo el lente, para lejos o para cerca. Los progresivos combinan zonas para lejos, computadora y lectura sin línea visible y necesitan un valor ADD en tu receta; los de lectura solo aumentan y no requieren receta. Más detalles en la <a href=\"lentes.html\">guía de lentes</a>.",
+  "ayuda.q.blue": "¿Necesito filtro de luz azul?",
+  "ayuda.a.blue": "Es opcional. El filtro de luz azul está pensado para muchas horas frente al celular y la computadora, y el antirreflejo también reduce los brillos de la pantalla. Puedes pedirlo con o sin graduación.",
+  "ayuda.q.thin": "¿Qué material de lente conviene para una graduación alta?",
+  "ayuda.a.thin": "Mientras más alta la graduación, más adelgaza y aligera los bordes un lente de alto índice (1.61, 1.67 o 1.74). Para niños y deporte recomendamos policarbonato, que resiste los golpes.",
+  "ayuda.q.coatings": "¿Para qué sirven el antirreflejo, el antirrayas y la protección UV?",
+  "ayuda.a.coatings": "El antirreflejo reduce brillos y reflejos, el antirrayas agrega una capa dura protectora y la protección UV bloquea la luz ultravioleta. Para el sol, los fotocromáticos se oscurecen afuera y los polarizados eliminan el reflejo del agua y la carretera.",
+
+  "ayuda.q.size": "¿Cómo sé la medida de mi armazón?",
+  "ayuda.a.size": "Mira por dentro la patilla de unos lentes que ya tengas: los tres números (por ejemplo 52-18-140) son el ancho del lente, el puente y el largo de la patilla, en milímetros. Un armazón con números parecidos te quedará de forma parecida; la <a href=\"talla.html\">guía de medidas</a> explica cada uno.",
+  "ayuda.q.face": "¿Qué armazones van con la forma de mi cara?",
+  "ayuda.a.face": "Como regla general, los armazones angulares le dan definición a una cara redonda y los redondeados suavizan una cara cuadrada. Haz el <a href=\"quiz.html\">quiz de estilo</a> para ver tres formas según tu cara y tu gusto, o mira la <a href=\"talla.html#face\">guía por forma de cara</a>.",
+  "ayuda.q.adjust": "Mis lentes se resbalan o me aprietan. ¿Se pueden ajustar?",
+  "ayuda.a.adjust": "Por lo general, sí. Los armazones de metal con plaquetas son los más fáciles de ajustar, y un óptico puede moldear las patillas de acetato con calor suave. Escríbenos y te ayudamos a encontrar la mejor solución.",
+  "ayuda.q.kids": "¿Hacen lentes para niños?",
+  "ayuda.a.kids": "Sí. Para niños recomendamos lentes de policarbonato, livianos y resistentes a los golpes, en armazones para caras pequeñas; los materiales flexibles como el TR-90 aguantan bien el juego de todos los días.",
+
+  "ayuda.q.shipping": "¿Cuánto tarda la entrega y cuánto cuesta el envío?",
+  "ayuda.a.shipping": "Los lentes graduados se fabrican por pedido, así que el tiempo depende de los lentes que elijas. Las opciones, tiempos y costos de envío vigentes están en nuestra <a href=\"legal.html#shipping\">política de envíos</a>.",
+  "ayuda.q.track": "¿Cómo rastreo mi pedido?",
+  "ayuda.a.track": "Cuando tu pedido sale, te enviamos por correo un enlace de rastreo. Si no lo encuentras, escríbenos con tu número de pedido y el correo que usaste, y lo buscamos.",
+  "ayuda.q.returns": "¿Puedo cambiar mi pedido o devolver mis lentes?",
+  "ayuda.a.returns": "Escríbenos lo antes posible con tu número de pedido: los lentes se hacen con tu receta, así que los cambios son más fáciles antes de que el laboratorio empiece. Las condiciones de devolución y cambio están en nuestra <a href=\"legal.html#returns\">política de devoluciones</a>.",
+  "ayuda.q.spanish": "¿Me pueden atender en español?",
+  "ayuda.a.spanish": "Sí. Cambia el idioma arriba en cualquier página, y escríbenos o llámanos en español cuando quieras.",
+
+  "ayuda.q.insurance": "¿Puedo usar mi seguro de visión?",
+  "ayuda.a.insurance": "<p>Muchos planes de visión reembolsan lentes comprados fuera de la red; el monto depende de tu plan. Funciona en tres pasos.</p><ol><li>Consulta con tu aseguradora tus beneficios fuera de la red.</li><li>Haz tu pedido y guarda el recibo detallado.</li><li>Envía el recibo con el formulario de reclamo de tu plan a tu aseguradora, que te reembolsa directamente.</li></ol>",
+  "ayuda.q.fsa": "¿Puedo pagar con FSA o HSA?",
+  "ayuda.a.fsa": "Por lo general, los lentes graduados son un gasto elegible para cuentas FSA y HSA. Si aceptamos tarjetas FSA/HSA al pagar lo confirmaremos en el lanzamiento; mientras tanto, puedes pagar de otra forma y presentar tu recibo detallado a tu plan.",
+
+  "ayuda.c.title": "Habla con nosotros",
+  "ayuda.c.lead": "Escríbenos, llámanos o mándanos un WhatsApp.",
+  "ayuda.c.email": "Correo",
+  "ayuda.c.phone": "Teléfono",
+  "ayuda.c.wa": "WhatsApp",
+  "ayuda.c.tip": "¿Es sobre un pedido? Incluye tu número de pedido y el correo que usaste.",
+  "ayuda.c.safe": "Nunca te pediremos el número completo de tu tarjeta por correo, teléfono ni WhatsApp."
+});

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /clasica/
+Disallow: /nueva/
+Disallow: /carrito.html
+Sitemap: https://houseofeyeglasses.com/sitemap.xml

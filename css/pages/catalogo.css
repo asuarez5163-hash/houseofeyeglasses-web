@@ -1,0 +1,152 @@
+/* Catálogo (catalogo.html) — C-cine: la tienda a oscuras. Foto 21:9 a sangre bajo la cabecera transparente, velo + fundido,
+   titular Jost 300 y la cifra viva; barra pegajosa en cristal (Filtros · chips · categorías en hairline); rejilla de losetas
+   --paper 4:3 (la tarjeta global .fcard de styles.css: aquí sólo la rejilla). Radios 0, sin sombras, hairlines --line.
+   Tokens: los de css/styles.css :root. Prefix: catp- */
+
+main.catp { padding-bottom: var(--sec-y); }
+
+/* =========================================================
+   1 · page head: the photo bleeds edge to edge under the transparent header (same trick as the home hero)
+   ========================================================= */
+.catp-hero { position: relative; isolation: isolate; overflow: hidden; display: grid; align-items: end; min-height: 64svh; margin-top: calc(-1 * var(--hdr-h)); background: var(--bg-2); }
+@media (min-width: 861px) { .catp-hero { aspect-ratio: 21 / 9; min-height: 480px; max-height: 760px; } }
+.catp-hero__media { position: absolute; inset: -8% 0; z-index: -3; }                               /* taller than the band: room for the parallax */
+.catp-hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: var(--cat-pos, 50% 30%); }
+.catp-hero__veil { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: var(--veil-side), var(--veil-down), linear-gradient(180deg, rgba(11, 11, 13, .55) 0, transparent 200px); }
+.catp-hero__copy { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; align-items: end; padding-top: calc(var(--hdr-h) + 56px); padding-bottom: clamp(36px, 5vw, 64px); }
+.catp-hero__text { grid-column: 1 / 9; }
+.catp-hero h1 { margin: 18px 0 0; font: 300 clamp(40px, 1.5rem + 4.4vw, 96px)/.98 var(--font-ui); letter-spacing: -.015em; color: var(--ink); text-wrap: balance; }
+.catp-hero h1 .line { display: block; }
+.catp-hero h1 .line-in { display: inline-block; }
+.catp-sub { margin-top: 20px; max-width: 46ch; }
+/* the live figure: Jost 200, gold, counting from 0 when the page lands (hoeMotion.count); without GSAP the value is simply there */
+.catp-count { grid-column: 10 / 13; justify-self: end; margin: 0; display: grid; justify-items: end; gap: 4px; text-align: right; }
+.catp-count .num { font-size: clamp(48px, 2rem + 3.4vw, 92px); line-height: .9; }
+.catp-count__lbl { font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); }
+
+/* =========================================================
+   2 · the bar: glass under the header; Filters · active chips · categories
+   ========================================================= */
+.catp-bar { position: sticky; top: var(--header-h); z-index: 20; background: rgba(11, 11, 13, .82); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); transition: top .32s var(--ease-out); }
+@media (prefers-reduced-transparency: reduce) { .catp-bar { background: var(--bg); backdrop-filter: none; -webkit-backdrop-filter: none; } }
+.site-header.is-hidden ~ main .catp-bar { top: 0; }                                              /* the phone bar slid away: ours takes the edge */
+.catp-bar__in { display: flex; align-items: center; gap: 20px 28px; min-height: 60px; }
+.catp-filters-btn { flex: none; display: inline-flex; align-items: center; gap: 10px; height: 44px; font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink); transition: color .2s; }
+.catp-filters-btn svg { width: 18px; height: 18px; color: var(--gold); stroke-width: 1.5; }
+.catp-filters-btn:hover, .catp-filters-btn[aria-expanded="true"] { color: var(--gold); }
+.catp-filters-n { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--gold); color: var(--bg); font: 500 11px/18px var(--font-ui); letter-spacing: 0; text-align: center; }
+
+/* active filters: hairline chips, Jost caps, × */
+.catp-chips { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 4px 0; }
+.catp-chips::-webkit-scrollbar { display: none; }
+.catp-chips li { flex: none; }
+.catp-chip { display: inline-flex; align-items: center; gap: 10px; height: 32px; padding: 0 10px 0 14px; border: 1px solid var(--line); font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; transition: border-color .2s, color .2s, background-color .2s, transform var(--t-release) var(--ease-out); }
+.catp-chip svg { width: 10px; height: 10px; stroke-width: 1.8; color: var(--ink-3); transition: color .2s; }
+.catp-chip:hover { border-color: var(--gold); color: var(--ink); }
+.catp-chip:hover svg { color: var(--gold); }
+.catp-chip.is-pressed { transform: scale(.97); background: var(--bg-3); transition-duration: 0ms, 0ms, 0ms, var(--t-press); }
+
+/* the five categories: caps with the gold underline that draws on hover; the current one stays underlined */
+.catp-cats { margin-left: auto; display: flex; align-items: center; gap: clamp(18px, 2.2vw, 32px); white-space: nowrap; }
+.catp-cats a { position: relative; display: inline-block; padding: 8px 0; font: 400 13px/1 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); transition: color .2s; }
+.catp-cats a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 2px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: 0 50%; transition: transform var(--t-hover) var(--ease-out); }
+.catp-cats a:hover { color: var(--ink); }
+.catp-cats a:hover::after, .catp-cats a[aria-current="page"]::after { transform: scaleX(1); }
+.catp-cats a[aria-current="page"] { color: var(--ink); }
+
+/* =========================================================
+   3 · body: the panel (a column on a desktop, a sheet on a phone) and the grid
+   ========================================================= */
+.catp-body { display: grid; grid-template-columns: minmax(0, 1fr); align-items: start; padding-top: clamp(40px, 5vw, 72px); }
+.catp-results { min-width: 0; }
+.catp-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px 24px; transition: min-height 300ms var(--ease-out); }
+@media (min-width: 1100px) { .catp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(48px, 5vw, 72px) 32px; } }
+/* filtering: the cards that leave fade in 120 ms (over .rv.is-in), the new ones come in with the stagger */
+.catp-grid.is-fading > .fcard { opacity: 0; transform: none; transition: opacity 120ms var(--ease-out); }
+.catp-grid.is-fading > .fcard .fcard-tile { transition: none; }
+
+/* empty: the pair of circles, one line, the link */
+.catp-empty { display: grid; justify-items: center; gap: 18px; padding: clamp(64px, 8vw, 128px) 0; text-align: center; }
+.catp-empty > svg { width: 140px; height: 70px; color: var(--gold); stroke-width: 1; }
+.catp-empty p { margin: 0; font: 300 var(--fs-lead)/1.4 var(--font-ui); color: var(--ink); text-wrap: balance; }
+
+/* ---------- the panel: four facets (shape, material, colour, size) in hairline groups ---------- */
+.catp-panel-head { display: flex; align-items: center; gap: 16px; height: 52px; border-bottom: 1px solid var(--gold); font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink); }
+.catp-panel-head .text-btn { margin-left: auto; font-size: var(--fs-caps); }
+.catp-panel-close { display: none; margin-right: -10px; }
+.catp-group { border-bottom: 1px solid var(--line); }
+.catp-group > summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 52px; padding: 4px 0; cursor: pointer; list-style: none; font: 400 var(--fs-body)/1.3 var(--font-ui); color: var(--ink); transition: color .2s; }
+.catp-group > summary::-webkit-details-marker { display: none; }
+.catp-group > summary:hover { color: var(--gold); }
+.catp-group > summary .chev { width: 16px; height: 16px; color: var(--gold); stroke-width: 1.5; transition: transform .25s var(--ease-out); }
+.catp-group[open] > summary .chev { transform: rotate(90deg); }
+.catp-group .on { margin-left: 8px; font-size: var(--fs-caps); color: var(--gold); font-variant-numeric: tabular-nums; }
+.catp-opts { display: grid; gap: 2px; padding: 2px 0 16px; }
+.catp-opt { position: relative; display: grid; grid-template-columns: 18px minmax(0, 1fr); align-items: center; gap: 12px; min-height: 38px; cursor: pointer; font-size: var(--fs-small); color: var(--ink-2); transition: color .2s, opacity .2s; }
+.catp-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.catp-opt .box { width: 16px; height: 16px; border: 1px solid var(--ink-3); display: grid; place-items: center; transition: border-color .2s, background-color .2s; }
+.catp-opt .box svg { width: 10px; height: 10px; stroke: var(--bg); stroke-width: 2.2; opacity: 0; transition: opacity .15s; }
+.catp-opt input:checked ~ .box { background: var(--gold); border-color: var(--gold); }
+.catp-opt input:checked ~ .box svg { opacity: 1; }
+.catp-opt input:checked ~ .lbl { color: var(--ink); }
+.catp-opt input:focus-visible ~ .box, .catp-opt input:focus-visible ~ .sw { outline: 2px solid var(--gold); outline-offset: 2px; }
+.catp-opt:hover .lbl { color: var(--ink); }
+.catp-opt .sw { width: 14px; height: 14px; border-radius: 50%; background: var(--c); border: 1px solid rgba(244, 242, 238, .28); background-clip: padding-box; justify-self: center; }
+.catp-opt.is-zero { opacity: .38; }
+.catp-opt.is-zero:not(.is-on) { pointer-events: none; }
+/* shape options: the drawing at 56 px in light ink, no glass and no glare on the dark stage */
+.catp-opt-shape { min-height: 42px; }
+.catp-opt-shape .lbl { display: flex; align-items: center; gap: 14px; }
+.catp-opt-shape .lbl svg { width: 56px; height: auto; flex: none; --fc: var(--ink-2); --fc2: var(--ink-3); --lens: transparent; --glass: rgba(244, 242, 238, .06); }
+.catp-opt-shape .lbl .glare { display: none; }
+.catp-panel-foot { display: none; }
+
+/* desktop: a 280 px column that slides in beside the grid, sticky under the bar */
+@media (min-width: 861px) {
+  .catp-body { grid-template-columns: 0 minmax(0, 1fr); column-gap: 0; transition: grid-template-columns 280ms var(--ease-out), column-gap 280ms var(--ease-out); }
+  .catp-body.is-open { grid-template-columns: 280px minmax(0, 1fr); column-gap: 48px; }
+  .catp-panel { position: sticky; top: calc(var(--header-h) + 60px + 24px); max-height: calc(100vh - var(--header-h) - 84px); overflow-y: auto; overflow-x: hidden; width: 280px; padding: 0 0 24px; opacity: 0; visibility: hidden; transform: translateX(-12px); transition: opacity 240ms var(--ease-out), transform 280ms var(--ease-out), visibility 0s linear 280ms; }
+  .catp-body.is-open .catp-panel { opacity: 1; visibility: visible; transform: none; transition: opacity 240ms var(--ease-out) 60ms, transform 280ms var(--ease-out), visibility 0s; }
+  .catp-scrim { display: none; }
+}
+/* phone / tablet: a full-screen sheet on --bg-3 with a sticky "Show N frames"; closed, it takes no height at all */
+@media (max-width: 860px) {
+  .catp-panel { position: fixed; inset: 0; z-index: 60; display: flex; flex-direction: column; padding: 0 var(--gutter) 0; background: var(--bg-3); transform: translateY(100%); visibility: hidden; overflow-y: auto; overscroll-behavior: contain; transition: transform 360ms var(--ease-drawer), visibility 0s linear 360ms; }
+  .catp-panel.is-open { transform: none; visibility: visible; transition: transform var(--t-panel) var(--ease-drawer), visibility 0s; }
+  .catp-panel-head { flex: none; height: 56px; padding-top: env(safe-area-inset-top); }
+  .catp-panel-close { display: inline-grid; }
+  #cat-form { flex: 1; }
+  .catp-panel-foot { display: block; position: sticky; bottom: 0; flex: none; padding: 12px 0 calc(12px + env(safe-area-inset-bottom)); background: var(--bg-3); border-top: 1px solid var(--line); }
+  .catp-panel-foot .btn { width: 100%; }
+  .catp-scrim { position: fixed; inset: 0; z-index: 55; background: rgba(0, 0, 0, .62); opacity: 0; transition: opacity 240ms var(--ease-out); }
+  .catp-scrim.is-on { opacity: 1; }
+
+  .catp-hero { align-items: end; }
+  .catp-hero__media img { object-position: var(--cat-pos-m, var(--cat-pos, 50% 24%)); }
+  .catp-hero__veil { background: linear-gradient(180deg, rgba(11, 11, 13, .5) 0, rgba(11, 11, 13, .08) 24%, rgba(11, 11, 13, .12) 40%, rgba(11, 11, 13, .86) 68%, var(--bg) 100%); }
+  .catp-hero__copy { display: block; padding-top: calc(var(--hdr-h) + 34vh); padding-bottom: 36px; }
+  .catp-hero h1 { margin-top: 12px; }
+  .catp-sub { margin-top: 14px; font-size: 16px; }
+  .catp-count { margin-top: 22px; display: flex; align-items: baseline; justify-content: flex-start; gap: 12px; text-align: left; }
+  .catp-count .num { font-size: 44px; line-height: 1; }
+
+  .catp-bar__in { flex-wrap: wrap; gap: 0 16px; min-height: 56px; }
+  .catp-cats { margin-left: auto; max-width: 100%; overflow-x: auto; scrollbar-width: none; gap: 18px; padding: 6px 0; }
+  .catp-cats::-webkit-scrollbar { display: none; }
+  .catp-cats a { font-size: 12px; }
+  .catp-chips { order: 3; flex-basis: 100%; padding: 0 0 10px; }
+  .catp-body { padding-top: 28px; }
+}
+@media (max-width: 600px) {
+  .catp-grid { gap: 28px 12px; }
+  /* the drawing at ~94 % of the tile so a frame measures ≥ 160 px across on a 390 px screen (tile ≈ 173 px) */
+  .catp-grid .fcard-tile svg, .catp-grid .frame-tile svg { width: 94%; }
+  .catp-cats { gap: 14px; }
+  .catp-cats a { letter-spacing: .08em; }
+}
+@media (max-width: 400px) { .catp-cats a[data-cat="all"] { display: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .catp-body, .catp-panel, .catp-scrim, .catp-grid, .catp-grid > .fcard, .catp-chip, .catp-group > summary .chev, .catp-cats a::after, .catp-bar { transition: none !important; }
+  .catp-panel { transform: none !important; }
+}

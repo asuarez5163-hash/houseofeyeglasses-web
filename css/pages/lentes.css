@@ -1,0 +1,221 @@
+/* Lens options page (lentes.html) — "C-cine": the dark stage, gold hairlines, Jost. The lens cut is ink on the dark;
+   the option rows are hairline tables; the thickness helper sits on the charcoal band with lit fields. Prefix: lx- */
+
+.lx { --lx-err: #e08a80; }
+.lx-hero, .lx-group, .lx-faq, .lx-next { max-width: var(--maxw); margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
+.lx [id] { scroll-margin-top: calc(var(--header-h, 72px) + 24px); }
+.lx-k { font-size: 13px; color: var(--ink-3); }
+
+/* ---------- intro: the head on the left, the lens cut on the right ---------- */
+.lx-hero { display: grid; gap: 48px; padding-bottom: 0; }
+.lx-hero .lead { max-width: 44ch; }
+.lx-promise { display: flex; gap: 12px; align-items: flex-start; margin: 24px 0 0; max-width: 60ch; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+.lx-promise svg { flex: none; width: 22px; height: 22px; margin-top: 1px; color: var(--gold); stroke-width: 1.6; }
+
+.lx-steps { list-style: none; margin: var(--block) 0 0; padding: 0; border-top: 1px solid var(--gold); }
+.lx-steps li { border-bottom: 1px solid var(--line); }
+.lx-steps a { display: grid; grid-template-columns: 44px minmax(0, 1fr) 18px; column-gap: 14px; row-gap: 2px; align-items: baseline; padding: 18px 0 20px; transition: background-color .2s var(--ease-out); }
+.lx-step-n { grid-row: 1 / span 2; font: 200 26px/1 var(--font-ui); color: var(--gold); font-variant-numeric: lining-nums tabular-nums; }
+.lx-step-t { font: 300 var(--fs-title)/1.25 var(--font-ui); color: var(--ink); transition: color .2s; }
+.lx-step-d { grid-column: 2; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.lx-steps a::after { content: ""; grid-column: 3; grid-row: 1 / span 2; align-self: center; width: 16px; height: 16px; background: linear-gradient(var(--gold), var(--gold)) 50% 50% / 100% 1px no-repeat; opacity: 0; transform: translateX(-6px); transition: opacity .25s, transform .25s var(--ease-out); }
+@media (hover: hover) and (pointer: fine) {
+  .lx-steps a:hover .lx-step-t { color: var(--gold); }
+  .lx-steps a:hover::after { opacity: 1; transform: none; }
+}
+
+/* the lens cut: five edge profiles of the same −6.00 lens, 1.50 to 1.74. Each profile is a button: the one under
+   the pointer, the finger or the keyboard fills with gold (300 ms) and its index reads in the title size */
+.lx-hero-fig { margin: 0; align-self: end; }
+.lx-fig-k { margin-bottom: 28px; }
+.lx-cut { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.lx-cut-item { display: grid; justify-items: center; gap: 2px; padding: 0 0 6px; text-align: center; color: var(--ink); -webkit-tap-highlight-color: transparent; transition: color .3s var(--ease-out); }
+.lx-cut-item svg { display: block; width: 100%; height: auto; overflow: visible; margin-bottom: 12px; border-bottom: 1px solid var(--line); }
+.lx-cut-lens { fill: rgba(244, 242, 238, .06); stroke: var(--ink); stroke-width: 1.3; stroke-linejoin: round; transition: fill .3s var(--ease-out), stroke .3s var(--ease-out); }
+.lx-cut-item[aria-pressed="true"] .lx-cut-lens, .lx-cut-item:focus-visible .lx-cut-lens { fill: color-mix(in srgb, var(--gold) 28%, transparent); stroke: var(--gold); }
+.lx-cut-item[aria-pressed="true"] .lx-cut-idx { color: var(--gold); }
+.lx-cut-item:focus-visible { outline-offset: 4px; }
+.lx-cut-idx { display: block; font: 300 var(--fs-title)/1.2 var(--font-ui); font-variant-numeric: lining-nums tabular-nums; transition: color .3s var(--ease-out); }
+.lx-cut-name { display: block; font-size: 12px; line-height: 1.3; letter-spacing: .04em; color: var(--ink-3); }
+.lx-cut-cap { margin: 16px 0 0; text-align: center; font-size: 14px; color: var(--ink-2); min-height: 1.6em; }
+@media (hover: hover) and (pointer: fine) {
+  .lx-cut-item:hover .lx-cut-lens { fill: color-mix(in srgb, var(--gold) 28%, transparent); stroke: var(--gold); }
+  .lx-cut-item:hover .lx-cut-idx { color: var(--gold); }
+}
+
+/* ---------- option groups: kicker + display + lead, then a hairline table ---------- */
+.lx-group { padding-top: var(--sec-y); }
+.lx-group--band { padding-top: var(--sec-y-sm); }
+.lx-group-head { margin-bottom: var(--block); }
+.lx-group-head .lead { max-width: 54ch; }
+
+.lx-cols { display: none; }
+.lx-list { border-top: 1px solid var(--gold); }
+.lx-opt { display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 18px; row-gap: 4px; grid-template-areas: "art name" "art text" "art for"; padding: 22px 0 24px; border-bottom: 1px solid var(--line); transition: background-color .3s var(--ease-out); }
+.lx-opt-art { grid-area: art; display: block; width: 48px; height: 40px; color: var(--gold); }
+.lx-idx { display: block; padding-top: 2px; font: 200 22px/1 var(--font-ui); color: var(--gold); font-variant-numeric: lining-nums tabular-nums; }
+.lx-opt-art svg { width: 100%; height: 100%; stroke-width: 1.3; overflow: visible; }
+.lx-opt-art .lx-fill { fill: currentColor; stroke: none; opacity: .28; }
+.lx-opt-art .lx-prof { fill: color-mix(in srgb, var(--gold) 18%, transparent); stroke-width: 1.3; }
+.lx-opt-name { grid-area: name; margin: 0; font: 300 var(--fs-title)/1.25 var(--font-ui); color: var(--ink); }
+.lx-opt-text { grid-area: text; margin: 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+.lx-opt-for { grid-area: for; margin: 8px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-2); }
+.lx-opt-for .lx-k { margin-right: 4px; }
+.lx-opt-note { display: block; margin-top: 4px; color: var(--gold); }
+.lx-opt:target { background: linear-gradient(90deg, color-mix(in srgb, var(--gold) 12%, transparent), transparent 70%); }
+
+.lx-group-foot { display: grid; gap: 14px; justify-items: start; margin-top: 20px; }
+.lx-cap { margin: 0; max-width: 70ch; font-size: 13px; line-height: 1.6; color: var(--ink-3); }
+
+/* ---------- 03 · the video band carries the head ---------- */
+.lx-band .media-band__copy .lead { max-width: 40ch; }
+
+/* ---------- thickness helper: the charcoal band, lit fields, the result beside them ---------- */
+.lx-helper { margin-top: var(--sec-y); background: var(--bg-2); border-top: 1px solid var(--line-2); border-bottom: 1px solid var(--line-2); }
+.lx-helper-in { max-width: var(--maxw); margin: 0 auto; padding: var(--sec-y) var(--gutter); display: grid; gap: 40px; }
+.lx-helper-lead { margin: 20px 0 0; max-width: 52ch; }
+
+.lx-form { margin-top: var(--block); display: grid; gap: 26px; }
+.lx-fields { display: grid; gap: 24px; }
+.lx-field label { display: block; margin-bottom: 10px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.lx-stepper { display: grid; grid-template-columns: 48px minmax(0, 1fr) 48px; align-items: center; height: 60px; background: var(--bg-3); border: 1px solid var(--line); transition: border-color .2s, box-shadow .2s; }
+.lx-stepper:focus-within { border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+.lx-stepper input { width: 100%; min-width: 0; height: 100%; padding: 0; border: 0; border-radius: 0; background: transparent; outline: none; text-align: center; font: 300 30px/1 var(--font-ui); font-variant-numeric: lining-nums tabular-nums; color: var(--ink); caret-color: var(--gold); }
+.lx-stepper input::selection { background: var(--gold); color: var(--bg); }
+.lx-step-btn { display: grid; place-items: center; width: 48px; height: 100%; color: var(--ink-2); touch-action: manipulation; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; transition: color .2s, background-color .2s, transform .14s var(--ease-out); }
+.lx-step-btn svg { width: 16px; height: 16px; stroke-width: 1.6; }
+.lx-step-btn:first-child { border-right: 1px solid var(--line-2); }
+.lx-step-btn:last-child { border-left: 1px solid var(--line-2); }
+@media (hover: hover) and (pointer: fine) { .lx-step-btn:hover { color: var(--gold); background: rgba(244, 242, 238, .04); } .lx-stepper:hover { border-color: rgba(201, 163, 90, .5); } }
+.lx-step-btn:active, .lx-step-btn.is-pressed { transform: scale(.92); color: var(--gold); transition-duration: .2s, .2s, 100ms; }
+.lx-step-btn[aria-disabled="true"] { opacity: .3; cursor: default; }
+.lx-step-btn[aria-disabled="true"]:active, .lx-step-btn[aria-disabled="true"].is-pressed { transform: none; }
+.lx-msg { display: grid; min-height: 42px; margin-top: 8px; }
+.lx-msg > p { grid-area: 1 / 1; margin: 0; }
+.lx-hint { font-size: 13px; line-height: 1.5; color: var(--ink-3); }
+.lx-err { font-size: 13.5px; line-height: 1.5; color: var(--lx-err); }
+.lx-field.is-invalid .lx-hint { visibility: hidden; }
+.lx-field.is-invalid .lx-stepper { border-color: var(--lx-err); box-shadow: inset 0 0 0 1px var(--lx-err); }
+.lx-form-foot { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 28px; }
+.lx-form-foot .btn { white-space: nowrap; }
+
+.lx-result { border-top: 1px solid var(--gold); padding-top: 28px; }
+.lx-res-empty { margin: 0; max-width: 28ch; font: 300 var(--fs-title)/1.5 var(--font-ui); color: var(--ink-3); }
+.lx-res-empty.is-invalid { color: var(--lx-err); }
+.lx-res-main { display: flex; flex-wrap: wrap; align-items: flex-end; align-items: last baseline; gap: 4px 18px; margin: 0; }
+.lx-res-idx { display: inline-block; transform-origin: 0 100%; will-change: auto; }
+.lx-res-name { display: grid; gap: 2px; font: 300 var(--fs-title)/1.25 var(--font-ui); color: var(--ink); }
+.lx-res-name .lx-k { line-height: 1.4; }
+.lx-res-why { margin: 16px 0 0; max-width: 48ch; font-size: 16px; line-height: 1.65; color: var(--ink-2); text-wrap: pretty; }
+.lx-scale { margin: 28px -10px 0; max-width: 480px; padding: 0 10px; overflow: hidden; }
+.lx-res-empty + .lx-scale { margin-top: 30px; }
+.lx-scale + .lx-res-cap { display: block; margin: 12px 0 0; }
+.lx-scale-track { position: relative; display: flex; }
+.lx-scale-seg { display: flex; flex-direction: column; min-width: 0; }
+.lx-scale-idx { height: 26px; font: 300 15px/16px var(--font-ui); text-align: center; color: var(--ink-3); font-variant-numeric: lining-nums; transition: color .3s; }
+.lx-scale-tick { position: relative; padding-top: 10px; font-size: 11px; line-height: 1.2; color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.lx-scale-tick::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--line); transition: background-color .3s; }
+.lx-scale-tick::before { content: ""; position: absolute; left: 0; top: -4px; width: 1px; height: 10px; background: var(--ink-3); }
+.lx-scale-seg.is-open .lx-scale-tick::after { background: linear-gradient(90deg, var(--line) 45%, transparent); }
+.lx-scale-seg.is-on .lx-scale-idx { color: var(--gold); }
+.lx-scale-seg.is-on .lx-scale-tick::after { background: var(--gold); }
+.lx-scale-seg.is-on.is-open .lx-scale-tick::after { background: linear-gradient(90deg, var(--gold) 45%, transparent); }
+.lx-scale-mark { position: absolute; left: 0; top: 20px; width: 100%; height: 12px; pointer-events: none; transition: transform .26s var(--ease-out); }
+.lx-scale-mark::before { content: ""; position: absolute; left: -9px; top: -3px; width: 18px; height: 18px; border-radius: 50%; background: var(--gold); border: 3px solid var(--bg-2); }
+.lx-res-fig { margin: 24px 0 0; max-width: 380px; }
+.lx-res-fig svg { display: block; width: 100%; height: auto; overflow: visible; }
+.lx-p-std { fill: none; stroke: var(--ink-3); stroke-width: 1.1; stroke-dasharray: 4 4; }
+.lx-p-sug { fill: color-mix(in srgb, var(--gold) 22%, transparent); stroke: var(--gold); stroke-width: 1.5; }
+.lx-res-fig figcaption { display: grid; gap: 6px; margin-top: 12px; }
+.lx-legend { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: 13px; color: var(--ink-2); }
+.lx-legend span::before { content: ""; display: inline-block; width: 22px; margin-right: 8px; vertical-align: middle; border-top: 1.5px solid var(--gold); }
+.lx-legend .is-std::before { border-top: 1.5px dashed var(--ink-3); }
+.lx-res-cap { font-size: 13px; line-height: 1.55; color: var(--ink-3); }
+.lx-res-kids { display: flex; gap: 12px; align-items: flex-start; margin: 16px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+.lx-res-kids svg { flex: none; width: 22px; height: 22px; margin-top: 1px; color: var(--gold); stroke-width: 1.8; }
+
+.lx-disclaimer { display: flex; gap: 10px; align-items: flex-start; margin: 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 13px; line-height: 1.6; color: var(--ink-3); }
+.lx-disclaimer svg { flex: none; width: 18px; height: 18px; margin-top: 1px; color: var(--gold); stroke-width: 1.5; }
+
+/* ---------- good to know: hairline rows, each answer opens by height ---------- */
+.lx-faq { padding-top: var(--sec-y); display: grid; gap: 26px; }
+.lx-faq-head .lead { max-width: 36ch; }
+.lx-faq-list { border-top: 1px solid var(--gold); }
+.lx-q { border-bottom: 1px solid var(--line); }
+details.lx-q { display: grid; grid-template-rows: auto 0fr; transition: grid-template-rows 240ms var(--ease-out); }
+details.lx-q[hidden] { display: none; }
+details.lx-q[open]:not(.is-closing) { grid-template-rows: auto 1fr; }
+details.lx-q.is-closing { transition-duration: 180ms; }
+details.lx-q::details-content { min-height: 0; overflow: hidden; }
+.lx-q summary { display: grid; grid-template-columns: minmax(0, 1fr) 20px; align-items: center; gap: 16px; padding: 22px 0; list-style: none; cursor: pointer; transition: background-color .2s var(--ease-out); }
+.lx-q summary::-webkit-details-marker { display: none; }
+.lx-q summary:active, .lx-q summary.is-pressed { background: var(--bg-2); transition-duration: 0ms; }
+.lx-q summary:active .lx-q-q, .lx-q summary.is-pressed .lx-q-q { color: var(--gold); }
+.lx-q-tag { color: var(--gold); }
+.lx-q-q { display: block; font: 300 var(--fs-title)/1.25 var(--font-ui); color: var(--ink); transition: color .25s; }
+.lx-q-ico { width: 20px; height: 20px; color: var(--gold); stroke-width: 1.4; transition: transform .28s var(--ease-out); }
+.lx-q[open] .lx-q-ico { transform: rotate(45deg); }
+.lx-q summary:hover .lx-q-q { color: var(--gold); }
+.lx-q-a { min-height: 0; overflow: hidden; padding: 0 36px 0 0; opacity: 0; transition: opacity 200ms var(--ease-out); }
+.lx-q-a::after { content: ""; display: block; height: 26px; }
+.lx-q-a p { margin: 0; max-width: 64ch; font-size: 16px; line-height: 1.7; color: var(--ink-2); text-wrap: pretty; }
+details.lx-q[open]:not(.is-closing) .lx-q-a { opacity: 1; }
+details.lx-q.is-closing .lx-q-a { transition-duration: 180ms; }
+
+/* ---------- next steps ---------- */
+.lx-next { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+.lx-next-head { margin-bottom: var(--block); }
+.lx-next-list { border-top: 1px solid var(--gold); }
+.lx-next-list li { border-bottom: 1px solid var(--line); }
+.lx-next-link { display: grid; grid-template-columns: 40px minmax(0, 1fr) 18px; column-gap: 18px; row-gap: 2px; align-items: center; padding: 22px 0; }
+.lx-next-ico { grid-row: 1 / span 2; width: 40px; height: 40px; color: var(--gold); stroke-width: 1.4; }
+.lx-next-t { font: 300 var(--fs-title)/1.25 var(--font-ui); color: var(--ink); transition: color .25s; }
+.lx-next-d { grid-column: 2; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.lx-next-arrow { grid-column: 3; grid-row: 1 / span 2; width: 18px; height: 18px; color: var(--gold); stroke-width: 1.6; transition: transform .35s var(--ease-out); }
+.lx-next-link:hover .lx-next-t { color: var(--gold); }
+@media (hover: hover) and (pointer: fine) { .lx-next-link:hover .lx-next-arrow { transform: translateX(4px); } }
+
+/* ---------- wider screens ---------- */
+@media (min-width: 600px) {
+  .lx-fields { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .lx-form-foot { grid-template-columns: auto auto; align-items: center; justify-content: start; gap: 28px; }
+}
+@media (min-width: 860px) {
+  .lx-next-list { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--line); }
+  .lx-next-list li { border-bottom: 0; }
+  .lx-next-list li:first-child { padding-right: 32px; }
+  .lx-next-list li + li { padding-left: 32px; border-left: 1px solid var(--line); }
+  .lx-next-link { padding: 28px 0; }
+}
+@media (min-width: 900px) {
+  .lx-cols, .lx-opt { display: grid; grid-template-columns: 56px minmax(0, 2.1fr) minmax(0, 3.2fr) minmax(0, 2.5fr); column-gap: clamp(16px, 2.2vw, 32px); }
+  .lx-cols { padding-bottom: 12px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); }
+  .lx-cols span:first-child { grid-column: 2; }
+  .lx-opt { grid-template-areas: "art name text for"; align-items: baseline; padding: 26px 0; }
+  .lx-opt-art { align-self: start; width: 56px; height: 42px; }
+  .lx-idx { padding-top: 0; font-size: 26px; }
+  .lx-opt-for { margin: 0; }
+  .lx-opt-for .lx-k { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+  .lx-opt-note { margin-top: 6px; }
+}
+@media (min-width: 1000px) {
+  .lx-hero { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); column-gap: clamp(40px, 6vw, 96px); align-items: end; }
+  .lx-group-foot { grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 24px; }
+  .lx-helper-in { grid-template-columns: minmax(0, 6fr) minmax(0, 6fr); column-gap: 0; row-gap: 40px; }
+  .lx-helper-form { padding-right: clamp(40px, 5vw, 80px); }
+  .lx-result { border-top: 0; padding-top: 0; padding-left: clamp(40px, 5vw, 80px); border-left: 1px solid var(--gold); align-self: stretch; }
+  .lx-disclaimer { grid-column: 1 / -1; }
+  .lx-faq { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(40px, 6vw, 96px); align-items: start; }
+}
+@media (max-width: 860px) {
+  .lx-group { padding-top: var(--sec-y-sm); }
+  .lx-faq, .lx-next { padding-top: var(--sec-y-sm); }
+  .lx-helper { margin-top: var(--sec-y-sm); }
+}
+
+/* ---------- reduced motion: short crossfades only, nothing moves or blurs ---------- */
+@keyframes lx-fade-only { from { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  details.lx-q, .lx-q-a, .lx-step-btn, .lx-q-ico, .lx-next-arrow, .lx-cut-lens, .lx-cut-idx, .lx-stepper, .lx-steps a::after { transition: none !important; }
+  .lx-step-btn:active, .lx-next-link:hover .lx-next-arrow { transform: none; }
+}

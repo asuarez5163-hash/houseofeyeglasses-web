@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex,nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Style Quiz — House of Eyeglasses</title>
+  <meta name="description" content="Six quick questions to find the frame shapes, materials, colors and lenses that suit you. No sign-up needed.">
+  <meta name="theme-color" content="#fbf9f7">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="House of Eyeglasses">
+  <meta property="og:title" content="Style Quiz — House of Eyeglasses">
+  <meta property="og:description" content="Six quick questions to find the frame shapes, materials, colors and lenses that suit you. No sign-up needed.">
+  <meta property="og:url" content="https://houseofeyeglasses.com/clasica/quiz.html">
+  <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/pages/quiz.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+
+  <!-- ============ HEADER ============ -->
+  <header class="site-header" id="top">
+    <div class="header-bar">
+      <button class="icon-btn menu-btn" type="button" aria-controls="drawer" aria-expanded="false" data-i18n-aria="openMenu" aria-label="Open menu">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 7.5h22M3 14h22M3 20.5h22"/></svg>
+      </button>
+
+      <a class="brand" href="index.html" aria-label="House of Eyeglasses — Home">
+        <img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses — Eyewear and contact lenses">
+      </a>
+
+      <div class="header-actions">
+        <div class="lang-switch" role="group" data-i18n-aria="language" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <span aria-hidden="true">|</span>
+          <button type="button" data-lang="es" aria-pressed="false">ES</button>
+        </div>
+        <button class="icon-btn" type="button" data-open="search" aria-controls="search-panel" aria-expanded="false" data-i18n-aria="search" aria-label="Search">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+        </button>
+        <a class="icon-btn" href="ayuda.html#orders" data-i18n-aria="account" aria-label="Account">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="9" r="5"/><path d="M4.5 25c.8-5.2 4.6-8.5 9.5-8.5s8.7 3.3 9.5 8.5"/></svg>
+        </a>
+        <button class="icon-btn cart-btn" type="button" data-open="cart" aria-controls="cart" aria-expanded="false" data-i18n-aria="cart" aria-label="Cart">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 9h18l-1.4 16H6.4z"/><path d="M10 12V7.5a4 4 0 0 1 8 0V12"/></svg>
+          <span class="cart-count" aria-hidden="true">0</span>
+        </button>
+      </div>
+    </div>
+
+    <nav class="main-nav" data-i18n-aria="mainNav" aria-label="Main">
+      <ul>
+        <li><a href="men.html" data-i18n="nav.men">Shop Men</a></li>
+        <li><a href="women.html" data-i18n="nav.women">Shop Women</a></li>
+        <li><a href="kids.html" data-i18n="nav.kids">Shop Kids</a></li>
+        <li><a href="sunglasses.html" data-i18n="nav.sun">Sunglasses</a></li>
+        <li><a href="contacts.html" data-i18n="nav.contacts">Contacts</a></li>
+        <li><a href="index.html#coming-soon" class="is-gold" data-i18n="nav.soon">Coming Soon</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ============ SEARCH PANEL ============ -->
+  <div class="search-panel" id="search-panel" hidden>
+    <form class="search-form" role="search" action="#" id="search-form">
+      <label class="visually-hidden" for="q" data-i18n="search">Search</label>
+      <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+      <input id="q" name="q" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" data-i18n-ph="searchPh" placeholder="Search lenses, prescriptions, sizes…">
+      <button type="button" class="text-btn" data-close="search" data-i18n="close">Close</button>
+    </form>
+    <div class="search-suggest">
+      <p class="suggest-title" id="search-title" data-i18n="popular">Popular searches</p>
+      <ul id="search-results" class="search-results" role="listbox" aria-labelledby="search-title"></ul>
+      <p class="search-empty" id="search-empty" hidden></p>
+    </div>
+  </div>
+  </div>
+
+
+  <!-- ============ MAIN ============ -->
+<main id="main" class="quiz-page">
+    <header class="quiz-intro">
+      <h1 data-i18n="quiz.title">Find frames that suit you</h1>
+      <p class="quiz-lead" data-i18n="quiz.lead">Six quick questions. No sign-up: your result appears right here.</p>
+    </header>
+
+    <section class="quiz" id="quiz" data-i18n-aria="quiz.kicker" aria-label="Style quiz">
+      <div class="q-bar">
+        <button class="q-back" type="button" id="q-back" disabled>
+          <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M17 10H4M8.5 5.5 4 10l4.5 4.5"/></svg>
+          <span data-i18n="quiz.back">Back</span>
+        </button>
+        <div class="q-track" id="q-track" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" data-i18n-aria="quiz.progress" aria-label="Quiz progress"><span></span></div>
+        <p class="q-count" id="q-count">Question 1 of 6</p>
+      </div>
+
+      <div class="q-stage" id="q-stage"></div>
+      <noscript>
+        <p class="q-noscript">The style quiz needs JavaScript. / El quiz de estilo necesita JavaScript. <a class="link-u" href="ayuda.html">Help / Ayuda</a></p>
+      </noscript>
+
+      <!-- result (filled by js/pages/quiz.js; static text is translated by main.js) -->
+      <section class="qr" id="quiz-result" aria-labelledby="qr-title" hidden>
+        <header class="qr-head">
+          <h2 id="qr-title" tabindex="-1" data-i18n="quiz.r.title">The three shapes we recommend</h2>
+          <p class="qr-face" id="qr-face"></p>
+        </header>
+
+        <div class="qr-answers">
+          <h3 class="qr-answers-k" id="qr-answers-k" data-i18n="quiz.r.answers">Your answers</h3>
+          <ul id="qr-answers" aria-labelledby="qr-answers-k"></ul>
+        </div>
+
+        <ol class="qr-shapes" id="qr-shapes"></ol>
+
+        <dl class="qr-details" id="qr-details"></dl>
+
+        <div class="qr-next">
+          <div class="qr-next-copy">
+            <h3 data-i18n="quiz.r.next">What's next</h3>
+            <p data-i18n="quiz.r.nextText">Our frame collection is coming soon. Until then, keep this profile handy: the shapes, material and colors above are what to look for.</p>
+            <ul class="qr-links">
+              <li><a class="link-u" href="talla.html" data-i18n="quiz.r.size">Find your frame size</a></li>
+              <li><a class="link-u" href="ayuda.html" data-i18n="quiz.r.help">Visit the help center</a></li>
+            </ul>
+            <button class="q-restart" type="button" id="q-restart">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10a6 6 0 1 0 1.8-4.3"/><path d="M4 3.5v3.6h3.6"/></svg>
+              <span data-i18n="quiz.r.restart">Start over</span>
+            </button>
+          </div>
+
+          <form class="qr-mail" id="qr-mail" action="#" novalidate>
+            <h3 data-i18n="quiz.e.title">Email me my results when the collection launches</h3>
+            <label class="qr-mail-label" for="qr-email" data-i18n="quiz.e.label">Email (optional)</label>
+            <div class="qr-mail-row">
+              <input id="qr-email" name="email" type="email" autocomplete="email" inputmode="email" data-i18n-ph="quiz.e.ph" placeholder="name@example.com" aria-describedby="qr-note qr-msg">
+              <button class="btn btn-gold" type="submit"><span data-i18n="quiz.e.cta">Notify me</span></button>
+            </div>
+            <label class="qr-check">
+              <input type="checkbox" id="qr-consent" name="consent">
+              <span data-i18n="quiz.e.consent">Yes, email me when the collection launches. I can unsubscribe anytime.</span>
+            </label>
+            <p class="qr-note" id="qr-note" data-i18n="quiz.e.note">Heads-up: this sign-up isn't connected yet, so nothing is sent or saved for now.</p>
+            <p class="qr-msg" id="qr-msg" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="contact">
+    <div class="foot-band">
+      <div class="foot-band-in">
+        <div class="foot-band-row">
+          <a class="foot-brand" href="index.html"><img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses" loading="lazy"></a>
+        </div>
+        <p class="foot-line" data-i18n="foot.line">An optical shop in Tampa. Lenses made to your prescription.</p>
+      </div>
+    </div>
+    <div class="foot-top">
+      <nav class="foot-cols" data-i18n-aria="footer" aria-label="Footer">
+        <div>
+          <h3 data-i18n="foot.shop">Shop</h3>
+          <ul>
+            <li><a href="men.html" data-i18n="nav.men">Shop Men</a></li>
+            <li><a href="women.html" data-i18n="nav.women">Shop Women</a></li>
+            <li><a href="kids.html" data-i18n="nav.kids">Shop Kids</a></li>
+            <li><a href="sunglasses.html" data-i18n="nav.sun">Sunglasses</a></li>
+            <li><a href="contacts.html" data-i18n="cat.contacts">Contact Lenses</a></li>
+            <li><a href="index.html#best-sellers" data-i18n="drawer.best">Best sellers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.help">Help</h3>
+          <ul>
+            <li><a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a></li>
+            <li><a href="legal.html#shipping" data-i18n="foot.ship">Shipping</a></li>
+            <li><a href="legal.html#returns" data-i18n="foot.returns">Returns</a></li>
+            <li><a href="ayuda.html#track-order" data-i18n="foot.track">Track your order</a></li>
+            <li><a href="ayuda.html#contacto" data-i18n="drawer.contact">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.learn">Learn</h3>
+          <ul>
+            <li><a href="lentes.html" data-i18n="nav.lensOptions">Lens options</a></li>
+            <li><a href="talla.html" data-i18n="fit.title">Find your fit</a></li>
+            <li><a href="receta.html" data-i18n="lens.rx">How to read your prescription</a></li>
+            <li><a href="receta.html#pd" data-i18n="lens.pd">Measure your PD</a></li>
+            <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.contact">Contact us</h3>
+          <ul class="foot-contact">
+            <li><a href="mailto:amm@houseofeyeglasses.com">amm@houseofeyeglasses.com</a></li>
+            <li><a href="tel:+17866148629">(786) 614-8629</a></li>
+            <li><address>16064 Dawnview Dr<br>Tampa, FL 33624</address></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year">2026</span> House of Eyeglasses</p>
+      <ul class="legal">
+        <li><a href="legal.html#privacy" data-i18n="foot.privacy">Privacy Policy</a></li>
+        <li><a href="legal.html#terms" data-i18n="foot.terms">Terms of Use</a></li>
+        <li><a href="legal.html#cookies" data-i18n="foot.cookies">Cookie Policy</a></li>
+        <li><a href="legal.html#ccpa" data-i18n="foot.ccpa">CA Privacy Notice</a></li>
+        <li><a href="legal.html#accessibility" data-i18n="foot.a11y">Accessibility</a></li>
+        <li><a href="legal.html#do-not-sell" data-i18n="foot.dns">Do Not Sell or Share My Personal Information</a></li>
+      </ul>
+      <div class="lang-switch lang-switch--foot" role="group" data-i18n-aria="language" aria-label="Language">
+        <button type="button" data-lang="en" aria-pressed="true">English</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-lang="es" aria-pressed="false">Español</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ DRAWER MENU (mockup 2) ============ -->
+  <div class="scrim" data-close="all" hidden></div>
+
+  <aside class="drawer" id="drawer" aria-label="Menu" data-i18n-aria="menu" tabindex="-1" inert>
+    <div class="drawer-head">
+      <a class="drawer-brand" href="index.html" aria-label="House of Eyeglasses — Home">
+        <img src="assets/brand/logo-900.png" width="900" height="702" alt="House of Eyeglasses">
+      </a>
+      <button class="icon-btn close-btn" type="button" data-close="drawer" data-i18n-aria="closeMenu" aria-label="Close menu">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+
+    <div class="lang-switch lang-switch--drawer" role="group" data-i18n-aria="language" aria-label="Language">
+      <button type="button" data-lang="en" aria-pressed="true">English</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-lang="es" aria-pressed="false">Español</button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Shop" data-i18n-aria="shop">
+      <ul class="drawer-primary">
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-shape">
+            <svg class="acc-ico" viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0M3.5 9 1 7.5M44.5 9 47 7.5"/></svg>
+            <span data-i18n="drawer.shape">Shop by shape</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-shape" hidden>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.round">Round</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.square">Square</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.rect">Rectangle</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.cateye">Cat-eye</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.aviator">Aviator</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.browline">Browline</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.oval">Oval</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="shape.geo">Geometric</a></li>
+          </ul>
+        </li>
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-material">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 5 5 13l15 8 15-8z"/><path d="m5 20 15 8 15-8M5 27l15 8 15-8"/></svg>
+            <span data-i18n="drawer.material">Shop by material</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-material" hidden>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.acetate">Acetate</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.metal">Metal</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.titanium">Titanium</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.tr90">TR-90 (flexible)</a></li>
+            <li><a href="index.html#shop-by-shape" data-i18n="mat.mixed">Mixed materials</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="acc-btn" href="index.html#best-sellers">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 36c-7 0-12-4.6-12-11.2 0-6.9 5.6-10 6.8-17.3 4.3 2.7 6.4 6.3 6.2 10.5 1.8-1.2 2.9-3.1 3.2-5.5 4.2 3.6 7.8 7.7 7.8 12.6C32 31.5 27 36 20 36z"/><path d="M20 36c-3.2 0-5.4-2.1-5.4-5.2 0-3 2.1-4.8 4-7.6 1 1.7 1.3 3 1 4.6 1.4-.4 2.4-1.4 3-2.9 1.9 1.8 2.8 3.6 2.8 5.9 0 3.1-2.2 5.2-5.4 5.2z"/></svg>
+            <span data-i18n="drawer.best">Best sellers</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </a>
+        </li>
+        <li class="acc">
+          <button type="button" class="acc-btn" aria-expanded="false" aria-controls="acc-lenses">
+            <svg class="acc-ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M4 9c5.5-1.5 11-1 16 2v23c-5-3-10.5-3.5-16-2zM36 9c-5.5-1.5-11-1-16 2v23c5-3 10.5-3.5 16-2z"/><path d="M25 5v7l2.5-1.8L30 12V4.4"/></svg>
+            <span data-i18n="drawer.lenses">Lenses education</span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </button>
+          <ul class="acc-panel" id="acc-lenses" hidden>
+            <li><a href="lentes.html" data-i18n="nav.lensOptions">Lens options</a></li>
+            <li><a href="receta.html" data-i18n="lens.rx">How to read your prescription</a></li>
+            <li><a href="receta.html#pd" data-i18n="lens.pd">Measure your PD</a></li>
+            <li><a href="lentes.html#lens-index" data-i18n="lens.index">Lens thickness guide</a></li>
+            <li><a href="talla.html" data-i18n="fit.title">Find your fit</a></li>
+            <li><a href="talla.html#face" data-i18n="fit.face">Frames for your face shape</a></li>
+            <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+          </ul>
+        </li>
+        <li>
+          <a class="acc-btn is-soon" href="contacts.html">
+            <svg class="acc-ico lens-ico" viewBox="0 0 40 40" aria-hidden="true"><ellipse cx="20" cy="20" rx="16" ry="9" transform="rotate(-28 20 20)"/><path d="M8.5 26.5c7 2 17-3.5 22-12"/></svg>
+            <span><span data-i18n="nav.contacts">Contacts</span><small data-i18n="drawer.soon">(Coming soon)</small></span>
+            <svg class="chev" viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5"/></svg>
+          </a>
+        </li>
+      </ul>
+
+      <ul class="drawer-secondary">
+        <li><a href="index.html#best-sellers" data-i18n="drawer.all">Shop all</a></li>
+        <li><a href="quiz.html" data-i18n="nav.quiz">Style quiz</a></li>
+        <li><a href="ayuda.html" data-i18n="nav.help">Help &amp; FAQ</a></li>
+        <li><a href="ayuda.html#contacto" data-i18n="drawer.contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="drawer-foot">
+      <ul class="trust-list trust-list--drawer">
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M3 11h21v16H3zM24 16h7l5 6v5h-12"/><circle cx="10" cy="29" r="3"/><circle cx="29" cy="29" r="3"/></svg>
+          <span data-i18n-html="trust.track">Tracking<br>on every order</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 7 9v9c0 8.5 5.6 15 13 18 7.4-3 13-9.5 13-18V9z"/><path d="m14 20 4.5 4.5L27 16"/></svg>
+          <span data-i18n-html="trust.rx">An optician checks<br>every prescription</span>
+        </li>
+        <li>
+          <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 34S5 25.3 5 14.8A7.8 7.8 0 0 1 20 11a7.8 7.8 0 0 1 15 3.8C35 25.3 20 34 20 34z"/></svg>
+          <span data-i18n-html="trust.wa">Real people<br>on WhatsApp</span>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ============ CART DRAWER ============ -->
+  <aside class="cart" id="cart" aria-label="Cart" data-i18n-aria="cart" tabindex="-1" inert>
+    <div class="cart-head">
+      <h2 data-i18n="cart.title">Your cart</h2>
+      <button class="icon-btn" type="button" data-close="cart" data-i18n-aria="close" aria-label="Close">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+    <div class="cart-empty">
+      <svg viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0"/></svg>
+      <p data-i18n="cart.empty">Your cart is empty.</p>
+      <a class="btn btn-gold" href="quiz.html" data-close="cart"><span data-i18n="cart.cta">Find your frames</span></a>
+    </div>
+  </aside>
+
+
+  <script src="js/i18n.js"></script>
+  <script src="js/i18n/quiz.js"></script>
+  <script src="js/catalog.js"></script>
+  <script src="js/data/search.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/data/lenses.js"></script>
+  <script src="js/pages/quiz.js"></script>
+</body>
+</html>
