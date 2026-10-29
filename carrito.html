@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Your cart — House of Eyeglasses</title>
-  <meta name="description" content="Your frames, lenses and prescription in one place. Prices and checkout open at launch. House of Eyeglasses, Tampa.">
+  <meta name="description" content="Your frames, lenses and prescription in one place, with the real total. Reserve on WhatsApp. House of Eyeglasses, Tampa.">
   <meta name="robots" content="noindex,nofollow">
   <meta name="theme-color" content="#0b0b0d">
   <link rel="canonical" href="https://houseofeyeglasses.com/carrito.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="House of Eyeglasses">
   <meta property="og:title" content="Your cart — House of Eyeglasses">
-  <meta property="og:description" content="Your frames, lenses and prescription in one place. Prices and checkout open at launch. House of Eyeglasses, Tampa.">
+  <meta property="og:description" content="Your frames, lenses and prescription in one place, with the real total. Reserve on WhatsApp. House of Eyeglasses, Tampa.">
   <meta property="og:url" content="https://houseofeyeglasses.com/carrito.html">
   <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -23,9 +23,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261029">
-  <link rel="stylesheet" href="css/pages/receta.css?v=20261029">
-  <link rel="stylesheet" href="css/pages/carrito.css?v=20261029">
+  <link rel="stylesheet" href="css/styles.css?v=20261031">
+  <link rel="stylesheet" href="css/pages/receta.css?v=20261031">
+  <link rel="stylesheet" href="css/pages/carrito.css?v=20261031">
   <script>
     document.documentElement.classList.add('js');
     // home, first visit of the session, motion allowed: the headline, button and price line wait for the load choreography
@@ -103,6 +103,7 @@
         <p class="kicker" data-i18n="cart.kicker">Your selection</p>
         <h1 data-i18n="cart.title">Your cart</h1>
         <p class="lead" id="cart-count-line"></p>
+        <p class="cart-cleaned" id="cart-cleaned" hidden></p>
       </header>
 
       <div class="cart-layout">
@@ -113,12 +114,12 @@
           <dl class="cart-sum">
             <div><dt data-i18n="cart.sumFrames">Frames</dt><dd id="cart-sum-n">0</dd></div>
             <div><dt data-i18n="cart.sumLenses">Lenses</dt><dd data-i18n="cart.sumLensesV">Included</dd></div>
-            <div><dt data-i18n="cart.sumShip">Shipping</dt><dd data-i18n="cart.sumShipV">Set at launch</dd></div>
-            <div class="cart-sum-total"><dt data-i18n="cart.total">Total</dt><dd data-i18n="prod.price.launch">Price at launch</dd></div>
+            <div><dt data-i18n="cart.sumShip">Shipping</dt><dd data-i18n="cart.sumShipV">Quoted on WhatsApp</dd></div>
+            <div class="cart-sum-total"><dt data-i18n="cart.total">Total</dt><dd id="cart-sum-total-v"></dd></div>
           </dl>
           <button type="button" class="btn cart-checkout" id="cart-checkout"><span data-i18n="cart.checkout">Continue to checkout</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></button>
           <p class="cart-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12a8 8 0 0 1 13.7-5.6M20 12a8 8 0 0 1-13.7 5.6"/><path d="M17.5 3v3.5H14M6.5 21v-3.5H10"/></svg><span data-i18n="cart.guarantee">If the prescription isn’t right, we remake it free</span></p>
-          <p class="cart-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h12a4 4 0 0 1 0 8H9"/><path d="m7 5-3 3 3 3"/></svg><span data-i18n="cart.returnsLine">Returns on unworn frames · details at launch</span></p>
+          <p class="cart-note"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h12a4 4 0 0 1 0 8H9"/><path d="m7 5-3 3 3 3"/></svg><span data-i18n="cart.returnsLine">Returns on unworn frames · see our policies</span></p>
 
           <!-- what happens next: three lines, the order step of the plan reduced to its bones -->
           <section class="cart-next-wrap" aria-labelledby="cart-next-h">
@@ -138,14 +139,15 @@
       <svg viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0"/></svg>
       <h1 data-i18n="cart.empty">Your cart is empty.</h1>
       <p class="lead" data-i18n="cart.emptyLead">Every pair starts with a frame. Pick one and we take it from there.</p>
+      <p class="cart-cleaned" id="cart-empty-cleaned" hidden></p>
       <a class="btn" href="catalogo.html"><span data-i18n="cart.cta">Find your frames</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></a>
     </section>
-    <!-- …and the frames you looked at (the same sample gallery, nothing invented) -->
+    <!-- …and the frames you looked at (localStorage hoe-view-<sku>; else the best sellers) -->
     <section class="sec sec--alt cart-seen" id="cart-seen" aria-labelledby="cart-seen-h" hidden>
       <div class="wrap">
         <div class="sec-head" data-reveal-self>
           <div class="page-head">
-            <p class="kicker" data-i18n="look.kicker">First look</p>
+            <p class="kicker" data-i18n="look.kicker">The collection</p>
             <h2 id="cart-seen-h" data-i18n="cart.seen">Frames you looked at</h2>
           </div>
           <a class="link-u" href="catalogo.html" data-i18n="cart.seenAll">See all frames</a>
@@ -154,11 +156,11 @@
       </div>
     </section>
 
-    <!-- checkout: an honest note until the store opens -->
+    <!-- checkout: an honest note (no payment gateway yet: WhatsApp reserves the frames at these prices) -->
     <section class="wrap cart-proto" id="cart-proto" hidden aria-labelledby="cart-proto-h" tabindex="-1">
       <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15"/><path d="M20 12v8.5l5 3"/></svg>
-      <h2 id="cart-proto-h" data-i18n="cart.protoTitle">Checkout opens at launch</h2>
-      <p class="lead" data-i18n="cart.protoLead">Message us on WhatsApp to reserve your frames. We confirm the price the day the store opens.</p>
+      <h2 id="cart-proto-h" data-i18n="cart.protoTitle">Reserve your frames on WhatsApp</h2>
+      <p class="lead" data-i18n="cart.protoLead">Online checkout is not open yet. Send us your selection on WhatsApp and we reserve it at these prices; an optician confirms your prescription before the lab starts.</p>
       <div class="cart-proto-actions">
         <a class="btn" id="cart-proto-wa" href="https://wa.me/17866148629" target="_blank" rel="noopener"><span data-i18n="cart.protoWa">Reserve on WhatsApp</span><span class="visually-hidden" data-i18n="newTab">(opens in a new tab)</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></a>
         <button type="button" class="link-u" id="cart-proto-back" data-i18n="cart.protoBack">Back to the cart</button>
@@ -311,17 +313,16 @@
   </aside>
 
 
-  <script src="js/i18n.js?v=20261029"></script>
-  <script src="js/i18n/carrito.js?v=20261029"></script>
-  <script src="js/catalog.js?v=20261029"></script>
-  <script src="js/data/frames.js?v=20261029"></script>
-  <script src="js/data/search.js?v=20261029"></script>
+  <script src="js/i18n.js?v=20261031"></script>
+  <script src="js/i18n/carrito.js?v=20261031"></script>
+  <script src="js/catalog.js?v=20261031"></script>
+  <script src="js/data/search.js?v=20261031"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/motion.js?v=20261029"></script>
-  <script src="js/main.js?v=20261029"></script>
-  <script src="js/data/lenses.js?v=20261029"></script>
-  <script src="js/cart.js?v=20261029"></script>
-  <script src="js/pages/carrito.js?v=20261029"></script>
+  <script src="js/motion.js?v=20261031"></script>
+  <script src="js/main.js?v=20261031"></script>
+  <script src="js/data/lenses.js?v=20261031"></script>
+  <script src="js/cart.js?v=20261031"></script>
+  <script src="js/pages/carrito.js?v=20261031"></script>
 </body>
 </html>

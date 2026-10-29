@@ -106,7 +106,7 @@ Object.assign(window.HOE_I18N.en, {
   "quiz.e.cta": "Notify me",
   "quiz.e.bad": "Enter a valid email, like name@example.com.",
   "quiz.e.noConsent": "Check the box first so we know you want the email.",
-  "quiz.e.ok": "Thanks. Sign-up isn't live yet, so your email was not saved. Check back at launch, or write to us anytime."
+  "quiz.e.ok": "Thanks. Sign-up isn't live yet, so your email was not saved. Write to us anytime."
 });
 
 Object.assign(window.HOE_I18N.es, {
@@ -215,5 +215,5 @@ Object.assign(window.HOE_I18N.es, {
   "quiz.e.cta": "Avísenme",
   "quiz.e.bad": "Escribe un correo válido, por ejemplo nombre@ejemplo.com.",
   "quiz.e.noConsent": "Primero marca la casilla para confirmar que quieres el correo.",
-  "quiz.e.ok": "Gracias. El registro todavía no está activo, así que tu correo no se guardó. Vuelve cuando lancemos o escríbenos cuando quieras."
+  "quiz.e.ok": "Gracias. El registro todavía no está activo, así que tu correo no se guardó. Escríbenos cuando quieras."
 });

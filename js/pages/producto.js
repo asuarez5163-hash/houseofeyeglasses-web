@@ -1,19 +1,24 @@
-// Ficha de armazón (producto.html): dibujo (frente · lado · en un rostro) sobre la loseta --paper 1:1 (al cargar, el armazón
-// se DIBUJA trazo a trazo: hoeMotion.draw, 900 ms; sin GSAP está completo desde el primer pintado), color (el dibujo cambia en
-// vivo al pasar por un swatch), medida en una línea, y el configurador de lentes en TRES pasos (uso → receta → lentes) con
-// barra pegajosa (nombre + "Precio al lanzamiento") y "Agregar al carrito" (el botón dice "Añadido ✓" 1.2 s y se abre el cajón).
-// En el paso 3 la lente de muestra (partial lens_demo, .cfg-demo) reacciona a la opción marcada o bajo el puntero.
-// Debajo, "También te pueden gustar": tres armazones de la misma categoría (window.hoeFrameCard, la tarjeta global).
-// Datos: js/data/frames.js (armazones de muestra), js/data/lenses.js (opciones), js/cart.js (carrito en localStorage).
+// Ficha de armazón (producto.html): la FOTO real del sprite (assets/frames/<SKU>.webp: hasta 3 vistas, pestañas 1 · 2 · 3)
+// sobre la loseta --paper 1:1 y la pestaña "Medida" con la patilla dibujada (hoeTempleSVG); al cargar, la primera foto entra
+// en foco (GSAP fade + scale; sin GSAP está desde el primer pintado). Variantes = hermanos de color (f.v): cada punto enlaza a
+// producto.html?id=<hermano> (su propia URL canónica) y, bajo el puntero, muestra su foto en la vista 1. Precio real + "lentes
+// incluidos", stock (st<=0 → agotado, botón deshabilitado, noindex), Details con marca · modelo · código · color · lente ·
+// material · forma · aro · medida, JSON-LD Product, y el configurador de lentes en TRES pasos (uso → receta → lentes) con barra
+// pegajosa (nombre + precio) y "Agregar al carrito" (el botón dice "Añadido ✓" 1.2 s y se abre el cajón). En el paso 3 la lente
+// de muestra (partial lens_demo, .cfg-demo) reacciona a la opción marcada o bajo el puntero.
+// Debajo, "También te pueden gustar": el mismo modelo en otros colores y luego la misma forma (window.hoeFrameCard).
+// Datos: js/catalog.js (hoeCatalog.byId: el chunk sale de la letra del SKU), js/data/lenses.js (opciones), js/cart.js (carrito).
 // La receta nunca se "manda después de pagar": se escribe aquí y la revisa el óptico antes de que el laboratorio empiece.
 (() => {
   'use strict';
   const main = document.querySelector('main.pdp');
-  if (!main || !window.HOE_SAMPLE_FRAMES) return;
+  if (!main || !window.hoeCatalog) return;
+  const CAT = window.hoeCatalog;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const T = k => (window.hoeT ? window.hoeT(k) : k);
   const L = () => (window.hoeLang ? window.hoeLang() : 'en');
+  const esc = s => (window.hoeEsc ? window.hoeEsc(s) : String(s));
   const loc = o => (o && (o[L()] || o.en)) || { name: '', text: '' };
   const fill = (s, map) => String(s).replace(/\{(\w+)\}/g, (m, k) => (k in map ? map[k] : m));
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -21,29 +26,41 @@
   const MINUS = '−';
   const OPTS = window.HOE_LENS_OPTIONS;
   const q = new URLSearchParams(location.search);
-  const frame = window.hoeFrameById(q.get('id') || '');
-  // colour on a drawing: the shared helper (js/catalog.js) or, until it lands, the same three variables by hand
-  const setColor = (svg, c) => {
-    if (!svg || !c) return;
-    if (window.hoeSetFrameColor) { window.hoeSetFrameColor(svg, c); return; }
-    svg.style.setProperty('--fc', c.c || ''); svg.style.setProperty('--fc2', c.c2 || c.c || '');
-    if (c.lens && c.lens !== 'transparent') svg.style.setProperty('--lens', c.lens); else svg.style.removeProperty('--lens');
-  };
+  const id = (q.get('id') || '').trim();
+  const SITE = 'https://houseofeyeglasses.com/';
 
-  // SEO: each frame is its own URL (canonical + og:url carry ?id=…); an unknown id is a soft 404 and must not be indexed
+  // SEO: each frame is its own URL (canonical + og:url carry ?id=…); an unknown SKU, a sold-out one and a catalog being
+  // updated are soft 404s and must not be indexed
   const setHead = (sel, attr, val) => { const el = document.head.querySelector(sel); if (el) el.setAttribute(attr, val); };
-  if (!frame) {
-    const nf = document.createElement('meta'); nf.name = 'robots'; nf.content = 'noindex,nofollow'; document.head.appendChild(nf);
-    $('#pdp-top').hidden = true; $('#pdp-404').hidden = false; document.title = T('prod.notFound'); return;
+  const noindex = () => { if (document.head.querySelector('meta[name="robots"]')) return; const nf = document.createElement('meta'); nf.name = 'robots'; nf.content = 'noindex,nofollow'; document.head.appendChild(nf); };
+  function notFound(updating) {
+    noindex();
+    $('#pdp-top').hidden = true; const box = $('#pdp-404'); box.hidden = false;
+    const p = box.querySelector('p'); const key = updating ? 'cat.updating' : 'prod.notFound';
+    p.dataset.i18n = key; p.textContent = T(key);
+    const title = () => { document.title = `${T(key)} — House of Eyeglasses`; };
+    title(); document.addEventListener('hoe:lang', title);
   }
-  setHead('link[rel="canonical"]', 'href', 'https://houseofeyeglasses.com/producto.html?id=' + encodeURIComponent(frame.id));
-  setHead('meta[property="og:url"]', 'content', 'https://houseofeyeglasses.com/producto.html?id=' + encodeURIComponent(frame.id));
+  CAT.manifest().then(m => (m ? CAT.byId(id).then(f => ({ f })) : { updating: true })).then(r => {
+    if (r.updating) { notFound(true); return; }
+    if (!r.f) { notFound(false); return; }
+    init(r.f);
+  });
+
+  function init(frame) {
+  const name = CAT.name(frame);
+  const inStock = Number(frame.st) > 0;
+  const url = SITE + 'producto.html?id=' + encodeURIComponent(frame.id);
+  setHead('link[rel="canonical"]', 'href', url);
+  setHead('meta[property="og:url"]', 'content', url);
+  setHead('meta[property="og:image"]', 'content', SITE + CAT.img(frame));
+  if (!inStock) noindex();
   try { localStorage.setItem('hoe-view-' + frame.id, String(Number(localStorage.getItem('hoe-view-' + frame.id) || 0) + 1)); } catch (e) { /* per visit */ }
 
-  const isKids = frame.cats.includes('kids');
+  const isKids = frame.g === 'kids' || frame.cats.includes('kids');
   const isSun = frame.cats.includes('sun');
   const editId = q.get('edit');
-  const editing = editId && window.hoeCart ? window.hoeCart.get().items.find(i => i.id === editId) : null;
+  const editing = editId && window.hoeCart ? window.hoeCart.get().items.find(i => i.id === editId && i.sku === frame.id) : null;
   const LOCKED = ['anti-reflective', 'scratch'];   // always included, never shown as a choice
 
   const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'store', total: '' }, confirm: false, readers: '' });
@@ -58,127 +75,121 @@
     return rx;
   };
   const state = {
-    color: Math.max(0, frame.colors.findIndex(c => c.id === (editing ? editing.color.id : q.get('color')))),
-    face: 'medium',
     use: editing ? editing.use : 'single',
     material: editing ? editing.material : null,
     extras: new Set(editing ? (editing.coatings || []).filter(id => !LOCKED.includes(id)) : []),
     rx: loadRx(editing && editing.rx),
     done: { 1: !!editing, 2: !!editing, 3: !!editing },
   };
-  const color = () => frame.colors[state.color];
 
   /* =========================================================
-     Drawing: front · side · on a face
+     Gallery: the sprite's views (1 · 2 · 3) and the temple drawing ("Size")
      ========================================================= */
-  const FACE_MM = { narrow: 125, medium: 135, wide: 145 };
-  const faceSVG = `<svg class="face" viewBox="0 0 300 380" aria-hidden="true">
-    <path class="face-soft" d="M60 372c6-40 30-62 90-62s84 22 90 62"/>
-    <path class="face-fill" d="M150 22c-62 0-104 48-104 122 0 36 8 66 22 92 18 34 46 58 82 58s64-24 82-58c14-26 22-56 22-92C254 70 212 22 150 22z"/>
-    <path class="face-line" d="M46 150c-10-2-18 8-16 22 2 16 10 26 20 28M254 150c10-2 18 8 16 22-2 16-10 26-20 28"/>
-    <path class="face-soft" d="M70 118c20-34 50-52 80-52s60 18 80 52"/>
-    <path class="face-line" d="M92 136c12-10 30-12 44-6M164 130c14-6 32-4 44 6"/>
-    <path class="face-line" d="M100 158c10-8 26-8 36 0-10 8-26 8-36 0zM164 158c10-8 26-8 36 0-10 8-26 8-36 0z"/>
-    <circle class="face-line" cx="118" cy="158" r="3.5"/><circle class="face-line" cx="182" cy="158" r="3.5"/>
-    <path class="face-soft" d="M150 170v38c-8 8-4 14 4 14"/>
-    <path class="face-line" d="M126 254c14 8 34 8 48 0"/>
-  </svg>`;
-  const FACE_W = 208;   // units between the temples of the drawing (x 46 → 254)
-  // the frame's width on a face, as % of the face box; the box is sized for the medium face and the other two scale it
-  const faceW = face => (frame.size.total / FACE_MM[face]) * (FACE_W / 300) * (240 / 204) * 100;
-  const faceScale = () => faceW(state.face) / faceW('medium');
-  const faceBox = $('#pdp-face');
-  let faceFrame = null, faceAnim = null, faceCur = 1;
-  const paintFace = s => { faceCur = s; faceFrame.style.transform = `translate(-50%, -54%) scale(${s.toFixed(4)})`; };
-  let drawn = false;
-  function renderViews() {
-    const c = color();
-    $('#pdp-art-front').innerHTML = window.hoeFrameSVG(frame.shape, c);
-    $('#pdp-art-side').innerHTML = window.hoeTempleSVG(window.hoeFrameSize(frame), null, { marks: true });
-    // the signature moment of the page, once: the frame draws itself on the paper (every stroke, then the fills)
-    if (!drawn && window.hoeMotion && window.hoeMotion.hasGsap) {
-      drawn = true;
-      const svg = $('#pdp-art-front svg.frame');
-      window.gsap.set(svg, { opacity: 0 });
-      window.hoeMotion.ready(() => { window.gsap.set(svg, { opacity: 1 }); window.hoeMotion.draw(svg, { duration: .9, stagger: .045, delay: .1 }); });
-    }
-    if (!faceFrame) {
-      faceBox.innerHTML = faceSVG;
-      faceFrame = document.createElement('div');
-      faceFrame.className = 'pdp-face-frame';
-      faceFrame.style.width = faceW('medium').toFixed(1) + '%';
-      faceBox.appendChild(faceFrame);
-      paintFace(faceScale());
-    }
-    faceFrame.innerHTML = window.hoeFrameSVG(frame.shape, c);
-  }
-  // narrow / medium / wide: a spring on transform (interruptible; a new choice takes over from where it is)
-  function springFace() {
-    const to = faceScale();
-    if (faceAnim) { faceAnim.stop(); faceAnim = null; }
-    if (!window.hoeMotion || reduced.matches) { paintFace(to); return; }
-    faceAnim = window.hoeMotion.spring({ from: faceCur * 10, to: to * 10, response: .35, damping: 1, onUpdate: v => paintFace(v / 10), onDone: () => { faceAnim = null; } });
-  }
-  $$('input[name="face"]').forEach(r => r.addEventListener('change', () => { state.face = r.value; springFace(); }));
+  const mm = () => `${frame.size.lens} □ ${frame.size.bridge} ${frame.size.temple}`;
   const tabs = $$('.pdp-thumbs [role="tab"]');
-  function setView(v) {
-    $$('.pdp-view').forEach(f => { f.hidden = f.dataset.view !== v; f.classList.toggle('is-on', f.dataset.view === v); });
-    tabs.forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === v)));
+  const liveTabs = () => tabs.filter(b => !b.hidden);
+  let focused = false;
+  function renderViews() {
+    ['1', '2', '3'].forEach((k, i) => {
+      const fig = $('#pdp-view-' + k), tab = tabs.find(b => b.dataset.view === k);
+      const on = i < frame.ph;
+      if (tab) tab.hidden = !on;
+      if (!on) { fig.hidden = true; return; }
+      $('.pdp-art', fig).innerHTML = `<div class="pdp-img" role="img" aria-label="${esc(name)} · ${esc(fill(T('prod.photo'), { k: i + 1, n: frame.ph }))}" style="${CAT.sprite(frame, i)}"></div>`;
+      $('.pdp-plate-l', fig).textContent = `${CAT.colorName(frame)} · ${frame.cc}`;
+      $('.pdp-plate-r', fig).textContent = `${mm()} · ${frame.size.total} mm`;
+    });
+    $('#pdp-art-side').innerHTML = window.hoeTempleSVG(window.hoeFrameSize(frame), null, { marks: true });
+    $('#pdp-plate-mm2').textContent = window.hoeFrameSize(frame);
+    // the signature moment of the page, once: the first photo comes into focus on the paper (fade + a touch of scale)
+    if (!focused && window.hoeMotion && window.hoeMotion.hasGsap) {
+      focused = true;
+      const img = $('#pdp-view-1 .pdp-img');
+      window.gsap.set(img, { autoAlpha: 0 });
+      window.hoeMotion.ready(() => window.gsap.fromTo(img, { autoAlpha: 0, scale: .97 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'expo.out', clearProps: 'opacity,visibility,transform' }));
+    }
   }
-  tabs.forEach((b, i) => {
+  function setView(v) {
+    $$('.pdp-view').forEach(f => { const on = f.dataset.view === v; f.hidden = !on; f.classList.toggle('is-on', on); });
+    tabs.forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === v)));
+    const img = $(`.pdp-view[data-view="${v}"] .pdp-img, .pdp-view[data-view="${v}"] .temple-art`);
+    if (img && window.hoeMotion && window.hoeMotion.hasGsap && !reduced.matches) window.gsap.fromTo(img, { autoAlpha: 0, scale: .985 }, { autoAlpha: 1, scale: 1, duration: .5, ease: 'expo.out', clearProps: 'opacity,visibility,transform' });
+  }
+  tabs.forEach(b => {
     b.addEventListener('click', () => setView(b.dataset.view));
     b.addEventListener('keydown', e => {
       if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
       e.preventDefault();
-      const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : -1) + tabs.length) % tabs.length];
+      const live = liveTabs(), i = live.indexOf(b);
+      const n = live[(i + (e.key === 'ArrowRight' ? 1 : -1) + live.length) % live.length];
       n.focus(); setView(n.dataset.view);
     });
   });
-  // the gallery drawings (front view and the one on the face) take a colour live, without re-rendering
-  const gallerySvgs = () => [$('#pdp-view-front svg.frame'), faceFrame && faceFrame.querySelector('svg.frame')].filter(Boolean);
-  const previewColor = c => gallerySvgs().forEach(svg => setColor(svg, c));
+  // a colour sibling under the pointer shows its front photo in view 1; leaving brings this frame's back
+  const pre = new Set();
+  const preload = src => { if (pre.has(src)) return; pre.add(src); const i = new Image(); i.decoding = 'async'; i.src = src; };
+  function previewSibling(sku) {
+    const img = $('#pdp-view-1 .pdp-img'); if (!img) return;
+    if (!sku || sku === frame.id) { img.classList.remove('is-alt'); img.style.cssText = CAT.sprite(frame, 0); return; }
+    preload(CAT.img(sku));
+    img.classList.add('is-alt'); img.style.cssText = CAT.sprite(sku, 0, 0);
+  }
 
   /* =========================================================
-     Buy column: name · price · color · size · CTA · trust · details
+     Buy column: name · price · colour (siblings) · size · stock · CTA · trust · details · JSON-LD
      ========================================================= */
-  const mm = () => `${frame.size.lens} □ ${frame.size.bridge} ${frame.size.temple}`;
   const sizeLine = () => `${T('band.' + frame.size.band)} · ${mm()}`;
+  const sibs = () => [{ id: frame.id, col: frame.col, cc: frame.cc, self: true }, ...(frame.v || [])];
+  const sibName = s => (s.self ? CAT.colorName(frame) : T('color.' + s.col)) + (s.cc ? ` · ${s.cc}` : '');
   function renderBuy() {
-    const c = color();
-    const name = T(frame.nameKey);
     $('#pdp-name').textContent = name;
     document.title = fill(T('prod.meta'), { name });
     setHead('meta[property="og:title"]', 'content', document.title);
-    // kicker: the category and the material ("Men · Acetate", "Sunglasses · Metal")
-    const who = isSun ? [T('prod.kickerSun')] : isKids ? [T('tile.kids')] : ['men', 'women'].filter(c => frame.cats.includes(c)).map(c => T('tile.' + c));
-    $('#pdp-kicker').textContent = [...who, T('mat.' + frame.material)].join(' · ');
-    $('#pdp-plate-mm').textContent = `${mm()} · ${frame.size.total} mm`;
-    $('#pdp-plate-mm2').textContent = window.hoeFrameSize(frame);
-    $('#pdp-color-name').textContent = T(c.i18nKey);
-    $('#pdp-swatches').innerHTML = frame.colors.map((col, i) =>
-      `<button type="button" role="radio" aria-checked="${i === state.color}" tabindex="${i === state.color ? 0 : -1}" style="--c:${col.c}" aria-label="${T(col.i18nKey)}" data-i="${i}"></button>`).join('');
-    $('#pdp-size').innerHTML = `<span class="pdp-size-band">${T('band.' + frame.size.band)}</span><span aria-hidden="true">·</span><b class="pdp-size-mm">${mm()}</b>`;
+    setHead('meta[name="description"]', 'content', fill(T('prod.desc'), { name, color: CAT.colorName(frame), price: CAT.price(frame.p) }));
+    setHead('meta[property="og:description"]', 'content', fill(T('prod.desc'), { name, color: CAT.colorName(frame), price: CAT.price(frame.p) }));
+    // kicker: who it is for and the material ("Women · Acetate", "Sunglasses · Metal")
+    const who = isSun ? T('prod.kickerSun') : T('gender.' + (['men', 'women', 'kids', 'unisex'].includes(frame.g) ? frame.g : 'unisex'));
+    $('#pdp-kicker').textContent = [who, T('mat.' + frame.mat)].join(' · ');
+    $('#pdp-price-v').textContent = CAT.price(frame.p);
+    $('#pdp-color-name').textContent = `${CAT.colorName(frame)} · ${frame.cc}`;
+    $('#pdp-swatches').innerHTML = sibs().map((s, i) =>
+      `<a role="radio" aria-checked="${s.self}" tabindex="${i === 0 ? 0 : -1}" href="producto.html?id=${encodeURIComponent(s.id)}" style="--c:${CAT.colorHex(s.col)}" aria-label="${esc(sibName(s))}" data-sku="${esc(s.id)}"${s.self ? ' aria-current="page"' : ''}></a>`).join('');
+    $('#pdp-size').innerHTML = `<span class="pdp-size-band">${esc(T('band.' + frame.size.band))}</span><span aria-hidden="true">·</span><b class="pdp-size-mm">${mm()}</b>`;
+    const stock = $('#pdp-stock');
+    stock.textContent = T(inStock ? 'prod.stock' : 'prod.soo');
+    stock.classList.toggle('is-out', !inStock);
+    cta.disabled = !inStock; $('#cfg-add').disabled = !inStock;
     $('#pdp-details').innerHTML = [
-      ['prod.d.material', T('mat.' + frame.material)], ['prod.d.shape', T(window.HOE_SHAPE_LABEL[frame.shape])], ['prod.d.rim', T('rim.' + frame.rim)],
-      ['prod.d.size', `${sizeLine()} · ${frame.size.total} mm`], ['prod.d.prog', T(frame.progressiveOk ? 'prod.d.yes' : 'prod.d.no')], ['prod.d.incl', T('prod.d.inclText')],
-    ].map(([k, v]) => `<dt>${T(k)}</dt><dd>${v}</dd>`).join('');
+      ['prod.d.brand', frame.b], ['prod.d.model', frame.n], ['prod.d.colorCode', frame.cc], ['prod.d.color', CAT.colorName(frame)], ['prod.d.lens', CAT.lensName(frame)],
+      ['prod.d.material', T('mat.' + frame.mat)], ['prod.d.shape', T(window.HOE_SHAPE_LABEL[frame.sh] || 'shape.rect')], ['prod.d.rim', T('rim.' + frame.rim)],
+      ['prod.d.size', `${sizeLine()} · ${frame.size.total} mm`], ['prod.d.incl', T('prod.d.inclText')],
+    ].map(([k, v]) => `<dt>${esc(T(k))}</dt><dd>${esc(v)}</dd>`).join('');
+    renderJsonLd();
+  }
+  function renderJsonLd() {
+    let el = document.getElementById('pdp-jsonld');
+    if (!el) { el = document.createElement('script'); el.type = 'application/ld+json'; el.id = 'pdp-jsonld'; document.head.appendChild(el); }
+    el.textContent = JSON.stringify({
+      '@context': 'https://schema.org', '@type': 'Product', name, sku: frame.id, brand: { '@type': 'Brand', name: frame.b },
+      color: (frame.colRaw && frame.colRaw.en) || frame.col, image: [SITE + CAT.img(frame)], url,
+      offers: { '@type': 'Offer', url, priceCurrency: 'USD', price: Number(frame.p) || 0, availability: 'https://schema.org/' + (inStock ? 'InStock' : 'OutOfStock'), itemCondition: 'https://schema.org/NewCondition' },
+    });
   }
   const swatches = $('#pdp-swatches');
-  function pickColor(i) {
-    state.color = i; renderViews(); renderBuy(); renderBar();
-    $(`#pdp-swatches button[data-i="${state.color}"]`).focus({ preventScroll: true });
-  }
-  swatches.addEventListener('click', e => { const b = e.target.closest('button'); if (b) pickColor(Number(b.dataset.i)); });
   swatches.addEventListener('keydown', e => {
     if (!['ArrowRight', 'ArrowLeft'].includes(e.key)) return;
     e.preventDefault();
-    pickColor((state.color + (e.key === 'ArrowRight' ? 1 : -1) + frame.colors.length) % frame.colors.length);
+    const all = $$('a', swatches), i = all.indexOf(document.activeElement);
+    const n = all[(Math.max(0, i) + (e.key === 'ArrowRight' ? 1 : -1) + all.length) % all.length];
+    n.focus();
   });
-  // hover previews the colour on the drawing; leaving brings the chosen one back (300 ms transitions in the svg)
-  swatches.addEventListener('pointerover', e => { const b = e.target.closest('button'); if (b && fine.matches) previewColor(frame.colors[Number(b.dataset.i)]); });
-  swatches.addEventListener('pointerleave', () => { if (fine.matches) previewColor(color()); });
-  swatches.addEventListener('focusin', e => { const b = e.target.closest('button'); if (b && b.matches(':focus-visible')) previewColor(frame.colors[Number(b.dataset.i)]); });
-  swatches.addEventListener('focusout', e => { if (!swatches.contains(e.relatedTarget)) previewColor(color()); });
+  // hover previews the sibling's photo; leaving brings the chosen frame back
+  swatches.addEventListener('pointerover', e => { const a = e.target.closest('a'); if (a && fine.matches) previewSibling(a.dataset.sku); });
+  swatches.addEventListener('pointerleave', () => { if (fine.matches) previewSibling(null); });
+  swatches.addEventListener('focusin', e => { const a = e.target.closest('a'); if (a && a.matches(':focus-visible')) previewSibling(a.dataset.sku); });
+  swatches.addEventListener('focusout', e => { if (!swatches.contains(e.relatedTarget)) previewSibling(null); });
+  // the siblings' sprites are fetched once the pointer reaches the swatches (one Image each)
+  swatches.addEventListener('pointerenter', () => (frame.v || []).forEach(s => preload(CAT.img(s.id))), { once: true });
 
   // accordions: closing waits for the rows to shrink (css grid-template-rows)
   function accordion(selector, exclusive) {
@@ -222,12 +233,12 @@
   const cta = $('#pdp-cta');
   const stepEl = n => $('#cfg-s' + n);
   const bodyEl = n => $('#cfg-body' + n);
-  const price = () => `<span class="price">${T('prod.price.plus')}</span>`;
+  const price = o => (o && o.price != null ? `<span class="price">+ ${CAT.price(o.price)}</span>` : '');   // lens options carry no surcharge today (js/data/lenses.js price: null): the frame price includes them
   const opt = (type, name, o, checked, rec, demo) => `<label class="cfg-opt${type === 'checkbox' ? ' is-check' : ''}" data-press${demo ? ` data-demo="${demo}"` : ''}>
       <input type="${type}" name="${name}" value="${o.id}"${checked ? ' checked' : ''}>
       <span class="dot"></span>
       <span class="txt"><b>${loc(o).name}</b>${rec ? `<span class="rec">${T('cfg.rec')}</span>` : ''}</span>
-      ${price()}
+      ${price(o)}
     </label>`;
   const nextBtn = n => `<button type="button" class="btn btn-gold cfg-next" data-next="${n}"><span>${T('cfg.next')}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></button>`;
   const errBox = n => `<div class="rxf-errs" id="cfg-errs${n}" hidden></div>`;
@@ -412,8 +423,8 @@
 
   // ---- bar, summaries, flow ----
   function renderBar() {
-    $('#cfg-bar-name').textContent = `${T(frame.nameKey)} · ${T(color().i18nKey)}`;
-    $('#cfg-bar-price').textContent = T('prod.price.launch');
+    $('#cfg-bar-name').textContent = `${name} · ${CAT.colorName(frame)}`;
+    $('#cfg-bar-price').textContent = `${CAT.price(frame.p)} · ${T('prod.included')}`;
     renderSummaries();
   }
   const fmt = v => (!v || Number(v) === 0 ? '0.00' : (Number(v) > 0 ? '+' : MINUS) + Math.abs(Number(v)).toFixed(2));
@@ -503,13 +514,15 @@
   const addBtn = $('#cfg-add');
   let addedTimer = 0;
   $('#cfg-form').addEventListener('click', e => {
-    if (!e.target.closest('#cfg-add') || !window.hoeCart || addBtn.dataset.busy) return;
+    if (!e.target.closest('#cfg-add') || !window.hoeCart || addBtn.dataset.busy || !inStock) return;
     const errs2 = validateStep2();
     if (errs2.length) { showErrs(3, [fill(T('cfg.missing'), { n: 2 })]); openStep(2); showErrs(2, errs2); return; }
     showErrs(3, []);
     state.done[2] = state.done[3] = true;
     const pkg = {
-      frameId: frame.id, nameKey: frame.nameKey, shape: frame.shape, color: color(), band: frame.size.band, size: frame.size,
+      sku: frame.id, name, colorName: { en: (frame.colRaw && frame.colRaw.en) || frame.col, es: (frame.colRaw && frame.colRaw.es) || (frame.colRaw && frame.colRaw.en) || frame.col },
+      colorKey: frame.col, cc: frame.cc, img: CAT.img(frame), price: Number(frame.p) || 0, band: frame.size.band,
+      size: { lens: frame.size.lens, bridge: frame.size.bridge, temple: frame.size.temple, total: frame.size.total },
       use: state.use, material: state.material, coatings: [...LOCKED, ...state.extras], rx: JSON.parse(JSON.stringify(state.rx)),
     };
     if (pkg.use === 'non-rx') pkg.rx = { path: 'none' };
@@ -525,29 +538,42 @@
   });
 
   /* =========================================================
-     Second read: three frames of the same category (the same gallery, the global card)
+     Second read: the same model in its other colours, then the same shape (the global card)
      ========================================================= */
   const more = $('#pdp-more'), moreGrid = $('#pdp-more-grid');
-  function renderMore() {
-    if (!more || !window.hoeFrameCard) return;
-    const FR = window.HOE_SAMPLE_FRAMES.filter(f => f.id !== frame.id);
-    const same = FR.filter(f => f.cats.some(c => frame.cats.includes(c)));
-    const list = same.concat(FR.filter(f => !same.includes(f))).slice(0, 3);
-    if (!list.length) { more.hidden = true; return; }
+  let moreList = null;
+  function paintMore() {
+    if (!more || !window.hoeFrameCard || !moreList) return;
+    if (!moreList.length) { more.hidden = true; return; }
     more.hidden = false;
-    $('#pdp-more-all').href = 'catalogo.html' + (frame.cats.length === 1 ? '?cat=' + frame.cats[0] : '');
-    moreGrid.innerHTML = list.map(f => window.hoeFrameCard(f)).join('');
+    const cat = frame.cats.find(c => c !== 'sun') || frame.cats[0];
+    $('#pdp-more-all').href = 'catalogo.html?cat=' + encodeURIComponent(cat) + '&shape=' + encodeURIComponent(frame.sh);
+    moreGrid.innerHTML = moreList.map(f => window.hoeFrameCard(f)).join('');
     delete moreGrid.dataset.revealed;
     if (window.hoeMotion) window.hoeMotion.reveal(moreGrid);
+  }
+  function renderMore() {
+    if (moreList) { paintMore(); return; }
+    const ok = f => f && f.id !== frame.id && Number(f.st) > 0;
+    Promise.all((frame.v || []).map(s => CAT.byId(s.id))).then(sibsFound => {
+      const list = sibsFound.filter(ok);
+      if (list.length >= 3) return list.slice(0, 3);
+      return CAT.chunk(CAT.catOf(frame.id) || frame.cats[0]).then(chunk => {
+        const same = chunk.filter(f => ok(f) && f.sh === frame.sh && !list.includes(f));
+        const rest = chunk.filter(f => ok(f) && !list.includes(f) && !same.includes(f));
+        return list.concat(same, rest).slice(0, 3);
+      });
+    }).then(l => { moreList = l; paintMore(); });
   }
 
   /* ---------- language ---------- */
   document.addEventListener('hoe:lang', () => {
-    renderBuy(); renderMore();
+    renderViews(); renderBuy(); renderMore();
     { const open = openStepN(); renderStep1(); renderStep2(); renderStep3(); renderBar(); if (open) stepEl(open).open = true; }
   });
 
   renderViews(); renderBuy(); renderMore();
   renderStep1(); renderStep2(); renderStep3(); renderBar();          // the steps are rendered closed, ready for a click on any row
-  if (q.get('step') || editing) openCfg(Math.min(3, Number(q.get('step')) || 1));
+  if ((q.get('step') || editing) && inStock) openCfg(Math.min(3, Number(q.get('step')) || 1));
+  }
 })();

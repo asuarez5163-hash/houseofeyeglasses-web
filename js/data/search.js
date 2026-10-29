@@ -1,10 +1,8 @@
-// Índice del buscador del encabezado (sin catálogo todavía: busca herramientas, guías y ayuda).
+// Índice del buscador del encabezado: herramientas, guías y ayuda. Los armazones llegan del índice del catálogo (js/main.js, hoeCatalog.search).
 // k = palabras y sinónimos EN/ES que el cliente podría escribir.
 window.HOE_SEARCH = [
   { url: 'catalogo.html', en: 'All frames', es: 'Todos los armazones',
     k: 'frames armazones glasses lentes anteojos gafas espejuelos shop tienda catalog catalogo catálogo browse ver comprar buy men women kids sun hombre mujer niños sol round square cateye aviator' },
-  { url: 'producto.html?id=dawnview', en: 'Frame with lenses included', es: 'Armazón con lentes incluidos',
-    k: 'product producto frame armazón lenses included lentes incluidos select lenses elegir lentes prescription receta configurator' },
   { url: 'carrito.html', en: 'Your cart', es: 'Tu carrito',
     k: 'cart carrito checkout pagar pago order pedido basket bag bolsa' },
   { url: 'receta.html', en: 'Read your prescription', es: 'Entiende tu receta',

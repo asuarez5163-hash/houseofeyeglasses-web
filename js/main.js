@@ -234,35 +234,56 @@
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   });
 
-  // ---------- search (tools, guides and help; synonyms EN/ES; honest empty state) ----------
+  // ---------- search (frames from the catalog index + tools, guides and help; synonyms EN/ES; honest empty state) ----------
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  window.hoeEsc = esc;
   const searchBtn = document.querySelector('[data-open="search"]');
   const searchPanel = document.getElementById('search-panel');
   const qInput = document.getElementById('q');
   const resultsEl = document.getElementById('search-results');
   const emptyEl = document.getElementById('search-empty');
   const norm = t => (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9. ]+/g, ' ');
+  let frameIdx = null;                                    // [{ s: SKU, t: "Brand Model code colour" }], from hoeCatalog.search()
+  function searchFrames(words) {
+    if (!frameIdx || !words.length) return [];
+    const hits = [];
+    for (const it of frameIdx) {
+      const hay = norm(`${it.t} ${it.s}`);
+      let score = 0, ok = true;
+      for (const w of words) { if (hay.includes(w)) score += 2; else { ok = false; break; } }
+      if (!ok) continue;
+      if (hay.startsWith(words[0])) score += 1;
+      hits.push({ it, score });
+    }
+    return hits.sort((a, b) => b.score - a.score).slice(0, 5).map(r => ({ url: 'producto.html?id=' + encodeURIComponent(r.it.s), en: r.it.t, es: r.it.t, k: '', frame: true }));
+  }
   function searchItems(q) {
     const idx = window.HOE_SEARCH || [];
     const words = norm(q).split(/\s+/).filter(w => w.length > 1);
     if (!words.length) return idx.slice(0, 6);
-    return idx.map(it => {
+    const frames = searchFrames(words);
+    const guides = idx.map(it => {
       const hay = norm(`${it.en} ${it.es} ${it.k}`);
       let score = 0;
       for (const w of words) { if (hay.includes(w)) score += 2; else if (w.length > 3 && hay.includes(w.slice(0, -1))) score += 1; else return null; }
       if (norm(it[lang] || it.en).includes(words[0])) score += 1;
       return { it, score };
     }).filter(Boolean).sort((a, b) => b.score - a.score).slice(0, 7).map(r => r.it);
+    return frames.concat(guides.slice(0, Math.max(2, 7 - frames.length)));
   }
   function renderSearch() {
     if (!resultsEl) return;
     const q = qInput.value.trim();
     const items = searchItems(q);
-    resultsEl.innerHTML = items.map((it, i) => `<li role="option" id="sr-${i}"><a href="${it.url}">${it[lang] || it.en}</a></li>`).join('');
+    resultsEl.innerHTML = items.map((it, i) => `<li role="option" id="sr-${i}"${it.frame ? ' class="is-frame"' : ''}><a href="${it.url}">${esc(it[lang] || it.en)}</a></li>`).join('');
     emptyEl.hidden = items.length > 0;
     if (!items.length) emptyEl.textContent = tr('search.none').replace('{q}', q);
     qInput.setAttribute('aria-expanded', String(items.length > 0));
   }
-  function openSearch() { searchPanel.hidden = false; searchBtn.setAttribute('aria-expanded', 'true'); renderSearch(); qInput.focus(); }
+  function openSearch() {
+    searchPanel.hidden = false; searchBtn.setAttribute('aria-expanded', 'true'); renderSearch(); qInput.focus();
+    if (!frameIdx && window.hoeCatalog) window.hoeCatalog.search().then(list => { frameIdx = list; renderSearch(); });
+  }
   function closeSearch() { if (!searchPanel || searchPanel.hidden) return; searchPanel.hidden = true; searchBtn.setAttribute('aria-expanded', 'false'); searchBtn.focus(); }
   searchBtn?.addEventListener('click', () => (searchPanel.hidden ? openSearch() : closeSearch()));
   searchPanel?.querySelector('[data-close="search"]').addEventListener('click', closeSearch);
@@ -274,49 +295,92 @@
   });
   document.addEventListener('hoe:lang', renderSearch);
 
-  // ---------- the frame card (home grid, catalog, cart): paper tile with the drawing, name · "Price at launch", colour dots ----------
+  // ---------- the frame card (home grid, catalog, categories, cart): paper tile with the first photo of the sprite
+  // (assets/frames/<SKU>.webp, hoeCatalog.sprite), "Brand Model" · the real price, one dot per colour sibling (f.v) ----------
+  const CAT = window.hoeCatalog;
   window.hoeFrameCard = function (f) {
-    const col = f.colors[0];
-    return `<li class="fcard" data-id="${f.id}">
-      <a href="producto.html?id=${f.id}" data-press>
-        <figure class="fcard-tile paper">${window.hoeFrameSVG(f.shape, col)}</figure>
-        <div class="fcard-meta"><span class="fcard-name">${tr(f.nameKey)}</span><span class="fcard-price" data-i18n="prod.price.launch">${tr('prod.price.launch')}</span></div>
-        <ul class="fcard-swatches" aria-hidden="true">${f.colors.map((c, i) => `<li data-color="${i}" style="--c:${c.c}"></li>`).join('')}</ul>
+    const sib = [{ id: f.id, col: f.col }, ...(f.v || [])];
+    const label = `${CAT.name(f)} · ${CAT.colorName(f)}`;
+    return `<li class="fcard" data-id="${esc(f.id)}">
+      <a href="producto.html?id=${encodeURIComponent(f.id)}" data-press>
+        <figure class="fcard-tile paper"><div class="fcard-img" role="img" aria-label="${esc(label)}" data-ph="${f.ph}" data-bg="${esc(CAT.img(f))}" style="--ph:${f.ph}"></div></figure>
+        <div class="fcard-meta"><span class="fcard-name">${esc(CAT.name(f))}</span><span class="fcard-price">${CAT.price(f.p)}</span></div>
+        <ul class="fcard-swatches" aria-hidden="true">${sib.map((s, i) => `<li data-sku="${esc(s.id)}"${i ? '' : ' class="is-on"'} style="--c:${CAT.colorHex(s.col)}"></li>`).join('')}</ul>
       </a>
     </li>`;
   };
-  // hover on a card: the drawing turns to the frame's next colour (the lens darkens in css); a swatch under the pointer
-  // picks its own colour; leaving the card brings the first colour back. One listener for every card, present and future.
+  // the photos load when a tile comes near the screen (IntersectionObserver), whoever painted the card: one observer for
+  // the whole document watches for new .fcard-img[data-bg] (the catalog paints 36 at a time; a phone only fetches what it shows)
   (() => {
-    const frameOf = card => window.hoeFrameById && window.hoeFrameById(card.dataset.id);
-    const colorOf = (card, idx) => { const f = frameOf(card); return f && f.colors[idx]; };
+    const show = el => { if (el.dataset.bgd) return; el.dataset.bgd = '1'; el.style.backgroundImage = `url('${el.dataset.bg}')`; };
+    const io = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(en => { if (en.isIntersecting) { io.unobserve(en.target); show(en.target); } }), { rootMargin: '480px 0px' }) : null;
+    const arm = root => (root.querySelectorAll ? root.querySelectorAll('.fcard-img[data-bg]:not([data-bgd])') : []).forEach(el => (io ? io.observe(el) : show(el)));
+    window.hoeLazy = arm;
+    arm(document);
+    if ('MutationObserver' in window) new MutationObserver(muts => muts.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) arm(n); }))).observe(document.body, { childList: true, subtree: true });
+  })();
+  // hover on a card: a colour dot under the pointer swaps the photo for that sibling's (its sprite, front view, preloaded on
+  // entering the card); leaving the dot or the card brings the frame's own photo back. One listener for every card, present and future.
+  (() => {
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)');
+    const pre = new Set();
+    const preload = src => { if (pre.has(src)) return; pre.add(src); const i = new Image(); i.decoding = 'async'; i.src = src; };
+    const imgOf = card => card.querySelector('.fcard-img');
+    const restore = (img, card) => { img.classList.remove('is-alt'); img.dataset.bgd = '1'; img.style.backgroundImage = `url('${img.dataset.bg}')`; card.querySelectorAll('.fcard-swatches li').forEach(li => li.classList.toggle('is-on', li.dataset.sku === card.dataset.id)); };
     document.addEventListener('pointerover', e => {
+      if (!fine.matches) return;
       const link = e.target.closest('.fcard > a'); if (!link) return;
-      const card = link.closest('.fcard'), svg = card.querySelector('svg.frame'); if (!svg) return;
-      const sw = e.target.closest('.fcard-swatches li[data-color]');
-      if (sw) { const c = colorOf(card, +sw.dataset.color); if (c) window.hoeSetFrameColor(svg, c); return; }
-      if (link.dataset.hover) return; link.dataset.hover = '1';
-      const f = frameOf(card); const c = f && f.colors.length > 1 ? f.colors[1] : null;
-      if (c) window.hoeSetFrameColor(svg, c);
+      const card = link.closest('.fcard'), img = imgOf(card); if (!img) return;
+      if (!link.dataset.pre) { link.dataset.pre = '1'; card.querySelectorAll('.fcard-swatches li[data-sku]').forEach(li => { if (li.dataset.sku !== card.dataset.id) preload(CAT.img(li.dataset.sku)); }); }
+      const sw = e.target.closest('.fcard-swatches li[data-sku]');
+      if (sw && sw.dataset.sku !== card.dataset.id) {
+        const src = CAT.img(sw.dataset.sku); preload(src);
+        img.classList.add('is-alt'); img.style.backgroundImage = `url('${src}')`;
+        card.querySelectorAll('.fcard-swatches li').forEach(li => li.classList.toggle('is-on', li === sw));
+        return;
+      }
+      if (img.classList.contains('is-alt')) restore(img, card);
     });
     document.addEventListener('pointerout', e => {
       const link = e.target.closest('.fcard > a'); if (!link || (e.relatedTarget && link.contains(e.relatedTarget))) return;
-      delete link.dataset.hover;
-      const card = link.closest('.fcard'), svg = card.querySelector('svg.frame'), c = colorOf(card, 0);
-      if (svg && c) window.hoeSetFrameColor(svg, c);
+      const card = link.closest('.fcard'), img = imgOf(card);
+      if (img && img.classList.contains('is-alt')) restore(img, card);
     });
   })();
 
-  // ---------- home: six sample frames (js/data/frames.js), re-rendered on each language switch ----------
+  // ---------- home · 4: the best sellers (manifest.featuredItems, up to 12), asked for once the block comes within 600 px of the
+  // screen (the hero photo and the video bands go first), fetched once and re-painted on each language switch ----------
+  let homeList = null, homeAsked = false, homeIO = null;
+  function askHome() {
+    if (homeAsked) return;
+    homeAsked = true;
+    CAT.featured().then(list => {
+      homeList = list; paintHome();
+      // the block just grew by twelve tiles: every ScrollTrigger below it (the figures, the reveals, the band's parallax)
+      // keeps the positions measured with the block empty until a refresh
+      if (window.hoeMotion) requestAnimationFrame(() => window.hoeMotion.refresh());
+    });
+  }
+  function paintHome() {
+    const samples = document.getElementById('home-samples'); if (!samples) return;
+    if (!homeList.length) { samples.innerHTML = `<li class="look-empty" data-i18n="cat.updating">${esc(tr('cat.updating'))}</li>`; return; }
+    samples.innerHTML = homeList.slice(0, 12).map(f => window.hoeFrameCard(f)).join('');
+    if (window.hoeMotion) window.hoeMotion.reveal(samples, { stagger: 60 });
+  }
   function renderDynamic() {
     if (document.body.dataset.page === 'index') document.title = tr('index.docTitle');
     const samples = document.getElementById('home-samples');
-    if (!samples || !window.HOE_SAMPLE_FRAMES) return;
-    samples.innerHTML = window.HOE_SAMPLE_FRAMES.slice(0, 6).map(f => window.hoeFrameCard(f)).join('');
-    if (window.hoeMotion) window.hoeMotion.reveal(samples, { stagger: 60 });
+    if (!samples || !CAT) return;
+    if (homeList) { paintHome(); return; }
+    if (homeAsked || homeIO) return;
+    const block = samples.closest('section') || samples;
+    if ('IntersectionObserver' in window) {
+      homeIO = new IntersectionObserver(entries => { if (entries.some(en => en.isIntersecting)) { homeIO.disconnect(); askHome(); } }, { rootMargin: '600px 0px' });
+      homeIO.observe(block);
+    } else askHome();
   }
 
-  // first paint in the visitor's language (renders the sample frames too)
+  // first paint in the visitor's language (arms the best sellers: they are fetched when block 4 comes near)
   const saved = store.get('hoe-lang');
   setLang(saved || ((navigator.language || '').toLowerCase().startsWith('es') ? 'es' : 'en'));
 

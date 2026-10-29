@@ -1,6 +1,6 @@
 /* Category pages (men, women, kids, sunglasses, contacts) and the 404 — "C-cine".
    The photo owns the top of the page edge to edge (21:9), under the side veil and the grain; the headline sits on the
-   diffuse side; the sample frames follow on paper tiles (the global .look-grid / .fcard). Prefix: cp- (404: nf-) */
+   diffuse side; twelve real frames follow on paper tiles (the global .look-grid / .fcard). Prefix: cp- (404: nf-) */
 
 /* ---------- the photo head: 21:9, pulled under the transparent header, the copy at the bottom left ---------- */
 .cp-hero {
@@ -21,7 +21,7 @@
 .js .cp-hero__copy > :nth-child(4) { animation-delay: 240ms; }
 @keyframes cp-rise { from { opacity: 0; transform: translateY(18px); } }
 
-/* ---------- the sample frames ---------- */
+/* ---------- the frames of the category ---------- */
 .cp-frames .sec-head { align-items: end; }
 .cp-frames .page-head .lead { max-width: 52ch; }
 .cp-count { color: var(--ink-3); }

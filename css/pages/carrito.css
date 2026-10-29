@@ -1,5 +1,5 @@
 /* Carrito (carrito.html) — C-cine: la tienda a oscuras. Cabecera de página (kicker · display · cuenta), dos columnas en escritorio:
-   las líneas (loseta --paper de 96 px con el dibujo, nombre Jost 300, lentes y receta, Editar / Quitar) y el resumen pegajoso en
+   las líneas (loseta --paper de 96 px con la foto, nombre Jost 300, lentes y receta, Editar / Quitar) y el resumen pegajoso en
    hairlines (armazones · lentes · envío · total) con el único botón primario; vacío: el par de círculos, una frase y el botón.
    Radios 0, sin sombras, dorado como hilo. Tokens: css/styles.css :root. Prefix: cart- (main.cart-page) */
 
@@ -11,8 +11,10 @@ main.cart-page { padding-bottom: 0; }
 /* ---------- one line per package ---------- */
 .cart-list { border-top: 1px solid var(--gold); }
 .cart-line { display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: clamp(20px, 3vw, 36px); padding: clamp(22px, 3vw, 32px) 0; border-bottom: 1px solid var(--line); }
-.cart-line-art { display: grid; place-items: center; aspect-ratio: 4 / 3; background: var(--paper); --ink: var(--ink-paper); }
+.cart-line-art { display: grid; place-items: center; aspect-ratio: 1 / 1; overflow: hidden; background: var(--paper); --ink: var(--ink-paper); }
 .cart-line-art svg { width: 86%; height: auto; }
+.cart-line-img { width: 100%; height: 100%; background-repeat: no-repeat; background-position: 0 0; background-size: 100% auto; mix-blend-mode: multiply; }
+.cart-cleaned { margin: 16px 0 0; padding-left: 14px; border-left: 1px solid var(--gold); font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); }
 .cart-line-main { min-width: 0; display: grid; gap: 6px; align-content: start; }
 .cart-line-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px 24px; }
 .cart-line-name { font: 300 var(--fs-title)/1.2 var(--font-ui); color: var(--ink); }

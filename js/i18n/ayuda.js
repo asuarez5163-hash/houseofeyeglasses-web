@@ -68,7 +68,7 @@ Object.assign(window.HOE_I18N.en, {
   "ayuda.q.insurance": "Can I use my vision insurance?",
   "ayuda.a.insurance": "<p>Many vision plans reimburse glasses bought out of network; how much depends on your plan. It works in three steps.</p><ol><li>Check your out-of-network benefits with your insurer.</li><li>Place your order and save the itemized receipt.</li><li>Send the receipt with your plan's claim form to your insurer, who reimburses you directly.</li></ol>",
   "ayuda.q.fsa": "Can I pay with FSA or HSA?",
-  "ayuda.a.fsa": "Prescription eyeglasses are generally an eligible expense for FSA and HSA accounts. Whether we accept FSA/HSA cards at checkout will be confirmed at launch; meanwhile, you can pay another way and submit your itemized receipt to your plan.",
+  "ayuda.a.fsa": "Prescription eyeglasses are generally an eligible expense for FSA and HSA accounts. Before paying, ask us on WhatsApp whether your FSA/HSA card works for your order; you can also pay another way and submit your itemized receipt to your plan.",
 
   // Contact
   "ayuda.c.title": "Talk to us",
@@ -143,7 +143,7 @@ Object.assign(window.HOE_I18N.es, {
   "ayuda.q.insurance": "¿Puedo usar mi seguro de visión?",
   "ayuda.a.insurance": "<p>Muchos planes de visión reembolsan lentes comprados fuera de la red; el monto depende de tu plan. Funciona en tres pasos.</p><ol><li>Consulta con tu aseguradora tus beneficios fuera de la red.</li><li>Haz tu pedido y guarda el recibo detallado.</li><li>Envía el recibo con el formulario de reclamo de tu plan a tu aseguradora, que te reembolsa directamente.</li></ol>",
   "ayuda.q.fsa": "¿Puedo pagar con FSA o HSA?",
-  "ayuda.a.fsa": "Por lo general, los lentes graduados son un gasto elegible para cuentas FSA y HSA. Si aceptamos tarjetas FSA/HSA al pagar lo confirmaremos en el lanzamiento; mientras tanto, puedes pagar de otra forma y presentar tu recibo detallado a tu plan.",
+  "ayuda.a.fsa": "Por lo general, los lentes graduados son un gasto elegible para cuentas FSA y HSA. Antes de pagar, pregúntanos por WhatsApp si tu tarjeta FSA/HSA sirve para tu pedido; también puedes pagar de otra forma y presentar tu recibo detallado a tu plan.",
 
   "ayuda.c.title": "Habla con nosotros",
   "ayuda.c.lead": "Escríbenos, llámanos o mándanos un WhatsApp.",

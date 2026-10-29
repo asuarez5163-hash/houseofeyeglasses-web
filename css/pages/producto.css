@@ -1,5 +1,6 @@
 /* Ficha de armazón + configurador en 3 pasos (producto.html) — C-cine: la tienda a oscuras.
-   Galería = loseta --paper 1:1 grande (la única superficie clara) con el dibujo y una placa; columna de compra con jerarquía:
+   Galería = loseta --paper 1:1 grande (la única superficie clara) con la FOTO real (sprite assets/frames/<SKU>.webp: vista 1/2/3)
+   y la patilla dibujada en la pestaña "Medida", una placa al pie; columna de compra con jerarquía:
    kicker → nombre display → precio → swatches 28 px con aro dorado → medida → botón primario → promesa → Details → 3 pasos.
    Radios 0, sin sombras, hairlines --line, dorado como hilo. Tokens: css/styles.css :root.
    Prefix: pdp- (ficha), cfg- (selector de lentes), rxf- (receta dentro del paso 2). Los campos (.rx-select/.rx-input/.rx-field)
@@ -9,7 +10,7 @@ main.pdp { padding-bottom: 0; }
 .pdp-top { display: grid; grid-template-columns: minmax(0, 1fr); row-gap: 24px; padding-top: 16px; padding-bottom: var(--sec-y); }
 
 /* =========================================================
-   1 · the drawing: a 1:1 paper tile, the frame at 84 %, a plate at the foot (sample · size)
+   1 · the photo: a 1:1 paper tile, one square of the sprite (multiply over --paper), a plate at the foot (colour · size)
    ========================================================= */
 .pdp-gallery { min-width: 0; }
 .pdp-views { position: relative; }
@@ -17,29 +18,19 @@ main.pdp { padding-bottom: 0; }
 .pdp-art { display: grid; place-items: center; width: 100%; }
 .pdp-art > svg.frame { width: 84%; height: auto; }
 .pdp-art .temple-art { width: 84%; }
+.pdp-art--img { width: 100%; height: 100%; }
+.pdp-img { width: 100%; height: 100%; background-repeat: no-repeat; background-size: 100% calc(var(--ph, 1) * 100%); background-position: 0 0; mix-blend-mode: multiply; }
+.pdp-img.is-alt { background-size: 100% auto; }
 .pdp-view .temple-arm, .pdp-view .temple-hinge { fill: var(--ink-paper); }
 .pdp-view .temple-core { stroke: rgba(239, 233, 223, .3); }
 .pdp-plate { position: absolute; left: clamp(16px, 3%, 28px); right: clamp(16px, 3%, 28px); bottom: clamp(14px, 2.6%, 24px); display: flex; justify-content: space-between; gap: 16px; font: 500 11px/1.3 var(--font-ui); letter-spacing: .16em; text-transform: uppercase; color: rgba(20, 19, 18, .52); font-variant-numeric: lining-nums tabular-nums; }
 /* view change: a crossfade with a touch of blur, so the swap reads as one object coming into focus */
 .pdp-view:not([hidden]) { animation: pdp-fade 320ms var(--ease-out); }
 @keyframes pdp-fade { from { opacity: 0; filter: blur(3px); } to { opacity: 1; filter: blur(0); } }
-.pdp-view--face { grid-template-rows: minmax(0, 1fr) auto; align-items: center; }
-.pdp-face { position: relative; width: 58%; max-height: 100%; margin: 0 auto; color: rgba(20, 19, 18, .45); }
-.pdp-face > svg.face { display: block; width: 100%; height: auto; }
-.pdp-face .face-line { fill: none; stroke: rgba(20, 19, 18, .5); stroke-width: 1.6; }
-.pdp-face .face-fill { fill: var(--paper); stroke: rgba(20, 19, 18, .5); stroke-width: 1.6; }
-.pdp-face .face-soft { fill: none; stroke: rgba(20, 19, 18, .5); stroke-width: 1.2; opacity: .7; }
-/* the frame on the face: its width is the medium face; narrow / wide scale it with a spring (js, transform only) */
-.pdp-face-frame { position: absolute; left: 50%; top: 45%; transform: translate(-50%, -54%); transform-origin: 50% 54%; will-change: transform; }
-.pdp-face-frame svg.frame { display: block; width: 100%; height: auto; }
-.pdp-face-size { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 24px; padding: 0 12px 20px; }
-.pdp-face-size label { position: relative; display: inline-flex; min-height: 40px; align-items: center; cursor: pointer; }
-.pdp-face-size input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
-.pdp-face-size span { padding: 4px 0; font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: rgba(20, 19, 18, .55); border-bottom: 1px solid transparent; transition: color .2s, border-color .25s var(--ease-out); }
-.pdp-face-size input:checked + span { color: var(--ink-paper); border-bottom-color: var(--gold-2); }
-.pdp-face-size input:focus-visible + span { outline: 2px solid var(--gold-2); outline-offset: 4px; }
-/* the three views as hairline tabs under the tile */
+html.gs .pdp-view:not([hidden]) { animation: none; }                                   /* with GSAP the photo itself comes into focus (js) */
+/* the views as hairline tabs under the tile: 1 · 2 · 3 (as many as the sprite holds) · Size */
 .pdp-thumbs { display: flex; flex-wrap: wrap; gap: 4px 28px; margin-top: 2px; border-bottom: 1px solid var(--line); }
+.pdp-thumbs button[hidden] { display: none; }
 .pdp-thumbs button { position: relative; padding: 16px 0 14px; font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); transition: color .2s; }
 .pdp-thumbs button::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px; background: var(--gold); transform: scaleX(0); transform-origin: 0 50%; transition: transform var(--t-hover) var(--ease-out); }
 .pdp-thumbs button[aria-selected="true"] { color: var(--ink); }
@@ -59,14 +50,18 @@ main.pdp { padding-bottom: 0; }
 .pdp-lbl .pdp-lbl-sep { color: var(--ink-3); }
 .pdp-lbl #pdp-color-name { color: var(--ink); }
 .pdp-color { margin-top: 36px; }
-/* swatches: 28 px, a gold ring 4 px out when chosen; hover rings in --ink-3 */
+/* swatches: 28 px, a gold ring 4 px out when chosen; hover rings in --ink-3. Each one is a link to that colour's own page (?id=) */
 .pdp-swatches { display: flex; flex-wrap: wrap; gap: 16px; padding: 4px; }
-.pdp-swatches button { width: 28px; height: 28px; border-radius: 50%; background: var(--c); border: 1px solid rgba(244, 242, 238, .22); background-clip: padding-box; outline: 1px solid transparent; outline-offset: 4px; transition: outline-color .25s var(--ease-out), transform var(--t-release) var(--ease-out); }
-.pdp-swatches button[aria-checked="true"] { outline-color: var(--gold); }
-.pdp-swatches button:hover { outline-color: var(--ink-3); }
-.pdp-swatches button[aria-checked="true"]:hover { outline-color: var(--gold); }
-.pdp-swatches button:active, .pdp-swatches button.is-pressed { transform: scale(.92); transition-duration: .25s, var(--t-press); }
-.pdp-swatches button:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.pdp-swatches a { display: block; width: 28px; height: 28px; border-radius: 50%; background: var(--c); border: 1px solid rgba(244, 242, 238, .22); background-clip: padding-box; outline: 1px solid transparent; outline-offset: 4px; transition: outline-color .25s var(--ease-out), transform var(--t-release) var(--ease-out); }
+.pdp-swatches a[aria-checked="true"] { outline-color: var(--gold); }
+.pdp-swatches a:hover { outline-color: var(--ink-3); }
+.pdp-swatches a[aria-checked="true"]:hover { outline-color: var(--gold); }
+.pdp-swatches a:active, .pdp-swatches a.is-pressed { transform: scale(.92); transition-duration: .25s, var(--t-press); }
+.pdp-swatches a:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+/* stock: one caps line under the size; sold out in the warm red of the form errors, and the primary button steps back */
+.pdp-stock { margin: 14px 0 0; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-2); }
+.pdp-stock.is-out { color: #e38b78; }
+.pdp-cta[disabled], .cfg-add[disabled] { opacity: .4; pointer-events: none; }
 /* size: the band in caps, the millimetres in Jost 300 tabular */
 .pdp-size { margin: 28px 0 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 12px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); }
 .pdp-size .pdp-size-mm { font: 300 24px/1.2 var(--font-ui); letter-spacing: .02em; text-transform: none; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
@@ -134,7 +129,7 @@ details.cfg-step[open]:not(.is-closing) .cfg-body { opacity: 1; transition-delay
 .cfg-body-in { padding: 4px 0 32px 58px; }
 .cfg-next { margin-top: 24px; }
 
-/* options: a radio or checkbox drawn as one hairline row (name · "+ price at launch"). No boxes. */
+/* options: a radio or checkbox drawn as one hairline row (name · surcharge, when an option has one). No boxes. */
 .cfg-opts { display: grid; gap: 0; border-top: 1px solid var(--line); }
 .cfg-opt { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; column-gap: 16px; align-items: center; min-height: 60px; padding: 12px 6px 12px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: background-color .2s; }
 .cfg-opt input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
@@ -213,8 +208,6 @@ details.cfg-step[open]:not(.is-closing) .cfg-body { opacity: 1; transition-delay
 @media (max-width: 860px) {
   .pdp-top { padding-top: 8px; row-gap: 20px; }
   .pdp-art > svg.frame { width: 88%; }
-  .pdp-view--face { aspect-ratio: auto; min-height: 320px; padding-top: 12px; }
-  .pdp-face { width: 54%; }
   .pdp-plate { left: 16px; right: 16px; bottom: 12px; font-size: 10px; letter-spacing: .12em; }
   .pdp-thumbs { gap: 4px 20px; }
   .pdp-thumbs button { padding: 14px 0 12px; }
@@ -236,6 +229,6 @@ details.cfg-step[open]:not(.is-closing) .cfg-body { opacity: 1; transition-delay
 }
 
 @media (prefers-reduced-motion: reduce) {
-  details.pdp-det, details.cfg-step, .det-body, .cfg-body, .pdp-face-frame, .cfg-opt .dot::after, .rxf-pd-opt .dot::after, .rxf-confirm .dot::after, .pdp-thumbs button, .pdp-thumbs button::after, .cfg-bar { transition: none !important; }
+  details.pdp-det, details.cfg-step, .det-body, .cfg-body, .cfg-opt .dot::after, .rxf-pd-opt .dot::after, .rxf-confirm .dot::after, .pdp-thumbs button, .pdp-thumbs button::after, .cfg-bar { transition: none !important; }
   .pdp-view:not([hidden]) { animation: none; }
 }

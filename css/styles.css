@@ -341,23 +341,30 @@ main [id] { scroll-margin-top: calc(var(--hdr-glass) + 16px); }
 }
 
 /* =========================================================
-   Home · 4 FIRST LOOK: six frames on paper tiles (hoeFrameCard, js/main.js), 3 × 2
+   Home · 4 BEST SELLERS (and every frame grid): the card = a 1:1 paper tile with the first photo of the frame's sprite
+   (assets/frames/<SKU>.webp, 800 × 800·ph; background-size 100% × ph·100 %, position 0 0 = the front view), painted
+   with multiply so the supplier's white turns into --paper, the one light surface. hoeFrameCard, js/main.js.
    ========================================================= */
 .look-grid, .home-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 44px 24px; }
+.look-empty { grid-column: 1 / -1; margin: 0; padding: 48px 0; font: 300 var(--fs-lead)/1.4 var(--font-ui); color: var(--ink-2); text-align: center; text-wrap: balance; }
 .fcard { position: relative; display: flex; flex-direction: column; }
 .fcard > a { display: flex; flex-direction: column; color: inherit; }
-.frame-tile, .fcard-tile { position: relative; margin: 0; display: grid; place-items: center; aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper); --ink: var(--ink-paper); color: var(--ink-paper); transition: background-color .6s var(--ease-out); }
+.frame-tile { position: relative; margin: 0; display: grid; place-items: center; aspect-ratio: 4 / 3; overflow: hidden; background: var(--paper); --ink: var(--ink-paper); color: var(--ink-paper); }
+.fcard-tile { position: relative; margin: 0; display: grid; place-items: center; aspect-ratio: 1 / 1; overflow: hidden; background: var(--paper); --ink: var(--ink-paper); color: var(--ink-paper); transition: background-color .6s var(--ease-out); }
 .frame-tile svg, .fcard-tile svg { width: 80%; height: auto; }
+.fcard-img { width: 100%; height: 100%; background-repeat: no-repeat; background-position: 0 0; background-size: 100% calc(var(--ph, 1) * 100%); mix-blend-mode: multiply; transition: transform .6s var(--ease-out); }
+.fcard-img.is-alt { background-size: 100% auto; }                /* a colour sibling's sprite (its photo count unknown): the top square is its front */
 @media (hover: hover) and (pointer: fine) {
-  .fcard > a:hover .fcard-tile { background: #f4efe6; --lens: rgba(52, 41, 30, .38); }
-  .fcard > a:hover .fcard-tile .frame .rim { transition-duration: .6s, .6s; }
+  .fcard > a:hover .fcard-tile { background: #f4efe6; }
+  .fcard > a:hover .fcard-img { transform: scale(1.03); }
 }
 .fcard > a.is-pressed .fcard-tile { background: #e6dfd3; transition-duration: 0ms; }
 .fcard-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 16px 0 0; }
 .fcard-name { font: 400 18px/1.3 var(--font-ui); color: var(--ink); }
 .fcard-price { flex: none; font-size: var(--fs-small); color: var(--ink-3); text-align: right; }
 .fcard-swatches { display: flex; gap: 8px; padding: 10px 0 0; }
-.fcard-swatches li { width: 12px; height: 12px; border-radius: 50%; background: var(--c); border: 1px solid rgba(244, 242, 238, .28); background-clip: padding-box; }
+.fcard-swatches li { width: 12px; height: 12px; border-radius: 50%; background: var(--c); border: 1px solid rgba(244, 242, 238, .28); background-clip: padding-box; outline: 1px solid transparent; outline-offset: 2px; transition: outline-color .2s; }
+.fcard-swatches li.is-on { outline-color: var(--gold); }
 @media (max-width: 1100px) and (min-width: 861px) { .look-grid, .home-grid { gap: 36px 20px; } }
 @media (max-width: 860px) {
   .look-grid, .home-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 12px; }
@@ -469,8 +476,10 @@ main [id] { scroll-margin-top: calc(var(--hdr-glass) + 16px); }
 .cart-mini { display: grid; gap: 14px; padding-top: 16px; }
 .cart-mini-list { display: grid; }
 .cart-mini-line { display: grid; grid-template-columns: 72px minmax(0, 1fr) 32px; align-items: center; gap: 14px; padding: 12px 0; border-bottom: 1px solid var(--line); }
-.cart-mini-art { display: grid; place-items: center; aspect-ratio: 4 / 3; background: var(--paper); --ink: var(--ink-paper); }
+.cart-mini-art { display: grid; place-items: center; aspect-ratio: 1 / 1; overflow: hidden; background: var(--paper); --ink: var(--ink-paper); }
 .cart-mini-art svg { width: 86%; height: auto; }
+.cart-mini-img { width: 100%; height: 100%; background-repeat: no-repeat; background-position: 0 0; background-size: 100% auto; mix-blend-mode: multiply; }   /* the sprite's top square = the front view */
+.cart-mini-note--warn { color: var(--gold); }
 .cart-mini-meta { display: grid; gap: 2px; min-width: 0; font-size: 13px; color: var(--ink-2); }
 .cart-mini-meta b { font: 400 17px/1.25 var(--font-ui); color: var(--ink); }
 .cart-mini-price { color: var(--ink-3); }
@@ -640,9 +649,9 @@ body.is-locked { overflow: hidden; }
 .js .rv.is-in:not(.rv-done) { transition: opacity 520ms var(--ease-out), transform 520ms var(--ease-out); transition-delay: calc(var(--rv-i, 0) * var(--rv-step, 60ms)); }
 .js.gs .rv:not(.is-in) { opacity: 0; visibility: hidden; transform: translateY(24px); }
 .js.gs .rv.is-in { transition: none; }
-.js .rv:not(.is-in) .fcard-tile svg, .js .rv:not(.is-in) .frame-tile svg { transform: scale(.96); }
-.js:not(.gs) .rv.is-in:not(.rv-done) .fcard-tile svg, .js:not(.gs) .rv.is-in:not(.rv-done) .frame-tile svg { transition: transform 520ms var(--ease-out); transition-delay: calc(var(--rv-i, 0) * var(--rv-step, 60ms)); }
-.js.gs .rv.is-in .fcard-tile svg, .js.gs .rv.is-in .frame-tile svg { transition: transform .9s var(--ease-out); }
+.js .rv:not(.is-in) .fcard-tile svg, .js .rv:not(.is-in) .frame-tile svg, .js .rv:not(.is-in) .fcard-img { transform: scale(.96); }
+.js:not(.gs) .rv.is-in:not(.rv-done) .fcard-tile svg, .js:not(.gs) .rv.is-in:not(.rv-done) .frame-tile svg, .js:not(.gs) .rv.is-in:not(.rv-done) .fcard-img { transition: transform 520ms var(--ease-out); transition-delay: calc(var(--rv-i, 0) * var(--rv-step, 60ms)); }
+.js.gs .rv.is-in .fcard-tile svg, .js.gs .rv.is-in .frame-tile svg, .js.gs .rv.is-in .fcard-img { transition: transform .9s var(--ease-out); }
 
 /* =========================================================
    Reduced motion: nothing moves; colour and opacity changes stay, shorter. Videos stay on their poster (motion.js).

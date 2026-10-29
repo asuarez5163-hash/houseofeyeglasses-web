@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Frame — House of Eyeglasses</title>
-  <meta name="description" content="Sample frame with prescription lenses included. Pick your color, then your lenses in three short steps. Prices at launch. House of Eyeglasses, Tampa.">
+  <meta name="description" content="Frame with prescription lenses included in the price. Pick your color, then your lenses in three short steps. House of Eyeglasses, Tampa.">
   <meta name="theme-color" content="#0b0b0d">
   <link rel="canonical" href="https://houseofeyeglasses.com/producto.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="House of Eyeglasses">
   <meta property="og:title" content="Frame — House of Eyeglasses">
-  <meta property="og:description" content="Sample frame with prescription lenses included. Pick your color, then your lenses in three short steps. Prices at launch. House of Eyeglasses, Tampa.">
+  <meta property="og:description" content="Frame with prescription lenses included in the price. Pick your color, then your lenses in three short steps. House of Eyeglasses, Tampa.">
   <meta property="og:url" content="https://houseofeyeglasses.com/producto.html">
   <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -22,9 +22,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261029">
-  <link rel="stylesheet" href="css/pages/receta.css?v=20261029">
-  <link rel="stylesheet" href="css/pages/producto.css?v=20261029">
+  <link rel="stylesheet" href="css/styles.css?v=20261031">
+  <link rel="stylesheet" href="css/pages/receta.css?v=20261031">
+  <link rel="stylesheet" href="css/pages/producto.css?v=20261031">
   <script>
     document.documentElement.classList.add('js');
     // home, first visit of the session, motion allowed: the headline, button and price line wait for the load choreography
@@ -98,38 +98,39 @@
   <!-- ============ MAIN ============ -->
 <main id="main" class="pdp">
     <div class="wrap pdp-top" id="pdp-top">
-      <!-- drawing: front · side · on a face, on the one light surface -->
+      <!-- the photos: the sprite's views (1 · 2 · 3, as many as it holds) and the temple drawing, on the one light surface -->
       <section class="pdp-gallery" aria-label="Views" data-i18n-aria="prod.views">
         <div class="pdp-views" id="pdp-views">
-          <figure class="pdp-view paper is-on" data-view="front" id="pdp-view-front">
-            <div class="pdp-art" id="pdp-art-front"></div>
-            <figcaption class="pdp-plate"><span data-i18n="prod.plate">Sample · drawn to scale</span><span id="pdp-plate-mm"></span></figcaption>
+          <figure class="pdp-view paper is-on" data-view="1" id="pdp-view-1">
+            <div class="pdp-art pdp-art--img"></div>
+            <figcaption class="pdp-plate"><span class="pdp-plate-l"></span><span class="pdp-plate-r"></span></figcaption>
           </figure>
-          <figure class="pdp-view paper" data-view="side" id="pdp-view-side" hidden>
+          <figure class="pdp-view paper" data-view="2" id="pdp-view-2" hidden>
+            <div class="pdp-art pdp-art--img"></div>
+            <figcaption class="pdp-plate"><span class="pdp-plate-l"></span><span class="pdp-plate-r"></span></figcaption>
+          </figure>
+          <figure class="pdp-view paper" data-view="3" id="pdp-view-3" hidden>
+            <div class="pdp-art pdp-art--img"></div>
+            <figcaption class="pdp-plate"><span class="pdp-plate-l"></span><span class="pdp-plate-r"></span></figcaption>
+          </figure>
+          <figure class="pdp-view paper" data-view="size" id="pdp-view-size" hidden>
             <div class="pdp-art" id="pdp-art-side"></div>
             <figcaption class="pdp-plate"><span data-i18n="prod.plateSide">Inside the temple · your size</span><span id="pdp-plate-mm2"></span></figcaption>
           </figure>
-          <figure class="pdp-view pdp-view--face paper" data-view="face" id="pdp-view-face" hidden>
-            <div class="pdp-face" id="pdp-face"></div>
-            <div class="pdp-face-size" role="radiogroup" data-i18n-aria="prod.face.lbl" aria-label="Face width">
-              <label><input type="radio" name="face" value="narrow"><span data-i18n="prod.face.narrow">Narrow</span></label>
-              <label><input type="radio" name="face" value="medium" checked><span data-i18n="prod.face.medium">Medium</span></label>
-              <label><input type="radio" name="face" value="wide"><span data-i18n="prod.face.wide">Wide</span></label>
-            </div>
-          </figure>
         </div>
         <div class="pdp-thumbs" role="tablist">
-          <button type="button" role="tab" aria-selected="true" data-view="front" data-i18n="prod.view.front">Front</button>
-          <button type="button" role="tab" aria-selected="false" data-view="side" data-i18n="prod.view.side">Side</button>
-          <button type="button" role="tab" aria-selected="false" data-view="face" data-i18n="prod.view.face">On a face</button>
+          <button type="button" role="tab" aria-selected="true" data-view="1">1</button>
+          <button type="button" role="tab" aria-selected="false" data-view="2">2</button>
+          <button type="button" role="tab" aria-selected="false" data-view="3">3</button>
+          <button type="button" role="tab" aria-selected="false" data-view="size" data-i18n="prod.view.size">Size</button>
         </div>
       </section>
 
-      <!-- buy column: kicker → name → price → color → size → CTA → one trust line → "Details" → the three steps -->
+      <!-- buy column: kicker → name → price → color → size → stock → CTA → one trust line → "Details" → the three steps -->
       <section class="pdp-buy" id="pdp-buy" data-reveal="stagger" style="--rv-step:50ms">
         <p class="kicker pdp-kicker" id="pdp-kicker"></p>
         <h1 class="pdp-name" id="pdp-name"></h1>
-        <p class="pdp-price"><span class="pdp-price__v" data-i18n="prod.price.launch">Price at launch</span><span class="pdp-price__sep" aria-hidden="true"> · </span><span data-i18n="prod.included">lenses included</span></p>
+        <p class="pdp-price"><span class="pdp-price__v" id="pdp-price-v"></span><span class="pdp-price__sep" aria-hidden="true"> · </span><span data-i18n="prod.lensesIncluded">prescription lenses included</span></p>
 
         <div class="pdp-color">
           <p class="pdp-lbl"><span data-i18n="prod.colorOf">Color</span><span class="pdp-lbl-sep" aria-hidden="true"> · </span><span id="pdp-color-name"></span></p>
@@ -137,6 +138,7 @@
         </div>
 
         <p class="pdp-size" id="pdp-size"></p>
+        <p class="pdp-stock" id="pdp-stock" aria-live="polite"></p>
 
         <button class="btn pdp-cta" type="button" id="pdp-cta" aria-controls="cfg" aria-expanded="false">
           <span data-i18n="prod.lenses">Select lenses</span>
@@ -155,7 +157,7 @@
         <section class="cfg" id="cfg" aria-labelledby="cfg-title">
           <div class="cfg-bar" id="cfg-bar">
             <span class="cfg-bar-name" id="cfg-bar-name"></span>
-            <b class="cfg-bar-price" id="cfg-bar-price" data-i18n="prod.price.launch">Price at launch</b>
+            <b class="cfg-bar-price" id="cfg-bar-price"></b>
           </div>
           <div class="cfg-head">
             <h2 id="cfg-title" class="cfg-title" data-i18n="cfg.title">Choose your lenses</h2>
@@ -230,12 +232,12 @@
       <a class="btn" href="catalogo.html"><span data-i18n="prod.notFoundCta">See all frames</span></a>
     </section>
 
-    <!-- second read: three frames from the same category (the same sample gallery, nothing invented) -->
+    <!-- second read: the same model in its other colours, then the same shape -->
     <section class="sec sec--alt pdp-more" id="pdp-more" aria-labelledby="pdp-more-h" hidden>
       <div class="wrap">
         <div class="sec-head" data-reveal-self>
           <div class="page-head">
-            <p class="kicker" data-i18n="look.kicker">First look</p>
+            <p class="kicker" data-i18n="look.kicker">The collection</p>
             <h2 id="pdp-more-h" data-i18n="prod.more">You may also like</h2>
           </div>
           <a class="link-u" id="pdp-more-all" href="catalogo.html" data-i18n="prod.moreAll">See all frames</a>
@@ -390,17 +392,16 @@
   </aside>
 
 
-  <script src="js/i18n.js?v=20261029"></script>
-  <script src="js/i18n/producto.js?v=20261029"></script>
-  <script src="js/catalog.js?v=20261029"></script>
-  <script src="js/data/frames.js?v=20261029"></script>
-  <script src="js/data/search.js?v=20261029"></script>
+  <script src="js/i18n.js?v=20261031"></script>
+  <script src="js/i18n/producto.js?v=20261031"></script>
+  <script src="js/catalog.js?v=20261031"></script>
+  <script src="js/data/search.js?v=20261031"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/motion.js?v=20261029"></script>
-  <script src="js/main.js?v=20261029"></script>
-  <script src="js/data/lenses.js?v=20261029"></script>
-  <script src="js/cart.js?v=20261029"></script>
-  <script src="js/pages/producto.js?v=20261029"></script>
+  <script src="js/motion.js?v=20261031"></script>
+  <script src="js/main.js?v=20261031"></script>
+  <script src="js/data/lenses.js?v=20261031"></script>
+  <script src="js/cart.js?v=20261031"></script>
+  <script src="js/pages/producto.js?v=20261031"></script>
 </body>
 </html>

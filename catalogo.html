@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Frames — House of Eyeglasses</title>
-  <meta name="description" content="Browse sample frames by shape, material, color and size. Prescription lenses included; prices at launch. House of Eyeglasses, Tampa.">
+  <meta name="description" content="Browse our frames by brand, shape, material, color, lens and size. Prescription lenses included in every price. House of Eyeglasses, Tampa.">
   <meta name="theme-color" content="#0b0b0d">
   <link rel="canonical" href="https://houseofeyeglasses.com/catalogo.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="House of Eyeglasses">
   <meta property="og:title" content="Frames — House of Eyeglasses">
-  <meta property="og:description" content="Browse sample frames by shape, material, color and size. Prescription lenses included; prices at launch. House of Eyeglasses, Tampa.">
+  <meta property="og:description" content="Browse our frames by brand, shape, material, color, lens and size. Prescription lenses included in every price. House of Eyeglasses, Tampa.">
   <meta property="og:url" content="https://houseofeyeglasses.com/catalogo.html">
   <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -22,8 +22,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261029">
-  <link rel="stylesheet" href="css/pages/catalogo.css?v=20261029">
+  <link rel="stylesheet" href="css/styles.css?v=20261031">
+  <link rel="stylesheet" href="css/pages/catalogo.css?v=20261031">
   <script>
     document.documentElement.classList.add('js');
     // home, first visit of the session, motion allowed: the headline, button and price line wait for the load choreography
@@ -103,24 +103,32 @@
       <div class="catp-hero__veil" aria-hidden="true"></div>
       <div class="wrap catp-hero__copy">
         <div class="catp-hero__text">
-          <p class="kicker" id="cat-kicker" data-i18n="catalogo.kicker">Sample collection</p>
+          <p class="kicker" id="cat-kicker" data-i18n="catalogo.kicker">Collection</p>
           <h1 id="cat-h1" data-i18n="catalogo.h1">All frames</h1>
-          <p class="lead catp-sub" data-i18n="catalogo.sub">Sample frames drawn to size · Price at launch · lenses included</p>
+          <p class="lead catp-sub" data-i18n="catalogo.sub">Prescription lenses included in every price</p>
         </div>
         <p class="catp-count" aria-live="polite">
-          <span class="num" id="cat-n">16</span>
+          <span class="num" id="cat-n"></span>
           <span class="catp-count__lbl" id="cat-count" data-i18n="catalogo.countLbl">frames</span>
         </p>
       </div>
     </header>
 
-    <!-- the bar: Filters (+ how many are on) · the active chips · the five categories as hairline tabs -->
+    <!-- the bar: Filters (+ how many are on) · sort · the active chips · the five categories as hairline tabs -->
     <div class="catp-bar" id="cat-bar">
       <div class="wrap catp-bar__in">
         <button class="catp-filters-btn" type="button" id="cat-filters-btn" aria-controls="cat-panel" aria-expanded="false">
           <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 5h14M6 10h8M8.5 15h3"/></svg>
           <span data-i18n="catalogo.filters">Filters</span><span class="catp-filters-n" id="cat-filters-n" hidden></span>
         </button>
+        <label class="catp-sort"><span data-i18n="catalogo.sort">Sort</span>
+          <select id="cat-sort" data-i18n-aria="catalogo.sort" aria-label="Sort">
+            <option value="rel" data-i18n="catalogo.sort.rel">Relevance</option>
+            <option value="price-asc" data-i18n="catalogo.sort.priceAsc">Price, low to high</option>
+            <option value="price-desc" data-i18n="catalogo.sort.priceDesc">Price, high to low</option>
+            <option value="brand" data-i18n="catalogo.sort.brand">Brand A–Z</option>
+          </select>
+        </label>
         <ul class="catp-chips" id="cat-chips" data-i18n-aria="catalogo.active" aria-label="Active filters" hidden></ul>
         <nav class="catp-cats" id="cat-cats" data-i18n-aria="catalogo.cats" aria-label="Categories">
           <a href="catalogo.html" data-cat="all" data-i18n="catalogo.cats.all">All</a>
@@ -150,10 +158,15 @@
 
       <section class="catp-results" aria-labelledby="cat-h1">
         <ul class="catp-grid" id="cat-grid" data-reveal="stagger" style="--rv-step:40ms"></ul>
+        <!-- pagination: 36 at a time; "36 of 128" and the ghost button paint the next 36 (the page stays, the URL carries ?page=) -->
+        <div class="catp-more" id="cat-more" hidden>
+          <p class="catp-shown" id="cat-shown"></p>
+          <button type="button" class="btn btn--ghost" id="cat-more-btn"><span data-i18n="catalogo.more">Show more</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></button>
+        </div>
         <div class="catp-empty" id="cat-empty" hidden>
           <svg viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0"/></svg>
-          <p data-i18n="catalogo.empty">No frames match these filters.</p>
-          <button type="button" class="link-u" data-act="clear" data-i18n="catalogo.emptyCta">Clear the filters</button>
+          <p id="cat-empty-p" data-i18n="catalogo.empty">No frames match these filters.</p>
+          <button type="button" class="link-u" id="cat-empty-cta" data-act="clear" data-i18n="catalogo.emptyCta">Clear the filters</button>
         </div>
       </section>
     </div>
@@ -304,17 +317,16 @@
   </aside>
 
 
-  <script src="js/i18n.js?v=20261029"></script>
-  <script src="js/i18n/catalogo.js?v=20261029"></script>
-  <script src="js/catalog.js?v=20261029"></script>
-  <script src="js/data/frames.js?v=20261029"></script>
-  <script src="js/data/search.js?v=20261029"></script>
+  <script src="js/i18n.js?v=20261031"></script>
+  <script src="js/i18n/catalogo.js?v=20261031"></script>
+  <script src="js/catalog.js?v=20261031"></script>
+  <script src="js/data/search.js?v=20261031"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/motion.js?v=20261029"></script>
-  <script src="js/main.js?v=20261029"></script>
-  <script src="js/data/lenses.js?v=20261029"></script>
-  <script src="js/cart.js?v=20261029"></script>
-  <script src="js/pages/catalogo.js?v=20261029"></script>
+  <script src="js/motion.js?v=20261031"></script>
+  <script src="js/main.js?v=20261031"></script>
+  <script src="js/data/lenses.js?v=20261031"></script>
+  <script src="js/cart.js?v=20261031"></script>
+  <script src="js/pages/catalogo.js?v=20261031"></script>
 </body>
 </html>

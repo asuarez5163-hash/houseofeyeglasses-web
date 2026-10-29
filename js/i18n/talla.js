@@ -27,7 +27,6 @@ Object.assign(window.HOE_I18N.en, {
   "talla.res.look": "Look for frames within ±2 mm of these numbers: lens {lw1}–{lw2} mm and bridge {br1}–{br2} mm. Temple length is more forgiving: {tl1}–{tl2} mm.",
   "talla.res.note": "This is an approximation: hinges and endpieces vary from style to style. Each frame lists its exact measurements, so compare those too.",
   "talla.res.invalid": "Fix the highlighted number to see your size.",
-  "talla.band.narrow": "Narrow", "talla.band.medium": "Medium", "talla.band.wide": "Wide", "talla.band.xwide": "Extra-wide",
 
   // 02
   "talla.s2.title": "No glasses? Measure your face",
@@ -147,7 +146,6 @@ Object.assign(window.HOE_I18N.es, {
   "talla.res.look": "Busca armazones a ±2 mm de estos números: lente de {lw1} a {lw2} mm y puente de {br1} a {br2} mm. El largo de patilla es más flexible: de {tl1} a {tl2} mm.",
   "talla.res.note": "Es una aproximación: las bisagras y los extremos cambian según el modelo. Cada armazón muestra sus medidas exactas; compáralas también.",
   "talla.res.invalid": "Corrige el número marcado para ver tu medida.",
-  "talla.band.narrow": "Angosta", "talla.band.medium": "Mediana", "talla.band.wide": "Ancha", "talla.band.xwide": "Extra ancha",
 
   // 02
   "talla.s2.title": "¿Sin lentes? Mide tu cara",

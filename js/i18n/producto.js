@@ -1,21 +1,21 @@
 // Ficha de armazón + configurador de lentes en 3 pasos (producto.html) — bilingual copy.
 // Prefixes: "prod." (ficha), "cfg." (selector de lentes), "rx." (receta dentro del paso 2).
-// Colours, bands, rims and "Price at launch" come from js/data/frames.js; lens names from js/data/lenses.js;
+// Colours, lens colours, bands, rims, genders and stock come from js/i18n.js (contract keys); lens option names from js/data/lenses.js;
 // rx.od / rx.os (OD / OI) live in js/i18n.js because the header drawer uses them.
 Object.assign(window.HOE_I18N.en, {
   "prod.meta": "{name} — House of Eyeglasses",
-  "prod.views": "Views", "prod.view.front": "Front", "prod.view.side": "Side", "prod.view.face": "On a face",
-  "prod.face.lbl": "Face width", "prod.face.narrow": "Narrow", "prod.face.medium": "Medium", "prod.face.wide": "Wide",
+  "prod.desc": "{name} in {color}, {price} with prescription lenses included. Pick your lenses in three short steps; an optician in Tampa checks every prescription.",
+  "prod.views": "Views", "prod.view.size": "Size",
   "prod.colorOf": "Color",
   "prod.trust": "If the prescription isn’t right, we remake it free",
   "prod.details": "Details",
-  "prod.d.material": "Material", "prod.d.shape": "Shape", "prod.d.rim": "Rim", "prod.d.size": "Size", "prod.d.prog": "Progressives", "prod.d.yes": "Yes", "prod.d.no": "Not recommended (shallow lens)",
+  "prod.d.brand": "Brand", "prod.d.model": "Model", "prod.d.colorCode": "Color code", "prod.d.color": "Color", "prod.d.lens": "Lens",
+  "prod.d.material": "Material", "prod.d.shape": "Shape", "prod.d.rim": "Rim", "prod.d.size": "Size",
   "prod.d.incl": "Included", "prod.d.inclText": "Lenses with anti-reflective and scratch-resistant coatings, hard case and cloth. An optician in Tampa checks every prescription.",
   "prod.notFound": "We couldn’t find that frame.", "prod.notFoundCta": "See all frames",
-  "prod.price.plus": "+ Price at launch",
   "prod.more": "You may also like", "prod.moreAll": "See all frames",
-  // C-cine: the plate under the drawing and the line under the configurator title
-  "prod.plate": "Sample · drawn to scale", "prod.plateSide": "Inside the temple · your size",
+  // C-cine: the plate under the temple drawing and the line under the configurator title
+  "prod.plateSide": "Inside the temple · your size",
   "prod.kickerSun": "Sunglasses",
 
   "cfg.title": "Choose your lenses",
@@ -40,17 +40,17 @@ Object.assign(window.HOE_I18N.en, {
 
 Object.assign(window.HOE_I18N.es, {
   "prod.meta": "{name} — House of Eyeglasses",
-  "prod.views": "Vistas", "prod.view.front": "De frente", "prod.view.side": "De lado", "prod.view.face": "En un rostro",
-  "prod.face.lbl": "Ancho de cara", "prod.face.narrow": "Angosta", "prod.face.medium": "Mediana", "prod.face.wide": "Ancha",
+  "prod.desc": "{name} en {color}, {price} con lentes graduados incluidos. Elige tus lentes en tres pasos cortos; un óptico en Tampa revisa cada receta.",
+  "prod.views": "Vistas", "prod.view.size": "Medida",
   "prod.colorOf": "Color",
   "prod.trust": "Si la graduación no está bien, la rehacemos gratis",
   "prod.details": "Detalles",
-  "prod.d.material": "Material", "prod.d.shape": "Forma", "prod.d.rim": "Aro", "prod.d.size": "Medida", "prod.d.prog": "Progresivos", "prod.d.yes": "Sí", "prod.d.no": "No recomendado (lente poco alto)",
+  "prod.d.brand": "Marca", "prod.d.model": "Modelo", "prod.d.colorCode": "Código de color", "prod.d.color": "Color", "prod.d.lens": "Lente",
+  "prod.d.material": "Material", "prod.d.shape": "Forma", "prod.d.rim": "Aro", "prod.d.size": "Medida",
   "prod.d.incl": "Incluye", "prod.d.inclText": "Lentes con antirreflejo y antirrayas, estuche rígido y paño. Un óptico en Tampa revisa cada receta.",
   "prod.notFound": "No encontramos ese armazón.", "prod.notFoundCta": "Ver todos los armazones",
-  "prod.price.plus": "+ Precio al lanzamiento",
   "prod.more": "También te pueden gustar", "prod.moreAll": "Ver todos los armazones",
-  "prod.plate": "Muestra · dibujada a escala", "prod.plateSide": "Por dentro de la patilla · tu medida",
+  "prod.plateSide": "Por dentro de la patilla · tu medida",
   "prod.kickerSun": "Lentes de sol",
 
   "cfg.title": "Elige tus lentes",

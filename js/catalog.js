@@ -1,17 +1,116 @@
-// Catálogo: se lee de data/catalog.json cuando exista el catálogo real de armazones.
-// Mientras no exista, la sección "Más vendidos" queda oculta (no se inventan productos).
-window.HOE_CATALOG = [];
-window.HOE_LENSES = [];
-fetch('data/catalog.json', { cache: 'no-store' })
-  .then(r => (r.ok ? r.json() : null))
-  .then(d => {
-    if (!d) return;
-    window.HOE_CATALOG = d.products || [];
-    window.HOE_LENSES = d.lenses || [];
-    document.dispatchEvent(new Event('hoe:catalog'));
-  })
-  .catch(() => { /* sin catálogo publicado: la sección de más vendidos queda oculta */ });
+// Catálogo real (contrato: scratchpad b2b/DATA-CONTRACT.md). El job externo escribe data/manifest.json, los chunks
+// data/c/<cat>.<hash>.json (men · women · kids · sun; un unisex vive en men y women) y los sprites assets/frames/<SKU>.webp
+// (800 × 800·ph, foto 1 arriba). La web los LEE sin build: nada de UPC ni proveedor llega aquí.
+// window.hoeCatalog:
+//   manifest()        → Promise<manifest|null>  (data/manifest.json?v=<hora>: salta la caché del CDN; null si no existe)
+//   chunk(cat)        → Promise<registro[]>     (con caché; cada registro recibe .size = size(...sz))
+//   all(onPartial)    → Promise<registro[]>     (los cuatro chunks EN SECUENCIA, deduplicados; onPartial(lista) tras cada uno)
+//   byId(sku)         → Promise<registro|null>  (el chunk sale de la letra del SKU: HOE-W-77 → women)
+//   featured()        → Promise<registro[]>     (manifest.featuredItems inline → ningún chunk; si falta, manifest.featured por chunks; sólo con stock)
+//   search()          → Promise<[{s,t}]>        (índice del buscador, una sola vez)
+//   img(f)            → 'assets/frames/<SKU>.webp'   · sprite(f, k) → estilo inline del sprite en la vista k (0..ph-1)
+//   size(l, b, t)     → { lens, bridge, temple, total, band }   (UNA fórmula: total = 2·lente + puente + HINGE; talla.js la usa)
+//   price(n)          → "$129" en el idioma activo · colorHex(key) → hex de manifest.colors · name(f) → "Marca Modelo"
+//   colorName(f)      → texto del color en el idioma activo · catOf(sku) → 'men' | 'women' | 'kids' | 'sun' | null
+// Evento 'hoe:catalog' en document tras cada chunk ({ detail: { cat, list } }) y 'hoe:catalog' con { cat: null, empty: true }
+// cuando no hay manifest (catálogo en actualización: las páginas muestran su estado vacío sin errores).
+window.hoeCatalog = (() => {
+  const S = { manifest: null, m: null, byId: new Map(), chunks: {}, search: null, featured: null, lists: {} };
+  const V = Math.floor(Date.now() / 36e5);                       // one value per hour: the CDN keys by full URL
+  const LETTER = { M: 'men', W: 'women', K: 'kids', S: 'sun' };
+  const HINGE = 8;                                              // mm added by rims and hinges (contract §4)
+  const BANDS = [{ key: 'narrow', max: 127 }, { key: 'medium', max: 137 }, { key: 'wide', max: 145 }, { key: 'xwide', max: Infinity }];
+  const size = (lens, bridge, temple) => {
+    const l = Number(lens) || 0, b = Number(bridge) || 0, t = Number(temple) || 0;
+    const total = l * 2 + b + HINGE;
+    const band = BANDS.find(x => Math.round(total) <= x.max).key;
+    return { lens: l, bridge: b, temple: t, total, band };
+  };
+  const lang = () => (window.hoeLang ? window.hoeLang() : (document.documentElement.lang || 'en'));
+  const fmt = {};
+  const price = n => {
+    if (n == null || isNaN(Number(n))) return '';
+    const L = lang() === 'es' ? 'es-US' : 'en-US';
+    fmt[L] = fmt[L] || new Intl.NumberFormat(L, { style: 'currency', currency: 'USD', maximumFractionDigits: 0 });
+    return fmt[L].format(Number(n));
+  };
+  const json = url => fetch(url).then(r => (r.ok ? r.json() : null)).catch(() => null);
+  const emit = detail => document.dispatchEvent(new CustomEvent('hoe:catalog', { detail }));
 
+  const manifest = () => S.manifest || (S.manifest = json(`data/manifest.json?v=${V}`).then(m => {
+    S.m = m && m.chunks ? m : null;
+    if (!S.m) emit({ cat: null, empty: true });
+    return S.m;
+  }));
+  const prep = (f, cat) => {
+    if (!f || !f.id) return null;
+    f.size = size(...(Array.isArray(f.sz) ? f.sz : [0, 0, 0]));
+    f.cats = Array.isArray(f.cats) && f.cats.length ? f.cats : [cat];
+    f.v = Array.isArray(f.v) ? f.v : [];
+    f.ph = Math.min(3, Math.max(1, Number(f.ph) || 1));
+    if (!S.byId.has(f.id)) S.byId.set(f.id, f);
+    return S.byId.get(f.id);                                       // a unisex frame is one object, seen from both chunks
+  };
+  const chunk = cat => S.chunks[cat] || (S.chunks[cat] = manifest().then(m => {
+    if (!m || !m.chunks[cat]) return [];
+    return json(m.chunks[cat]).then(list => {
+      const out = (Array.isArray(list) ? list : []).map(f => prep(f, cat)).filter(Boolean);
+      S.lists[cat] = out;
+      emit({ cat, list: out });
+      return out;
+    });
+  }));
+  // every chunk, one after the other (a phone never asks for the four at once); onPartial sees the growing list
+  const all = onPartial => manifest().then(m => {
+    if (!m) return [];
+    const cats = Object.keys(m.chunks);
+    const seen = new Set(); const acc = [];
+    const step = i => {
+      if (i >= cats.length) return Promise.resolve(acc);
+      return chunk(cats[i]).then(list => {
+        list.forEach(f => { if (!seen.has(f.id)) { seen.add(f.id); acc.push(f); } });
+        if (typeof onPartial === 'function') onPartial(acc.slice(), cats[i], i === cats.length - 1);
+        return step(i + 1);
+      });
+    };
+    return step(0);
+  });
+  const catOf = sku => { const m = /^HOE-([MWKS])-\d+$/.exec(String(sku || '').trim().toUpperCase()); return m ? LETTER[m[1]] : null; };
+  const byId = sku => {
+    const id = String(sku || '').trim();
+    if (S.byId.has(id)) return Promise.resolve(S.byId.get(id));
+    const cat = catOf(id);
+    if (!cat) return Promise.resolve(null);
+    return chunk(cat).then(() => S.byId.get(id) || null);
+  };
+  // the home grid: manifest.featuredItems carries the twelve records inline (≈5 KB), so the home never asks for a chunk;
+  // without it (an older manifest) the SKUs of manifest.featured are looked up chunk by chunk (grouped by letter)
+  const featured = () => S.featured || (S.featured = manifest().then(m => {
+    if (!m) return [];
+    if (Array.isArray(m.featuredItems) && m.featuredItems.length) return m.featuredItems.map(f => prep(f, catOf(f.id) || 'men')).filter(f => f && Number(f.st) > 0);
+    const ids = Array.isArray(m.featured) ? m.featured : [];
+    const cats = [...new Set(ids.map(catOf).filter(Boolean))];
+    const step = i => (i >= cats.length ? Promise.resolve() : chunk(cats[i]).then(() => step(i + 1)));
+    return step(0).then(() => ids.map(id => S.byId.get(id)).filter(f => f && Number(f.st) > 0));
+  }));
+  const search = () => S.search || (S.search = manifest().then(m => (m && m.search ? json(m.search) : null)).then(l => (Array.isArray(l) ? l : [])));
+
+  const img = f => `assets/frames/${encodeURIComponent(typeof f === 'string' ? f : f.id)}.webp`;
+  // inline style for a sprite view: k = 0 (front) … ph-1; ph unknown (a colour sibling) → view 0 with the natural height
+  const sprite = (f, k = 0, ph) => {
+    const n = ph || (f && f.ph) || 0;
+    const y = n > 1 ? (Math.min(k, n - 1) / (n - 1)) * 100 : 0;
+    return `background-image:url('${img(f)}');background-size:100% ${n ? n * 100 + '%' : 'auto'};background-position:0 ${y}%;--ph:${n || 1}`;
+  };
+  const colorHex = key => (S.m && S.m.colors && S.m.colors[key]) || '#8a8a8a';
+  const name = f => `${f.b || ''} ${f.n || ''}`.trim();
+  const colorName = f => { const r = f && f.colRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('color.' + (f && f.col)) : (f && f.col)) || ''; };
+  const lensName = f => { const r = f && f.lcRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('lc.' + (f && f.lc)) : (f && f.lc)) || ''; };
+
+  return { manifest, chunk, all, byId, featured, search, img, sprite, size, price, colorHex, name, colorName, lensName, catOf, HINGE, BANDS, get m() { return S.m; }, _s: S };
+})();
+window.hoeFrameById = id => window.hoeCatalog.byId(id);
+window.hoeFrameSize = f => `${f.size.lens} □ ${f.size.bridge} — ${f.size.temple}`;
 // ---------------------------------------------------------------------------
 // Front-view frame drawings (viewBox 0 0 240 100). The left half is drawn once
 // and mirrored; the bridge sits in the middle and is drawn once.

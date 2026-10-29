@@ -6,17 +6,13 @@
   const fill = (str, vars) => str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
   const r1 = n => Math.round(n * 10) / 10;
 
-  // ---------- one source for the size bands (total frame width, whole mm) ----------
-  const HINGE_MM = 12;                // hinges + endpieces, both sides (real frames add ~12–13 mm to 2×lens + bridge)
-  const BANDS = [                     // upper bound inclusive
-    { key: 'narrow', max: 127 },
-    { key: 'medium', max: 137 },
-    { key: 'wide', max: 145 },
-    { key: 'xwide', max: Infinity },
-  ];
+  // ---------- one source for the size formula and the bands: js/catalog.js (hoeCatalog.size, the same the product pages use) ----------
+  const CAT = window.hoeCatalog;
+  const HINGE_MM = CAT ? CAT.HINGE : 8;                     // rims + hinges, both sides (contract: total = 2 × lens + bridge + 8)
+  const BANDS = CAT ? CAT.BANDS : [{ key: 'narrow', max: 127 }, { key: 'medium', max: 137 }, { key: 'wide', max: 145 }, { key: 'xwide', max: Infinity }];
   const EDGES = BANDS.slice(0, -1).map(b => b.max + 0.5);   // 127.5, 137.5, 145.5
-  const bandOf = mm => BANDS.find(b => Math.round(mm) <= b.max).key;
-  const bandName = key => T('talla.band.' + key);
+  const bandOf = mm => (CAT ? CAT.size((mm - HINGE_MM) / 2, 0, 0).band : BANDS.find(b => Math.round(mm) <= b.max).key);
+  const bandName = key => T('band.' + key);
 
   /* =========================================================
      01 · size from the three numbers on the temple arm
@@ -118,8 +114,8 @@
 
   function renderSize() {
     const L = FIELDS.lens.val, B = FIELDS.bridge.val, TL = FIELDS.temple.val;
-    const tot = 2 * L + B + HINGE_MM;
-    const band = bandOf(tot);
+    const sz = CAT ? CAT.size(L, B, TL) : { total: 2 * L + B + HINGE_MM, band: bandOf(2 * L + B + HINGE_MM) };
+    const tot = sz.total, band = sz.band;
     const bad = Object.values(FIELDS).some(f => f.bad);
 
     $('ta-arm-nums').textContent = `${L} □ ${B} — ${TL}`;
