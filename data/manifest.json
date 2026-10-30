@@ -1,13 +1,13 @@
 {
- "v": "2026-10-29T22:48:15Z",
- "total": 5949,
+ "v": "2026-10-30T22:14:33Z",
+ "total": 5963,
  "chunks": {
-  "men": "data/c/men.e657b052.json",
-  "women": "data/c/women.c44da1ee.json",
-  "kids": "data/c/kids.1a443678.json",
+  "men": "data/c/men.2fc2d079.json",
+  "women": "data/c/women.c9618e66.json",
+  "kids": "data/c/kids.11708856.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.98fd6337.json",
+ "search": "data/s/index.6674de59.json",
  "featured": [
   "HOE-W-155",
   "HOE-M-72",
@@ -20,7 +20,7 @@
   "HOE-W-3007",
   "HOE-W-816",
   "HOE-M-1102",
-  "HOE-W-591"
+  "HOE-M-2619"
  ],
  "facets": {
   "brand": [
@@ -138,6 +138,7 @@
    "Palm Angels",
    "Pepe Jeans",
    "Philipp Plein",
+   "Polaroid",
    "Polaroid Core",
    "Police",
    "Polo Ralph Lauren",
