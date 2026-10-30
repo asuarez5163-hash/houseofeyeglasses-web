@@ -23,7 +23,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=20261031">
-  <link rel="preload" as="image" href="assets/img/hero-woman-2x.jpg" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero-woman-2x.jpg" imagesrcset="assets/img/hero-woman-2x.jpg 1x, assets/img/hero-woman@2x.jpg 2x" fetchpriority="high">
   <script>
     document.documentElement.classList.add('js');
     // home, first visit of the session, motion allowed: the headline, button and price line wait for the load choreography
@@ -99,7 +99,7 @@
     <!-- 1 · HERO: the owner's model full screen, the headline on the diffuse side, one primary button -->
     <section class="hero grain" aria-labelledby="hero-title">
       <div class="hero-media">
-        <img src="assets/img/hero-woman-2x.jpg" width="1752" height="930" alt="" fetchpriority="high" decoding="async">
+        <img src="assets/img/hero-woman-2x.jpg" srcset="assets/img/hero-woman-2x.jpg 1x, assets/img/hero-woman@2x.jpg 2x" width="1752" height="930" alt="" fetchpriority="high" decoding="async">
       </div>
       <div class="hero-veil" aria-hidden="true"></div>
       <div class="hero-copy">
@@ -129,18 +129,18 @@
         <h2 id="cats-title" data-i18n="cats.title">Who are the glasses for?</h2>
       </div>
       <ul class="cat-row" data-reveal="stagger">
-        <li><a class="tile" href="catalogo.html?cat=men"><span class="tile-ph"><img src="assets/img/tile-men.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.men">Men</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
-        <li><a class="tile" href="catalogo.html?cat=women"><span class="tile-ph"><img src="assets/img/tile-women.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.women">Women</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
-        <li><a class="tile" href="catalogo.html?cat=kids"><span class="tile-ph"><img src="assets/img/tile-kids.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.kids">Kids</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
-        <li><a class="tile" href="catalogo.html?cat=sun"><span class="tile-ph"><img src="assets/img/tile-sunglasses.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.sun">Sunglasses</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
-        <li><a class="tile" href="contacts.html"><span class="tile-ph"><img src="assets/img/tile-contacts.jpg" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.contacts">Contact lenses</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="catalogo.html?cat=men"><span class="tile-ph"><img src="assets/img/tile-men.jpg" srcset="assets/img/tile-men.jpg 1x, assets/img/tile-men@2x.jpg 2x" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.men">Men</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="catalogo.html?cat=women"><span class="tile-ph"><img src="assets/img/tile-women.jpg" srcset="assets/img/tile-women.jpg 1x, assets/img/tile-women@2x.jpg 2x" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.women">Women</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="catalogo.html?cat=kids"><span class="tile-ph"><img src="assets/img/tile-kids.jpg" srcset="assets/img/tile-kids.jpg 1x, assets/img/tile-kids@2x.jpg 2x" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.kids">Kids</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="catalogo.html?cat=sun"><span class="tile-ph"><img src="assets/img/tile-sunglasses.jpg" srcset="assets/img/tile-sunglasses.jpg 1x, assets/img/tile-sunglasses@2x.jpg 2x" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.sun">Sunglasses</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
+        <li><a class="tile" href="contacts.html"><span class="tile-ph"><img src="assets/img/tile-contacts.jpg" srcset="assets/img/tile-contacts.jpg 1x, assets/img/tile-contacts@2x.jpg 2x" width="220" height="177" alt="" loading="lazy" decoding="async"></span><span class="tile-label"><span data-i18n="tile.contacts">Contact lenses</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></a></li>
       </ul>
     </section>
 
     <!-- 3 · VIDEO BAND "Your prescription": the video plays only on screen (hoeMotion.band); the text sits on the right -->
     <section class="media-band media-band--text-right grain" id="lenses" aria-labelledby="band1-title" style="--fade: var(--bg-2)">
       <div class="media-band__media" data-gs-trigger>
-        <video data-band src="assets/video/video-mujer.mp4" poster="assets/video/video-mujer-poster.jpg" width="1280" height="720" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+        <video data-band src="assets/video/video-mujer-1080.mp4" poster="assets/video/video-mujer-1080-poster.jpg" width="1920" height="1080" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
       </div>
       <div class="media-band__veil" aria-hidden="true"></div>
       <div class="wrap">
@@ -204,7 +204,7 @@
     <!-- 6 · VIDEO BAND "Sun": the text on the left, the one primary button of the screen -->
     <section class="media-band media-band--text-left grain" id="sun" aria-labelledby="band2-title" style="--fade: var(--bg-2)">
       <div class="media-band__media" data-gs-trigger style="--media-pos: 50% 40%">
-        <video data-band src="assets/video/video-sol.mp4" poster="assets/video/video-sol-poster.jpg" width="1280" height="720" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+        <video data-band src="assets/video/video-sol-1080.mp4" poster="assets/video/video-sol-1080-poster.jpg" width="1920" height="1080" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
       </div>
       <div class="media-band__veil" aria-hidden="true"></div>
       <div class="wrap">
@@ -226,9 +226,9 @@
           <h2 id="trio-title" data-i18n="trio.title">For him, for the kids, for your eyes</h2>
         </div>
         <ul class="trio" data-reveal="stagger">
-          <li><a class="portrait" href="men.html"><img src="assets/img/foto-hombre-retrato.jpg" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.men">Men</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
-          <li><a class="portrait" href="kids.html"><img src="assets/img/foto-ninos-retrato.jpg" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.kids">Kids</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
-          <li><a class="portrait" href="contacts.html"><img src="assets/img/foto-contacto-retrato.jpg" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.contacts">Contact lenses</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
+          <li><a class="portrait" href="men.html"><img src="assets/img/foto-hombre-retrato.jpg" srcset="assets/img/foto-hombre-retrato.jpg 1x, assets/img/foto-hombre-retrato@2x.jpg 2x" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.men">Men</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
+          <li><a class="portrait" href="kids.html"><img src="assets/img/foto-ninos-retrato.jpg" srcset="assets/img/foto-ninos-retrato.jpg 1x, assets/img/foto-ninos-retrato@2x.jpg 2x" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.kids">Kids</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
+          <li><a class="portrait" href="contacts.html"><img src="assets/img/foto-contacto-retrato.jpg" srcset="assets/img/foto-contacto-retrato.jpg 1x, assets/img/foto-contacto-retrato@2x.jpg 2x" width="1200" height="1800" alt="" loading="lazy" decoding="async"><span class="portrait-copy"><b data-i18n="tile.contacts">Contact lenses</b><i></i><span><span data-i18n="trio.shop">Shop</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h15m-6-6 6 6-6 6"/></svg></span></span></a></li>
         </ul>
       </div>
     </section>
