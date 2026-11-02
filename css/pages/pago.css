@@ -1,0 +1,75 @@
+/* Pago (pago.html) — C-cine: el pago dentro de la tienda. Video de armazones fijo detrás con velo oscuro, dos columnas
+   (contacto · envío · tarjeta | resumen) en paneles de vidrio oscuro con hilo dorado; Stripe pinta sus campos dentro con el
+   tema de js/pages/pago.js (Appearance API). Radios 0, sin sombras, dorado como hilo. Reusa cart-aside / cart-sum / cart-next.
+   Tokens: css/styles.css :root. Prefix: pay- (main.pay-page) */
+
+body:has(.pay-page) { background: transparent; }   /* html carries --bg; the fixed video (z-index -1) shows between that and the page */
+.pay-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: var(--bg) url("../../assets/video/video-armazones-1080-poster.jpg") 50% 40% / cover no-repeat; }
+.pay-bg video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+.pay-bg__veil { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(11, 11, 13, .62) 0%, rgba(11, 11, 13, .78) 45%, rgba(11, 11, 13, .94) 100%); }
+
+main.pay-page { position: relative; padding-bottom: 0; }
+.pay-wrap { padding-top: clamp(32px, 5vw, 72px); padding-bottom: var(--sec-y); }
+.pay-head .lead { max-width: 52ch; }
+.pay-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: clamp(24px, 4vw, 40px); margin-top: clamp(28px, 4vw, 56px); align-items: start; }
+
+/* ---------- glass panels ---------- */
+.pay-form, .pay-aside { background: rgba(11, 11, 13, .74); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); border: 1px solid var(--line); border-top-color: var(--gold); padding: clamp(22px, 3.4vw, 40px); }
+.pay-form { display: grid; gap: clamp(26px, 3vw, 36px); align-content: start; }
+.pay-form[aria-busy="true"] .pay-step { opacity: .3; pointer-events: none; }
+.pay-form[aria-busy="false"] .pay-wait { display: none; }
+.pay-wait { margin: 0; padding: 8px 0; font-size: var(--fs-small); letter-spacing: .02em; color: var(--ink-2); display: flex; align-items: center; gap: 14px; }
+.pay-wait::before { content: ""; flex: none; width: 18px; height: 18px; border: 1px solid var(--line); border-top-color: var(--gold); border-radius: 50%; animation: pay-spin 900ms linear infinite; }
+@keyframes pay-spin { to { transform: rotate(360deg); } }
+
+.pay-step { display: grid; gap: 14px; transition: opacity 400ms var(--ease-out); }
+.pay-h { margin: 0; display: flex; align-items: baseline; gap: 12px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
+.pay-n { font: 200 26px/1 var(--font-ui); letter-spacing: 0; color: var(--gold); font-variant-numeric: lining-nums; }
+.pay-slot { min-height: 8px; }
+
+.pay-msg { margin: 0; border-left-color: #d9786b; color: #f2c5bd; }
+.pay-submit { width: 100%; margin-top: 4px; }
+.pay-submit:disabled { opacity: .45; cursor: not-allowed; }
+.pay-submit[aria-busy="true"] { opacity: .6; cursor: progress; }
+.pay-lock { margin-top: 0; }
+
+/* ---------- the summary: one hairline row per frame ---------- */
+.pay-aside { display: grid; align-content: start; gap: 0; }
+.pay-lines { margin: 8px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--gold); }
+.pay-lines li { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; column-gap: 14px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+.pay-line-art { display: grid; place-items: center; aspect-ratio: 1 / 1; overflow: hidden; background: var(--paper); }
+.pay-line-img { width: 100%; height: 100%; background-repeat: no-repeat; background-position: 0 0; background-size: 100% auto; mix-blend-mode: multiply; }
+.pay-line-main { min-width: 0; display: grid; gap: 2px; }
+.pay-line-name { font: 300 17px/1.25 var(--font-ui); color: var(--ink); }
+.pay-line-meta { font-size: 13px; line-height: 1.4; color: var(--ink-3); overflow-wrap: anywhere; }
+.pay-line-price { font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; color: var(--gold); white-space: nowrap; font-variant-numeric: lining-nums tabular-nums; }
+.pay-aside .cart-sum { margin-top: 6px; }
+.pay-back { margin-top: 22px; justify-self: start; }
+
+/* ---------- could not open ---------- */
+.pay-fail { display: grid; justify-items: center; gap: 20px; padding-top: clamp(40px, 6vw, 80px); text-align: center; }
+.pay-fail:not([hidden]) { animation: cart-fade 280ms var(--ease-out); }
+.pay-fail > svg { width: 64px; height: 64px; color: var(--gold); stroke-width: 1.2; }
+.pay-fail h2 { margin: 0; max-width: 20ch; font: 300 var(--fs-display)/1.05 var(--font-ui); letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+.pay-fail .lead { max-width: 46ch; text-align: center; }
+.pay-fail:focus { outline: none; }
+.pay-page[data-failed] .pay-layout { display: none; }
+
+@media (min-width: 1100px) {
+  .pay-layout { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: clamp(32px, 4vw, 64px); }
+  .pay-aside { position: sticky; top: calc(var(--header-h) + 32px); }
+}
+@media (max-width: 1099px) {
+  .pay-aside { order: -1; }
+}
+@media (max-width: 600px) {
+  .pay-form, .pay-aside { padding: 20px 18px; }
+  .pay-lines li { grid-template-columns: 48px minmax(0, 1fr) auto; column-gap: 12px; }
+}
+
+/* motion off · data saver: the poster stays, the video goes */
+@media (prefers-reduced-motion: reduce) {
+  .pay-bg video { display: none; }
+  .pay-wait::before { animation: none; }
+  .pay-step, .pay-fail:not([hidden]) { transition: none; animation: none; }
+}
