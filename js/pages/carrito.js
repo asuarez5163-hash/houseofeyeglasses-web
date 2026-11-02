@@ -148,6 +148,7 @@
     if (btn.disabled) return;
     say('');
     if (!canPay()) { showProto(cfg === null); return; }
+    if (cfg.checkout === 'elements') { location.href = 'pago.html'; return; }   // the payment page inside the site (Worker updated); else the hosted Stripe page below
     busy(true);
     C.pay().then(r => {
       if (!r || !r.url) throw new Error('sin url');
@@ -171,6 +172,8 @@
   });
   $('#cart-proto-back').addEventListener('click', () => { proto.hidden = true; render(); btn.focus({ preventScroll: true }); });
   C.config().then(c => { cfg = c; render(); });
+  // pago.html sent the visitor back with a note (a price changed · a frame is gone)
+  try { const flash = sessionStorage.getItem('hoe-pay-flash'); if (flash) { sessionStorage.removeItem('hoe-pay-flash'); say(T(flash)); } } catch (e) { /* private mode */ }
 
   document.addEventListener('hoe:cart', render);
   document.addEventListener('hoe:lang', render);
