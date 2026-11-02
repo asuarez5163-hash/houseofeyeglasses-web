@@ -110,9 +110,12 @@
   };
   let cfgP = null;
   const config = () => cfgP || (cfgP = fetchJson(API + '/config', { method: 'GET' }, 6000).catch(() => null));   // null = the Central did not answer
-  const pay = () => {
+  // opts.ui = 'elements' → the Worker answers { clientSecret } for the on-site payment page (pago.html); without it, { url } (hosted Stripe Checkout)
+  const pay = opts => {
     const items = get().items.map(it => ({ id: it.id, sku: it.sku, price: it.price, use: it.use, material: it.material, coatings: it.coatings || [], rx: it.rx || { path: 'none' } }));
-    return fetchJson(API + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items, lang: L() }) }, 20000);
+    const body = { items, lang: L() };
+    if (opts && opts.ui) body.ui = opts.ui;
+    return fetchJson(API + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }, 20000);
   };
   const order = sid => fetchJson(API + '/pedido?s=' + encodeURIComponent(sid), { method: 'GET' }, 20000);
 
