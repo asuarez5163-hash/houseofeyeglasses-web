@@ -1,9 +1,12 @@
 // Carrito compartido: un solo almacén en localStorage ('hoe-cart'), leído por el cajón #cart del encabezado en todas las
 // páginas y por carrito.html. Cada paquete = armazón real { sku, name, colorName {en,es}, colorKey, cc, img, price, band, size }
 // + lentes { use, material, coatings, rx }. Un ítem sin sku (del prototipo anterior) se descarta al leer, con aviso.
-// Nada sale del dispositivo: no hay servidor todavía.
+// Pago: window.hoeCart.pay() manda los paquetes (sku + lentes + receta) al Worker de Cloudflare que despliega el Central, que
+// cobra EL PRECIO DEL CATÁLOGO PUBLICADO y abre Stripe Checkout; el Central lee el pago en Stripe y lo anota como pedido.
+// config() dice si el cobro está abierto y el envío.
 (() => {
   const KEY = 'hoe-cart';
+  const API = 'https://hoe-pagos.asuarez5163.workers.dev';    // Cloudflare Worker deployed by the Central (scripts/cloudflare/pagos-worker.js)
   const T = k => (window.hoeT ? window.hoeT(k) : k);
   const L = () => (window.hoeLang ? window.hoeLang() : 'en');
   const fill = (s, map) => String(s).replace(/\{(\w+)\}/g, (m, k) => (k in map ? map[k] : m));
@@ -32,6 +35,7 @@
   const add = item => { const d = get(); item.id = item.id || ('p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6)); d.items.push(item); write(d); return item.id; };
   const remove = id => { const d = get(); d.items = d.items.filter(i => i.id !== id); write(d); };
   const update = (id, patch) => { const d = get(); const it = d.items.find(i => i.id === id); if (it) Object.assign(it, patch); write(d); };
+  const clear = () => write({ items: [] });
   const count = () => get().items.length;
   const total = () => get().items.reduce((a, i) => a + (Number(i.price) || 0), 0);
   const price = n => (window.hoeCatalog ? window.hoeCatalog.price(n) : '$' + n);
@@ -96,5 +100,21 @@
   window.addEventListener('storage', e => { if (e.key === KEY) { memory = read(); renderDrawer(); document.dispatchEvent(new CustomEvent('hoe:cart', { detail: memory })); } });
   renderDrawer();
 
-  window.hoeCart = { get, add, remove, update, count, total, price, colorOf, lensName, rxLine, fill, dropped: () => dropped, KEY };
+  // ---------- payment (the Central creates the Stripe Checkout session; the browser only carries the cart) ----------
+  const fetchJson = (url, opts, ms) => {
+    const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+    const t = setTimeout(() => ctl && ctl.abort(), ms || 8000);
+    return fetch(url, Object.assign({ signal: ctl ? ctl.signal : undefined, mode: 'cors', credentials: 'omit' }, opts || {}))
+      .then(r => r.json().catch(() => ({})).then(data => { if (!r.ok) { const e = new Error(data.mensaje || ('HTTP ' + r.status)); e.status = r.status; e.data = data; throw e; } return data; }))
+      .finally(() => clearTimeout(t));
+  };
+  let cfgP = null;
+  const config = () => cfgP || (cfgP = fetchJson(API + '/config', { method: 'GET' }, 6000).catch(() => null));   // null = the Central did not answer
+  const pay = () => {
+    const items = get().items.map(it => ({ id: it.id, sku: it.sku, price: it.price, use: it.use, material: it.material, coatings: it.coatings || [], rx: it.rx || { path: 'none' } }));
+    return fetchJson(API + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ items, lang: L() }) }, 20000);
+  };
+  const order = sid => fetchJson(API + '/pedido?s=' + encodeURIComponent(sid), { method: 'GET' }, 20000);
+
+  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, dropped: () => dropped, KEY, API, config, pay, order };
 })();

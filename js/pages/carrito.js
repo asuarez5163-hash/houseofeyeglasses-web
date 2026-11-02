@@ -1,8 +1,9 @@
 // Carrito (carrito.html): una línea por paquete desde js/cart.js (localStorage 'hoe-cart'): la foto del armazón (vista 1 del
 // sprite) sobre loseta --paper, nombre, color · código · medida, precio real, "Lentes: uso · material", "Receta: OD/OI" con
 // Editar (vuelve a producto.html?id=<sku>&edit=&step=2), Quitar con confirmación en línea; a la derecha el resumen (armazones ·
-// lentes · envío · TOTAL real), un solo botón que abre el aviso honesto (no hay pasarela: WhatsApp con SKU · nombre · color ·
-// precio) y "Qué pasa después" en tres líneas.
+// lentes · envío · TOTAL real) y un solo botón: hoeCart.pay() → el Central cobra el precio del Central y abre Stripe Checkout;
+// si el cobro está apagado o el Central no contesta, el mismo botón abre el aviso honesto (WhatsApp con SKU · nombre · color ·
+// precio). "Qué pasa después" en tres líneas.
 // Vacío: el par de círculos, una línea, un botón y los tres armazones más vistos (localStorage hoe-view-<sku>) como .fcard.
 (() => {
   'use strict';
@@ -81,6 +82,10 @@
   }
 
   const proto = $('#cart-proto');
+  // cfg: the Central's answer to /config ({ pagos, envio, modo }) · undefined = still asking · null = no answer (WhatsApp mode)
+  let cfg;
+  const canPay = () => !!(cfg && cfg.pagos);
+  const shipping = () => (canPay() ? Number(cfg.envio) || 0 : 0);
   function render() {
     const d = C.get();
     const n = d.items.length;
@@ -88,10 +93,15 @@
     $('#cart-page-empty').hidden = n > 0 || !proto.hidden;
     renderSeen(n === 0 && proto.hidden);
     list.innerHTML = d.items.map(line).join('');
-    // the line under the headline and the first row of the summary carry the count; the total is the sum of the real prices
+    // the line under the headline and the first row of the summary carry the count; the total is the sum of the real prices (+ shipping when the card checkout is open)
     $('#cart-count-line').textContent = n === 1 ? T('cart.count1') : fill(T('cart.count'), { n });
     $('#cart-sum-n').textContent = String(n);
-    $('#cart-sum-total-v').textContent = C.price(C.total());
+    const ship = $('#cart-sum-ship');
+    if (cfg === undefined) ship.textContent = T('cart.shipCalc');
+    else if (canPay()) ship.textContent = shipping() ? C.price(shipping()) : T('cart.shipFree');
+    else ship.textContent = T('cart.sumShipV');
+    $('#cart-sum-total-v').textContent = C.price(C.total() + shipping());
+    $('#cart-pay-note').hidden = !canPay();
     const cleaned = $('#cart-cleaned'); if (cleaned) { cleaned.hidden = !C.dropped(); cleaned.textContent = T('cart.cleaned'); }
     const emptyNote = $('#cart-empty-cleaned'); if (emptyNote) { emptyNote.hidden = !C.dropped(); emptyNote.textContent = T('cart.cleaned'); }
     document.title = T('cart.meta');
@@ -110,18 +120,57 @@
     }
   });
 
-  // checkout → the honest note: the WhatsApp message carries SKU · name · colour · price per line and the total
-  $('#cart-checkout').addEventListener('click', () => {
+  // the honest note: the WhatsApp message carries SKU · name · colour · price per line and the total.
+  // down = the Central did not answer or refused (other words: "unavailable right now"), else the cobro is simply off
+  function showProto(down) {
     const d = C.get();
     const lines = d.items.map(it => `• ${it.sku} · ${it.name} · ${C.colorOf(it)}${it.cc ? ` (${it.cc})` : ''} · ${C.price(it.price)}`).join('\n');
     const msg = L() === 'es'
       ? `Hola, quiero apartar:\n${lines}\nTotal: ${C.price(C.total())}`
       : `Hi, I’d like to reserve:\n${lines}\nTotal: ${C.price(C.total())}`;
     $('#cart-proto-wa').href = 'https://wa.me/17866148629?text=' + encodeURIComponent(msg);
+    $('#cart-proto-h').textContent = T(down ? 'cart.payDownTitle' : 'cart.protoTitle');
+    $('#cart-proto .lead').textContent = T(down ? 'cart.payDownLead' : 'cart.protoLead');
     proto.hidden = false; render();
     setTimeout(() => { proto.scrollIntoView({ block: 'start', behavior: reduced.matches ? 'auto' : 'smooth' }); proto.focus({ preventScroll: true }); }, 30);
+  }
+  const btn = $('#cart-checkout');
+  const msgEl = $('#cart-pay-msg');
+  const say = txt => { msgEl.hidden = !txt; msgEl.textContent = txt || ''; };
+  function busy(on) {
+    btn.setAttribute('aria-busy', on ? 'true' : 'false');
+    btn.disabled = !!on;
+    btn.querySelector('span').textContent = on ? T('cart.paying') : T('cart.checkout');
+  }
+  // checkout → the Central creates the Stripe session and we go there; 409 = a price changed (the cart refreshes itself);
+  // 400 'no_disponible' = a frame is gone (removed from the cart); anything else = WhatsApp with the "down" words
+  btn.addEventListener('click', () => {
+    if (btn.disabled) return;
+    say('');
+    if (!canPay()) { showProto(cfg === null); return; }
+    busy(true);
+    C.pay().then(r => {
+      if (!r || !r.url) throw new Error('sin url');
+      location.href = r.url;                                   // Stripe Checkout (card, address); back to gracias.html?s=…
+    }).catch(err => {
+      busy(false);
+      const data = (err && err.data) || {};
+      if (err && err.status === 409 && Array.isArray(data.items)) {
+        data.items.forEach(p => C.get().items.filter(it => it.sku === p.sku).forEach(it => C.update(it.id, { price: Number(p.precio) || it.price })));
+        say(T('cart.priceChanged')); render(); return;
+      }
+      if (err && err.status === 400 && data.error === 'no_disponible' && Array.isArray(data.items)) {
+        const gone = new Set(data.items.filter(p => p.motivo !== 'precio').map(p => p.sku));
+        C.get().items.filter(it => gone.has(it.sku)).forEach(it => C.remove(it.id));
+        data.items.filter(p => p.motivo === 'precio').forEach(p => C.get().items.filter(it => it.sku === p.sku).forEach(it => C.update(it.id, { price: Number(p.precio) || it.price })));
+        say(T('cart.unavailable')); render(); return;
+      }
+      if (err && err.status === 503 && data.error === 'apagado') { cfg = Object.assign({}, cfg, { pagos: false }); render(); showProto(false); return; }
+      showProto(true);
+    });
   });
-  $('#cart-proto-back').addEventListener('click', () => { proto.hidden = true; render(); $('#cart-checkout').focus({ preventScroll: true }); });
+  $('#cart-proto-back').addEventListener('click', () => { proto.hidden = true; render(); btn.focus({ preventScroll: true }); });
+  C.config().then(c => { cfg = c; render(); });
 
   document.addEventListener('hoe:cart', render);
   document.addEventListener('hoe:lang', render);

@@ -68,6 +68,23 @@ main.cart-page { padding-bottom: 0; }
 .cart-proto .btn { white-space: nowrap; }
 .cart-seen .sec-head { align-items: end; }
 
+/* ---------- checkout in flight · thank-you (gracias.html, same tokens) ---------- */
+.cart-checkout[aria-busy="true"] { opacity: .55; cursor: progress; }
+.cart-pay-note svg { stroke-width: 1.4; }
+.thanks-wrap { padding-top: clamp(48px, 7vw, 96px); padding-bottom: var(--sec-y); max-width: 820px; }
+.thanks-state { display: grid; gap: 22px; justify-items: start; }
+.thanks-state h1 { margin: 0; max-width: 22ch; font: 300 var(--fs-display)/1.05 var(--font-ui); letter-spacing: -.01em; color: var(--ink); text-wrap: balance; }
+.thanks-state .lead { max-width: 52ch; }
+.thanks-items { list-style: none; margin: 8px 0 0; padding: 0; width: 100%; border-top: 1px solid var(--gold); }
+.thanks-items li { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; line-height: 1.5; color: var(--ink-2); }
+.thanks-items b { font-weight: 400; color: var(--ink); }
+.thanks-items small { font-size: var(--fs-small); color: var(--ink-3); }
+.thanks-items .p { flex: none; color: var(--gold); font-variant-numeric: lining-nums tabular-nums; }
+.thanks-total { margin: 0; width: 100%; display: flex; justify-content: space-between; align-items: baseline; padding: 18px 0 0; border-top: 1px solid var(--gold); font: 300 22px/1.2 var(--font-ui); color: var(--ink); }
+.thanks-total b { font-weight: 300; color: var(--gold); }
+.thanks-state .cart-next-wrap { width: 100%; margin-top: 8px; }
+.thanks-actions { justify-items: start; }
+
 /* ---------- layout ---------- */
 @media (min-width: 1100px) {
   .cart-layout { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: clamp(48px, 7vw, 120px); align-items: start; }

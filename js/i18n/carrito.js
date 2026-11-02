@@ -18,6 +18,14 @@ Object.assign(window.HOE_I18N.en, {
   "cart.summary": "Summary", "cart.sumFrames": "Frames", "cart.sumLenses": "Lenses", "cart.sumLensesV": "Included",
   "cart.sumShip": "Shipping", "cart.sumShipV": "Quoted on WhatsApp",
   "cart.emptyLead": "Every pair starts with a frame. Pick one and we take it from there.",
+  // payment (Stripe Checkout through the store's own Central)
+  "cart.shipFree": "Free in the USA", "cart.shipCalc": "Calculated at checkout",
+  "cart.paying": "Opening secure checkout…",
+  "cart.payNote": "Secure card payment with Stripe. Your address and card go on the next page; nothing is charged until you confirm there.",
+  "cart.priceChanged": "Some prices were updated to today’s price. Please review your cart and continue.",
+  "cart.unavailable": "A frame in your cart is no longer available and was removed.",
+  "cart.payDownTitle": "Online payment is unavailable right now",
+  "cart.payDownLead": "Reserve your frames on WhatsApp at these prices and we send you a secure payment link.",
 });
 
 Object.assign(window.HOE_I18N.es, {
@@ -37,4 +45,11 @@ Object.assign(window.HOE_I18N.es, {
   "cart.summary": "Resumen", "cart.sumFrames": "Armazones", "cart.sumLenses": "Lentes", "cart.sumLensesV": "Incluidos",
   "cart.sumShip": "Envío", "cart.sumShipV": "Se cotiza por WhatsApp",
   "cart.emptyLead": "Cada par empieza por un armazón. Elige uno y nosotros seguimos.",
+  "cart.shipFree": "Gratis en EE. UU.", "cart.shipCalc": "Se calcula al pagar",
+  "cart.paying": "Abriendo el pago seguro…",
+  "cart.payNote": "Pago seguro con tarjeta (Stripe). La dirección y la tarjeta van en la siguiente página; no se cobra nada hasta que confirmes allí.",
+  "cart.priceChanged": "Algunos precios se actualizaron al precio de hoy. Revisa tu carrito y continúa.",
+  "cart.unavailable": "Un armazón de tu carrito ya no está disponible y se quitó.",
+  "cart.payDownTitle": "El pago en línea no está disponible ahora mismo",
+  "cart.payDownLead": "Aparta tus armazones por WhatsApp a estos precios y te mandamos un enlace de pago seguro.",
 });
