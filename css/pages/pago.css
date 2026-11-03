@@ -26,6 +26,15 @@ main.pay-page { position: relative; padding-bottom: 0; }
 .pay-h { margin: 0; display: flex; align-items: baseline; gap: 12px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
 .pay-n { font: 200 26px/1 var(--font-ui); letter-spacing: 0; color: var(--gold); font-variant-numeric: lining-nums; }
 .pay-slot { min-height: 8px; }
+/* our own phone field: same look as Stripe's hairline inputs (Appearance in js/pages/pago.js) */
+.pay-field { display: grid; gap: 8px; }
+.pay-label { font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-2); }
+.pay-input { width: 100%; padding: 13px 14px; font: 300 16px/1.3 var(--font-ui); color: var(--ink); background: rgba(255, 255, 255, .03); border: 1px solid rgba(244, 242, 238, .18); border-radius: 0; outline: none; transition: border-color var(--t-fast) var(--ease-out); }
+.pay-input::placeholder { color: rgba(244, 242, 238, .38); }
+.pay-input:focus { border-color: var(--gold); }
+.pay-input[aria-invalid="true"] { border-color: #e08a7c; }
+.pay-hint { margin: 0; font-size: 13px; line-height: 1.4; color: var(--ink-3); }
+.pay-input[aria-invalid="true"] + .pay-hint { color: #e08a7c; }
 
 .pay-msg { margin: 0; border-left-color: #d9786b; color: #f2c5bd; }
 .pay-submit { width: 100%; margin-top: 4px; }

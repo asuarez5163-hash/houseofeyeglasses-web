@@ -18,7 +18,33 @@
 
   const form = $('#pay-form'), submit = $('#pay-submit'), submitT = $('#pay-submit-t'), msg = $('#pay-msg');
   const fail = $('#pay-fail');
+  const phoneIn = $('#pay-phone'), phoneHint = $('#pay-phone-hint');
   let cfg = null, session = null, actions = null, checkout = null, starting = false, paying = false;
+  let phone = null;   // E.164 once the visitor typed a valid number; Stripe keeps the pay button off until it has one (canConfirm)
+
+  // ---------- phone: Stripe Elements has no phone field and the session asks for it, so ours feeds updatePhoneNumber ----------
+  function normPhone(v) {
+    const raw = String(v || '').trim();
+    const d = raw.replace(/\D/g, '');
+    if (raw.startsWith('+')) return d.length >= 8 && d.length <= 15 ? '+' + d : null;
+    if (d.length === 10) return '+1' + d;
+    if (d.length === 11 && d[0] === '1') return '+' + d;
+    return null;
+  }
+  function pushPhone() {
+    if (!actions || !actions.updatePhoneNumber) return;
+    Promise.resolve(actions.updatePhoneNumber(phone)).then(r => {
+      if (r && r.type === 'error') { phoneIn.setAttribute('aria-invalid', 'true'); phoneHint.textContent = (r.error && r.error.message) || T('pay.phoneErr'); }
+    }).catch(() => { /* the next change event repaints the button */ });
+  }
+  phoneIn.addEventListener('input', () => {
+    phone = normPhone(phoneIn.value);
+    phoneIn.removeAttribute('aria-invalid'); phoneHint.textContent = T('pay.phoneHint');
+    pushPhone();
+  });
+  phoneIn.addEventListener('blur', () => {
+    if (phoneIn.value.trim() && !phone) { phoneIn.setAttribute('aria-invalid', 'true'); phoneHint.textContent = T('pay.phoneErr'); }
+  });
 
   // ---------- summary (from the cart; the session total replaces the number once Stripe answers) ----------
   const shipping = () => (cfg && cfg.pagos ? Number(cfg.envio) || 0 : 0);
@@ -105,6 +131,7 @@
       const loaded = await checkout.loadActions();
       if (loaded && loaded.type && loaded.type !== 'success') throw new Error('loadActions ' + loaded.type);
       actions = loaded.actions;
+      if (phone) pushPhone();                                                          // typed while Stripe was still loading
       session = actions && actions.getSession ? actions.getSession() : session;
       form.setAttribute('aria-busy', 'false');
       paintSummary();
@@ -136,7 +163,7 @@
     paying = false; paintSubmit();
   });
   $('#pay-retry').addEventListener('click', () => location.reload());
-  document.addEventListener('hoe:lang', paintSummary);
+  document.addEventListener('hoe:lang', () => { paintSummary(); if (!phoneIn.hasAttribute('aria-invalid')) phoneHint.textContent = T('pay.phoneHint'); });
   document.addEventListener('hoe:cart', paintSummary);
 
   if (!C.get().items.length) { location.replace('carrito.html'); return; }
