@@ -141,6 +141,9 @@
         data.items.forEach(p => C.get().items.filter(it => it.sku === p.sku).forEach(it => C.update(it.id, { price: Number(p.precio) || it.price })));
         backToCart('cart.priceChanged'); return;
       }
+      if (status === 400 && data.error === 'receta_archivo' && Array.isArray(data.items)) {
+        C.dropFiles(data.items.map(p => p.sku)); backToCart('cart.needFile'); return;
+      }
       if (status === 400 && data.error === 'no_disponible' && Array.isArray(data.items)) {
         const gone = new Set(data.items.filter(p => p.motivo !== 'precio').map(p => p.sku));
         C.get().items.filter(it => gone.has(it.sku)).forEach(it => C.remove(it.id));

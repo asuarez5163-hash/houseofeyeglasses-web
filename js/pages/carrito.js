@@ -33,6 +33,8 @@
     const items = C.get().items, sh = C.ship();
     if (!items.length) return null;
     if (!sh) return { text: T('cart.needZip'), href: editHref(items[0], 1) };
+    const noFile = items.find(C.fileMissing);
+    if (noFile) return { text: T('cart.needFile'), href: editHref(noFile, 3) };
     const noPd = items.find(C.pdMissing);
     if (noPd) return { text: T('cart.needPd'), href: editHref(noPd, 3) };
     const noDoc = items.find(C.proofMissing);
@@ -54,6 +56,7 @@
     const rx = it.rx || {};
     if (rx.path === 'none' || it.use === 'non-rx') return T('cart.rxNone');
     if (it.use === 'readers') return fill(T('cart.readers'), { p: rx.readers || '' });
+    if (rx.path === 'upload') { const p = C.pdText(rx.pd); return `${T('cart.rxUp')} (${(rx.file && rx.file.name) || '—'})${p ? ` · ${T('cart.pd')} ${p}` : ''}`; }
     const pdt = C.pdText(rx.pd);
     const pd = pdt ? `${T('cart.pd')} ${pdt}` : T('cart.pdStore');
     const doc = rx.doc && rx.doc.name ? ` · ${fill(T('cart.docIs'), { name: rx.doc.name })}` : '';
@@ -186,6 +189,9 @@
       if (err && err.status === 409 && Array.isArray(data.items)) {
         data.items.forEach(p => C.get().items.filter(it => it.sku === p.sku).forEach(it => C.update(it.id, { price: Number(p.precio) || it.price })));
         say(T('cart.priceChanged')); render(); return;
+      }
+      if (err && err.status === 400 && data.error === 'receta_archivo' && Array.isArray(data.items)) {
+        C.dropFiles(data.items.map(p => p.sku)); render(); return;                      // the uploaded file expired: the notice asks to upload it again
       }
       if (err && err.status === 400 && data.error === 'no_disponible' && Array.isArray(data.items)) {
         const gone = new Set(data.items.filter(p => p.motivo !== 'precio').map(p => p.sku));

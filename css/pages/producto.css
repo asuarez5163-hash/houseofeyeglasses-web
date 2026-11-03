@@ -204,6 +204,23 @@ details.cfg-step[open]:not(.is-closing) .cfg-body { opacity: 1; transition-delay
 .cfg .rxf-pd-in { width: 96px; height: 44px; font-size: 16px; }
 .rxf-pd-switch { justify-self: start; padding: 8px 0; background: none; border: 0; font: inherit; font-size: var(--fs-small); color: var(--ink-2); cursor: pointer; }
 .rxf-pd-switch:hover { color: var(--ink); }
+/* how the prescription comes: typed or uploaded (photo / PDF) */
+.rxf-mode { display: flex; flex-wrap: wrap; gap: 4px 28px; padding: 6px 0 0; }
+.rxf-mode-note { margin: 4px 0 6px; max-width: 56ch; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); }
+.rxf-up { margin: 10px 0 4px; padding: 18px; border: 1px dashed var(--line); transition: border-color .2s var(--ease-out), background-color .2s var(--ease-out); }
+.rxf-up.is-over { border-color: var(--gold); background: rgba(201, 163, 90, .06); }
+.rxf-up.has-file { border-style: solid; border-color: var(--gold-2); }
+.rxf-up-btn { display: inline-flex; align-items: center; gap: 10px; }
+.rxf-up-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.rxf-up-hint { margin: 10px 0 0; max-width: 54ch; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-3); }
+.rxf-up-busy { margin: 0; font-size: 15px; color: var(--ink-2); }
+.rxf-up-file { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; align-items: center; gap: 14px; }
+.rxf-up-thumb, .rxf-up-icon { width: 56px; height: 56px; object-fit: cover; background: var(--paper); }
+.rxf-up-icon { display: grid; place-items: center; font: 500 11px/1 var(--font-ui); letter-spacing: .1em; color: var(--ink-paper); }
+.rxf-up-meta { display: grid; gap: 2px; min-width: 0; font-size: var(--fs-small); color: var(--ink-2); }
+.rxf-up-meta b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 400; font-size: 15px; color: var(--ink); }
+.rxf-up-x { padding: 8px 0; background: none; border: 0; font: inherit; font-size: var(--fs-small); color: var(--ink-2); cursor: pointer; }
+.rxf-up-err { margin: 12px 0 0; padding-left: 12px; border-left: 1px solid #e38b78; font-size: var(--fs-small); color: #e38b78; }
 /* the eye doctor, only in the states that ask us to verify the prescription */
 .rxf-doc { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
 .rxf-doc .rxf-eye-h { margin-bottom: 6px; }

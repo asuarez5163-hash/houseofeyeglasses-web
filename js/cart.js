@@ -45,10 +45,14 @@
   // items that still lack the eye doctor where the ZIP's state asks for it (table: js/data/rx-states.js; loaded by the pages that call this)
   const needsDoc = it => { const sh = ship(), R = window.hoeRxStates; return !!(sh && R && R.strict(sh.state) && (it.use === 'single' || it.use === 'progressive')); };
   const hasDoc = it => { const d = it.rx && it.rx.doc; return !!(d && String(d.name || '').trim().length >= 2 && String(d.phone || '').replace(/\D/g, '').length >= 10); };
+  const hasFile = it => !!(it.rx && it.rx.path === 'upload' && it.rx.file && it.rx.file.id);
+  const fileMissing = it => !!(it.rx && it.rx.path === 'upload') && !hasFile(it);      // uploaded and then gone (30 days) → upload again
   const needsRx = it => it.use === 'single' || it.use === 'progressive';
   const pdMissing = it => needsRx(it) && !pdText(it.rx && it.rx.pd);                  // the PD is always the visitor's own (nobody measures it for them)
-  const proofMissing = it => needsDoc(it) && !hasDoc(it);
-  const rxIssues = () => get().items.filter(it => pdMissing(it) || proofMissing(it));
+  const proofMissing = it => needsDoc(it) && !hasDoc(it) && !hasFile(it);           // an uploaded copy, or typed numbers with the doctor
+  const rxIssues = () => get().items.filter(it => fileMissing(it) || pdMissing(it) || proofMissing(it));
+  // the Worker said an uploaded file is gone: those items keep the rest and ask for the file again
+  const dropFiles = skus => { const set = new Set(skus); get().items.filter(it => set.has(it.sku) && it.rx && it.rx.path === 'upload').forEach(it => update(it.id, { rx: Object.assign({}, it.rx, { file: null }) })); };
   const count = () => get().items.length;
   const total = () => get().items.reduce((a, i) => a + (Number(i.price) || 0), 0);
   const price = n => (window.hoeCatalog ? window.hoeCatalog.price(n) : '$' + n);
@@ -64,6 +68,7 @@
   const rxLine = (rx, use) => {
     if (!rx || rx.path === 'none' || use === 'non-rx') return T('cart.rxNone');
     if (use === 'readers') return `+${rx.readers || ''}`;
+    if (rx.path === 'upload') { const p = pdText(rx.pd); return `${T('cart.rxUp')}${p ? ` · PD ${p}` : ''}`; }
     const s = v => (!v || Number(v) === 0 ? '0.00' : (Number(v) > 0 ? '+' : '−') + Math.abs(Number(v)).toFixed(2));
     const pdt = pdText(rx.pd);
     const pd = pdt ? `PD ${pdt}` : T('cart.pdStore');
@@ -134,5 +139,5 @@
   };
   const order = sid => fetchJson(API + '/pedido?s=' + encodeURIComponent(sid), { method: 'GET' }, 20000);
 
-  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, ship, setShip, pdText, rxIssues, pdMissing, proofMissing, dropped: () => dropped, KEY, API, config, pay, order };
+  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, ship, setShip, pdText, rxIssues, pdMissing, proofMissing, fileMissing, dropFiles, dropped: () => dropped, KEY, API, config, pay, order };
 })();

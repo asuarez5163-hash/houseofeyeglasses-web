@@ -65,7 +65,7 @@
   const editing = editId && window.hoeCart ? window.hoeCart.get().items.find(i => i.id === editId && i.sku === frame.id) : null;
   const LOCKED = ['anti-reflective', 'scratch'];   // always included, never shown as a choice
 
-  const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'own', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, confirm: false, readers: '' });
+  const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'own', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, file: null, confirm: false, readers: '' });
   const loadRx = src => {   // a saved package (maybe from an older shape of the form) → today's shape
     const rx = freshRx();
     if (!src || typeof src !== 'object') return rx;
@@ -76,6 +76,7 @@
       rx.pd.kind = src.pd.kind === 'one' || (!src.pd.kind && src.pd.total && !(src.pd.od && src.pd.os)) ? 'one' : 'two';   // older carts only have the single number
     }
     if (src.doc && typeof src.doc === 'object') { rx.doc.name = src.doc.name || ''; rx.doc.phone = src.doc.phone || ''; }
+    if (src.path === 'upload' && src.file && src.file.id) { rx.path = 'upload'; rx.file = { id: src.file.id, name: src.file.name || '', type: src.file.type || '', size: src.file.size || 0 }; }
     rx.confirm = !!src.confirm;
     rx.readers = src.readers || '';
     return rx;
@@ -357,6 +358,73 @@
         <div class="rx-field"><label for="rx-doc-phone">${T('rx.docPhone')}</label><input class="rx-input" id="rx-doc-phone" data-doc="phone" type="tel" inputmode="tel" maxlength="16" autocomplete="off" value="${esc(state.rx.doc.phone)}"></div>
       </div>
     </div>`;
+  // ---- uploaded prescription (photo or PDF) instead of typing it: the Worker keeps it, the Central downloads it (lib/optica/recetas) ----
+  let rxUp = false;                                    // the Worker's /config said rx:true (an upload store is there)
+  let upBusy = false, upErr = '', upThumb = '';        // the thumbnail is an object URL, only for this visit
+  let modeTouched = !!(editing && editing.rx && editing.rx.path === 'upload');
+  const uploading = () => rxUp && state.rx.path === 'upload';
+  // a state that asks for the doctor starts on "Upload" (a copy of the prescription is the proof); elsewhere on typing; the visitor can switch
+  const autoMode = () => { if (!modeTouched && rxUp) state.rx.path = needsDoctor() ? 'upload' : 'now'; };
+  const modeBlock = () => !rxUp ? '' : `<div class="rxf-mode" role="radiogroup" aria-label="${T('rx.modeAria')}">
+        <label class="rxf-pd-opt" data-press><input type="radio" name="rxmode" value="now"${uploading() ? '' : ' checked'}><span class="dot"></span><span>${T('rx.modeType')}</span></label>
+        <label class="rxf-pd-opt" data-press><input type="radio" name="rxmode" value="upload"${uploading() ? ' checked' : ''}><span class="dot"></span><span>${T('rx.modeUpload')}</span></label>
+      </div>
+      <p class="rxf-mode-note">${fill(T(needsDoctor() ? 'rx.modeStrict' : 'rx.modeOpen'), { state: stName(state.st) })}</p>`;
+  const fmtSize = n => (n >= 1048576 ? (n / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(n / 1024)) + ' KB');
+  const UP_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 16v4h16v-4"/></svg>';
+  const upBlock = () => {
+    const f = state.rx.file;
+    const body = upBusy ? `<p class="rxf-up-busy" role="status">${T('rx.upBusy')}</p>`
+      : f && f.id ? `<div class="rxf-up-file">${upThumb ? `<img class="rxf-up-thumb" src="${upThumb}" alt="">` : `<span class="rxf-up-icon" aria-hidden="true">${f.type === 'application/pdf' ? 'PDF' : 'IMG'}</span>`}
+          <span class="rxf-up-meta"><b>${esc(f.name || 'receta')}</b><span>${f.size ? fmtSize(f.size) + ' · ' : ''}${T('rx.upOk')}</span></span>
+          <button type="button" class="link-u rxf-up-x" id="rx-up-x">${T('rx.upRemove')}</button></div>`
+      : `<button type="button" class="btn rxf-up-btn" id="rx-up-btn">${UP_ICON}<span>${T('rx.upBtn')}</span></button><p class="rxf-up-hint">${T('rx.upHint')}</p>`;
+    return `<div class="rxf-up${f && f.id ? ' has-file' : ''}" id="rx-up">${body}${upErr ? `<p class="rxf-up-err" role="alert">${esc(upErr)}</p>` : ''}<input type="file" id="rx-file" accept="image/*,application/pdf,.pdf,.heic,.heif" hidden></div>`;
+  };
+  // a phone photo is 3–8 MB: big JPG/PNG/WebP photos go as a JPEG of 2400 px at most (still sharp for the optician); PDF and HEIC go as they are
+  async function shrink(file) {
+    if (!/^image\/(jpeg|png|webp)$/.test(file.type) || file.size <= 1.5 * 1048576 || !window.createImageBitmap) return file;
+    try {
+      const bmp = await createImageBitmap(file);
+      const k = Math.min(1, 2400 / Math.max(bmp.width, bmp.height));
+      const c = document.createElement('canvas'); c.width = Math.round(bmp.width * k); c.height = Math.round(bmp.height * k);
+      c.getContext('2d').drawImage(bmp, 0, 0, c.width, c.height);
+      const blob = await new Promise(r => c.toBlob(r, 'image/jpeg', 0.85));
+      return blob && blob.size < file.size ? new File([blob], (file.name || 'receta').replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' }) : file;
+    } catch (e) { return file; }
+  }
+  const UP_ERR = { tipo: 'rx.upErrType', vacio: 'rx.upErrType', grande: 'rx.upErrBig', muchas: 'rx.upErrMany', sin_almacen: 'rx.upErrOff' };
+  async function upload(file) {
+    if (!file || upBusy || !window.hoeCart) return;
+    upErr = '';
+    if (file.size > 25 * 1048576) { upErr = T('rx.upErrBig'); renderRx(); return; }
+    upBusy = true; renderRx();
+    try {
+      const f = await shrink(file);
+      if (f.size > 6 * 1048576) throw Object.assign(new Error('big'), { code: 'grande' });
+      const ctl = typeof AbortController === 'function' ? new AbortController() : null;
+      const t = setTimeout(() => ctl && ctl.abort(), 60000);
+      const r = await fetch(window.hoeCart.API + '/rx?n=' + encodeURIComponent(String(f.name || 'receta').slice(0, 60)),
+        { method: 'POST', body: f, headers: { 'Content-Type': f.type || 'application/octet-stream' }, mode: 'cors', credentials: 'omit', signal: ctl ? ctl.signal : undefined });
+      clearTimeout(t);
+      const d = await r.json().catch(() => ({}));
+      if (!r.ok || !d.id) throw Object.assign(new Error('up'), { code: d.error });
+      if (upThumb) URL.revokeObjectURL(upThumb);
+      upThumb = /^image\/(jpeg|png|webp)$/.test(d.type) ? URL.createObjectURL(f) : '';
+      state.rx.file = { id: d.id, name: d.name, type: d.type, size: d.size };
+      showErrs(3, []);
+    } catch (e) {
+      upErr = T(UP_ERR[e && e.code] || 'rx.upErrNet');
+    }
+    upBusy = false; renderRx();
+    const back = $('#rx-up-x') || $('#rx-up-btn'); if (back) back.focus({ preventScroll: true });
+  }
+  if (window.hoeCart && window.hoeCart.config) window.hoeCart.config().then(c => {
+    rxUp = !!(c && c.rx);
+    if (!rxUp && state.rx.path === 'upload') state.rx.path = 'now';
+    renderRx(); renderLens();
+  });
+
   function renderRx() {
     const rx = state.rx;
     let inner = '';
@@ -365,10 +433,13 @@
     } else if (state.use === 'readers') {
       inner = `<div class="rx-field rxf-one"><label for="rx-readers">${T('rx.readers')}</label><select class="rx-select" id="rx-readers">${addOptions(rx.readers)}</select></div>`;
     } else {
-      inner = `${eyeRow('od')}${eyeRow('os')}
-        ${state.use === 'progressive' ? `<div class="rx-field rxf-one"><label for="rx-add">${T('rx.add')}</label><select class="rx-select" id="rx-add">${addOptions(rx.add)}</select></div>` : ''}
+      autoMode();
+      const up = uploading();
+      inner = `${modeBlock()}
+        ${up ? upBlock() : `${eyeRow('od')}${eyeRow('os')}
+        ${state.use === 'progressive' ? `<div class="rx-field rxf-one"><label for="rx-add">${T('rx.add')}</label><select class="rx-select" id="rx-add">${addOptions(rx.add)}</select></div>` : ''}`}
         ${pdBlock()}
-        ${docBlock()}
+        ${up ? '' : docBlock()}
         <label class="rxf-confirm" data-press><input type="checkbox" id="rx-confirm"${rx.confirm ? ' checked' : ''}><span class="dot"></span><span>${T('rx.confirm')}</span></label>
         <p class="rxf-help"><a class="link-u" href="receta.html">${T('rx.howTo')}</a></p>`;
     }
@@ -380,11 +451,15 @@
     const rx = state.rx, errs = [];
     if (state.use === 'non-rx') return errs;
     if (state.use === 'readers') { if (!rx.readers) errs.push(T('rx.errReaders')); return errs; }
-    ['od', 'os'].forEach(e => { const r = rx[e]; if (Number(r.cyl) !== 0 && !(/^\d{1,3}$/.test(r.axis) && Number(r.axis) >= 1 && Number(r.axis) <= 180)) errs.push(fill(T('rx.errAxis'), { eye: T('rx.' + e) })); });
-    if (state.use === 'progressive' && !rx.add) errs.push(T('rx.errAdd'));
+    const up = uploading();
+    if (up) { if (!(rx.file && rx.file.id)) errs.push(T('rx.errUpload')); }
+    else {
+      ['od', 'os'].forEach(e => { const r = rx[e]; if (Number(r.cyl) !== 0 && !(/^\d{1,3}$/.test(r.axis) && Number(r.axis) >= 1 && Number(r.axis) <= 180)) errs.push(fill(T('rx.errAxis'), { eye: T('rx.' + e) })); });
+      if (state.use === 'progressive' && !rx.add) errs.push(T('rx.errAdd'));
+    }
     if (rx.pd.kind === 'one') { const v = num(rx.pd.total); if (!(v >= 40 && v <= 80)) errs.push(T('rx.errPd')); }
     else { const a = num(rx.pd.od), b = num(rx.pd.os); if (!(a >= 20 && a <= 45 && b >= 20 && b <= 45 && a + b >= 40 && a + b <= 80)) errs.push(T('rx.errPd2')); }
-    if (needsDoctor()) {
+    if (!up && needsDoctor()) {                 // an uploaded copy already is the proof; typed numbers need the doctor to verify them
       if (rx.doc.name.trim().length < 2) errs.push(T('rx.errDocName'));
       if (rx.doc.phone.replace(/\D/g, '').length < 10) errs.push(T('rx.errDocPhone'));
     }
@@ -397,11 +472,15 @@
     const pd = rx.pd;
     if (pd.kind === 'one') rx.pd = { mode: 'own', kind: 'one', total: String(pd.total).replace(',', '.') };
     else rx.pd = { mode: 'own', kind: 'two', od: String(pd.od).replace(',', '.'), os: String(pd.os).replace(',', '.'), total: fmtMm(num(pd.od) + num(pd.os)) };
+    if (uploading() && rx.file && rx.file.id) return { path: 'upload', file: { id: rx.file.id, name: rx.file.name, type: rx.file.type, size: rx.file.size }, pd: rx.pd, confirm: rx.confirm };
+    rx.path = 'now'; delete rx.file;
     if (!needsDoctor()) delete rx.doc; else { rx.doc.name = rx.doc.name.trim(); rx.doc.phone = rx.doc.phone.trim(); }
     return rx;
   }
   bodyEl(3).addEventListener('change', e => {
     const el = e.target, rx = state.rx;
+    if (el.name === 'rxmode') { rx.path = el.value; modeTouched = true; upErr = ''; showErrs(3, []); renderRx(); renderLens(); const r = bodyEl(3).querySelector(`input[name="rxmode"][value="${el.value}"]`); if (r) r.focus({ preventScroll: true }); return; }
+    if (el.id === 'rx-file') { const f = el.files && el.files[0]; el.value = ''; upload(f); return; }
     if (el.dataset.eye) {
       rx[el.dataset.eye][el.dataset.f] = el.value;
       if (el.dataset.f === 'cyl') { const ax = $(`#rx-${el.dataset.eye}-axis`); const on = Number(el.value) !== 0; ax.disabled = !on; ax.placeholder = on ? '1–180' : '—'; if (!on) { ax.value = ''; rx[el.dataset.eye].axis = ''; } }
@@ -421,6 +500,14 @@
       state.rx.doc[el.dataset.doc] = clean;
     }
   });
+  bodyEl(3).addEventListener('click', e => {
+    if (e.target.closest('#rx-up-btn')) { const i = $('#rx-file'); if (i) i.click(); return; }
+    if (e.target.closest('#rx-up-x')) { state.rx.file = null; if (upThumb) { URL.revokeObjectURL(upThumb); upThumb = ''; } renderRx(); const b = $('#rx-up-btn'); if (b) b.focus({ preventScroll: true }); return; }
+  });
+  // drop a file on the upload area (desktop)
+  bodyEl(3).addEventListener('dragover', e => { const z = e.target.closest && e.target.closest('#rx-up'); if (!z) return; e.preventDefault(); z.classList.add('is-over'); });
+  bodyEl(3).addEventListener('dragleave', e => { const z = e.target.closest && e.target.closest('#rx-up'); if (z && !z.contains(e.relatedTarget)) z.classList.remove('is-over'); });
+  bodyEl(3).addEventListener('drop', e => { const z = e.target.closest && e.target.closest('#rx-up'); if (!z) return; e.preventDefault(); z.classList.remove('is-over'); upload(e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]); });
   bodyEl(3).addEventListener('click', e => {
     if (!e.target.closest('#pd-switch')) return;
     const pd = state.rx.pd;
@@ -506,7 +593,7 @@
 
   // ---- step 4: lenses (material + extras in one list) + the sample lens ----
   const maxPower = () => {
-    if (state.use === 'non-rx' || state.use === 'readers') return null;
+    if (state.use === 'non-rx' || state.use === 'readers' || uploading()) return null;      // uploaded: the optician reads the power from the file
     return Math.max(...['od', 'os'].map(e => Math.abs(Number(state.rx[e].sph) || 0) + Math.abs(Number(state.rx[e].cyl) || 0)));
   };
   const MATERIALS = () => {
@@ -603,6 +690,7 @@
     if (state.use === 'non-rx') return T('rx.sumNone');
     if (state.use === 'readers') return rx.readers ? fill(T('rx.sumReaders'), { p: rx.readers }) : '';
     const pd = rx.pd.kind === 'one' ? `${T('rx.pd')} ${rx.pd.total}` : `${T('rx.pd')} ${rx.pd.od}/${rx.pd.os}`;
+    if (uploading()) return `${T('rx.sumUploaded')} · ${pd}`;
     return `${T('rx.od')} ${fmt(rx.od.sph)} / ${T('rx.os')} ${fmt(rx.os.sph)} · ${pd}`;
   };
   const useName = () => loc(OPTS.uses.find(u => u.id === state.use)).name;
