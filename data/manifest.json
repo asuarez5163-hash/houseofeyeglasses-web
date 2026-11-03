@@ -1,13 +1,13 @@
 {
- "v": "2026-11-03T21:49:49Z",
- "total": 6076,
+ "v": "2026-11-03T23:09:55Z",
+ "total": 6032,
  "chunks": {
-  "men": "data/c/men.c9883836.json",
-  "women": "data/c/women.a6603035.json",
+  "men": "data/c/men.1a8f379b.json",
+  "women": "data/c/women.243afd26.json",
   "kids": "data/c/kids.11708856.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.496c0661.json",
+ "search": "data/s/index.5c8b68fc.json",
  "featured": [
   "HOE-W-155",
   "HOE-M-72",
