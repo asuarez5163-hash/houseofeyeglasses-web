@@ -1,6 +1,6 @@
 // Carrito (carrito.html): una línea por paquete desde js/cart.js (localStorage 'hoe-cart'): la foto del armazón (vista 1 del
 // sprite) sobre loseta --paper, nombre, color · código · medida, precio real, "Lentes: uso · material", "Receta: OD/OI" con
-// Editar (vuelve a producto.html?id=<sku>&edit=&step=2), Quitar con confirmación en línea; a la derecha el resumen (armazones ·
+// Editar (vuelve a producto.html?id=<sku>&edit=&step=3: el paso 3 es la receta), Quitar con confirmación en línea; a la derecha el resumen (armazones ·
 // lentes · envío · TOTAL real) y un solo botón: hoeCart.pay() → el Central cobra el precio del Central y abre Stripe Checkout;
 // si el cobro está apagado o el Central no contesta, el mismo botón abre el aviso honesto (WhatsApp con SKU · nombre · color ·
 // precio). "Qué pasa después" en tres líneas.
@@ -25,6 +25,26 @@
   const s = v => (!v || Number(v) === 0 ? '0.00' : (Number(v) > 0 ? '+' : MINUS) + Math.abs(Number(v)).toFixed(2));
 
   const list = $('#cart-list');
+  const RXS = window.hoeRxStates;
+  const stateName = c => (RXS ? RXS.nameOf(c, L()) : c);
+  // what still blocks the payment: no ZIP yet (older carts), or an item that needs the eye doctor in this state; each message links to the step that fixes it
+  const editHref = (it, step) => `producto.html?id=${encodeURIComponent(it.sku)}&edit=${encodeURIComponent(it.id)}&step=${step}`;
+  function blocker() {
+    const items = C.get().items, sh = C.ship();
+    if (!items.length) return null;
+    if (!sh) return { text: T('cart.needZip'), href: editHref(items[0], 1) };
+    const bad = C.rxIssues();
+    if (bad.length) return { text: fill(T('cart.needDoc'), { state: stateName(sh.state) }), href: editHref(bad[0], 3) };
+    return null;
+  }
+  function paintShip() {
+    const sh = C.ship(), el = $('#cart-shipto'), msg = $('#cart-rx-msg'), first = C.get().items[0];
+    el.hidden = !sh || !first;
+    if (sh && first) el.innerHTML = `${esc(fill(T('cart.shipTo'), { zip: sh.zip, state: stateName(sh.state) }))} · <a class="link-u" href="${esc(editHref(first, 1))}">${esc(T('cart.shipChange'))}</a>`;
+    const b = blocker();
+    msg.hidden = !b;
+    msg.innerHTML = b ? `${esc(b.text)} <a class="link-u" href="${esc(b.href)}">${esc(T('cart.fixIt'))}</a>` : '';
+  }
   let confirming = null;   // id of the line with the "remove?" question open
 
   const eye = r => (r ? `${s(r.sph)}${Number(r.cyl) ? ` ${s(r.cyl)}×${r.axis || '—'}` : ''}` : '0.00');
@@ -32,8 +52,10 @@
     const rx = it.rx || {};
     if (rx.path === 'none' || it.use === 'non-rx') return T('cart.rxNone');
     if (it.use === 'readers') return fill(T('cart.readers'), { p: rx.readers || '' });
-    const pd = rx.pd && rx.pd.total ? `${T('cart.pd')} ${rx.pd.total}` : T('cart.pdStore');
-    return `${T('rx.od')} ${eye(rx.od)} / ${T('rx.os')} ${eye(rx.os)} · ${pd}`;
+    const pdt = C.pdText(rx.pd);
+    const pd = pdt ? `${T('cart.pd')} ${pdt}` : T('cart.pdStore');
+    const doc = rx.doc && rx.doc.name ? ` · ${fill(T('cart.docIs'), { name: rx.doc.name })}` : '';
+    return `${T('rx.od')} ${eye(rx.od)} / ${T('rx.os')} ${eye(rx.os)} · ${pd}${doc}`;
   }
   const sizeOf = it => (it.size ? `${it.size.lens} □ ${it.size.bridge} ${it.size.temple}` : '');
   function line(it) {
@@ -46,7 +68,7 @@
         <div class="cart-line-top"><span class="cart-line-name">${esc(it.name)}</span><span class="cart-line-price">${C.price(it.price)}</span></div>
         <p class="cart-line-meta">${esc(C.colorOf(it))}${it.cc ? ` · ${esc(it.cc)}` : ''} · ${esc(T('band.' + it.band))} · ${esc(sizeOf(it))}</p>
         <p class="cart-line-meta"><span class="k">${T('cart.lenses')}:</span> ${esc(lenses)} · ${esc(T('prod.included'))}</p>
-        <p class="cart-line-meta cart-line-rx"><span class="k">${T('cart.rx')}:</span> <b>${esc(rxText(it))}</b> <a class="cart-line-edit" href="producto.html?id=${encodeURIComponent(it.sku)}&edit=${encodeURIComponent(it.id)}&step=2">${T('cart.edit')}</a></p>
+        <p class="cart-line-meta cart-line-rx"><span class="k">${T('cart.rx')}:</span> <b>${esc(rxText(it))}</b> <a class="cart-line-edit" href="producto.html?id=${encodeURIComponent(it.sku)}&edit=${encodeURIComponent(it.id)}&step=3">${T('cart.edit')}</a></p>
         <p class="cart-line-actions"><button type="button" data-ask="${esc(it.id)}">${T('cart.remove')}</button></p>
         <p class="cart-confirm" data-confirm="${esc(it.id)}"${confirming === it.id ? '' : ' hidden'}><span>${T('cart.removeQ')}</span><button type="button" data-yes="${esc(it.id)}">${T('cart.yes')}</button><button type="button" data-no="${esc(it.id)}">${T('cart.no')}</button></p>
       </div>
@@ -102,6 +124,7 @@
     else ship.textContent = T('cart.sumShipV');
     $('#cart-sum-total-v').textContent = C.price(C.total() + shipping());
     $('#cart-pay-note').hidden = !canPay();
+    paintShip();
     const cleaned = $('#cart-cleaned'); if (cleaned) { cleaned.hidden = !C.dropped(); cleaned.textContent = T('cart.cleaned'); }
     const emptyNote = $('#cart-empty-cleaned'); if (emptyNote) { emptyNote.hidden = !C.dropped(); emptyNote.textContent = T('cart.cleaned'); }
     document.title = T('cart.meta');
@@ -147,6 +170,8 @@
   btn.addEventListener('click', () => {
     if (btn.disabled) return;
     say('');
+    const block = blocker();
+    if (block) { paintShip(); $('#cart-rx-msg').scrollIntoView({ block: 'center', behavior: reduced.matches ? 'auto' : 'smooth' }); return; }
     if (!canPay()) { showProto(cfg === null); return; }
     if (cfg.checkout === 'elements') { location.href = 'pago.html'; return; }   // the payment page inside the site (Worker updated); else the hosted Stripe page below
     busy(true);

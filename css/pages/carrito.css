@@ -46,6 +46,8 @@ main.cart-page { padding-bottom: 0; }
 .cart-sum-total dt { font: 300 22px/1.2 var(--font-ui); color: var(--ink); }
 .cart-sum-total dd { font: 300 22px/1.2 var(--font-ui); color: var(--gold); }
 .cart-checkout { margin-top: 8px; width: 100%; }
+.cart-shipto { margin: 16px 0 0; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); }
+.cart-shipto[hidden] { display: none; }
 .cart-note { margin: 18px 0 0; display: flex; align-items: flex-start; gap: 12px; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-2); }
 .cart-note + .cart-note { margin-top: 10px; }
 .cart-note svg { flex: none; width: 20px; height: 20px; color: var(--gold); stroke-width: 1.4; margin-top: 1px; }

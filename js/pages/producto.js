@@ -3,12 +3,14 @@
 // en foco (GSAP fade + scale; sin GSAP está desde el primer pintado). Variantes = hermanos de color (f.v): cada punto enlaza a
 // producto.html?id=<hermano> (su propia URL canónica) y, bajo el puntero, muestra su foto en la vista 1. Precio real + "lentes
 // incluidos", stock (st<=0 → agotado, botón deshabilitado, noindex), Details con marca · modelo · código · color · lente ·
-// material · forma · aro · medida, JSON-LD Product, y el configurador de lentes en TRES pasos (uso → receta → lentes) con barra
-// pegajosa (nombre + precio) y "Agregar al carrito" (el botón dice "Añadido ✓" 1.2 s y se abre el cajón). En el paso 3 la lente
+// material · forma · aro · medida, JSON-LD Product, y el configurador de lentes en CUATRO pasos (código postal → uso → receta → lentes) con barra
+// pegajosa (nombre + precio) y "Agregar al carrito" (el botón dice "Añadido ✓" 1.2 s y se abre el cajón). En el paso 4 la lente
 // de muestra (partial lens_demo, .cfg-demo) reacciona a la opción marcada o bajo el puntero.
 // Debajo, "También te pueden gustar": el mismo modelo en otros colores y luego la misma forma (window.hoeFrameCard).
 // Datos: js/catalog.js (hoeCatalog.byId: el chunk sale de la letra del SKU), js/data/lenses.js (opciones), js/cart.js (carrito).
 // La receta nunca se "manda después de pagar": se escribe aquí y la revisa el óptico antes de que el laboratorio empiece.
+// El código postal (paso 1) fija el estado: en los estados de js/data/rx-states.js (STRICT) el paso 3 pide además el doctor para verificar la receta.
+// El DP se pide por ojo (derecho / izquierdo); "solo tengo un número" deja el DP total. El "?" del DP abre una guía con dibujo sin salir de la página.
 (() => {
   'use strict';
   const main = document.querySelector('main.pdp');
@@ -63,23 +65,30 @@
   const editing = editId && window.hoeCart ? window.hoeCart.get().items.find(i => i.id === editId && i.sku === frame.id) : null;
   const LOCKED = ['anti-reflective', 'scratch'];   // always included, never shown as a choice
 
-  const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'store', total: '' }, confirm: false, readers: '' });
+  const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'store', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, confirm: false, readers: '' });
   const loadRx = src => {   // a saved package (maybe from an older shape of the form) → today's shape
     const rx = freshRx();
     if (!src || typeof src !== 'object') return rx;
     ['od', 'os'].forEach(e => { if (src[e]) { rx[e].sph = src[e].sph || '0.00'; rx[e].cyl = src[e].cyl || '0.00'; rx[e].axis = src[e].axis || ''; } });
     rx.add = src.add || (src.od && src.od.add) || '';
-    if (src.pd) { rx.pd.mode = src.pd.mode === 'store' || !src.pd.total ? 'store' : 'own'; rx.pd.total = src.pd.total || ''; }
+    if (src.pd) {
+      rx.pd.od = src.pd.od || ''; rx.pd.os = src.pd.os || ''; rx.pd.total = src.pd.total || '';
+      rx.pd.mode = src.pd.mode === 'own' && (src.pd.total || (src.pd.od && src.pd.os)) ? 'own' : 'store';
+      rx.pd.kind = src.pd.kind === 'one' || (!src.pd.kind && src.pd.total && !(src.pd.od && src.pd.os)) ? 'one' : 'two';   // older carts only have the single number
+    }
+    if (src.doc && typeof src.doc === 'object') { rx.doc.name = src.doc.name || ''; rx.doc.phone = src.doc.phone || ''; }
     rx.confirm = !!src.confirm;
     rx.readers = src.readers || '';
     return rx;
   };
+  const ship0 = window.hoeCart && window.hoeCart.ship ? window.hoeCart.ship() : null;   // the ZIP the visitor already gave (one per cart)
   const state = {
+    zip: ship0 ? ship0.zip : '', st: ship0 ? ship0.state : '',
     use: editing ? editing.use : 'single',
     material: editing ? editing.material : null,
     extras: new Set(editing ? (editing.coatings || []).filter(id => !LOCKED.includes(id)) : []),
     rx: loadRx(editing && editing.rx),
-    done: { 1: !!editing, 2: !!editing, 3: !!editing },
+    done: { 1: !!(editing && ship0), 2: !!editing, 3: !!editing, 4: !!editing },
   };
 
   /* =========================================================
@@ -231,6 +240,7 @@
      ========================================================= */
   const cfg = $('#cfg');
   const cta = $('#pdp-cta');
+  const STEPS = [1, 2, 3, 4];   // 1 ZIP · 2 use · 3 prescription · 4 lenses
   const stepEl = n => $('#cfg-s' + n);
   const bodyEl = n => $('#cfg-body' + n);
   const price = o => (o && o.price != null ? `<span class="price">+ ${CAT.price(o.price)}</span>` : '');   // lens options carry no surcharge today (js/data/lenses.js price: null): the frame price includes them
@@ -243,20 +253,64 @@
   const nextBtn = n => `<button type="button" class="btn btn-gold cfg-next" data-next="${n}"><span>${T('cfg.next')}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></button>`;
   const errBox = n => `<div class="rxf-errs" id="cfg-errs${n}" hidden></div>`;
 
-  // ---- step 1: use (picking one moves on to the prescription) ----
-  const USES = () => OPTS.uses.filter(u => !(isSun && u.id === 'readers'));
-  function renderStep1() {
-    bodyEl(1).innerHTML = `<div class="cfg-body-in"><div class="cfg-opts">${USES().map(u => opt('radio', 'use', u, u.id === state.use)).join('')}</div></div>`;
+  // ---- step 1: ZIP code. The state it belongs to decides whether step 3 also asks for the eye doctor (table: js/data/rx-states.js) ----
+  const RXS = window.hoeRxStates || { stateOf: () => null, nameOf: c => String(c), strict: () => true, codes: () => [], has: () => false };
+  const stName = c => RXS.nameOf(c, L());
+  const needsDoctor = () => !!state.st && RXS.strict(state.st) && (state.use === 'single' || state.use === 'progressive');
+  const zipNote = () => (state.st ? fill(T(RXS.strict(state.st) ? 'cfg.zipStrict' : 'cfg.zipOpen'), { state: stName(state.st) }) : '');
+  const NO_PICK = ['AA', 'AE', 'AP', 'FM', 'MH', 'PW'];   // found by ZIP, never listed in the "choose your state" fallback
+  function stateOptions() {
+    const codes = RXS.codes().filter(c => !NO_PICK.includes(c)).sort((a, b) => stName(a).localeCompare(stName(b), L()));
+    return `<option value="">—</option>` + codes.map(c => `<option value="${c}"${c === state.st ? ' selected' : ''}>${esc(stName(c))}</option>`).join('');
   }
-  bodyEl(1).addEventListener('click', e => {
+  function renderZip() {
+    const five = /^\d{5}$/.test(state.zip);
+    bodyEl(1).innerHTML = `<div class="cfg-body-in">
+      <div class="rx-field rxf-one rxf-zip"><label for="cfg-zip">${T('cfg.zipLabel')}</label>
+        <input class="rx-input" id="cfg-zip" type="text" inputmode="numeric" autocomplete="postal-code" maxlength="5" placeholder="33606" value="${esc(state.zip)}"></div>
+      <div class="rx-field rxf-one rxf-zip-pick" id="cfg-zip-pick"${five && !RXS.stateOf(state.zip) ? '' : ' hidden'}><label for="cfg-zip-state">${T('cfg.zipPick')}</label><select class="rx-select" id="cfg-zip-state">${stateOptions()}</select></div>
+      <p class="rxf-zipnote" id="cfg-zipnote" aria-live="polite">${esc(zipNote())}</p>
+      <p class="rxf-help">${T('cfg.zipWhy')}</p>
+      ${errBox(1)}${nextBtn(1)}</div>`;
+  }
+  function validateZip() {
+    if (!/^\d{5}$/.test(state.zip)) return [T('cfg.errZip')];
+    if (!state.st || !RXS.has(state.st)) return [T('cfg.errZipState')];
+    return [];
+  }
+  bodyEl(1).addEventListener('input', e => {
+    if (e.target.id !== 'cfg-zip') return;
+    const clean = e.target.value.replace(/\D/g, '').slice(0, 5);
+    if (clean !== e.target.value) e.target.value = clean;
+    state.zip = clean;
+    state.st = clean.length === 5 ? (RXS.stateOf(clean) || '') : '';
+    $('#cfg-zip-pick').hidden = !(clean.length === 5 && !state.st);
+    $('#cfg-zipnote').textContent = zipNote();
+    if (clean.length === 5 && !state.st) { const sel = $('#cfg-zip-state'); if (sel) sel.value = ''; }
+  });
+  bodyEl(1).addEventListener('change', e => {
+    if (e.target.id === 'cfg-zip-state') { state.st = e.target.value; $('#cfg-zipnote').textContent = zipNote(); }
+  });
+  bodyEl(1).addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.id === 'cfg-zip') { e.preventDefault(); const b = bodyEl(1).querySelector('[data-next="1"]'); if (b) b.click(); } });
+  function commitZip() {   // the ZIP is one per cart: the cart keeps it for every frame, the cart page and the payment
+    if (window.hoeCart && window.hoeCart.setShip) window.hoeCart.setShip({ zip: state.zip, state: state.st });
+    renderRx(); renderLens();
+  }
+
+  // ---- step 2: use (picking one moves on to the prescription) ----
+  const USES = () => OPTS.uses.filter(u => !(isSun && u.id === 'readers'));
+  function renderUse() {
+    bodyEl(2).innerHTML = `<div class="cfg-body-in"><div class="cfg-opts">${USES().map(u => opt('radio', 'use', u, u.id === state.use)).join('')}</div></div>`;
+  }
+  bodyEl(2).addEventListener('click', e => {
     const r = e.target.closest('input[name="use"]'); if (!r) return;
-    if (state.use !== r.value) { state.use = r.value; state.material = null; renderStep2(); renderStep3(); }
-    state.done[1] = true;
+    if (state.use !== r.value) { state.use = r.value; state.material = null; renderRx(); renderLens(); }
+    state.done[2] = true;
     renderBar();
-    openStep(2);
+    openStep(3);
   });
 
-  // ---- step 2: prescription ----
+  // ---- step 3: prescription ----
   const selOpt = (v, label, sel) => `<option value="${v}"${sel ? ' selected' : ''}>${label}</option>`;
   function powerOptions(max, cur) {
     let plus = '', minus = '';
@@ -281,7 +335,30 @@
       </div>
     </div>`;
   };
-  function renderStep2() {
+  // PD: "I don't have it" (the optician helps) or "I have it" → two boxes, one per eye (from the nose to each pupil); "I only have one number" keeps the single total.
+  const pdBlock = () => {
+    const pd = state.rx.pd, own = pd.mode === 'own', one = pd.kind === 'one';
+    const box = (id, key, label, ph) => `<div class="rx-field rxf-pd-f"><label for="${id}">${label}</label><span class="rxf-pd-mm"><input class="rx-input rxf-pd-in" id="${id}" data-pd="${key}" type="text" inputmode="decimal" maxlength="4" autocomplete="off" placeholder="${ph}" value="${esc(pd[key])}"><span aria-hidden="true">mm</span></span></div>`;
+    return `<div class="rxf-pd" role="group" aria-labelledby="rx-pd-lbl">
+        <span class="rxf-pd-lbl" id="rx-pd-lbl">${T('rx.pd')}<button type="button" class="pd-help" id="pd-help" aria-label="${T('pd.helpAria')}" aria-expanded="false" aria-controls="pd-pop"><span aria-hidden="true">?</span></button></span>
+        <label class="rxf-pd-opt" data-press><input type="radio" name="pdmode" value="store"${own ? '' : ' checked'}><span class="dot"></span><span>${T('rx.pdStore')}</span></label>
+        <label class="rxf-pd-opt" data-press><input type="radio" name="pdmode" value="own"${own ? ' checked' : ''}><span class="dot"></span><span>${T('rx.pdOwn')}</span></label>
+        <div class="rxf-pd-vals" id="rx-pd-vals"${own ? '' : ' hidden'}>
+          <div class="rxf-pd-row">${one ? box('rx-pd', 'total', T('rx.pdTotal'), '63') : box('rx-pd-od', 'od', T('rx.pdRight'), '31.5') + box('rx-pd-os', 'os', T('rx.pdLeft'), '31.5')}</div>
+          <button type="button" class="link-u rxf-pd-switch" id="pd-switch">${T(one ? 'rx.pdTwoLink' : 'rx.pdOneLink')}</button>
+        </div>
+      </div>`;
+  };
+  // the eye doctor, only where the state asks us to verify the prescription with them (js/data/rx-states.js)
+  const docBlock = () => !needsDoctor() ? '' : `<div class="rxf-doc">
+      <p class="rxf-eye-h">${T('rx.docTitle')}</p>
+      <p class="rxf-doc-why">${fill(T('rx.docWhy'), { state: stName(state.st) })}</p>
+      <div class="rxf-doc-f">
+        <div class="rx-field"><label for="rx-doc-name">${T('rx.docName')}</label><input class="rx-input" id="rx-doc-name" data-doc="name" type="text" maxlength="40" autocomplete="off" value="${esc(state.rx.doc.name)}"></div>
+        <div class="rx-field"><label for="rx-doc-phone">${T('rx.docPhone')}</label><input class="rx-input" id="rx-doc-phone" data-doc="phone" type="tel" inputmode="tel" maxlength="16" autocomplete="off" value="${esc(state.rx.doc.phone)}"></div>
+      </div>
+    </div>`;
+  function renderRx() {
     const rx = state.rx;
     let inner = '';
     if (state.use === 'non-rx') {
@@ -289,52 +366,155 @@
     } else if (state.use === 'readers') {
       inner = `<div class="rx-field rxf-one"><label for="rx-readers">${T('rx.readers')}</label><select class="rx-select" id="rx-readers">${addOptions(rx.readers)}</select></div>`;
     } else {
-      const own = rx.pd.mode === 'own';
       inner = `${eyeRow('od')}${eyeRow('os')}
         ${state.use === 'progressive' ? `<div class="rx-field rxf-one"><label for="rx-add">${T('rx.add')}</label><select class="rx-select" id="rx-add">${addOptions(rx.add)}</select></div>` : ''}
-        <div class="rxf-pd" role="radiogroup" aria-label="${T('rx.pd')}">
-          <span class="rxf-pd-lbl">${T('rx.pd')}</span>
-          <label class="rxf-pd-opt" data-press><input type="radio" name="pdmode" value="store"${own ? '' : ' checked'}><span class="dot"></span><span>${T('rx.pdStore')}</span></label>
-          <span class="rxf-pd-own"><label class="rxf-pd-opt" data-press><input type="radio" name="pdmode" value="own"${own ? ' checked' : ''}><span class="dot"></span><span>${T('rx.pdOwn')}</span></label>
-          <input class="rx-input rxf-pd-in" id="rx-pd" type="text" inputmode="decimal" maxlength="4" autocomplete="off" aria-label="${T('rx.pd')} (mm)" placeholder="mm" value="${rx.pd.total}"${own ? '' : ' disabled'}></span>
-        </div>
+        ${pdBlock()}
+        ${docBlock()}
         <label class="rxf-confirm" data-press><input type="checkbox" id="rx-confirm"${rx.confirm ? ' checked' : ''}><span class="dot"></span><span>${T('rx.confirm')}</span></label>
         <p class="rxf-help"><a class="link-u" href="receta.html">${T('rx.howTo')}</a></p>`;
     }
-    bodyEl(2).innerHTML = `<div class="cfg-body-in">${inner}${errBox(2)}${nextBtn(2)}</div>`;
+    bodyEl(3).innerHTML = `<div class="cfg-body-in">${inner}${errBox(3)}${nextBtn(3)}</div>`;
   }
-  function validateStep2() {
+  const num = v => Number(String(v == null ? '' : v).replace(',', '.'));
+  const fmtMm = n => String(Math.round(n * 10) / 10);
+  function validateRx() {
     const rx = state.rx, errs = [];
     if (state.use === 'non-rx') return errs;
     if (state.use === 'readers') { if (!rx.readers) errs.push(T('rx.errReaders')); return errs; }
     ['od', 'os'].forEach(e => { const r = rx[e]; if (Number(r.cyl) !== 0 && !(/^\d{1,3}$/.test(r.axis) && Number(r.axis) >= 1 && Number(r.axis) <= 180)) errs.push(fill(T('rx.errAxis'), { eye: T('rx.' + e) })); });
     if (state.use === 'progressive' && !rx.add) errs.push(T('rx.errAdd'));
-    if (rx.pd.mode === 'own') { const v = Number(String(rx.pd.total).replace(',', '.')); if (!(v >= 40 && v <= 80)) errs.push(T('rx.errPd')); }
+    if (rx.pd.mode === 'own') {
+      if (rx.pd.kind === 'one') { const v = num(rx.pd.total); if (!(v >= 40 && v <= 80)) errs.push(T('rx.errPd')); }
+      else { const a = num(rx.pd.od), b = num(rx.pd.os); if (!(a >= 20 && a <= 45 && b >= 20 && b <= 45 && a + b >= 40 && a + b <= 80)) errs.push(T('rx.errPd2')); }
+    }
+    if (needsDoctor()) {
+      if (rx.doc.name.trim().length < 2) errs.push(T('rx.errDocName'));
+      if (rx.doc.phone.replace(/\D/g, '').length < 10) errs.push(T('rx.errDocPhone'));
+    }
     if (!rx.confirm) errs.push(T('rx.errConfirm'));
     return errs;
   }
-  bodyEl(2).addEventListener('change', e => {
+  // what goes to the cart: only the PD that was chosen (two numbers → also their sum as `total`, so a reader that knows only the total still shows a PD), the doctor only where it is asked
+  function rxForCart() {
+    const rx = JSON.parse(JSON.stringify(state.rx));
+    const pd = rx.pd;
+    if (pd.mode !== 'own') rx.pd = { mode: 'store' };
+    else if (pd.kind === 'one') rx.pd = { mode: 'own', kind: 'one', total: String(pd.total).replace(',', '.') };
+    else rx.pd = { mode: 'own', kind: 'two', od: String(pd.od).replace(',', '.'), os: String(pd.os).replace(',', '.'), total: fmtMm(num(pd.od) + num(pd.os)) };
+    if (!needsDoctor()) delete rx.doc; else { rx.doc.name = rx.doc.name.trim(); rx.doc.phone = rx.doc.phone.trim(); }
+    return rx;
+  }
+  bodyEl(3).addEventListener('change', e => {
     const el = e.target, rx = state.rx;
-    if (el.name === 'pdmode') { rx.pd.mode = el.value; const i = $('#rx-pd'); i.disabled = el.value !== 'own'; if (el.value === 'own') i.focus({ preventScroll: true }); else { i.value = ''; rx.pd.total = ''; } return; }
+    if (el.name === 'pdmode') {
+      rx.pd.mode = el.value;
+      $('#rx-pd-vals').hidden = el.value !== 'own';
+      if (el.value === 'own') { const f = $('#rx-pd-vals input'); if (f) f.focus({ preventScroll: true }); }
+      return;
+    }
     if (el.dataset.eye) {
       rx[el.dataset.eye][el.dataset.f] = el.value;
       if (el.dataset.f === 'cyl') { const ax = $(`#rx-${el.dataset.eye}-axis`); const on = Number(el.value) !== 0; ax.disabled = !on; ax.placeholder = on ? '1–180' : '—'; if (!on) { ax.value = ''; rx[el.dataset.eye].axis = ''; } }
-      renderStep3();
+      renderLens();
     }
     if (el.id === 'rx-add') rx.add = el.value;
-    if (el.id === 'rx-pd') rx.pd.total = el.value.trim();
     if (el.id === 'rx-confirm') rx.confirm = el.checked;
     if (el.id === 'rx-readers') rx.readers = el.value;
   });
-  bodyEl(2).addEventListener('input', e => {
+  bodyEl(3).addEventListener('input', e => {
     const el = e.target;
     if (el.dataset.f === 'axis') { const clean = el.value.replace(/\D/g, '').slice(0, 3); if (clean !== el.value) el.value = clean; state.rx[el.dataset.eye].axis = clean; }
-    if (el.id === 'rx-pd') { const clean = el.value.replace(/[^\d.,]/g, '').slice(0, 4); if (clean !== el.value) el.value = clean; state.rx.pd.total = clean; }
+    if (el.dataset.pd) { const clean = el.value.replace(/[^\d.,]/g, '').slice(0, 4); if (clean !== el.value) el.value = clean; state.rx.pd[el.dataset.pd] = clean; }
+    if (el.dataset.doc) {
+      const clean = el.dataset.doc === 'phone' ? el.value.replace(/[^\d+\-() ]/g, '').slice(0, 16) : el.value.slice(0, 40);
+      if (clean !== el.value) el.value = clean;
+      state.rx.doc[el.dataset.doc] = clean;
+    }
   });
-  // typing in the PD box picks "I have it"
-  bodyEl(2).addEventListener('focusin', e => { if (e.target.id === 'rx-pd' && state.rx.pd.mode !== 'own') { state.rx.pd.mode = 'own'; const r = $('input[name="pdmode"][value="own"]'); if (r) r.checked = true; } });
+  bodyEl(3).addEventListener('click', e => {
+    if (!e.target.closest('#pd-switch')) return;
+    const pd = state.rx.pd;
+    if (pd.kind === 'one') pd.kind = 'two';
+    else { pd.kind = 'one'; if (!pd.total && num(pd.od) && num(pd.os)) pd.total = fmtMm(num(pd.od) + num(pd.os)); }   // two numbers → their sum is the single PD
+    renderRx();
+    const f = $('#rx-pd-vals input'); if (f) f.focus({ preventScroll: true });
+  });
 
-  // ---- step 3: lenses (material + extras in one list) + the sample lens ----
+  // ---- PD help: the small "?" opens a floating card (drawing + three steps) over the page, so nobody leaves the purchase to learn how to measure ----
+  let pop = null, popBtn = null, popHide = 0;
+  const popHTML = () => `<button class="pd-pop-x" type="button" aria-label="${T('pd.close')}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg></button>
+    <p class="pd-pop-t" id="pd-pop-t">${T('pd.title')}</p>
+    <svg class="pd-fig" viewBox="0 0 320 176" role="img" aria-label="${T('pd.figAria')}">
+      <path class="pd-brow" d="M58 44c16-12 46-14 66-3M196 41c20-11 50-9 66 3"/>
+      <path class="pd-eye" d="M62 78c14-22 50-22 64 0-14 20-50 20-64 0zM194 78c14-22 50-22 64 0-14 20-50 20-64 0z"/>
+      <circle class="pd-iris" cx="94" cy="78" r="13"/><circle class="pd-iris" cx="226" cy="78" r="13"/>
+      <circle class="pd-pupil" cx="94" cy="78" r="5"/><circle class="pd-pupil" cx="226" cy="78" r="5"/>
+      <path class="pd-nose" d="M160 14v108"/>
+      <path class="pd-guide" d="M94 92v38M226 92v38"/>
+      <path class="pd-arrow" d="M160 112H98M106 107l-8 5 8 5M160 112h62M214 107l8 5-8 5"/>
+      <text class="pd-lbl pd-lbl--gold" x="127" y="104" text-anchor="middle">${T('pd.l')} 31.5</text>
+      <text class="pd-lbl pd-lbl--gold" x="193" y="104" text-anchor="middle">${T('pd.r')} 31.5</text>
+      <text class="pd-lbl pd-lbl--dim" x="160" y="10" text-anchor="middle">${T('pd.nose')}</text>
+      <rect class="pd-ruler" x="24" y="132" width="272" height="30" rx="2"/>
+      <path class="pd-ticks" d="M34 132v8M42 132v8M50 132v8M58 132v14M66 132v8M74 132v8M82 132v8M90 132v8M98 132v14M106 132v8M114 132v8M122 132v8M130 132v8M138 132v14M146 132v8M154 132v8M162 132v8M170 132v8M178 132v14M186 132v8M194 132v8M202 132v8M210 132v8M218 132v14M226 132v8M234 132v8M242 132v8M250 132v8M258 132v14M266 132v8M274 132v8M282 132v8M290 132v8"/>
+      <text class="pd-lbl pd-lbl--paper" x="288" y="156" text-anchor="end">mm</text>
+    </svg>
+    <ol class="pd-steps">
+      <li>${T('pd.s1')}</li><li>${T('pd.s2')}</li><li>${T('pd.s3')}</li>
+    </ol>
+    <p class="pd-sum"><b>31.5 + 31.5 = 63 mm</b><span>${T('pd.sum')}</span></p>
+    <a class="link-u pd-more" href="receta.html#pd" target="_blank" rel="noopener">${T('pd.more')}</a>`;
+  function placePop() {
+    if (!pop || pop.hidden || !popBtn) return;
+    const r = popBtn.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight, m = 12;
+    pop.style.maxWidth = Math.min(360, vw - 2 * m) + 'px';
+    const w = pop.offsetWidth, h = pop.offsetHeight;
+    const left = Math.max(m, Math.min(r.left + r.width / 2 - w / 2, vw - w - m));
+    let top = r.bottom + 10;
+    const above = top + h > vh - m && r.top - h - 10 >= m;
+    if (above) top = r.top - h - 10; else if (top + h > vh - m) top = Math.max(m, vh - h - m);   // no room below: above the "?"
+    pop.classList.toggle('is-above', above);
+    pop.style.left = left + 'px'; pop.style.top = top + 'px';
+    pop.style.setProperty('--pd-arrow', Math.max(14, Math.min(w - 14, r.left + r.width / 2 - left)) + 'px');
+  }
+  function showPop(btn, focusIn) {
+    clearTimeout(popHide);
+    if (!pop) {
+      pop = document.createElement('div'); pop.className = 'pd-pop'; pop.id = 'pd-pop'; pop.setAttribute('role', 'dialog'); pop.setAttribute('aria-labelledby', 'pd-pop-t'); pop.hidden = true;
+      document.body.appendChild(pop);
+      pop.addEventListener('pointerenter', () => clearTimeout(popHide));
+      pop.addEventListener('pointerleave', () => { if (fine.matches) schedHide(); });
+      pop.addEventListener('click', e => { if (e.target.closest('.pd-pop-x')) hidePop(true); });
+    }
+    popBtn = btn;
+    pop.innerHTML = popHTML();
+    pop.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    placePop();
+    if (focusIn) pop.querySelector('.pd-pop-x').focus({ preventScroll: true });
+  }
+  function hidePop(refocus) {
+    clearTimeout(popHide);
+    if (!pop || pop.hidden) return;
+    pop.hidden = true;
+    const b = popBtn; if (b) { b.setAttribute('aria-expanded', 'false'); if (refocus && document.contains(b)) b.focus({ preventScroll: true }); }
+  }
+  const schedHide = () => { clearTimeout(popHide); popHide = setTimeout(() => hidePop(false), 180); };
+  bodyEl(3).addEventListener('pointerover', e => { const b = e.target.closest('#pd-help'); if (b && fine.matches) showPop(b, false); });
+  bodyEl(3).addEventListener('pointerout', e => { const b = e.target.closest('#pd-help'); if (b && fine.matches && !(e.relatedTarget && b.contains(e.relatedTarget))) schedHide(); });
+  bodyEl(3).addEventListener('click', e => {
+    const b = e.target.closest('#pd-help'); if (!b) return;
+    if (pop && !pop.hidden && b.getAttribute('aria-expanded') === 'true' && !fine.matches) { hidePop(false); return; }
+    if (pop && !pop.hidden && fine.matches && e.detail === 0) { hidePop(true); return; }   // keyboard: Enter/Space toggles
+    showPop(b, e.detail === 0);                                                             // keyboard open moves focus into the card (× and the link are reachable)
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && pop && !pop.hidden) hidePop(true); });
+  document.addEventListener('pointerdown', e => { if (pop && !pop.hidden && !pop.contains(e.target) && !(e.target.closest && e.target.closest('#pd-help'))) hidePop(false); });
+  window.addEventListener('scroll', () => { if (pop && !pop.hidden) placePop(); }, { passive: true });
+  window.addEventListener('resize', () => { if (pop && !pop.hidden) placePop(); });
+  document.addEventListener('hoe:lang', () => { if (pop && !pop.hidden) { pop.innerHTML = popHTML(); placePop(); } });
+
+  // ---- step 4: lenses (material + extras in one list) + the sample lens ----
   const maxPower = () => {
     if (state.use === 'non-rx' || state.use === 'readers') return null;
     return Math.max(...['od', 'os'].map(e => Math.abs(Number(state.rx[e].sph) || 0) + Math.abs(Number(state.rx[e].cyl) || 0)));
@@ -352,16 +532,16 @@
     if (p == null) return mats[0];
     return mats.find(m => p <= m.maxPower) || mats[mats.length - 1];
   };
-  const opts3 = $('#cfg-opts3');
-  function renderStep3() {
+  const opts4 = $('#cfg-opts4');
+  function renderLens() {
     const mats = MATERIALS(), rec = recommended();
     if (!state.material || !mats.some(m => m.id === state.material)) state.material = rec.id;
-    opts3.innerHTML = mats.map(m => opt('radio', 'material', m, m.id === state.material, rec.id === m.id)).join('')
+    opts4.innerHTML = mats.map(m => opt('radio', 'material', m, m.id === state.material, rec.id === m.id)).join('')
       + EXTRAS().map(c => opt('checkbox', 'coat', c, state.extras.has(c.id), false, DEMO_OF[c.id] || '')).join('');
     $('#cfg-add > span').textContent = T('cfg.addToCart');
     demoRest();
   }
-  bodyEl(3).addEventListener('change', e => {
+  bodyEl(4).addEventListener('change', e => {
     if (e.target.name === 'material') state.material = e.target.value;
     if (e.target.name === 'coat') { e.target.checked ? state.extras.add(e.target.value) : state.extras.delete(e.target.value); }
     renderSummaries();
@@ -416,10 +596,10 @@
   }
   function demoRest() { setDemo(restMode(), restName()); }
   // the option under the pointer (or focused) previews its lens; leaving goes back to what is marked
-  opts3.addEventListener('pointerover', e => { const row = e.target.closest('[data-demo]'); if (row && fine.matches) setDemo(row.dataset.demo, row.querySelector('b').textContent); });
-  opts3.addEventListener('pointerleave', () => { if (fine.matches) demoRest(); });
-  opts3.addEventListener('focusin', e => { const row = e.target.closest('[data-demo]'); if (row && e.target.matches(':focus-visible')) setDemo(row.dataset.demo, row.querySelector('b').textContent); });
-  opts3.addEventListener('focusout', e => { if (!opts3.contains(e.relatedTarget)) demoRest(); });
+  opts4.addEventListener('pointerover', e => { const row = e.target.closest('[data-demo]'); if (row && fine.matches) setDemo(row.dataset.demo, row.querySelector('b').textContent); });
+  opts4.addEventListener('pointerleave', () => { if (fine.matches) demoRest(); });
+  opts4.addEventListener('focusin', e => { const row = e.target.closest('[data-demo]'); if (row && e.target.matches(':focus-visible')) setDemo(row.dataset.demo, row.querySelector('b').textContent); });
+  opts4.addEventListener('focusout', e => { if (!opts4.contains(e.relatedTarget)) demoRest(); });
 
   // ---- bar, summaries, flow ----
   function renderBar() {
@@ -432,17 +612,18 @@
     const rx = state.rx;
     if (state.use === 'non-rx') return T('rx.sumNone');
     if (state.use === 'readers') return rx.readers ? fill(T('rx.sumReaders'), { p: rx.readers }) : '';
-    const pd = rx.pd.mode === 'own' && rx.pd.total ? `${T('rx.pd')} ${rx.pd.total}` : T('rx.sumPdStore');
+    const pd = rx.pd.mode !== 'own' ? T('rx.sumPdStore') : rx.pd.kind === 'one' ? (rx.pd.total ? `${T('rx.pd')} ${rx.pd.total}` : T('rx.sumPdStore')) : (rx.pd.od && rx.pd.os ? `${T('rx.pd')} ${rx.pd.od}/${rx.pd.os}` : T('rx.sumPdStore'));
     return `${T('rx.od')} ${fmt(rx.od.sph)} / ${T('rx.os')} ${fmt(rx.os.sph)} · ${pd}`;
   };
   const useName = () => loc(OPTS.uses.find(u => u.id === state.use)).name;
   const matName = () => { const m = OPTS.materials.find(x => x.id === state.material); return m ? loc(m).name : ''; };
   const extrasNames = () => [...state.extras].map(id => loc(OPTS.coatings.find(c => c.id === id)).name);
   function renderSummaries() {
-    $('#cfg-sum1').textContent = state.done[1] ? useName() : '';
-    $('#cfg-sum2').textContent = state.done[2] ? rxSummary() : '';
-    $('#cfg-sum3').textContent = state.done[3] ? [matName(), ...extrasNames()].filter(Boolean).join(' · ') : '';
-    [1, 2, 3].forEach(n => stepEl(n).classList.toggle('is-done', !!state.done[n]));
+    $('#cfg-sum1').textContent = state.done[1] && state.zip ? `${state.zip} · ${state.st}` : '';
+    $('#cfg-sum2').textContent = state.done[2] ? useName() : '';
+    $('#cfg-sum3').textContent = state.done[3] ? rxSummary() : '';
+    $('#cfg-sum4').textContent = state.done[4] ? [matName(), ...extrasNames()].filter(Boolean).join(' · ') : '';
+    STEPS.forEach(n => stepEl(n).classList.toggle('is-done', !!state.done[n]));
   }
   // Scroll so `el` sits just under the compact header + the sticky bar (the target is re-read every frame, so the
   // step still lands right while the previous one collapses).
@@ -470,7 +651,7 @@
     scrollRaf = requestAnimationFrame(tick);
   }
   function openStep(n, focus = true) {
-    [1, 2, 3].forEach(i => { if (i !== n) steps.close(stepEl(i)); });
+    STEPS.forEach(i => { if (i !== n) steps.close(stepEl(i)); });
     const d = stepEl(n);
     if (!d.open) d.open = true;
     if (focus) setTimeout(() => { scrollToStep(d); d.querySelector('select, input:not(:disabled), button')?.focus({ preventScroll: true }); }, 60);
@@ -484,10 +665,11 @@
   $('#cfg-form').addEventListener('click', e => {
     const b = e.target.closest('[data-next]'); if (!b) return;
     const n = Number(b.dataset.next);
-    const errs = n === 2 ? validateStep2() : [];
+    const errs = n === 1 ? validateZip() : n === 3 ? validateRx() : [];
     showErrs(n, errs);
     if (errs.length) return;
     state.done[n] = true;
+    if (n === 1) commitZip();
     renderSummaries();
     openStep(n + 1);
   });
@@ -495,13 +677,13 @@
   $('#cfg-form').addEventListener('click', e => {
     const sum = e.target.closest('details.cfg-step > summary'); if (!sum) return;
     const d = sum.parentElement;
-    if (!d.open) [1, 2, 3].forEach(i => { if (stepEl(i) !== d) steps.close(stepEl(i)); });
+    if (!d.open) STEPS.forEach(i => { if (stepEl(i) !== d) steps.close(stepEl(i)); });
   });
 
-  // the configurator is always on the page (three closed rows under "Details"); .is-active = a step is open (the bar shows)
-  const openStepN = () => [1, 2, 3].find(n => stepEl(n).open) || 0;
+  // the configurator is always on the page (four closed rows under "Details"); .is-active = a step is open (the bar shows)
+  const openStepN = () => STEPS.find(n => stepEl(n).open) || 0;
   const syncActive = () => { const on = !!openStepN(); cfg.classList.toggle('is-active', on); cta.setAttribute('aria-expanded', on ? 'true' : 'false'); };
-  [1, 2, 3].forEach(n => stepEl(n).addEventListener('toggle', syncActive));
+  STEPS.forEach(n => stepEl(n).addEventListener('toggle', syncActive));
   function openCfg(step) {
     cfg.classList.add('is-active');
     cta.setAttribute('aria-expanded', 'true');
@@ -510,20 +692,23 @@
   }
   cta.addEventListener('click', () => { if (!openStepN()) openCfg(1); else cfg.scrollIntoView({ block: 'start', behavior: reduced.matches ? 'auto' : 'smooth' }); });
 
-  // ---- add to cart (from step 3): the button says "Added ✓" for 1.2 s and the cart drawer opens ----
+  // ---- add to cart (from step 4): the button says "Added ✓" for 1.2 s and the cart drawer opens ----
   const addBtn = $('#cfg-add');
   let addedTimer = 0;
   $('#cfg-form').addEventListener('click', e => {
     if (!e.target.closest('#cfg-add') || !window.hoeCart || addBtn.dataset.busy || !inStock) return;
-    const errs2 = validateStep2();
-    if (errs2.length) { showErrs(3, [fill(T('cfg.missing'), { n: 2 })]); openStep(2); showErrs(2, errs2); return; }
-    showErrs(3, []);
-    state.done[2] = state.done[3] = true;
+    const errsZip = validateZip();
+    if (errsZip.length) { showErrs(4, [fill(T('cfg.missing'), { n: 1 })]); openStep(1); showErrs(1, errsZip); return; }
+    const errsRx = validateRx();
+    if (errsRx.length) { showErrs(4, [fill(T('cfg.missing'), { n: 3 })]); openStep(3); showErrs(3, errsRx); return; }
+    showErrs(4, []);
+    if (window.hoeCart.setShip) window.hoeCart.setShip({ zip: state.zip, state: state.st });
+    state.done[1] = state.done[3] = state.done[4] = true;
     const pkg = {
       sku: frame.id, name, colorName: { en: (frame.colRaw && frame.colRaw.en) || frame.col, es: (frame.colRaw && frame.colRaw.es) || (frame.colRaw && frame.colRaw.en) || frame.col },
       colorKey: frame.col, cc: frame.cc, img: CAT.img(frame), price: Number(frame.p) || 0, band: frame.size.band,
       size: { lens: frame.size.lens, bridge: frame.size.bridge, temple: frame.size.temple, total: frame.size.total },
-      use: state.use, material: state.material, coatings: [...LOCKED, ...state.extras], rx: JSON.parse(JSON.stringify(state.rx)),
+      use: state.use, material: state.material, coatings: [...LOCKED, ...state.extras], rx: rxForCart(),
     };
     if (pkg.use === 'non-rx') pkg.rx = { path: 'none' };
     if (editing) { window.hoeCart.update(editing.id, pkg); location.href = 'carrito.html'; return; }
@@ -569,11 +754,11 @@
   /* ---------- language ---------- */
   document.addEventListener('hoe:lang', () => {
     renderViews(); renderBuy(); renderMore();
-    { const open = openStepN(); renderStep1(); renderStep2(); renderStep3(); renderBar(); if (open) stepEl(open).open = true; }
+    { const open = openStepN(); renderZip(); renderUse(); renderRx(); renderLens(); renderBar(); if (open) stepEl(open).open = true; }
   });
 
   renderViews(); renderBuy(); renderMore();
-  renderStep1(); renderStep2(); renderStep3(); renderBar();          // the steps are rendered closed, ready for a click on any row
-  if ((q.get('step') || editing) && inStock) openCfg(Math.min(3, Number(q.get('step')) || 1));
+  renderZip(); renderUse(); renderRx(); renderLens(); renderBar();   // the steps are rendered closed, ready for a click on any row
+  if ((q.get('step') || editing) && inStock) openCfg(Math.min(4, Number(q.get('step')) || 1));
   }
 })();

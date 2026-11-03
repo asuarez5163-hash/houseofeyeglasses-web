@@ -13,6 +13,8 @@
   const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   let dropped = 0;                                              // older items (no sku) removed on this visit
 
+  // the ZIP (and its state) is one per cart: the visitor gives it in step 1 of the lens configurator; it decides whether the eye doctor is asked for
+  const cleanShip = o => (o && typeof o === 'object' && /^\d{5}$/.test(String(o.zip)) && /^[A-Z]{2}$/.test(String(o.state)) ? { zip: String(o.zip), state: String(o.state) } : null);
   function read() {
     try {
       const d = JSON.parse(localStorage.getItem(KEY) || 'null');
@@ -22,8 +24,8 @@
         dropped += items.length - keep.length;
         try { localStorage.setItem(KEY, JSON.stringify({ items: keep })); } catch (e) { /* storage blocked */ }
       }
-      return { items: keep };
-    } catch (e) { return { items: [] }; }
+      return { items: keep, ship: cleanShip(d && d.ship) };
+    } catch (e) { return { items: [], ship: null }; }
   }
   function write(data) {
     try { localStorage.setItem(KEY, JSON.stringify(data)); } catch (e) { /* storage blocked: the cart lives for this page only */ }
@@ -35,7 +37,15 @@
   const add = item => { const d = get(); item.id = item.id || ('p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6)); d.items.push(item); write(d); return item.id; };
   const remove = id => { const d = get(); d.items = d.items.filter(i => i.id !== id); write(d); };
   const update = (id, patch) => { const d = get(); const it = d.items.find(i => i.id === id); if (it) Object.assign(it, patch); write(d); };
-  const clear = () => write({ items: [] });
+  const clear = () => write({ items: [], ship: get().ship || null });   // the ZIP stays for the next purchase
+  const ship = () => get().ship || null;
+  const setShip = o => { const s = cleanShip(o); if (!s) return; const d = get(); d.ship = s; write(d); };
+  // PD as the cart shows it: "31.5/32" (one per eye), "63" (one number) or '' (not given: the store measures it)
+  const pdText = pd => (pd && pd.mode === 'own' ? (pd.kind === 'one' || !(pd.od && pd.os) ? (pd.total || '') : `${pd.od}/${pd.os}`) : '');
+  // items that still lack the eye doctor where the ZIP's state asks for it (table: js/data/rx-states.js; loaded by the pages that call this)
+  const needsDoc = it => { const sh = ship(), R = window.hoeRxStates; return !!(sh && R && R.strict(sh.state) && (it.use === 'single' || it.use === 'progressive')); };
+  const hasDoc = it => { const d = it.rx && it.rx.doc; return !!(d && String(d.name || '').trim().length >= 2 && String(d.phone || '').replace(/\D/g, '').length >= 10); };
+  const rxIssues = () => get().items.filter(it => needsDoc(it) && !hasDoc(it));
   const count = () => get().items.length;
   const total = () => get().items.reduce((a, i) => a + (Number(i.price) || 0), 0);
   const price = n => (window.hoeCatalog ? window.hoeCatalog.price(n) : '$' + n);
@@ -52,7 +62,8 @@
     if (!rx || rx.path === 'none' || use === 'non-rx') return T('cart.rxNone');
     if (use === 'readers') return `+${rx.readers || ''}`;
     const s = v => (!v || Number(v) === 0 ? '0.00' : (Number(v) > 0 ? '+' : '−') + Math.abs(Number(v)).toFixed(2));
-    const pd = rx.pd && rx.pd.total ? `PD ${rx.pd.total}` : T('cart.pdStore');
+    const pdt = pdText(rx.pd);
+    const pd = pdt ? `PD ${pdt}` : T('cart.pdStore');
     return `${T('rx.od')} ${s(rx.od && rx.od.sph)} / ${T('rx.os')} ${s(rx.os && rx.os.sph)} · ${pd}`;
   };
 
@@ -112,12 +123,13 @@
   const config = () => cfgP || (cfgP = fetchJson(API + '/config', { method: 'GET' }, 6000).catch(() => null));   // null = the Central did not answer
   // opts.ui = 'elements' → the Worker answers { clientSecret } for the on-site payment page (pago.html); without it, { url } (hosted Stripe Checkout)
   const pay = opts => {
+    if (!ship() || rxIssues().length) { const e = new Error('rx'); e.data = { error: 'rx_pendiente' }; return Promise.reject(e); }   // ZIP and (where asked) eye doctor are required before paying
     const items = get().items.map(it => ({ id: it.id, sku: it.sku, price: it.price, use: it.use, material: it.material, coatings: it.coatings || [], rx: it.rx || { path: 'none' } }));
-    const body = { items, lang: L() };
+    const body = { items, lang: L(), ship: ship() };
     if (opts && opts.ui) body.ui = opts.ui;
     return fetchJson(API + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }, 20000);
   };
   const order = sid => fetchJson(API + '/pedido?s=' + encodeURIComponent(sid), { method: 'GET' }, 20000);
 
-  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, dropped: () => dropped, KEY, API, config, pay, order };
+  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, ship, setShip, pdText, rxIssues, dropped: () => dropped, KEY, API, config, pay, order };
 })();

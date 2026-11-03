@@ -166,7 +166,7 @@
   document.addEventListener('hoe:lang', () => { paintSummary(); if (!phoneIn.hasAttribute('aria-invalid')) phoneHint.textContent = T('pay.phoneHint'); });
   document.addEventListener('hoe:cart', paintSummary);
 
-  if (!C.get().items.length) { location.replace('carrito.html'); return; }
+  if (!C.get().items.length || !C.ship() || C.rxIssues().length) { location.replace('carrito.html'); return; }   // ZIP (and the eye doctor where the state asks) are set in the lens configurator / the cart
   paintSummary();
   start();
 })();
