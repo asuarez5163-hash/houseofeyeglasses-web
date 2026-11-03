@@ -33,8 +33,10 @@
     const items = C.get().items, sh = C.ship();
     if (!items.length) return null;
     if (!sh) return { text: T('cart.needZip'), href: editHref(items[0], 1) };
-    const bad = C.rxIssues();
-    if (bad.length) return { text: fill(T('cart.needDoc'), { state: stateName(sh.state) }), href: editHref(bad[0], 3) };
+    const noPd = items.find(C.pdMissing);
+    if (noPd) return { text: T('cart.needPd'), href: editHref(noPd, 3) };
+    const noDoc = items.find(C.proofMissing);
+    if (noDoc) return { text: fill(T('cart.needDoc'), { state: stateName(sh.state) }), href: editHref(noDoc, 3) };
     return null;
   }
   function paintShip() {

@@ -65,7 +65,7 @@
   const editing = editId && window.hoeCart ? window.hoeCart.get().items.find(i => i.id === editId && i.sku === frame.id) : null;
   const LOCKED = ['anti-reflective', 'scratch'];   // always included, never shown as a choice
 
-  const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'store', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, confirm: false, readers: '' });
+  const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'own', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, confirm: false, readers: '' });
   const loadRx = src => {   // a saved package (maybe from an older shape of the form) → today's shape
     const rx = freshRx();
     if (!src || typeof src !== 'object') return rx;
@@ -73,7 +73,6 @@
     rx.add = src.add || (src.od && src.od.add) || '';
     if (src.pd) {
       rx.pd.od = src.pd.od || ''; rx.pd.os = src.pd.os || ''; rx.pd.total = src.pd.total || '';
-      rx.pd.mode = src.pd.mode === 'own' && (src.pd.total || (src.pd.od && src.pd.os)) ? 'own' : 'store';
       rx.pd.kind = src.pd.kind === 'one' || (!src.pd.kind && src.pd.total && !(src.pd.od && src.pd.os)) ? 'one' : 'two';   // older carts only have the single number
     }
     if (src.doc && typeof src.doc === 'object') { rx.doc.name = src.doc.name || ''; rx.doc.phone = src.doc.phone || ''; }
@@ -335,15 +334,15 @@
       </div>
     </div>`;
   };
-  // PD: "I don't have it" (the optician helps) or "I have it" → two boxes, one per eye (from the nose to each pupil); "I only have one number" keeps the single total.
+  // PD: the visitor measures it (nobody measures it for them: the shop is online only). Two boxes, one per eye (from the nose to each pupil);
+  // "I only have one number" keeps the single total. The "?" teaches how to measure it, with a mirror or with someone's help.
   const pdBlock = () => {
-    const pd = state.rx.pd, own = pd.mode === 'own', one = pd.kind === 'one';
+    const pd = state.rx.pd, one = pd.kind === 'one';
     const box = (id, key, label, ph) => `<div class="rx-field rxf-pd-f"><label for="${id}">${label}</label><span class="rxf-pd-mm"><input class="rx-input rxf-pd-in" id="${id}" data-pd="${key}" type="text" inputmode="decimal" maxlength="4" autocomplete="off" placeholder="${ph}" value="${esc(pd[key])}"><span aria-hidden="true">mm</span></span></div>`;
     return `<div class="rxf-pd" role="group" aria-labelledby="rx-pd-lbl">
         <span class="rxf-pd-lbl" id="rx-pd-lbl">${T('rx.pd')}<button type="button" class="pd-help" id="pd-help" aria-label="${T('pd.helpAria')}" aria-expanded="false" aria-controls="pd-pop"><span aria-hidden="true">?</span></button></span>
-        <label class="rxf-pd-opt" data-press><input type="radio" name="pdmode" value="store"${own ? '' : ' checked'}><span class="dot"></span><span>${T('rx.pdStore')}</span></label>
-        <label class="rxf-pd-opt" data-press><input type="radio" name="pdmode" value="own"${own ? ' checked' : ''}><span class="dot"></span><span>${T('rx.pdOwn')}</span></label>
-        <div class="rxf-pd-vals" id="rx-pd-vals"${own ? '' : ' hidden'}>
+        <p class="rxf-pd-hint">${T('rx.pdHint')}</p>
+        <div class="rxf-pd-vals" id="rx-pd-vals">
           <div class="rxf-pd-row">${one ? box('rx-pd', 'total', T('rx.pdTotal'), '63') : box('rx-pd-od', 'od', T('rx.pdRight'), '31.5') + box('rx-pd-os', 'os', T('rx.pdLeft'), '31.5')}</div>
           <button type="button" class="link-u rxf-pd-switch" id="pd-switch">${T(one ? 'rx.pdTwoLink' : 'rx.pdOneLink')}</button>
         </div>
@@ -383,10 +382,8 @@
     if (state.use === 'readers') { if (!rx.readers) errs.push(T('rx.errReaders')); return errs; }
     ['od', 'os'].forEach(e => { const r = rx[e]; if (Number(r.cyl) !== 0 && !(/^\d{1,3}$/.test(r.axis) && Number(r.axis) >= 1 && Number(r.axis) <= 180)) errs.push(fill(T('rx.errAxis'), { eye: T('rx.' + e) })); });
     if (state.use === 'progressive' && !rx.add) errs.push(T('rx.errAdd'));
-    if (rx.pd.mode === 'own') {
-      if (rx.pd.kind === 'one') { const v = num(rx.pd.total); if (!(v >= 40 && v <= 80)) errs.push(T('rx.errPd')); }
-      else { const a = num(rx.pd.od), b = num(rx.pd.os); if (!(a >= 20 && a <= 45 && b >= 20 && b <= 45 && a + b >= 40 && a + b <= 80)) errs.push(T('rx.errPd2')); }
-    }
+    if (rx.pd.kind === 'one') { const v = num(rx.pd.total); if (!(v >= 40 && v <= 80)) errs.push(T('rx.errPd')); }
+    else { const a = num(rx.pd.od), b = num(rx.pd.os); if (!(a >= 20 && a <= 45 && b >= 20 && b <= 45 && a + b >= 40 && a + b <= 80)) errs.push(T('rx.errPd2')); }
     if (needsDoctor()) {
       if (rx.doc.name.trim().length < 2) errs.push(T('rx.errDocName'));
       if (rx.doc.phone.replace(/\D/g, '').length < 10) errs.push(T('rx.errDocPhone'));
@@ -398,20 +395,13 @@
   function rxForCart() {
     const rx = JSON.parse(JSON.stringify(state.rx));
     const pd = rx.pd;
-    if (pd.mode !== 'own') rx.pd = { mode: 'store' };
-    else if (pd.kind === 'one') rx.pd = { mode: 'own', kind: 'one', total: String(pd.total).replace(',', '.') };
+    if (pd.kind === 'one') rx.pd = { mode: 'own', kind: 'one', total: String(pd.total).replace(',', '.') };
     else rx.pd = { mode: 'own', kind: 'two', od: String(pd.od).replace(',', '.'), os: String(pd.os).replace(',', '.'), total: fmtMm(num(pd.od) + num(pd.os)) };
     if (!needsDoctor()) delete rx.doc; else { rx.doc.name = rx.doc.name.trim(); rx.doc.phone = rx.doc.phone.trim(); }
     return rx;
   }
   bodyEl(3).addEventListener('change', e => {
     const el = e.target, rx = state.rx;
-    if (el.name === 'pdmode') {
-      rx.pd.mode = el.value;
-      $('#rx-pd-vals').hidden = el.value !== 'own';
-      if (el.value === 'own') { const f = $('#rx-pd-vals input'); if (f) f.focus({ preventScroll: true }); }
-      return;
-    }
     if (el.dataset.eye) {
       rx[el.dataset.eye][el.dataset.f] = el.value;
       if (el.dataset.f === 'cyl') { const ax = $(`#rx-${el.dataset.eye}-axis`); const on = Number(el.value) !== 0; ax.disabled = !on; ax.placeholder = on ? '1–180' : '—'; if (!on) { ax.value = ''; rx[el.dataset.eye].axis = ''; } }
@@ -612,7 +602,7 @@
     const rx = state.rx;
     if (state.use === 'non-rx') return T('rx.sumNone');
     if (state.use === 'readers') return rx.readers ? fill(T('rx.sumReaders'), { p: rx.readers }) : '';
-    const pd = rx.pd.mode !== 'own' ? T('rx.sumPdStore') : rx.pd.kind === 'one' ? (rx.pd.total ? `${T('rx.pd')} ${rx.pd.total}` : T('rx.sumPdStore')) : (rx.pd.od && rx.pd.os ? `${T('rx.pd')} ${rx.pd.od}/${rx.pd.os}` : T('rx.sumPdStore'));
+    const pd = rx.pd.kind === 'one' ? `${T('rx.pd')} ${rx.pd.total}` : `${T('rx.pd')} ${rx.pd.od}/${rx.pd.os}`;
     return `${T('rx.od')} ${fmt(rx.od.sph)} / ${T('rx.os')} ${fmt(rx.os.sph)} · ${pd}`;
   };
   const useName = () => loc(OPTS.uses.find(u => u.id === state.use)).name;

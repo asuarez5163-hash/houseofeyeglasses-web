@@ -45,7 +45,10 @@
   // items that still lack the eye doctor where the ZIP's state asks for it (table: js/data/rx-states.js; loaded by the pages that call this)
   const needsDoc = it => { const sh = ship(), R = window.hoeRxStates; return !!(sh && R && R.strict(sh.state) && (it.use === 'single' || it.use === 'progressive')); };
   const hasDoc = it => { const d = it.rx && it.rx.doc; return !!(d && String(d.name || '').trim().length >= 2 && String(d.phone || '').replace(/\D/g, '').length >= 10); };
-  const rxIssues = () => get().items.filter(it => needsDoc(it) && !hasDoc(it));
+  const needsRx = it => it.use === 'single' || it.use === 'progressive';
+  const pdMissing = it => needsRx(it) && !pdText(it.rx && it.rx.pd);                  // the PD is always the visitor's own (nobody measures it for them)
+  const proofMissing = it => needsDoc(it) && !hasDoc(it);
+  const rxIssues = () => get().items.filter(it => pdMissing(it) || proofMissing(it));
   const count = () => get().items.length;
   const total = () => get().items.reduce((a, i) => a + (Number(i.price) || 0), 0);
   const price = n => (window.hoeCatalog ? window.hoeCatalog.price(n) : '$' + n);
@@ -131,5 +134,5 @@
   };
   const order = sid => fetchJson(API + '/pedido?s=' + encodeURIComponent(sid), { method: 'GET' }, 20000);
 
-  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, ship, setShip, pdText, rxIssues, dropped: () => dropped, KEY, API, config, pay, order };
+  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, ship, setShip, pdText, rxIssues, pdMissing, proofMissing, dropped: () => dropped, KEY, API, config, pay, order };
 })();
