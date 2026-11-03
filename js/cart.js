@@ -64,6 +64,8 @@
     const o = window.HOE_LENS_OPTIONS && window.HOE_LENS_OPTIONS[kind] && window.HOE_LENS_OPTIONS[kind].find(x => x.id === id);
     return o ? (o[L()] || o.en).name : id;
   };
+  // "Progressive · Premium" (the tier only for progressive; an older item without one is Standard)
+  const useLine = it => lensName('uses', it.use) + (it.use === 'progressive' ? ` · ${lensName('tiers', it.tier || 'estandar')}` : '');
   // one line for a saved prescription: "OD −2.00 / OS −1.50 · PD in store"
   const rxLine = (rx, use) => {
     if (!rx || rx.path === 'none' || use === 'non-rx') return T('cart.rxNone');
@@ -98,7 +100,7 @@
         <span class="cart-mini-art">${lineImg(it)}</span>
         <span class="cart-mini-meta">
           <b style="font-size:calc(var(--fs-title, 21px) - 2px)">${esc(it.name)}</b>
-          <span>${esc(colorOf(it))} · ${esc(T('band.' + it.band))} · ${esc(lensName('uses', it.use))}</span>
+          <span>${esc(colorOf(it))} · ${esc(T('band.' + it.band))} · ${esc(useLine(it))}</span>
           <span class="cart-mini-price">${price(it.price)} · ${esc(T('prod.included'))}</span>
         </span>
         <button type="button" class="cart-mini-x" data-remove="${esc(it.id)}" aria-label="${esc(T('cart.remove'))}: ${esc(it.name)}">
@@ -132,12 +134,12 @@
   // opts.ui = 'elements' → the Worker answers { clientSecret } for the on-site payment page (pago.html); without it, { url } (hosted Stripe Checkout)
   const pay = opts => {
     if (!ship() || rxIssues().length) { const e = new Error('rx'); e.data = { error: 'rx_pendiente' }; return Promise.reject(e); }   // ZIP and (where asked) eye doctor are required before paying
-    const items = get().items.map(it => ({ id: it.id, sku: it.sku, price: it.price, use: it.use, material: it.material, coatings: it.coatings || [], rx: it.rx || { path: 'none' } }));
+    const items = get().items.map(it => ({ id: it.id, sku: it.sku, price: it.price, use: it.use, ...(it.use === 'progressive' ? { tier: it.tier || 'estandar' } : {}), material: it.material, coatings: it.coatings || [], rx: it.rx || { path: 'none' } }));
     const body = { items, lang: L(), ship: ship() };
     if (opts && opts.ui) body.ui = opts.ui;
     return fetchJson(API + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }, 20000);
   };
   const order = sid => fetchJson(API + '/pedido?s=' + encodeURIComponent(sid), { method: 'GET' }, 20000);
 
-  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, ship, setShip, pdText, rxIssues, pdMissing, proofMissing, fileMissing, dropFiles, dropped: () => dropped, KEY, API, config, pay, order };
+  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, useLine, ship, setShip, pdText, rxIssues, pdMissing, proofMissing, fileMissing, dropFiles, dropped: () => dropped, KEY, API, config, pay, order };
 })();

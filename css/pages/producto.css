@@ -137,6 +137,10 @@ details.cfg-step[open]:not(.is-closing) .cfg-body { opacity: 1; transition-delay
 .rxf-zipnote { margin: 16px 0 0; padding-left: 14px; border-left: 1px solid var(--gold); max-width: 56ch; font-size: 15px; line-height: 1.5; color: var(--ink); }
 .rxf-zipnote:empty { display: none; }
 
+/* step 4 with a progressive: "Progressive design" (Standard · Premium · Ultimate, priced by the Central) above "Lens and extras" */
+.cfg-group { margin: 18px 0 6px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
+.cfg-opts > .cfg-group:first-child { margin-top: 10px; }
+
 /* options: a radio or checkbox drawn as one hairline row (name · surcharge, when an option has one). No boxes. */
 .cfg-opts { display: grid; gap: 0; border-top: 1px solid var(--line); }
 .cfg-opt { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr) auto; column-gap: 16px; align-items: center; min-height: 60px; padding: 12px 6px 12px 0; border-bottom: 1px solid var(--line); cursor: pointer; transition: background-color .2s; }
@@ -151,6 +155,7 @@ details.cfg-step[open]:not(.is-closing) .cfg-body { opacity: 1; transition-delay
 .cfg-opt .txt { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; min-width: 0; }
 .cfg-opt .txt b { font: 300 var(--fs-lead)/1.3 var(--font-ui); color: var(--ink); }
 .cfg-opt .txt .rec { font: 500 11px/1 var(--font-ui); letter-spacing: .14em; text-transform: uppercase; color: var(--gold); }
+.cfg-opt .txt .cfg-opt-d { flex: 1 1 100%; font-size: 13px; line-height: 1.45; color: var(--ink-2); }
 .cfg-opt .price { font-size: 13px; color: var(--ink-3); white-space: nowrap; font-variant-numeric: lining-nums tabular-nums; }
 @media (hover: hover) and (pointer: fine) { .cfg-opt:hover { background: var(--bg-2); } }
 .cfg-opt.is-pressed { background: var(--bg-3); transition-duration: 0ms; }

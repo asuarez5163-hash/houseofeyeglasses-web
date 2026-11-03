@@ -87,6 +87,7 @@
     use: editing ? editing.use : 'single',
     material: editing ? editing.material : null,
     extras: new Set(editing ? (editing.coatings || []).filter(id => !LOCKED.includes(id)) : []),
+    tier: editing && editing.tier ? editing.tier : 'estandar',          // nivel del progresivo (Estándar · Premium · Ultimate)
     rx: loadRx(editing && editing.rx),
     done: { 1: !!(editing && ship0), 2: !!editing, 3: !!editing, 4: !!editing },
   };
@@ -247,7 +248,7 @@
   const opt = (type, name, o, checked, rec, demo) => `<label class="cfg-opt${type === 'checkbox' ? ' is-check' : ''}" data-press${demo ? ` data-demo="${demo}"` : ''}>
       <input type="${type}" name="${name}" value="${o.id}"${checked ? ' checked' : ''}>
       <span class="dot"></span>
-      <span class="txt"><b>${loc(o).name}</b>${rec ? `<span class="rec">${T('cfg.rec')}</span>` : ''}</span>
+      <span class="txt"><b>${loc(o).name}</b>${rec ? `<span class="rec">${T('cfg.rec')}</span>` : ''}${o.desc ? `<small class="cfg-opt-d">${loc(o).text}</small>` : ''}</span>
       ${price(o)}
     </label>`;
   const nextBtn = n => `<button type="button" class="btn btn-gold cfg-next" data-next="${n}"><span>${T('cfg.next')}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></button>`;
@@ -610,16 +611,29 @@
     return mats.find(m => p <= m.maxPower) || mats[mats.length - 1];
   };
   const opts4 = $('#cfg-opts4');
+  // progressive tiers: their price comes from the Central (manifest.lentes.progressive); without it the group is not shown
+  let tierPrices = null;
+  CAT.manifest().then(m => { tierPrices = (m && m.lentes && m.lentes.progressive) || null; renderLens(); renderBar(); });
+  const showTiers = () => state.use === 'progressive' && !!tierPrices && (OPTS.tiers || []).some(t => Number(tierPrices[t.id]) > 0);
+  const lensPrice = () => (showTiers() ? Number(tierPrices[state.tier]) || 0 : 0);
+  const totalPrice = () => (Number(frame.p) || 0) + lensPrice();
+  const tierName = () => { const t = (OPTS.tiers || []).find(x => x.id === state.tier); return t ? loc(t).name : ''; };
   function renderLens() {
     const mats = MATERIALS(), rec = recommended();
     if (!state.material || !mats.some(m => m.id === state.material)) state.material = rec.id;
-    opts4.innerHTML = mats.map(m => opt('radio', 'material', m, m.id === state.material, rec.id === m.id)).join('')
+    if (!(OPTS.tiers || []).some(t => t.id === state.tier)) state.tier = 'estandar';
+    const tiers = showTiers()
+      ? `<p class="cfg-group">${T('cfg.tierTitle')}</p>` + OPTS.tiers.map(t => opt('radio', 'tier', Object.assign({}, t, { price: Number(tierPrices[t.id]) || 0, desc: true }), t.id === state.tier, false, 'progressive')).join('')
+        + `<p class="cfg-group">${T('cfg.matTitle')}</p>`
+      : '';
+    opts4.innerHTML = tiers + mats.map(m => opt('radio', 'material', m, m.id === state.material, rec.id === m.id)).join('')
       + EXTRAS().map(c => opt('checkbox', 'coat', c, state.extras.has(c.id), false, DEMO_OF[c.id] || '')).join('');
     $('#cfg-add > span').textContent = T('cfg.addToCart');
     demoRest();
   }
   bodyEl(4).addEventListener('change', e => {
     if (e.target.name === 'material') state.material = e.target.value;
+    if (e.target.name === 'tier') { state.tier = e.target.value; renderBar(); }
     if (e.target.name === 'coat') { e.target.checked ? state.extras.add(e.target.value) : state.extras.delete(e.target.value); }
     renderSummaries();
     demoRest();
@@ -681,7 +695,7 @@
   // ---- bar, summaries, flow ----
   function renderBar() {
     $('#cfg-bar-name').textContent = `${name} · ${CAT.colorName(frame)}`;
-    $('#cfg-bar-price').textContent = `${CAT.price(frame.p)} · ${T('prod.included')}`;
+    $('#cfg-bar-price').textContent = `${CAT.price(totalPrice())} · ${T('prod.included')}`;
     renderSummaries();
   }
   const fmt = v => (!v || Number(v) === 0 ? '0.00' : (Number(v) > 0 ? '+' : MINUS) + Math.abs(Number(v)).toFixed(2));
@@ -700,7 +714,7 @@
     $('#cfg-sum1').textContent = state.done[1] && state.zip ? `${state.zip} · ${state.st}` : '';
     $('#cfg-sum2').textContent = state.done[2] ? useName() : '';
     $('#cfg-sum3').textContent = state.done[3] ? rxSummary() : '';
-    $('#cfg-sum4').textContent = state.done[4] ? [matName(), ...extrasNames()].filter(Boolean).join(' · ') : '';
+    $('#cfg-sum4').textContent = state.done[4] ? [showTiers() ? tierName() : '', matName(), ...extrasNames()].filter(Boolean).join(' · ') : '';
     STEPS.forEach(n => stepEl(n).classList.toggle('is-done', !!state.done[n]));
   }
   // Scroll so `el` sits just under the compact header + the sticky bar (the target is re-read every frame, so the
@@ -784,9 +798,10 @@
     state.done[1] = state.done[3] = state.done[4] = true;
     const pkg = {
       sku: frame.id, name, colorName: { en: (frame.colRaw && frame.colRaw.en) || frame.col, es: (frame.colRaw && frame.colRaw.es) || (frame.colRaw && frame.colRaw.en) || frame.col },
-      colorKey: frame.col, cc: frame.cc, img: CAT.img(frame), price: Number(frame.p) || 0, band: frame.size.band,
+      colorKey: frame.col, cc: frame.cc, img: CAT.img(frame), price: totalPrice(), framePrice: Number(frame.p) || 0, band: frame.size.band,
       size: { lens: frame.size.lens, bridge: frame.size.bridge, temple: frame.size.temple, total: frame.size.total },
       use: state.use, material: state.material, coatings: [...LOCKED, ...state.extras], rx: rxForCart(),
+      ...(state.use === 'progressive' ? { tier: state.tier } : {}),
     };
     if (pkg.use === 'non-rx') pkg.rx = { path: 'none' };
     if (editing) { window.hoeCart.update(editing.id, pkg); location.href = 'carrito.html'; return; }

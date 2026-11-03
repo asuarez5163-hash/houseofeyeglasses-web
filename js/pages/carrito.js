@@ -19,7 +19,7 @@
   const CAT = window.hoeCatalog;
   const OPTS = window.HOE_LENS_OPTIONS || { uses: [], materials: [], coatings: [] };
   const loc = o => (o && (o[L()] || o.en)) || { name: '' };
-  const find = (kind, id) => OPTS[kind].find(x => x.id === id);
+  const find = (kind, id) => (OPTS[kind] || []).find(x => x.id === id);
   const LOCKED = new Set(['anti-reflective', 'scratch']);
   const MINUS = '−';
   const s = v => (!v || Number(v) === 0 ? '0.00' : (Number(v) > 0 ? '+' : MINUS) + Math.abs(Number(v)).toFixed(2));
@@ -66,7 +66,8 @@
   function line(it) {
     const use = find('uses', it.use), mat = find('materials', it.material);
     const extras = (it.coatings || []).filter(id => !LOCKED.has(id)).map(id => find('coatings', id)).filter(Boolean).map(c => loc(c).name);
-    const lenses = [loc(use).name, loc(mat).name, ...extras].filter(Boolean).join(' · ');
+    const tier = it.use === 'progressive' ? find('tiers', it.tier || 'estandar') : null;
+    const lenses = [loc(use).name, tier ? loc(tier).name : '', loc(mat).name, ...extras].filter(Boolean).join(' · ');
     return `<li class="cart-line" data-id="${esc(it.id)}">
       <div class="cart-line-art"><span class="cart-line-img" role="img" aria-label="${esc(it.name)}" style="background-image:url('${esc(it.img)}')"></span></div>
       <div class="cart-line-main">

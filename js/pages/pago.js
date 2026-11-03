@@ -52,7 +52,7 @@
     const items = C.get().items;
     $('#pay-lines').innerHTML = items.map(it => `<li>
       <span class="pay-line-art"><span class="pay-line-img" role="img" aria-label="${esc(it.name)}" style="background-image:url('${esc(it.img)}')"></span></span>
-      <span class="pay-line-main"><span class="pay-line-name">${esc(it.name)}</span><span class="pay-line-meta">${esc(C.colorOf(it))}${it.cc ? ` · ${esc(it.cc)}` : ''} · ${esc(C.lensName('uses', it.use))}</span></span>
+      <span class="pay-line-main"><span class="pay-line-name">${esc(it.name)}</span><span class="pay-line-meta">${esc(C.colorOf(it))}${it.cc ? ` · ${esc(it.cc)}` : ''} · ${esc(C.useLine(it))}</span></span>
       <span class="pay-line-price">${C.price(it.price)}</span></li>`).join('');
     $('#pay-sum-n').textContent = String(items.length);
     const ship = $('#pay-sum-ship');

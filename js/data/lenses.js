@@ -16,6 +16,19 @@ window.HOE_LENS_OPTIONS = {
       en: { name: 'Non-prescription', text: 'Clear lenses with no correction, for style or with a blue-light filter.', for: 'Fashion frames, or sunglasses with no correction.' },
       es: { name: 'Sin graduación', text: 'Lentes transparentes sin corrección, por estilo o con filtro de luz azul.', for: 'Armazones de moda o lentes de sol sin corrección.' } },
   ],
+  // Niveles del PROGRESIVO (solo progresivo). El precio NO vive aquí: lo publica el Central en data/manifest.json → lentes.progressive
+  // (lib/optica/lentes) y el Worker cobra ese mismo número. Se describen por lo que nota el cliente, sin marca ni tecnología.
+  tiers: [
+    { id: 'estandar', price: null,
+      en: { name: 'Standard', text: 'A proven progressive design: clear far and near vision, with a narrower middle zone.', for: 'A first pair of progressives, or a tighter budget.' },
+      es: { name: 'Estándar', text: 'Un diseño progresivo probado: lejos y cerca nítidos, con la zona intermedia más angosta.', for: 'Un primer par de progresivos o un presupuesto más ajustado.' } },
+    { id: 'premium', price: null,
+      en: { name: 'Premium', text: 'Digitally surfaced for your prescription: wider reading and computer zones, less blur at the sides.', for: 'All-day wear, screens and reading.' },
+      es: { name: 'Premium', text: 'Tallado digital para tu receta: zonas de lectura y computadora más anchas, menos borroso a los lados.', for: 'Uso de todo el día, pantallas y lectura.' } },
+    { id: 'ultimate', price: null,
+      en: { name: 'Ultimate', text: 'Our most advanced design, tailored to your prescription and frame: the widest zones, the least side blur, the easiest to get used to.', for: 'Anyone who wants the most natural vision, or has struggled with progressives before.' },
+      es: { name: 'Ultimate', text: 'Nuestro diseño más avanzado, a la medida de tu receta y tu armazón: las zonas más anchas, lo menos borroso a los lados y la adaptación más fácil.', for: 'Quien quiere la visión más natural, o ya batalló con progresivos antes.' } },
+  ],
   // maxPower = potencia máxima (valor absoluto de SPH+CYL en el meridiano más fuerte) recomendada para ese índice.
   materials: [
     { id: 'index-150', index: 1.50, maxPower: 2.0, price: null,
