@@ -297,10 +297,14 @@
     renderRx(); renderLens();
   }
 
+  // piezaPrices: manifest.lentes.piezas = { id: price } for the lens type, material and coatings (published by the Central; the Worker charges the same)
+  let piezaPrices = {};
+  const piezaPrecio = id => (Number(piezaPrices[id]) > 0 ? Number(piezaPrices[id]) : null);   // null = included (no "+ $" label)
+
   // ---- step 2: use (picking one moves on to the prescription) ----
   const USES = () => OPTS.uses.filter(u => !(isSun && u.id === 'office'));   // each use explains itself (what it is, who it is for); non-prescription needs no explanation
   function renderUse() {
-    bodyEl(2).innerHTML = `<div class="cfg-body-in"><div class="cfg-opts">${USES().map(u => opt('radio', 'use', u.id === 'non-rx' ? u : Object.assign({}, u, { desc: true, withFor: true }), u.id === state.use)).join('')}</div></div>`;
+    bodyEl(2).innerHTML = `<div class="cfg-body-in"><div class="cfg-opts">${USES().map(u => opt('radio', 'use', u.id === 'non-rx' ? u : Object.assign({}, u, { desc: true, withFor: true, price: piezaPrecio(u.id) }), u.id === state.use)).join('')}</div></div>`;
   }
   bodyEl(2).addEventListener('click', e => {
     const r = e.target.closest('input[name="use"]'); if (!r) return;
@@ -607,10 +611,10 @@
   };
   const opts4 = $('#cfg-opts4');
   // progressive tiers: their price comes from the Central (manifest.lentes.progressive); without it the group is not shown
-  let tierPrices = null, extraPrices = {};   // extraPrices: manifest.lentes.extras = { coating id: price } (published by the Central)
-  CAT.manifest().then(m => { tierPrices = (m && m.lentes && m.lentes.progressive) || null; extraPrices = (m && m.lentes && m.lentes.extras) || {}; renderLens(); renderBar(); });
+  let tierPrices = null;
+  CAT.manifest().then(m => { tierPrices = (m && m.lentes && m.lentes.progressive) || null; piezaPrices = (m && m.lentes && (m.lentes.piezas || m.lentes.extras)) || {}; renderUse(); renderLens(); renderBar(); });
   const showTiers = () => state.use === 'progressive' && !!tierPrices && (OPTS.tiers || []).some(t => Number(tierPrices[t.id]) > 0);
-  const extrasPrice = () => [...state.extras].reduce((s, id) => s + (Number(extraPrices[id]) || 0), 0);
+  const extrasPrice = () => [state.use, state.material, ...state.extras].reduce((s, id) => s + (piezaPrecio(id) || 0), 0);
   const lensPrice = () => (showTiers() ? Number(tierPrices[state.tier]) || 0 : 0) + extrasPrice();
   const totalPrice = () => (Number(frame.p) || 0) + lensPrice();
   const tierName = () => { const t = (OPTS.tiers || []).find(x => x.id === state.tier); return t ? loc(t).name : ''; };
@@ -622,15 +626,15 @@
       ? `<p class="cfg-group">${T('cfg.tierTitle')}</p>` + OPTS.tiers.map(t => opt('radio', 'tier', Object.assign({}, t, { price: Number(tierPrices[t.id]) || 0, desc: true }), t.id === state.tier, false, 'progressive')).join('')
       : '';
     opts4.innerHTML = tiers + `<p class="cfg-group">${T('cfg.matTitle')}</p>`
-      + mats.map(m => opt('radio', 'material', Object.assign({}, m, { desc: true, withFor: true }), m.id === state.material, rec.id === m.id)).join('')
+      + mats.map(m => opt('radio', 'material', Object.assign({}, m, { desc: true, withFor: true, price: piezaPrecio(m.id) }), m.id === state.material, rec.id === m.id)).join('')
       + `<p class="cfg-group">${T('cfg.extraTitle')}</p>`
-      + EXTRAS().map(c => opt('checkbox', 'coat', Object.assign({}, c, { price: Number(extraPrices[c.id]) > 0 ? Number(extraPrices[c.id]) : null, desc: true }), state.extras.has(c.id), false, DEMO_OF[c.id] || '')).join('')
+      + EXTRAS().map(c => opt('checkbox', 'coat', Object.assign({}, c, { price: piezaPrecio(c.id), desc: true }), state.extras.has(c.id), false, DEMO_OF[c.id] || '')).join('')
       ;
     $('#cfg-add > span').textContent = T('cfg.addToCart');
     demoRest();
   }
   bodyEl(4).addEventListener('change', e => {
-    if (e.target.name === 'material') state.material = e.target.value;
+    if (e.target.name === 'material') { state.material = e.target.value; renderBar(); }
     if (e.target.name === 'tier') { state.tier = e.target.value; renderBar(); }
     if (e.target.name === 'coat') { e.target.checked ? state.extras.add(e.target.value) : state.extras.delete(e.target.value); renderBar(); }
     renderSummaries();
