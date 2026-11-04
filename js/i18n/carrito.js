@@ -14,8 +14,8 @@ Object.assign(window.HOE_I18N.en, {
   "cart.next.1": "We receive your order", "cart.next.2": "An optician in Tampa checks your prescription", "cart.next.3": "Your glasses are ready in a few business days",
   "cart.seen": "Frames you looked at", "cart.seenAll": "See all frames",
   // C-cine: page head, the summary column and the empty state
-  "cart.kicker": "Your selection", "cart.count": "{n} frames · lenses included", "cart.count1": "1 frame · lenses included",
-  "cart.summary": "Summary", "cart.sumFrames": "Frames", "cart.sumLenses": "Lenses", "cart.sumLensesV": "Included",
+  "cart.kicker": "Your selection", "cart.count": "{n} frames · with your lenses", "cart.count1": "1 frame · with your lenses",
+  "cart.summary": "Summary", "cart.sumFrames": "Frames", "cart.sumLenses": "Lenses", "cart.sumLensesV": "In each pair's price",
   "cart.sumShip": "Shipping", "cart.sumShipV": "Quoted on WhatsApp",
   "cart.emptyLead": "Every pair starts with a frame. Pick one and we take it from there.",
   // payment (Stripe Checkout through the store's own Central)
@@ -44,8 +44,8 @@ Object.assign(window.HOE_I18N.es, {
   "cart.next.title": "Qué pasa después",
   "cart.next.1": "Recibimos tu pedido", "cart.next.2": "Un óptico en Tampa revisa tu receta", "cart.next.3": "Tus lentes quedan listos en pocos días hábiles",
   "cart.seen": "Armazones que viste", "cart.seenAll": "Ver todos los armazones",
-  "cart.kicker": "Tu selección", "cart.count": "{n} armazones · lentes incluidos", "cart.count1": "1 armazón · lentes incluidos",
-  "cart.summary": "Resumen", "cart.sumFrames": "Armazones", "cart.sumLenses": "Lentes", "cart.sumLensesV": "Incluidos",
+  "cart.kicker": "Tu selección", "cart.count": "{n} armazones · con tus lentes", "cart.count1": "1 armazón · con tus lentes",
+  "cart.summary": "Resumen", "cart.sumFrames": "Armazones", "cart.sumLenses": "Lentes", "cart.sumLensesV": "En el precio de cada par",
   "cart.sumShip": "Envío", "cart.sumShipV": "Se cotiza por WhatsApp",
   "cart.emptyLead": "Cada par empieza por un armazón. Elige uno y nosotros seguimos.",
   "cart.shipFree": "Gratis en EE. UU.", "cart.shipCalc": "Se calcula al pagar",

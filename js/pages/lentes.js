@@ -1,6 +1,6 @@
 // Lens options page (lentes.html).
 // Everything about an option (name, text, index, power range) comes from js/data/lenses.js — never from here.
-// Options carry no price of their own: the note at the top of the page says prescription lenses are included in every frame price.
+// Options show no price here: the note at the top says each one is added to the frame price (prices: manifest.lentes, set in the Central).
 // First paint uses window.hoeLang(); every language change ('hoe:lang' from main.js) re-renders.
 (() => {
   const data = window.HOE_LENS_OPTIONS;

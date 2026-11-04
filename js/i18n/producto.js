@@ -4,7 +4,7 @@
 // rx.od / rx.os (OD / OI) live in js/i18n.js because the header drawer uses them.
 Object.assign(window.HOE_I18N.en, {
   "prod.meta": "{name} — House of Eyeglasses",
-  "prod.desc": "{name} in {color}, {price} with prescription lenses included. Pick your lenses in four short steps; an optician in Tampa checks every prescription.",
+  "prod.desc": "{name} in {color}, {price} for the frame. Add your prescription lenses in four short steps; an optician in Tampa checks every prescription.",
   "prod.views": "Views", "prod.view.size": "Size",
   "prod.colorOf": "Color",
   "prod.trust": "If the prescription isn’t right, we remake it free",
@@ -31,7 +31,7 @@ Object.assign(window.HOE_I18N.en, {
   "cfg.errZip": "Type the 5-digit ZIP code where we ship.", "cfg.errZipState": "Choose your state.",
   "cfg.demo.single": "The same power across the whole lens.", "cfg.demo.progressive": "Three zones, no line: far at the top, reading at the bottom.",
   "cfg.demo.blue": "A faint tint that filters part of the blue light.", "cfg.demo.sun": "In sunlight it darkens; back indoors it clears.",
-  "cfg.demo.ar": "The reflection is gone. That is the coating at work, included with every pair.",
+  "cfg.demo.ar": "The reflection is gone. That is the anti-reflective coating at work.",
 
   "rx.none": "No prescription needed for this choice.",
   "rx.sph": "SPH", "rx.cyl": "CYL", "rx.axis": "AXIS", "rx.add": "ADD",
@@ -69,7 +69,7 @@ Object.assign(window.HOE_I18N.en, {
 
 Object.assign(window.HOE_I18N.es, {
   "prod.meta": "{name} — House of Eyeglasses",
-  "prod.desc": "{name} en {color}, {price} con lentes graduados incluidos. Elige tus lentes en cuatro pasos cortos; un óptico en Tampa revisa cada receta.",
+  "prod.desc": "{name} en {color}, {price} el armazón. Agrega tus lentes graduados en cuatro pasos cortos; un óptico en Tampa revisa cada receta.",
   "prod.views": "Vistas", "prod.view.size": "Medida",
   "prod.colorOf": "Color",
   "prod.trust": "Si la graduación no está bien, la rehacemos gratis",
@@ -95,7 +95,7 @@ Object.assign(window.HOE_I18N.es, {
   "cfg.errZip": "Escribe el código postal (5 dígitos) donde enviamos.", "cfg.errZipState": "Elige tu estado.",
   "cfg.demo.single": "La misma graduación en todo el lente.", "cfg.demo.progressive": "Tres zonas sin línea: lejos arriba, lectura abajo.",
   "cfg.demo.blue": "Un tinte apenas visible que filtra parte de la luz azul.", "cfg.demo.sun": "Con el sol se oscurece; adentro vuelve a aclararse.",
-  "cfg.demo.ar": "El reflejo desapareció. Eso hace el tratamiento, incluido en cada par.",
+  "cfg.demo.ar": "El reflejo desapareció. Eso hace el antirreflejo.",
 
   "rx.none": "Esta opción no necesita receta.",
   "rx.sph": "SPH", "rx.cyl": "CYL", "rx.axis": "EJE", "rx.add": "ADD",
