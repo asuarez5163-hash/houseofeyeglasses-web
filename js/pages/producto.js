@@ -614,11 +614,18 @@
   let tierPrices = null;
   CAT.manifest().then(m => { tierPrices = (m && m.lentes && m.lentes.progressive) || null; piezaPrices = (m && m.lentes && (m.lentes.piezas || m.lentes.extras)) || {}; renderUse(); renderLens(); renderBar(); });
   const showTiers = () => state.use === 'progressive' && !!tierPrices && (OPTS.tiers || []).some(t => Number(tierPrices[t.id]) > 0);
-  const extrasPrice = () => [state.use, state.material, ...state.extras].reduce((s, id) => s + (piezaPrecio(id) || 0), 0);
+  const noRx = () => state.use === 'non-rx';       // «Sin graduación» = el armazón tal cual, con sus lentes de muestra: todo incluido, nada que elegir ni cobrar
+  const extrasPrice = () => noRx() ? 0 : [state.use, state.material, ...state.extras].reduce((s, id) => s + (piezaPrecio(id) || 0), 0);
   const lensPrice = () => (showTiers() ? Number(tierPrices[state.tier]) || 0 : 0) + extrasPrice();
   const totalPrice = () => (Number(frame.p) || 0) + lensPrice();
   const tierName = () => { const t = (OPTS.tiers || []).find(x => x.id === state.tier); return t ? loc(t).name : ''; };
   function renderLens() {
+    if (noRx()) {
+      opts4.innerHTML = `<p class="cfg-incl">${T('cfg.nonrx')}</p>`;
+      $('#cfg-add > span').textContent = T('cfg.addToCart');
+      demoRest();
+      return;
+    }
     const mats = MATERIALS(), rec = recommended();
     if (!state.material || !mats.some(m => m.id === state.material)) state.material = rec.id;
     if (!(OPTS.tiers || []).some(t => t.id === state.tier)) state.tier = 'estandar';
@@ -715,7 +722,7 @@
     $('#cfg-sum1').textContent = state.done[1] && state.zip ? `${state.zip} · ${state.st}` : '';
     $('#cfg-sum2').textContent = state.done[2] ? useName() : '';
     $('#cfg-sum3').textContent = state.done[3] ? rxSummary() : '';
-    $('#cfg-sum4').textContent = state.done[4] ? [showTiers() ? tierName() : '', matName(), ...extrasNames()].filter(Boolean).join(' · ') : '';
+    $('#cfg-sum4').textContent = state.done[4] ? [showTiers() ? tierName() : '', ...(noRx() ? [] : [matName(), ...extrasNames()])].filter(Boolean).join(' · ') : '';
     STEPS.forEach(n => stepEl(n).classList.toggle('is-done', !!state.done[n]));
   }
   // Scroll so `el` sits just under the compact header + the sticky bar (the target is re-read every frame, so the
@@ -801,7 +808,7 @@
       sku: frame.id, name, colorName: { en: (frame.colRaw && frame.colRaw.en) || frame.col, es: (frame.colRaw && frame.colRaw.es) || (frame.colRaw && frame.colRaw.en) || frame.col },
       colorKey: frame.col, cc: frame.cc, img: CAT.img(frame), price: totalPrice(), framePrice: Number(frame.p) || 0, band: frame.size.band,
       size: { lens: frame.size.lens, bridge: frame.size.bridge, temple: frame.size.temple, total: frame.size.total },
-      use: state.use, material: state.material, coatings: [...LOCKED, ...state.extras], rx: rxForCart(),
+      use: state.use, material: noRx() ? '' : state.material, coatings: noRx() ? [] : [...LOCKED, ...state.extras], rx: rxForCart(),
       ...(state.use === 'progressive' ? { tier: state.tier } : {}),
     };
     if (pkg.use === 'non-rx') pkg.rx = { path: 'none' };
