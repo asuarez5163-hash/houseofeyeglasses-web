@@ -66,7 +66,7 @@
   };
   // "Progressive · Premium" (the tier only for progressive; an older item without one is Standard)
   const useLine = it => lensName('uses', it.use) + (it.use === 'progressive' ? ` · ${lensName('tiers', it.tier || 'estandar')}` : '');
-  // one line for a saved prescription: "OD −2.00 / OS −1.50 · PD in store"
+  // one line for a saved prescription: "OD −2.00 / OS −1.50 · PD 31/31" (or "PD missing")
   const rxLine = (rx, use) => {
     if (!rx || rx.path === 'none' || use === 'non-rx') return T('cart.rxNone');
     if (use === 'readers') return `+${rx.readers || ''}`;
