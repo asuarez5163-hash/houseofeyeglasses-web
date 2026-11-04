@@ -313,8 +313,8 @@
 
     // lenses that make sense (names come from js/data/lenses.js)
     const opts = window.HOE_LENS_OPTIONS || { uses: [], materials: [] };
-    const useId = hasAdd ? (distZero ? 'readers' : 'progressive') : (distZero ? 'non-rx' : 'single');
-    const useKey = { progressive: 'progressive', readers: 'readers', single: 'single', 'non-rx': 'nonrx' }[useId];
+    const useId = hasAdd ? (distZero ? 'office' : 'progressive') : (distZero ? 'non-rx' : 'single');
+    const useKey = { progressive: 'progressive', office: 'office', single: 'single', 'non-rx': 'nonrx' }[useId];
     const use = opts.uses.find(u => u.id === useId);
     const lenses = [item(loc(use).name, T('receta.use.tag'), `<p>${T('receta.use.' + useKey)}</p>`)];
 

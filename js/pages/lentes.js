@@ -57,7 +57,7 @@
   const GLYPH = {
     single: `<path d="${LENS}"/><circle cx="20" cy="20" r="1.6"/>`,
     progressive: `<path d="${LENS}"/><path d="M10 15h20M14 21h12M17.5 27h5"/>`,
-    readers: `<path d="${LENS}"/><path d="M20 16v8M16 20h8"/>`,
+    office: `<path d="${LENS}"/><path d="M12 17h16M15 24h10"/>`,
     'non-rx': `<path d="${LENS}"/><path d="M11 19l5-5M13 25l9-9"/>`,
     'anti-reflective': `<path d="${LENS}"/><path d="M12 20c2.4-3 13.6-3 16 0-2.4 3-13.6 3-16 0z"/><circle cx="20" cy="20" r="1.6"/>`,
     scratch: `<path d="M20 5 9 9.5V18c0 7.5 4.8 13 11 16 6.2-3 11-8.5 11-16V9.5z"/><path d="m15 19.5 3.5 3.5L26 15.5"/>`,

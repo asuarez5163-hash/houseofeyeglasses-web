@@ -25,7 +25,7 @@
     ['power', 'strength', 'graduacion', 'graduado', 'graduados', 'aumento', 'sph', 'esfera', 'dioptria', 'dioptrias', 'diopter', 'diopters'],
     ['progressive', 'progressives', 'progresivo', 'progresivos', 'multifocal', 'multifocales', 'bifocal', 'bifocales', 'varifocal', 'varifocals'],
     ['pd', 'dp', 'pupillary', 'pupilar', 'pupilas', 'pupils'],
-    ['reading', 'readers', 'reader', 'lectura', 'leer'],
+    ['reading', 'office', 'readers', 'reader', 'oficina', 'escritorio', 'lectura', 'leer'],
     ['blue', 'azul', 'screen', 'screens', 'pantalla', 'pantallas', 'computer', 'computadora', 'digital'],
     ['antireflective', 'antirreflejo', 'antireflejo', 'reflejo', 'reflejos', 'glare', 'brillo', 'brillos'],
     ['scratch', 'scratches', 'rayas', 'rayones', 'antirrayas', 'antirayas'],

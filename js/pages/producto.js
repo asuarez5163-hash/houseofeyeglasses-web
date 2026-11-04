@@ -65,7 +65,7 @@
   const editing = editId && window.hoeCart ? window.hoeCart.get().items.find(i => i.id === editId && i.sku === frame.id) : null;
   const LOCKED = ['anti-reflective', 'scratch'];   // always included, never shown as a choice
 
-  const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'own', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, file: null, confirm: false, readers: '' });
+  const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'own', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, file: null, confirm: false });
   const loadRx = src => {   // a saved package (maybe from an older shape of the form) → today's shape
     const rx = freshRx();
     if (!src || typeof src !== 'object') return rx;
@@ -78,7 +78,6 @@
     if (src.doc && typeof src.doc === 'object') { rx.doc.name = src.doc.name || ''; rx.doc.phone = src.doc.phone || ''; }
     if (src.path === 'upload' && src.file && src.file.id) { rx.path = 'upload'; rx.file = { id: src.file.id, name: src.file.name || '', type: src.file.type || '', size: src.file.size || 0 }; }
     rx.confirm = !!src.confirm;
-    rx.readers = src.readers || '';
     return rx;
   };
   const ship0 = window.hoeCart && window.hoeCart.ship ? window.hoeCart.ship() : null;   // the ZIP the visitor already gave (one per cart)
@@ -248,7 +247,7 @@
   const opt = (type, name, o, checked, rec, demo) => `<label class="cfg-opt${type === 'checkbox' ? ' is-check' : ''}" data-press${demo ? ` data-demo="${demo}"` : ''}>
       <input type="${type}" name="${name}" value="${o.id}"${checked ? ' checked' : ''}>
       <span class="dot"></span>
-      <span class="txt"><b>${loc(o).name}</b>${rec ? `<span class="rec">${T('cfg.rec')}</span>` : ''}${o.desc ? `<small class="cfg-opt-d">${loc(o).text}</small>` : ''}</span>
+      <span class="txt"><b>${loc(o).name}</b>${rec ? `<span class="rec">${T('cfg.rec')}</span>` : ''}${o.desc ? `<small class="cfg-opt-d">${loc(o).text}</small>${o.withFor ? `<small class="cfg-opt-d cfg-opt-for">${loc(o).for}</small>` : ''}` : ''}</span>
       ${price(o)}
     </label>`;
   const nextBtn = n => `<button type="button" class="btn btn-gold cfg-next" data-next="${n}"><span>${T('cfg.next')}</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg></button>`;
@@ -257,7 +256,7 @@
   // ---- step 1: ZIP code. The state it belongs to decides whether step 3 also asks for the eye doctor (table: js/data/rx-states.js) ----
   const RXS = window.hoeRxStates || { stateOf: () => null, nameOf: c => String(c), strict: () => true, codes: () => [], has: () => false };
   const stName = c => RXS.nameOf(c, L());
-  const needsDoctor = () => !!state.st && RXS.strict(state.st) && (state.use === 'single' || state.use === 'progressive');
+  const needsDoctor = () => !!state.st && RXS.strict(state.st) && (state.use === 'single' || state.use === 'progressive' || state.use === 'office');
   const zipNote = () => (state.st ? fill(T(RXS.strict(state.st) ? 'cfg.zipStrict' : 'cfg.zipOpen'), { state: stName(state.st) }) : '');
   const NO_PICK = ['AA', 'AE', 'AP', 'FM', 'MH', 'PW'];   // found by ZIP, never listed in the "choose your state" fallback
   function stateOptions() {
@@ -299,9 +298,9 @@
   }
 
   // ---- step 2: use (picking one moves on to the prescription) ----
-  const USES = () => OPTS.uses.filter(u => !(isSun && u.id === 'readers'));
+  const USES = () => OPTS.uses.filter(u => !(isSun && u.id === 'office'));   // each use explains itself (what it is, who it is for); non-prescription needs no explanation
   function renderUse() {
-    bodyEl(2).innerHTML = `<div class="cfg-body-in"><div class="cfg-opts">${USES().map(u => opt('radio', 'use', u, u.id === state.use)).join('')}</div></div>`;
+    bodyEl(2).innerHTML = `<div class="cfg-body-in"><div class="cfg-opts">${USES().map(u => opt('radio', 'use', u.id === 'non-rx' ? u : Object.assign({}, u, { desc: true, withFor: true }), u.id === state.use)).join('')}</div></div>`;
   }
   bodyEl(2).addEventListener('click', e => {
     const r = e.target.closest('input[name="use"]'); if (!r) return;
@@ -431,14 +430,12 @@
     let inner = '';
     if (state.use === 'non-rx') {
       inner = `<p class="rxf-none">${T('rx.none')}</p>`;
-    } else if (state.use === 'readers') {
-      inner = `<div class="rx-field rxf-one"><label for="rx-readers">${T('rx.readers')}</label><select class="rx-select" id="rx-readers">${addOptions(rx.readers)}</select></div>`;
     } else {
       autoMode();
       const up = uploading();
       inner = `${modeBlock()}
         ${up ? upBlock() : `${eyeRow('od')}${eyeRow('os')}
-        ${state.use === 'progressive' ? `<div class="rx-field rxf-one"><label for="rx-add">${T('rx.add')}</label><select class="rx-select" id="rx-add">${addOptions(rx.add)}</select></div>` : ''}`}
+        ${(state.use === 'progressive' || state.use === 'office') ? `<div class="rx-field rxf-one"><label for="rx-add">${T('rx.add')}</label><select class="rx-select" id="rx-add">${addOptions(rx.add)}</select></div>` : ''}`}
         ${pdBlock()}
         ${up ? '' : docBlock()}
         <label class="rxf-confirm" data-press><input type="checkbox" id="rx-confirm"${rx.confirm ? ' checked' : ''}><span class="dot"></span><span>${T('rx.confirm')}</span></label>
@@ -451,12 +448,11 @@
   function validateRx() {
     const rx = state.rx, errs = [];
     if (state.use === 'non-rx') return errs;
-    if (state.use === 'readers') { if (!rx.readers) errs.push(T('rx.errReaders')); return errs; }
     const up = uploading();
     if (up) { if (!(rx.file && rx.file.id)) errs.push(T('rx.errUpload')); }
     else {
       ['od', 'os'].forEach(e => { const r = rx[e]; if (Number(r.cyl) !== 0 && !(/^\d{1,3}$/.test(r.axis) && Number(r.axis) >= 1 && Number(r.axis) <= 180)) errs.push(fill(T('rx.errAxis'), { eye: T('rx.' + e) })); });
-      if (state.use === 'progressive' && !rx.add) errs.push(T('rx.errAdd'));
+      if ((state.use === 'progressive' || state.use === 'office') && !rx.add) errs.push(T('rx.errAdd'));
     }
     if (rx.pd.kind === 'one') { const v = num(rx.pd.total); if (!(v >= 40 && v <= 80)) errs.push(T('rx.errPd')); }
     else { const a = num(rx.pd.od), b = num(rx.pd.os); if (!(a >= 20 && a <= 45 && b >= 20 && b <= 45 && a + b >= 40 && a + b <= 80)) errs.push(T('rx.errPd2')); }
@@ -489,7 +485,6 @@
     }
     if (el.id === 'rx-add') rx.add = el.value;
     if (el.id === 'rx-confirm') rx.confirm = el.checked;
-    if (el.id === 'rx-readers') rx.readers = el.value;
   });
   bodyEl(3).addEventListener('input', e => {
     const el = e.target;
@@ -594,7 +589,7 @@
 
   // ---- step 4: lenses (material + extras in one list) + the sample lens ----
   const maxPower = () => {
-    if (state.use === 'non-rx' || state.use === 'readers' || uploading()) return null;      // uploaded: the optician reads the power from the file
+    if (state.use === 'non-rx' || uploading()) return null;      // uploaded: the optician reads the power from the file
     return Math.max(...['od', 'os'].map(e => Math.abs(Number(state.rx[e].sph) || 0) + Math.abs(Number(state.rx[e].cyl) || 0)));
   };
   const MATERIALS = () => {
@@ -669,7 +664,7 @@
   const demoWhat = demo && (demo.querySelector('#demo-what') || demo.querySelector('.demo-what'));
   // what the lens shows when nothing is under the pointer: the extras marked win, then the use
   const restMode = () => (state.extras.has('light-responsive') || state.extras.has('polarized') || state.extras.has('tint')) ? 'sun'
-    : state.extras.has('blue-light') ? 'blue' : state.use === 'progressive' ? 'progressive' : state.use === 'non-rx' ? 'ar' : 'single';
+    : state.extras.has('blue-light') ? 'blue' : (state.use === 'progressive' || state.use === 'office') ? 'progressive' : state.use === 'non-rx' ? 'ar' : 'single';
   const restName = () => {
     const m = restMode();
     const id = m === 'sun' ? ['light-responsive', 'polarized', 'tint'].find(x => state.extras.has(x)) : m === 'blue' ? 'blue-light' : m === 'ar' ? 'anti-reflective' : null;
@@ -702,7 +697,6 @@
   const rxSummary = () => {
     const rx = state.rx;
     if (state.use === 'non-rx') return T('rx.sumNone');
-    if (state.use === 'readers') return rx.readers ? fill(T('rx.sumReaders'), { p: rx.readers }) : '';
     const pd = rx.pd.kind === 'one' ? `${T('rx.pd')} ${rx.pd.total}` : `${T('rx.pd')} ${rx.pd.od}/${rx.pd.os}`;
     if (uploading()) return `${T('rx.sumUploaded')} · ${pd}`;
     return `${T('rx.od')} ${fmt(rx.od.sph)} / ${T('rx.os')} ${fmt(rx.os.sph)} · ${pd}`;

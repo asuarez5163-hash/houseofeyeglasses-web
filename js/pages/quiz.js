@@ -165,7 +165,7 @@
   const LO = window.HOE_LENS_OPTIONS || { uses: [], materials: [], coatings: [] };
   const lensText = o => o[lang()] || o.en;
   const byId = (list, id) => (list || []).find(o => o.id === id);
-  const USE_LENS = { allday: 'single', screen: 'single', reading: 'readers', sun: 'single' };
+  const USE_LENS = { allday: 'single', screen: 'single', reading: 'single', sun: 'single' };
   const COATS = {
     allday: ['anti-reflective', 'scratch', 'uv'],
     screen: ['blue-light', 'anti-reflective', 'scratch'],

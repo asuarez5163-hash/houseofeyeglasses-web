@@ -35,8 +35,8 @@ Object.assign(window.HOE_I18N.en, {
   "ayuda.a.pd": "PD (pupillary distance) is the space in millimeters between the centers of your pupils, and it tells the lab where to center each lens. Many eye doctors write it on the prescription; if yours doesn't have it, measure it with a millimeter ruler in front of a mirror, or ask your eye doctor. Two numbers, like 31.5/32, are a dual PD (one per eye): send us both.",
 
   // Lenses & coatings
-  "ayuda.q.lensTypes": "Single vision, progressive or readers: which do I need?",
-  "ayuda.a.lensTypes": "Single vision has one power across the whole lens, for distance or for near. Progressives blend distance, computer and reading zones with no visible line and need an ADD value on your prescription; readers only magnify and need no prescription. More in the <a href=\"lentes.html\">lens guide</a>.",
+  "ayuda.q.lensTypes": "Single vision, progressive or Office Lens: which do I need?",
+  "ayuda.a.lensTypes": "Single vision has one power across the whole lens, for distance or for near. Progressives blend distance, computer and reading zones with no visible line and need an ADD value on your prescription. An Office Lens is made for the desk: sharp for the computer and for reading, with no far-distance zone, and it also needs an ADD. More in the <a href=\"lentes.html\">lens guide</a>.",
   "ayuda.q.blue": "Do I need a blue-light filter?",
   "ayuda.a.blue": "It's optional. A blue-light filter is meant for long hours on phones and computers, and an anti-reflective coating also cuts screen glare. You can add it with or without a prescription.",
   "ayuda.q.thin": "Which lens material is best for a strong prescription?",
@@ -113,8 +113,8 @@ Object.assign(window.HOE_I18N.es, {
   "ayuda.q.pd": "¿Qué es la distancia pupilar (DP) y cómo la mido?",
   "ayuda.a.pd": "La distancia pupilar (DP, o PD en inglés) es la separación en milímetros entre el centro de tus pupilas, y le dice al laboratorio dónde centrar cada lente. Muchos médicos de la vista la anotan en la receta; si la tuya no la trae, mídela con una regla en milímetros frente a un espejo o pídesela a tu médico. Dos números, como 31.5/32, son una DP dual (uno por ojo): mándanos los dos.",
 
-  "ayuda.q.lensTypes": "¿Monofocales, progresivos o de lectura: cuáles necesito?",
-  "ayuda.a.lensTypes": "Los monofocales tienen una sola graduación en todo el lente, para lejos o para cerca. Los progresivos combinan zonas para lejos, computadora y lectura sin línea visible y necesitan un valor ADD en tu receta; los de lectura solo aumentan y no requieren receta. Más detalles en la <a href=\"lentes.html\">guía de lentes</a>.",
+  "ayuda.q.lensTypes": "¿Monofocales, progresivos o lente de oficina: cuáles necesito?",
+  "ayuda.a.lensTypes": "Los monofocales tienen una sola graduación en todo el lente, para lejos o para cerca. Los progresivos combinan zonas para lejos, computadora y lectura sin línea visible y necesitan un valor ADD en tu receta; el lente de oficina es para el escritorio: nítido para la computadora y para leer, sin zona de lejos, y también necesita ADD. Más detalles en la <a href=\"lentes.html\">guía de lentes</a>.",
   "ayuda.q.blue": "¿Necesito filtro de luz azul?",
   "ayuda.a.blue": "Es opcional. El filtro de luz azul está pensado para muchas horas frente al celular y la computadora, y el antirreflejo también reduce los brillos de la pantalla. Puedes pedirlo con o sin graduación.",
   "ayuda.q.thin": "¿Qué material de lente conviene para una graduación alta?",

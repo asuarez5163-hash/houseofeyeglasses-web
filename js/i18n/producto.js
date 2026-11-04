@@ -34,7 +34,6 @@ Object.assign(window.HOE_I18N.en, {
   "cfg.demo.ar": "The reflection is gone. That is the coating at work, included with every pair.",
 
   "rx.none": "No prescription needed for this choice.",
-  "rx.readers": "Reading power",
   "rx.sph": "SPH", "rx.cyl": "CYL", "rx.axis": "AXIS", "rx.add": "ADD",
   "rx.pd": "PD", "rx.pdHint": "Measure it yourself with a ruler, or ask someone to help. Tap the ? to see how.",
   "rx.pdRight": "Right eye PD", "rx.pdLeft": "Left eye PD", "rx.pdTotal": "PD (one number)",
@@ -64,8 +63,8 @@ Object.assign(window.HOE_I18N.en, {
   "rx.confirm": "My prescription is current",
   "rx.howTo": "How do I read my prescription?",
   "rx.errAxis": "{eye}: add the AXIS (1–180) when CYL is not 0.00.",
-  "rx.errAdd": "Add the ADD from your prescription.", "rx.errPd": "Type your PD (40–80 mm).", "rx.errConfirm": "Confirm your prescription is current.", "rx.errReaders": "Choose the reading power.",
-  "rx.sumNone": "No prescription", "rx.sumReaders": "Reading +{p}",
+  "rx.errAdd": "Add the ADD from your prescription.", "rx.errPd": "Type your PD (40–80 mm).", "rx.errConfirm": "Confirm your prescription is current.",
+  "rx.sumNone": "No prescription",
 });
 
 Object.assign(window.HOE_I18N.es, {
@@ -99,7 +98,6 @@ Object.assign(window.HOE_I18N.es, {
   "cfg.demo.ar": "El reflejo desapareció. Eso hace el tratamiento, incluido en cada par.",
 
   "rx.none": "Esta opción no necesita receta.",
-  "rx.readers": "Aumento de lectura",
   "rx.sph": "SPH", "rx.cyl": "CYL", "rx.axis": "EJE", "rx.add": "ADD",
   "rx.pd": "DP", "rx.pdHint": "Mídela tú con una regla, o pide que te ayuden. Toca el ? para ver cómo.",
   "rx.pdRight": "DP ojo derecho", "rx.pdLeft": "DP ojo izquierdo", "rx.pdTotal": "DP (un solo número)",
@@ -129,6 +127,6 @@ Object.assign(window.HOE_I18N.es, {
   "rx.confirm": "Mi receta está vigente",
   "rx.howTo": "¿Cómo leer mi receta?",
   "rx.errAxis": "{eye}: agrega el EJE (1–180) cuando CYL no es 0.00.",
-  "rx.errAdd": "Agrega el ADD de tu receta.", "rx.errPd": "Escribe tu DP (40–80 mm).", "rx.errConfirm": "Confirma que tu receta está vigente.", "rx.errReaders": "Elige el aumento de lectura.",
-  "rx.sumNone": "Sin receta", "rx.sumReaders": "Lectura +{p}",
+  "rx.errAdd": "Agrega el ADD de tu receta.", "rx.errPd": "Escribe tu DP (40–80 mm).", "rx.errConfirm": "Confirma que tu receta está vigente.",
+  "rx.sumNone": "Sin receta",
 });
