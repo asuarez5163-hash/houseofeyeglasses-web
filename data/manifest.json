@@ -1,13 +1,13 @@
 {
- "v": "2026-11-04T17:21:34Z",
- "total": 6032,
+ "v": "2026-11-04T23:22:15Z",
+ "total": 6125,
  "chunks": {
-  "men": "data/c/men.1a8f379b.json",
-  "women": "data/c/women.243afd26.json",
-  "kids": "data/c/kids.11708856.json",
+  "men": "data/c/men.e1dd793c.json",
+  "women": "data/c/women.20ed28d5.json",
+  "kids": "data/c/kids.21d6d53c.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.5c8b68fc.json",
+ "search": "data/s/index.639c4928.json",
  "featured": [
   "HOE-W-155",
   "HOE-M-72",
@@ -35,6 +35,7 @@
    "Arnette",
    "BMW",
    "Balenciaga",
+   "Bally",
    "Banana Republic",
    "Bebe",
    "Berluti",
@@ -138,6 +139,7 @@
    "Palm Angels",
    "Pepe Jeans",
    "Philipp Plein",
+   "Pierre Cardin",
    "Polaroid",
    "Polaroid Core",
    "Police",
@@ -226,7 +228,8 @@
   "lensColor": [
    "clear",
    "blue-light",
-   "tinted"
+   "tinted",
+   "mirror"
   ],
   "price": [
    37,
