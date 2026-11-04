@@ -1,5 +1,5 @@
 {
- "v": "2026-11-04T16:37:36Z",
+ "v": "2026-11-04T17:21:34Z",
  "total": 6032,
  "chunks": {
   "men": "data/c/men.1a8f379b.json",
@@ -265,15 +265,16 @@
    "ultimate": 299
   },
   "piezas": {
-   "office": 79,
-   "index-167": 69,
-   "index-174": 99,
-   "anti-reflective": 29,
+   "single": 59,
+   "office": 109,
+   "index-167": 129,
+   "index-174": 149,
+   "anti-reflective": 39,
    "scratch": 19,
    "blue-light": 29,
-   "light-responsive": 79,
-   "polarized": 59,
-   "tint": 19
+   "light-responsive": 109,
+   "polarized": 79,
+   "tint": 29
   }
  }
 }
