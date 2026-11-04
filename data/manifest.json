@@ -1,5 +1,5 @@
 {
- "v": "2026-11-03T23:09:55Z",
+ "v": "2026-11-04T16:18:36Z",
  "total": 6032,
  "chunks": {
   "men": "data/c/men.1a8f379b.json",
@@ -263,6 +263,17 @@
    "estandar": 89,
    "premium": 169,
    "ultimate": 299
+  },
+  "piezas": {
+   "office": 79,
+   "index-167": 49,
+   "index-174": 99,
+   "anti-reflective": 29,
+   "scratch": 19,
+   "blue-light": 29,
+   "light-responsive": 79,
+   "polarized": 59,
+   "tint": 19
   }
  }
 }
