@@ -31,29 +31,23 @@ window.HOE_LENS_OPTIONS = {
   ],
   // maxPower = potencia máxima (valor absoluto de SPH+CYL en el meridiano más fuerte) recomendada para ese índice.
   materials: [
-    { id: 'index-150', index: 1.50, maxPower: 2.0, price: null,
-      en: { name: 'Standard 1.50', text: 'For low prescriptions. Clear optics, thicker at higher powers.' },
-      es: { name: 'Estándar 1.50', text: 'Para graduaciones bajas. Óptica clara, más grueso en graduaciones altas.' } },
     { id: 'poly-159', index: 1.59, maxPower: 4.0, price: null, impact: true,
-      en: { name: 'Polycarbonate 1.59', text: 'Impact-resistant and light. Recommended for kids and sports.', for: 'Kids, sports and active days' },
-      es: { name: 'Policarbonato 1.59', text: 'Resistente a golpes y liviano. Recomendado para niños y deporte.', for: 'Niños, deporte y días activos' } },
-    { id: 'index-161', index: 1.61, maxPower: 4.0, price: null,
-      en: { name: 'Thin 1.61', text: 'Thinner and lighter than standard for moderate prescriptions.' },
-      es: { name: 'Delgado 1.61', text: 'Más delgado y liviano que el estándar para graduaciones medias.' } },
-    { id: 'index-167', index: 1.67, maxPower: 6.0, price: null,
-      en: { name: 'Thinner 1.67', text: 'For strong prescriptions; noticeably slimmer edges.' },
-      es: { name: 'Más delgado 1.67', text: 'Para graduaciones fuertes; bordes notablemente más finos.' } },
+      en: { name: 'Polycarbonate', text: 'Impact-resistant, light and shatter-safe: the material we start every pair with, for adults and kids alike.', for: 'Prescriptions up to about ±4. Everyday wear, work, sports and safety, at any age.' },
+      es: { name: 'Policarbonato', text: 'Resistente a golpes, liviano y que no se astilla: el material con el que empieza cada par, para adultos y niños por igual.', for: 'Graduaciones hasta más o menos ±4. Uso diario, trabajo, deporte y seguridad, a cualquier edad.' } },
+    { id: 'index-167', index: 1.67, maxPower: 8.0, price: null,
+      en: { name: 'High Index 1.67', text: 'About 20% thinner than polycarbonate, with slimmer, lighter edges so stronger prescriptions look and feel better.', for: 'Prescriptions from about ±4 to ±8.' },
+      es: { name: 'Alto índice 1.67', text: 'Alrededor de un 20% más delgado que el policarbonato, con bordes más finos y livianos para que las graduaciones altas se vean y se sientan mejor.', for: 'Graduaciones de más o menos ±4 a ±8.' } },
     { id: 'index-174', index: 1.74, maxPower: 99, price: null,
-      en: { name: 'Ultra-thin 1.74', text: 'The thinnest option for very strong prescriptions.' },
-      es: { name: 'Ultra delgado 1.74', text: 'La opción más delgada para graduaciones muy fuertes.' } },
+      en: { name: 'High Index 1.74', text: 'About 10% thinner than 1.67: the thinnest lens we offer, for very strong prescriptions.', for: 'Prescriptions from about ±8 and up.' },
+      es: { name: 'Alto índice 1.74', text: 'Alrededor de un 10% más delgado que el 1.67: el lente más delgado que ofrecemos, para graduaciones muy fuertes.', for: 'Graduaciones de más o menos ±8 en adelante.' } },
   ],
   coatings: [
     { id: 'anti-reflective', price: null,
-      en: { name: 'Anti-reflective', text: 'Cuts glare and reflections, for sharper vision and better night driving.', for: 'Night driving, screen work and video calls.' },
-      es: { name: 'Antirreflejo', text: 'Reduce brillos y reflejos: visión más nítida y mejor al manejar de noche.', for: 'Manejar de noche, trabajar en pantalla y videollamadas.' } },
+      en: { name: 'Anti-reflective coating', text: 'Cuts glare and reflections, for sharper vision, better night driving and clearer video calls.', for: 'Night driving, screen work and video calls.' },
+      es: { name: 'Capa antirreflejo', text: 'Reduce brillos y reflejos: visión más nítida, mejor al manejar de noche y videollamadas más claras.', for: 'Manejar de noche, trabajar en pantalla y videollamadas.' } },
     { id: 'scratch', price: null,
-      en: { name: 'Scratch-resistant', text: 'A hard coat that protects the lens surface from everyday wear.', for: 'Everyday wear, especially for kids.' },
-      es: { name: 'Antirrayas', text: 'Capa dura que protege la superficie del lente del uso diario.', for: 'El uso diario, sobre todo en niños.' } },
+      en: { name: 'Scratch-resistant coating', text: 'A hard coat that protects the lens from everyday scratches, wipes and drops. It keeps the lens clear for longer.', for: 'Every pair, at any age.' },
+      es: { name: 'Capa antirrayas', text: 'Capa dura que protege el lente de los rayones del día a día, de las limpiezas y de los roces. Lo mantiene claro por más tiempo.', for: 'Todos los pares, a cualquier edad.' } },
     { id: 'uv', price: null,
       en: { name: 'UV protection', text: 'Blocks ultraviolet light that can harm your eyes over time.', for: 'Time outdoors, all year round.' },
       es: { name: 'Protección UV', text: 'Bloquea la luz ultravioleta que con el tiempo daña los ojos.', for: 'Quien pasa tiempo al aire libre, todo el año.' } },
@@ -75,5 +69,5 @@ window.HOE_LENS_OPTIONS = {
 // Índice sugerido para una potencia (valor absoluto). Devuelve el primer material cuyo maxPower la cubre.
 window.hoeSuggestIndex = function (power) {
   const p = Math.abs(Number(power) || 0);
-  return window.HOE_LENS_OPTIONS.materials.find(m => !m.impact && p <= m.maxPower) || window.HOE_LENS_OPTIONS.materials[window.HOE_LENS_OPTIONS.materials.length - 1];
+  return window.HOE_LENS_OPTIONS.materials.find(m => p <= m.maxPower) || window.HOE_LENS_OPTIONS.materials[window.HOE_LENS_OPTIONS.materials.length - 1];
 };

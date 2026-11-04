@@ -20,7 +20,7 @@ window.HOE_SEARCH = [
   { url: 'lentes.html#lens-polarized', en: 'Polarized sun lenses', es: 'Lentes de sol polarizados',
     k: 'polarized polarizado sun sol sunglasses lentes de sol tint tinte' },
   { url: 'lentes.html#lens-index', en: 'Which thickness do I need?', es: '¿Qué grosor necesito?',
-    k: 'thin delgado grosor thickness index indice índice 1.67 1.74 1.61 policarbonato polycarbonate high index' },
+    k: 'thin delgado grosor thickness index indice índice 1.67 1.74 policarbonato polycarbonate high index' },
   { url: 'talla.html', en: 'Find your frame size', es: 'Encuentra tu medida',
     k: 'size talla medida measurements medidas fit ajuste width ancho bridge puente temple patilla 52 18 140 narrow wide angosto' },
   { url: 'talla.html#face', en: 'Frames for your face shape', es: 'Armazones según tu cara',

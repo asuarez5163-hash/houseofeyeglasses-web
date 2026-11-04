@@ -63,7 +63,7 @@
   const isSun = frame.cats.includes('sun');
   const editId = q.get('edit');
   const editing = editId && window.hoeCart ? window.hoeCart.get().items.find(i => i.id === editId && i.sku === frame.id) : null;
-  const LOCKED = ['anti-reflective', 'scratch'];   // always included, never shown as a choice
+  const LOCKED = [];   // no coating is automatic any more: the frame's sample lenses have anti-reflective + scratch, but the prescription lens is new, so they are chosen (and priced) in step 4
 
   const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'own', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, file: null, confirm: false });
   const loadRx = src => {   // a saved package (maybe from an older shape of the form) → today's shape
@@ -593,10 +593,10 @@
     return Math.max(...['od', 'os'].map(e => Math.abs(Number(state.rx[e].sph) || 0) + Math.abs(Number(state.rx[e].cyl) || 0)));
   };
   const MATERIALS = () => {
-    const ids = (isKids || frame.rim === 'rimless') ? ['poly-159', 'index-161', 'index-167'] : ['index-150', 'index-161', 'index-167'];
+    const ids = ['poly-159', 'index-167', 'index-174'];   // polycarbonate first (impact-resistant), then high index by prescription
     return ids.map(id => OPTS.materials.find(m => m.id === id)).filter(Boolean);
   };
-  const EXTRAS = () => ['blue-light', 'light-responsive', isSun ? 'polarized' : 'tint'].map(id => OPTS.coatings.find(c => c.id === id)).filter(Boolean);
+  const EXTRAS = () => ['anti-reflective', 'scratch', 'blue-light', 'light-responsive', isSun ? 'polarized' : 'tint'].map(id => OPTS.coatings.find(c => c.id === id)).filter(Boolean);
   const DEMO_OF = { 'light-responsive': 'sun', 'blue-light': 'blue', 'anti-reflective': 'ar', polarized: 'sun', tint: 'sun' };
   const recommended = () => {
     const mats = MATERIALS();
@@ -607,10 +607,11 @@
   };
   const opts4 = $('#cfg-opts4');
   // progressive tiers: their price comes from the Central (manifest.lentes.progressive); without it the group is not shown
-  let tierPrices = null;
-  CAT.manifest().then(m => { tierPrices = (m && m.lentes && m.lentes.progressive) || null; renderLens(); renderBar(); });
+  let tierPrices = null, extraPrices = {};   // extraPrices: manifest.lentes.extras = { coating id: price } (published by the Central)
+  CAT.manifest().then(m => { tierPrices = (m && m.lentes && m.lentes.progressive) || null; extraPrices = (m && m.lentes && m.lentes.extras) || {}; renderLens(); renderBar(); });
   const showTiers = () => state.use === 'progressive' && !!tierPrices && (OPTS.tiers || []).some(t => Number(tierPrices[t.id]) > 0);
-  const lensPrice = () => (showTiers() ? Number(tierPrices[state.tier]) || 0 : 0);
+  const extrasPrice = () => [...state.extras].reduce((s, id) => s + (Number(extraPrices[id]) || 0), 0);
+  const lensPrice = () => (showTiers() ? Number(tierPrices[state.tier]) || 0 : 0) + extrasPrice();
   const totalPrice = () => (Number(frame.p) || 0) + lensPrice();
   const tierName = () => { const t = (OPTS.tiers || []).find(x => x.id === state.tier); return t ? loc(t).name : ''; };
   function renderLens() {
@@ -619,17 +620,19 @@
     if (!(OPTS.tiers || []).some(t => t.id === state.tier)) state.tier = 'estandar';
     const tiers = showTiers()
       ? `<p class="cfg-group">${T('cfg.tierTitle')}</p>` + OPTS.tiers.map(t => opt('radio', 'tier', Object.assign({}, t, { price: Number(tierPrices[t.id]) || 0, desc: true }), t.id === state.tier, false, 'progressive')).join('')
-        + `<p class="cfg-group">${T('cfg.matTitle')}</p>`
       : '';
-    opts4.innerHTML = tiers + mats.map(m => opt('radio', 'material', m, m.id === state.material, rec.id === m.id)).join('')
-      + EXTRAS().map(c => opt('checkbox', 'coat', c, state.extras.has(c.id), false, DEMO_OF[c.id] || '')).join('');
+    opts4.innerHTML = tiers + `<p class="cfg-group">${T('cfg.matTitle')}</p>`
+      + mats.map(m => opt('radio', 'material', Object.assign({}, m, { desc: true, withFor: true }), m.id === state.material, rec.id === m.id)).join('')
+      + `<p class="cfg-group">${T('cfg.extraTitle')}</p>`
+      + EXTRAS().map(c => opt('checkbox', 'coat', Object.assign({}, c, { price: Number(extraPrices[c.id]) > 0 ? Number(extraPrices[c.id]) : null, desc: true }), state.extras.has(c.id), false, DEMO_OF[c.id] || '')).join('')
+      ;
     $('#cfg-add > span').textContent = T('cfg.addToCart');
     demoRest();
   }
   bodyEl(4).addEventListener('change', e => {
     if (e.target.name === 'material') state.material = e.target.value;
     if (e.target.name === 'tier') { state.tier = e.target.value; renderBar(); }
-    if (e.target.name === 'coat') { e.target.checked ? state.extras.add(e.target.value) : state.extras.delete(e.target.value); }
+    if (e.target.name === 'coat') { e.target.checked ? state.extras.add(e.target.value) : state.extras.delete(e.target.value); renderBar(); }
     renderSummaries();
     demoRest();
   });

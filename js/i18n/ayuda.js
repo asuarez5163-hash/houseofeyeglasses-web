@@ -40,7 +40,7 @@ Object.assign(window.HOE_I18N.en, {
   "ayuda.q.blue": "Do I need a blue-light filter?",
   "ayuda.a.blue": "It's optional. A blue-light filter is meant for long hours on phones and computers, and an anti-reflective coating also cuts screen glare. You can add it with or without a prescription.",
   "ayuda.q.thin": "Which lens material is best for a strong prescription?",
-  "ayuda.a.thin": "The stronger your prescription, the more a high-index lens (1.61, 1.67 or 1.74) thins and lightens the edges. For kids and sports we recommend polycarbonate, which resists impact.",
+  "ayuda.a.thin": "The stronger your prescription, the more a high-index lens (1.67 or 1.74) thins and lightens the edges. For kids and sports we recommend polycarbonate, which resists impact.",
   "ayuda.q.coatings": "What do anti-reflective, scratch-resistant and UV coatings do?",
   "ayuda.a.coatings": "Anti-reflective cuts glare and reflections, scratch-resistant adds a hard protective layer, and UV protection blocks ultraviolet light. For the sun, light-responsive lenses darken outdoors and polarized lenses remove glare from water and the road.",
 
@@ -118,7 +118,7 @@ Object.assign(window.HOE_I18N.es, {
   "ayuda.q.blue": "¿Necesito filtro de luz azul?",
   "ayuda.a.blue": "Es opcional. El filtro de luz azul está pensado para muchas horas frente al celular y la computadora, y el antirreflejo también reduce los brillos de la pantalla. Puedes pedirlo con o sin graduación.",
   "ayuda.q.thin": "¿Qué material de lente conviene para una graduación alta?",
-  "ayuda.a.thin": "Mientras más alta la graduación, más adelgaza y aligera los bordes un lente de alto índice (1.61, 1.67 o 1.74). Para niños y deporte recomendamos policarbonato, que resiste los golpes.",
+  "ayuda.a.thin": "Mientras más alta la graduación, más adelgaza y aligera los bordes un lente de alto índice (1.67 o 1.74). Para niños y deporte recomendamos policarbonato, que resiste los golpes.",
   "ayuda.q.coatings": "¿Para qué sirven el antirreflejo, el antirrayas y la protección UV?",
   "ayuda.a.coatings": "El antirreflejo reduce brillos y reflejos, el antirrayas agrega una capa dura protectora y la protección UV bloquea la luz ultravioleta. Para el sol, los fotocromáticos se oscurecen afuera y los polarizados eliminan el reflejo del agua y la carretera.",
 

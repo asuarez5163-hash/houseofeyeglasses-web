@@ -24,9 +24,9 @@
   const fmtIn = v => (v === 0 ? '0.00' : (v > 0 ? '+' : '-') + Math.abs(v).toFixed(2));      // for the input box
   const fmtAbs = v => '±' + Math.abs(v).toFixed(2);
 
-  // Power ranges come from maxPower in the data file: each non-impact material starts where the previous one ends.
+  // Power ranges come from maxPower in the data file: each material starts where the previous one ends.
   const OPEN = 30; // strongest possible input (|SPH| 20 + |CYL| 10): a maxPower at or above this has no upper limit
-  const ladder = () => data.materials.filter(m => !m.impact).sort((a, b) => a.maxPower - b.maxPower);
+  const ladder = () => data.materials.slice().sort((a, b) => a.maxPower - b.maxPower);
   function range(m) {
     if (m.impact) return t('lentes.range.upto', { a: fmtAbs(m.maxPower) });
     const l = ladder();
