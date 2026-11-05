@@ -1,13 +1,13 @@
 {
- "v": "2026-11-05T11:12:09Z",
- "total": 6270,
+ "v": "2026-11-05T23:13:11Z",
+ "total": 6238,
  "chunks": {
-  "men": "data/c/men.dee610e9.json",
-  "women": "data/c/women.365c71f7.json",
-  "kids": "data/c/kids.21d6d53c.json",
+  "men": "data/c/men.08f6c71e.json",
+  "women": "data/c/women.dafbdcce.json",
+  "kids": "data/c/kids.701840bc.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.30eaf6e7.json",
+ "search": "data/s/index.25e118e7.json",
  "featured": [
   "HOE-W-155",
   "HOE-M-72",
@@ -106,11 +106,13 @@
    "Kenneth Cole New York",
    "Kenneth Cole Reaction",
    "Kenzo",
+   "L.G.R.",
    "Lacoste",
    "Levis",
    "Liz Claiborne",
    "Loewe",
    "Longchamp",
+   "Lotto",
    "Lucky Brand",
    "M Missoni",
    "MCM",
@@ -228,8 +230,7 @@
   "lensColor": [
    "clear",
    "blue-light",
-   "tinted",
-   "mirror"
+   "tinted"
   ],
   "price": [
    37,
