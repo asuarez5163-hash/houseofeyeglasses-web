@@ -208,20 +208,27 @@ import { FaceLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@m
   }
 
   // ---------- the detector + the canonical face ----------
+  // the first visit downloads ~15 MB (engine + model): the veil says what is loading and, past 20 s, that it is slow
+  const t0 = performance.now();
+  const slow = setTimeout(() => { if (!lm && veilText._k !== 'tryon.detFail') setVeil('tryon.slow'); }, 20000);
+  const fail = e => { clearTimeout(slow); setVeil('tryon.detFail', { e: ((e && (e.message || e.reason && e.reason.message)) || String(e)).slice(0, 160) }); };
+  window.addEventListener('unhandledrejection', e => { if (!lm) fail(e.reason || e); });
   try {
-    const [vision, fm] = await Promise.all([
-      FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm'),
-      fetch('js/data/face-mesh-v1.json').then(r => r.json()),
-    ]);
+    setVeil('tryon.loading');
+    const vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
+    setVeil('tryon.loadingModel');
+    const fm = await fetch('js/data/face-mesh-v1.json').then(r => r.json());
     mesh = fm; buildOccluder(); buildGlasses();
     const opts = d => ({ baseOptions: { modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task', delegate: d },
       runningMode: 'IMAGE', numFaces: 1, outputFacialTransformationMatrixes: true });
     try { lm = await FaceLandmarker.createFromOptions(vision, opts('GPU')); } catch (e) { lm = await FaceLandmarker.createFromOptions(vision, opts('CPU')); }
+    clearTimeout(slow);
     const hasCam = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     bCam.disabled = !hasCam;
     setVeil(hasCam ? 'tryon.ready' : 'tryon.noCam');
+    ga('tryon_ready', { ms: Math.round(performance.now() - t0) });
   } catch (e) {
-    setVeil('tryon.detFail', { e: (e && e.message) || e });
+    fail(e);
   }
 
   // ---------- a frame: source → detector → 3D → a 3:4 crop that follows the face ----------
