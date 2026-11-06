@@ -5,7 +5,7 @@
 Object.assign(window.HOE_I18N.en, {
   "prod.meta": "{name} — House of Eyeglasses",
   "prod.desc": "{name} in {color}, {price} for the frame. Add your prescription lenses in four short steps; an optician in Tampa checks every prescription.",
-  "prod.views": "Views", "prod.view.size": "Size",
+  "prod.views": "Views", "prod.view.size": "Size", "prod.tryon": "Try them on with your camera",
   "prod.colorOf": "Color",
   "prod.trust": "If the prescription isn’t right, we remake it free",
   "prod.details": "Details",
@@ -70,7 +70,7 @@ Object.assign(window.HOE_I18N.en, {
 Object.assign(window.HOE_I18N.es, {
   "prod.meta": "{name} — House of Eyeglasses",
   "prod.desc": "{name} en {color}, {price} el armazón. Agrega tus lentes graduados en cuatro pasos cortos; un óptico en Tampa revisa cada receta.",
-  "prod.views": "Vistas", "prod.view.size": "Medida",
+  "prod.views": "Vistas", "prod.view.size": "Medida", "prod.tryon": "Pruébatelos con tu cámara",
   "prod.colorOf": "Color",
   "prod.trust": "Si la graduación no está bien, la rehacemos gratis",
   "prod.details": "Detalles",

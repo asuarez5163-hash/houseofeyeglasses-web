@@ -36,6 +36,10 @@ html.gs .pdp-view:not([hidden]) { animation: none; }                            
 .pdp-thumbs button[aria-selected="true"] { color: var(--ink); }
 .pdp-thumbs button[aria-selected="true"]::after, .pdp-thumbs button:hover::after { transform: scaleX(1); }
 .pdp-thumbs button:hover { color: var(--ink); }
+/* try-on link under the views: a gold thread, like the tabs (only when the frame's cut-out exists) */
+.pdp-tryon { display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; font: 500 var(--fs-caps)/1 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); transition: color .2s; }
+.pdp-tryon svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.pdp-tryon:hover { color: var(--ink); }
 
 /* =========================================================
    2 · buy column

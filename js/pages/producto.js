@@ -144,6 +144,10 @@
     img.classList.add('is-alt'); img.style.cssText = CAT.sprite(sku, 0, 0);
   }
 
+  // "Try them on": the Central marks t:1 once the frame's cut-out exists (pruebatelos.html?id=<SKU>)
+  const tryOn = $('#pdp-tryon');
+  if (tryOn && frame.t) { tryOn.href = 'pruebatelos.html?id=' + encodeURIComponent(frame.id); tryOn.hidden = false; }
+
   /* =========================================================
      Buy column: name · price · colour (siblings) · size · stock · CTA · trust · details · JSON-LD
      ========================================================= */
