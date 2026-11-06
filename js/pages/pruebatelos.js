@@ -233,7 +233,31 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
     const outer = rdpClosed(trace(i => label[i] === big), 0.9);
     const holes = [];
     for (let k = 1; k <= nh; k++) if (holeArea[k] > 120) { const p = rdpClosed(trace(i => hole[i] === k), 0.9); if (p.length > 6) holes.push(p); }
-    return { outer, holes };
+    // the end piece's outer face height per side (px): rows whose outer edge is solid (≥6 px inward) and within 3 px of the
+    // extreme, longest contiguous run — the same rule the Central uses for the hinge; the temple can't be taller than this
+    const faceH = {};
+    for (const side of ['L', 'R']) {
+      const xs = new Int32Array(H).fill(-1);
+      for (let y = 0; y < H; y++) {
+        const row = (y + 1) * w;
+        let x = -1;
+        if (side === 'L') { for (let i = 1; i <= W; i++) if (label[row + i] === big) { x = i; break; } }
+        else { for (let i = W; i >= 1; i--) if (label[row + i] === big) { x = i; break; } }
+        if (x < 0) continue;
+        let ok = true;
+        for (let k = 0; k < 6; k++) { const xx = side === 'L' ? x + k : x - k; if (xx < 1 || xx > W || label[row + xx] !== big) { ok = false; break; } }
+        if (ok) xs[y] = x;
+      }
+      let ext = -1;
+      for (let y = 0; y < H; y++) if (xs[y] >= 0 && (ext < 0 || (side === 'L' ? xs[y] < ext : xs[y] > ext))) ext = xs[y];
+      let best = 0, run = 0;
+      for (let y = 0; y <= H; y++) {
+        const flat = y < H && xs[y] >= 0 && (side === 'L' ? xs[y] <= ext + 3 : xs[y] >= ext - 3);
+        if (flat) run++; else { if (run > best) best = run; run = 0; }
+      }
+      faceH[side] = best;
+    }
+    return { outer, holes, faceH };
   }
 
   // the temple photo (assets/tryon/<SKU>-p.webp) starts with the end piece / hinge block: find where the temple proper
@@ -252,26 +276,37 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
         const cols = [];
         for (let px = 0; px < W; px++) { hgt[px] = top[px] < 0 ? 0 : bot[px] - top[px] + 1; if (hgt[px]) cols.push(px); }
         if (cols.length < 20) { resolve(null); return; }
-        const mid = cols.slice(Math.floor(cols.length * 0.3), Math.floor(cols.length * 0.7)).map(px => hgt[px]).sort((a, b) => a - b);
-        const med = mid[Math.floor(mid.length / 2)] || 1;
-        let x0 = cols[0];
-        for (let i = 0; i < cols.length - 8; i++) {
-          let ok = true;
-          for (let k = 0; k < 8; k++) if (hgt[cols[i + k]] > 1.7 * med) { ok = false; break; }
-          if (ok) { x0 = cols[i]; break; }
-        }
-        if (x0 > W * 0.45) x0 = cols[0];
-        let y0 = H, y1 = -1;
-        for (let px = x0; px < W; px++) if (hgt[px]) { if (top[px] < y0) y0 = top[px]; if (bot[px] > y1) y1 = bot[px]; }
-        let cy0 = 0, nc = 0;                                 // centre row of the temple where it meets the hinge (first 10 columns)
-        for (let px = x0; px < Math.min(W, x0 + 10); px++) if (hgt[px]) { cy0 += (top[px] + bot[px]) / 2; nc++; }
-        cy0 = nc ? cy0 / nc : (y0 + y1) / 2;
-        resolve({ x0, y0, y1, cy0, W, H });
+        resolve({ W, H, top, bot, hgt, cols });
       } catch (err) { dbg('pata falló: ' + err); resolve(null); }
     };
     im.onerror = () => resolve(null);
     im.src = url;
   }));
+
+  // where the temple proper starts in its photo and which rows to show: the end-piece block on the left is skipped (8
+  // columns no taller than max(1.7× the temple's median height, 1.2× the end piece's real height)) and the band is
+  // clipped to the end piece's real height (faceHpx, in photo px) around the temple's own centre line at the hinge
+  function templeFit(t, faceHpx) {
+    const { W, H, top, bot, hgt, cols } = t;
+    const mid = cols.slice(Math.floor(cols.length * 0.3), Math.floor(cols.length * 0.7)).map(px => hgt[px]).sort((a, b) => a - b);
+    const med = mid[Math.floor(mid.length / 2)] || 1;
+    const lim = Math.max(1.7 * med, faceHpx ? 1.2 * faceHpx : 0);
+    let x0 = cols[0];
+    for (let i = 0; i < cols.length - 8; i++) {
+      let ok = true;
+      for (let k = 0; k < 8; k++) if (hgt[cols[i + k]] > lim) { ok = false; break; }
+      if (ok) { x0 = cols[i]; break; }
+    }
+    if (x0 > W * 0.45) x0 = cols[0];
+    let y0 = H, y1 = -1;
+    for (let px = x0; px < W; px++) if (hgt[px]) { if (top[px] < y0) y0 = top[px]; if (bot[px] > y1) y1 = bot[px]; }
+    let cy0 = 0, nc = 0;                                   // centre row of the temple where it meets the hinge (first 10 columns)
+    for (let px = x0; px < Math.min(W, x0 + 10); px++) if (hgt[px]) { cy0 += (top[px] + bot[px]) / 2; nc++; }
+    cy0 = nc ? cy0 / nc : (y0 + y1) / 2;
+    let up = cy0 - y0 + 0.5, down = y1 - cy0 + 0.5;
+    if (faceHpx) { up = Math.min(up, faceHpx / 2 + 1); down = Math.min(down, faceHpx / 2 + 1); }   // never taller than the end piece
+    return { x0, up, down, cy0, W, H };
+  }
 
   const THICK = { acetate: 0.42, tr90: 0.34, mixed: 0.3, metal: 0.14, titanium: 0.12 };   // front thickness, cm, by catalog material
   function buildGlasses() {
@@ -317,10 +352,13 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
       const pa = pa0, paUrl = paUrl0;
       const paTex = paUrl ? (texCache[paUrl] || (texCache[paUrl] = texLoader.load(paUrl, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; }))) : null;
       let paUp = pa ? pa[1] / 2 : 0, paDown = paUp;                     // rows of the photo above / below the hinge line
-      if (paTex && tinfo) {                                               // only the temple proper: skip the end-piece block on the left
-        paTex.offset.set(tinfo.x0 / tinfo.W, (tinfo.H - 1 - tinfo.y1) / tinfo.H);
-        paTex.repeat.set((tinfo.W - tinfo.x0) / tinfo.W, (tinfo.y1 - tinfo.y0 + 1) / tinfo.H);
-        paUp = tinfo.cy0 - tinfo.y0 + 0.5; paDown = tinfo.y1 - tinfo.cy0 + 0.5;   // the temple's own centre line sits ON the hinge
+      if (paTex && tinfo) {
+        // the end piece's real height (front px → cm → temple-photo px): the temple band can't be taller than that
+        const faceCm = msk && msk.faceH ? Math.max(msk.faceH.L || 0, msk.faceH.R || 0) * mm : 0;
+        const fit = templeFit(tinfo, faceCm ? faceCm * 10 / pa[2] : 0);
+        paUp = fit.up; paDown = fit.down;
+        paTex.offset.set(fit.x0 / fit.W, (fit.H - 1 - (fit.cy0 + fit.down)) / fit.H);
+        paTex.repeat.set((fit.W - fit.x0) / fit.W, (fit.up + fit.down) / fit.H);
       } else if (paTex) { paTex.offset.set(0, 0); paTex.repeat.set(1, 1); }
       const matT = new THREE.MeshStandardMaterial({ color: col, roughness: 0.45, metalness: 0.25 });
       const matP = paTex ? new THREE.MeshBasicMaterial({ map: paTex, alphaTest: 0.4, side: THREE.DoubleSide }) : null;   // unlit too (lit, a white temple came out dark grey)
