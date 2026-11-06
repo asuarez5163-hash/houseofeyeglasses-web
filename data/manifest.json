@@ -1,5 +1,5 @@
 {
- "v": "2026-11-06T19:16:41Z",
+ "v": "2026-11-06T19:24:32Z",
  "total": 6238,
  "chunks": {
   "men": "data/c/men.1f7fd8f7.json",
@@ -282,8 +282,8 @@
   }
  },
  "tryon": {
-  "kids": "data/t/kids.d4e6a4ab.json",
-  "men": "data/t/men.37d74413.json",
-  "women": "data/t/women.8ab3f0a9.json"
+  "kids": "data/t/kids.57cdc669.json",
+  "men": "data/t/men.f172c4f1.json",
+  "women": "data/t/women.98e7b759.json"
  }
 }
