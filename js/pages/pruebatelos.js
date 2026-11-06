@@ -9,9 +9,12 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js';
 import { FaceLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs';
 
+const dbg = window.__tyDbg || (() => {});   // ?debug=1 (inline script in pruebatelos.html): stage log + pings to the Worker
+window.__tyStarted = true;
+dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
 (async () => {
   const main = document.querySelector('main.ty');
-  if (!main || !window.hoeCatalog) return;
+  if (!main || !window.hoeCatalog) { dbg('sin main.ty o sin hoeCatalog'); return; }
   const CAT = window.hoeCatalog;
   const $ = (s, r = document) => r.querySelector(s);
   const T = k => (window.hoeT ? window.hoeT(k) : k);
@@ -32,6 +35,7 @@ import { FaceLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@m
   const tryon = new Map();                           // sku → entry of data/t
   const loadedCats = new Set();
   const m = await CAT.manifest();
+  dbg('manifest ' + (m ? 'ok v=' + m.v + ' tryon=' + Object.keys(m.tryon || {}).length : 'NULL'));
   if (!m) { notAvailable('tryon.updating'); return; }
   const refs = (m.tryon && typeof m.tryon === 'object') ? m.tryon : {};
   const loadCat = cat => {
@@ -79,6 +83,7 @@ import { FaceLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@m
   }
   let strip = await buildStrip();
   if (!frame && strip.length) { frame = strip[0]; entry = tryon.get(frame.id); }
+  dbg('frame ' + (frame ? frame.id : 'NINGUNO') + ' entry ' + !!entry + ' strip ' + strip.length);
   if (!frame) { notAvailable('tryon.updating'); return; }
 
   const imgUrl = (f, e) => `assets/tryon/${encodeURIComponent(f.id)}.webp?v=${(e && e.v) || 0}`;
@@ -211,21 +216,26 @@ import { FaceLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@m
   // the first visit downloads ~15 MB (engine + model): the veil says what is loading and, past 20 s, that it is slow
   const t0 = performance.now();
   const slow = setTimeout(() => { if (!lm && veilText._k !== 'tryon.detFail') setVeil('tryon.slow'); }, 20000);
-  const fail = e => { clearTimeout(slow); setVeil('tryon.detFail', { e: ((e && (e.message || e.reason && e.reason.message)) || String(e)).slice(0, 160) }); };
+  const fail = e => { clearTimeout(slow); const t = ((e && (e.message || e.reason && e.reason.message)) || String(e)).slice(0, 160); dbg('FALLO detector: ' + t); setVeil('tryon.detFail', { e: t }); };
   window.addEventListener('unhandledrejection', e => { if (!lm) fail(e.reason || e); });
   try {
     setVeil('tryon.loading');
+    dbg('renderer ok, cargando wasm…');
     const vision = await FilesetResolver.forVisionTasks('https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/wasm');
+    dbg('wasm fileset ok');
     setVeil('tryon.loadingModel');
     const fm = await fetch('js/data/face-mesh-v1.json').then(r => r.json());
     mesh = fm; buildOccluder(); buildGlasses();
+    dbg('malla ok, creando landmarker…');
     const opts = d => ({ baseOptions: { modelAssetPath: 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task', delegate: d },
       runningMode: 'IMAGE', numFaces: 1, outputFacialTransformationMatrixes: true });
-    try { lm = await FaceLandmarker.createFromOptions(vision, opts('GPU')); } catch (e) { lm = await FaceLandmarker.createFromOptions(vision, opts('CPU')); }
+    try { lm = await FaceLandmarker.createFromOptions(vision, opts('GPU')); dbg('landmarker GPU ok'); }
+    catch (e) { dbg('GPU falló (' + ((e && e.message) || e) + '), probando CPU'); lm = await FaceLandmarker.createFromOptions(vision, opts('CPU')); dbg('landmarker CPU ok'); }
     clearTimeout(slow);
     const hasCam = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
     bCam.disabled = !hasCam;
     setVeil(hasCam ? 'tryon.ready' : 'tryon.noCam');
+    dbg('LISTO en ' + Math.round(performance.now() - t0) + ' ms · cámara ' + hasCam);
     ga('tryon_ready', { ms: Math.round(performance.now() - t0) });
   } catch (e) {
     fail(e);

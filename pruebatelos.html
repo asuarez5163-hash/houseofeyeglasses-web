@@ -22,8 +22,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261106c">
-  <link rel="stylesheet" href="css/pages/pruebatelos.css?v=20261106c">
+  <link rel="stylesheet" href="css/styles.css?v=20261106d">
+  <link rel="stylesheet" href="css/pages/pruebatelos.css?v=20261106d">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0LM7KG67S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-V0LM7KG67S");</script>
   <script>
@@ -156,9 +156,24 @@
   <link rel="preconnect" href="https://storage.googleapis.com" crossorigin>
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js">
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs">
-  <script type="module" src="js/pages/pruebatelos.js?v=20261106c"></script>
-  <!-- if the module itself never runs (old browser, blocked script, CDN hiccup) the veil would say "loading" forever: say so after 25 s -->
-  <script>setTimeout(function(){if(!window.__tryon){var p=document.getElementById('ty-veil-text');if(p){p.textContent=(document.documentElement.lang==='es')?'No se pudo cargar el probador en este navegador. Recarga la página o prueba con Chrome o Safari actualizados.':'The try-on could not load in this browser. Reload the page, or try an up-to-date Chrome or Safari.';}}},25000);</script>
+  <!-- ?debug=1: a log box under the stage + each line pinged to the Worker's /salud (?dbg=) so the log can be read with `wrangler tail` -->
+  <script>
+  (function(){
+    var q=new URLSearchParams(location.search); if(q.get('debug')!=='1') return;
+    var box=document.createElement('pre'); box.id='ty-dbg'; box.style.cssText='white-space:pre-wrap;word-break:break-all;font:12px/1.4 monospace;color:#c9c5bd;background:#141417;padding:10px;margin:12px 0;max-height:40vh;overflow:auto';
+    var t0=Date.now();
+    function log(s){ s=((Date.now()-t0)/1000).toFixed(1)+'s '+s; box.textContent+=s+'\n'; try{ new Image().src='https://hoe-pagos.asuarez5163.workers.dev/salud?dbg='+encodeURIComponent(s.slice(0,180))+'&r='+Math.random().toString(36).slice(2,6); }catch(e){} }
+    window.__tyDbg=log;
+    document.addEventListener('DOMContentLoaded',function(){ var m=document.getElementById('ty-stage'); if(m&&m.parentNode) m.parentNode.insertBefore(box,m.nextSibling); else document.body.appendChild(box);
+      var gl=null; try{ gl=document.createElement('canvas').getContext('webgl2'); }catch(e){}
+      log('ua '+navigator.userAgent); log('wasm '+(typeof WebAssembly)+' webgl2 '+!!gl+' mem '+(navigator.deviceMemory||'?')+' online '+navigator.onLine); });
+    window.addEventListener('error',function(e){ log('ERROR '+(e.message||'(sin mensaje)')+' @'+String(e.filename||'').split('/').pop()+':'+(e.lineno||0)); },true);
+    window.addEventListener('unhandledrejection',function(e){ var r=e.reason; log('REJECT '+String((r&&(r.message||r.stack))||r).slice(0,200)); });
+  })();
+  </script>
+  <script type="module" src="js/pages/pruebatelos.js?v=20261106d" onerror="window.__tyDbg&&window.__tyDbg('MODULE no cargó (import de three/MediaPipe o del propio js falló)')"></script>
+  <!-- if the module never even starts (old browser, blocked script, CDN hiccup) the veil would say "loading" forever: say so after 25 s -->
+  <script>setTimeout(function(){if(!window.__tyStarted){var p=document.getElementById('ty-veil-text');if(p){p.textContent=(document.documentElement.lang==='es')?'No se pudo cargar el probador en este navegador. Recarga la página o prueba con Chrome o Safari actualizados.':'The try-on could not load in this browser. Reload the page, or try an up-to-date Chrome or Safari.';}}},25000);</script>
 
   <!-- ============ FOOTER ============ -->
   <!-- ============ FOOTER ============ -->
@@ -305,15 +320,15 @@
   </aside>
 
 
-  <script src="js/i18n.js?v=20261106c"></script>
-  <script src="js/i18n/pruebatelos.js?v=20261106c"></script>
-  <script src="js/catalog.js?v=20261106c"></script>
-  <script src="js/data/search.js?v=20261106c"></script>
+  <script src="js/i18n.js?v=20261106d"></script>
+  <script src="js/i18n/pruebatelos.js?v=20261106d"></script>
+  <script src="js/catalog.js?v=20261106d"></script>
+  <script src="js/data/search.js?v=20261106d"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/motion.js?v=20261106c"></script>
-  <script src="js/main.js?v=20261106c"></script>
-  <script src="js/data/lenses.js?v=20261106c"></script>
-  <script src="js/cart.js?v=20261106c"></script>
+  <script src="js/motion.js?v=20261106d"></script>
+  <script src="js/main.js?v=20261106d"></script>
+  <script src="js/data/lenses.js?v=20261106d"></script>
+  <script src="js/cart.js?v=20261106d"></script>
 </body>
 </html>
