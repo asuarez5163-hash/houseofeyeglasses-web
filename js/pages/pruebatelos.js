@@ -221,9 +221,18 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
       }
       return pts.filter((p, i) => keep[i]);
     };
-    const outer = rdp(trace(i => label[i] === big), 0.9);
+    // a traced boundary is CLOSED (it ends next to where it started): simplify it in two halves, split at the point
+    // farthest from the start, or RDP sees a zero-length base line and throws every point away
+    const rdpClosed = (pts, eps) => {
+      if (pts.length < 8) return pts;
+      let far = 0, fd = -1;
+      for (let i = 1; i < pts.length; i++) { const dd = (pts[i][0] - pts[0][0]) ** 2 + (pts[i][1] - pts[0][1]) ** 2; if (dd > fd) { fd = dd; far = i; } }
+      const a = rdp(pts.slice(0, far + 1), eps), b = rdp(pts.slice(far), eps);
+      return a.concat(b.slice(1));
+    };
+    const outer = rdpClosed(trace(i => label[i] === big), 0.9);
     const holes = [];
-    for (let k = 1; k <= nh; k++) if (holeArea[k] > 120) { const p = rdp(trace(i => hole[i] === k), 0.9); if (p.length > 6) holes.push(p); }
+    for (let k = 1; k <= nh; k++) if (holeArea[k] > 120) { const p = rdpClosed(trace(i => hole[i] === k), 0.9); if (p.length > 6) holes.push(p); }
     return { outer, holes };
   }
 
@@ -468,6 +477,6 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
   });
   window.addEventListener('pagehide', stopCam);
 
-  window.__tryon = { get mode() { return mode; }, get err() { return lastErr; }, get frame() { return frame; }, get entry() { return entry; }, strip, loadPhoto,
+  window.__tryon = { get mode() { return mode; }, get err() { return lastErr; }, get frame() { return frame; }, get entry() { return entry; }, strip, loadPhoto, scene, head, get glasses() { return glasses; }, THREE, loadMask, traceMask, buildGlasses, drawPhoto: () => { if (mode === 'photo') drawPhoto(); },
     pick(id) { const f = strip.find(x => x.id === id); if (!f) return false; frame = f; entry = tryon.get(f.id); renderNow(); buildGlasses(); if (mode === 'photo') drawPhoto(); return true; } };
 })();
