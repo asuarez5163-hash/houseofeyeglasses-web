@@ -1,13 +1,13 @@
 {
- "v": "2026-11-05T23:13:11Z",
+ "v": "2026-11-06T12:28:45Z",
  "total": 6238,
  "chunks": {
-  "men": "data/c/men.08f6c71e.json",
-  "women": "data/c/women.dafbdcce.json",
-  "kids": "data/c/kids.701840bc.json",
+  "men": "data/c/men.1f7fd8f7.json",
+  "women": "data/c/women.283bfc02.json",
+  "kids": "data/c/kids.450a5c1b.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.25e118e7.json",
+ "search": "data/s/index.855c3812.json",
  "featured": [
   "HOE-W-155",
   "HOE-M-72",
@@ -280,5 +280,10 @@
    "polarized": 79,
    "tint": 29
   }
+ },
+ "tryon": {
+  "kids": "data/t/kids.b30d584e.json",
+  "men": "data/t/men.7c4db824.json",
+  "women": "data/t/women.2b012305.json"
  }
 }
