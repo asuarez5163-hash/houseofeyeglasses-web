@@ -6,7 +6,7 @@
 // (js/data/face-mesh-v1.json) plus an invisible skull and two ears make the "occluder": whatever sits behind them is not
 // drawn, so the temples rest on the ear and go down behind it. Everything runs on the device: no image leaves it.
 // The product page shows its "Try them on" link only when the record carries t:1 (the Central marks it once the cut exists).
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js';
 import { FaceLandmarker, FilesetResolver } from 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14/vision_bundle.mjs';
 
 (async () => {
