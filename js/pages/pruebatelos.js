@@ -155,42 +155,159 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
     head.add(occluder);
   }
 
+  // ---------- the cut-out's contour (2.5D front): alpha mask → outer boundary + lens holes, image px, y down ----------
+  const maskCache = {};
+  const loadMask = url => maskCache[url] || (maskCache[url] = new Promise(resolve => {
+    const im = new Image(); im.decoding = 'async';
+    im.onload = () => {
+      try {
+        const c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight;
+        const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(im, 0, 0);
+        resolve(traceMask(x.getImageData(0, 0, c.width, c.height)));
+      } catch (err) { dbg('contorno falló: ' + err); resolve(null); }
+    };
+    im.onerror = () => resolve(null);
+    im.src = url;
+  }));
+  function traceMask(id) {
+    const W = id.width, H = id.height, d = id.data, w = W + 2, h = H + 2, n = w * h;   // a 1-px empty border closes every boundary
+    const solid = new Uint8Array(n);
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) solid[(y + 1) * w + x + 1] = d[(y * W + x) * 4 + 3] > 100 ? 1 : 0;
+    const stack = new Int32Array(n);
+    const flood = (seed, ok, mark, val) => {            // 4-connected fill; returns the area
+      let sp = 0, area = 0; stack[sp++] = seed; mark[seed] = val;
+      while (sp) {
+        const j = stack[--sp]; area++;
+        const cand = [j - w, j + w]; if (j % w) cand.push(j - 1); if ((j + 1) % w) cand.push(j + 1);
+        for (const k of cand) if (k >= 0 && k < n && ok(k) && !mark[k]) { mark[k] = val; stack[sp++] = k; }
+      }
+      return area;
+    };
+    const label = new Int32Array(n); let nl = 0, big = 0, bigArea = 0;
+    for (let i = 0; i < n; i++) if (solid[i] && !label[i]) { nl++; const a = flood(i, k => solid[k], label, nl); if (a > bigArea) { bigArea = a; big = nl; } }
+    if (!big) return null;
+    const outside = new Uint8Array(n); flood(0, k => !solid[k], outside, 1);
+    const hole = new Int32Array(n); let nh = 0; const holeArea = [0];
+    for (let i = 0; i < n; i++) if (!solid[i] && !outside[i] && !hole[i]) { nh++; holeArea.push(flood(i, k => !solid[k] && !outside[k], hole, nh)); }
+    // Moore-neighbour boundary tracing (8-connected, clockwise, Jacob's stopping criterion) from the first pixel in raster order
+    const DIRS = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]];
+    const trace = inside => {
+      let s = -1; for (let i = 0; i < n; i++) if (inside(i)) { s = i; break; }
+      if (s < 0) return [];
+      const sx = s % w, sy = (s / w) | 0; let x = sx, y = sy, bx = x - 1, by = y, dir0 = -1; const pts = [];
+      for (let guard = 0; guard < 400000; guard++) {
+        pts.push([x - 1, y - 1]);
+        const from = DIRS.findIndex(dd => dd[0] === bx - x && dd[1] === by - y);
+        let moved = false;
+        for (let k = 1; k <= 8; k++) {
+          const di = (from + k) % 8, cx = x + DIRS[di][0], cy = y + DIRS[di][1];
+          if (!inside(cy * w + cx)) continue;
+          if (x === sx && y === sy && pts.length > 1 && di === dir0) return pts;
+          if (dir0 < 0) dir0 = di;
+          const pb = (di + 7) % 8; bx = x + DIRS[pb][0]; by = y + DIRS[pb][1]; x = cx; y = cy; moved = true; break;
+        }
+        if (!moved) return pts;
+      }
+      return pts;
+    };
+    const rdp = (pts, eps) => {                        // Ramer–Douglas–Peucker, iterative
+      if (pts.length < 4) return pts;
+      const keep = new Uint8Array(pts.length); keep[0] = keep[pts.length - 1] = 1; const st = [[0, pts.length - 1]];
+      while (st.length) {
+        const [a, b] = st.pop(); let md = 0, mi = -1;
+        const [ax, ay] = pts[a], [bx, by] = pts[b]; const dx = bx - ax, dy = by - ay, L = Math.hypot(dx, dy) || 1;
+        for (let i = a + 1; i < b; i++) { const dd = Math.abs(dy * pts[i][0] - dx * pts[i][1] + bx * ay - by * ax) / L; if (dd > md) { md = dd; mi = i; } }
+        if (md > eps) { keep[mi] = 1; st.push([a, mi], [mi, b]); }
+      }
+      return pts.filter((p, i) => keep[i]);
+    };
+    const outer = rdp(trace(i => label[i] === big), 0.9);
+    const holes = [];
+    for (let k = 1; k <= nh; k++) if (holeArea[k] > 120) { const p = rdp(trace(i => hole[i] === k), 0.9); if (p.length > 6) holes.push(p); }
+    return { outer, holes };
+  }
+
+  const THICK = { acetate: 0.42, tr90: 0.34, mixed: 0.3, metal: 0.14, titanium: 0.12 };   // front thickness, cm, by catalog material
   function buildGlasses() {
-    if (!mesh || !entry) return;
-    if (glasses) { head.remove(glasses); glasses.traverse(o => { if (o.geometry) o.geometry.dispose(); }); }
-    const e = entry;
-    glasses = new THREE.Group();
-    const glasses_y = 2.63 - Y_DROP;                                  // the group's height on the face (lens centre)
-    const mm = Number(e.m) / 10;                                      // cm per px of the cut-out
-    const W = e.p[0] * mm, H = e.p[1] * mm;
-    const ax = (e.a[0] - e.p[0] / 2) * mm, ay = (e.p[1] / 2 - e.a[1]) * mm;   // the anchor (lens centre) relative to the image centre
-    const url = imgUrl(frame, e);
+    if (!mesh || !entry) return Promise.resolve();
+    const e = entry, f = frame;
+    const url = imgUrl(f, e);
     const tex = texCache[url] || (texCache[url] = texLoader.load(url, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; }));
-    const front = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshBasicMaterial({ map: tex, transparent: true, alphaTest: 0.45, side: THREE.DoubleSide }));
-    front.position.set(-ax, -ay, 0); front.renderOrder = 2;
-    glasses.add(front);
-    // the temples: from each end piece backwards, opening out until they rest on the ear and go down behind it (catalog length)
-    const col = new THREE.Color(/^#[0-9a-f]{6}$/i.test(e.c || '') ? e.c : '#2a2a2a');
-    const matT = new THREE.MeshStandardMaterial({ color: col, roughness: 0.45, metalness: 0.25 });
-    const hinges = Array.isArray(e.h) && e.h.length === 2 ? e.h : [[0, e.a[1]], [e.p[0], e.a[1]]];
-    hinges.forEach((hp, i) => {
-      const side = i === 0 ? -1 : 1;
-      const hx = (hp[0] - e.a[0]) * mm, hy = (e.a[1] - hp[1]) * mm;
-      const len = Math.max(10, (frame.size.temple || 140) / 10);      // cm
-      const straight = Math.min(len - 3.5, Z_FRONT - EAR.z);         // up to the ear
-      const restY = EAR.top + 0.14 - glasses_y;                      // resting on the ear's top edge (group coordinates)
-      const pts = [
-        new THREE.Vector3(hx, hy, 0),
-        new THREE.Vector3(hx + side * 0.25, hy + (restY - hy) * 0.35, -straight * 0.35),
-        new THREE.Vector3(side * EAR.x, restY, -straight),
-        new THREE.Vector3(side * (EAR.x - 0.2), restY - 2.0, -straight - Math.min(2.2, (len - straight) * 0.9)),
-      ];
-      const tube = new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.3), 32, 0.13, 10, false), matT);
-      tube.renderOrder = 1;
-      glasses.add(tube);
+    return loadMask(url).then(msk => {
+      if (entry !== e) return;                                            // another frame was picked meanwhile
+      if (glasses) { head.remove(glasses); glasses.traverse(o => { if (o.geometry) o.geometry.dispose(); }); }
+      glasses = new THREE.Group();
+      const glasses_y = 2.63 - Y_DROP;                                  // the group's height on the face (lens centre)
+      const mm = Number(e.m) / 10;                                      // cm per px of the cut-out
+      const col = new THREE.Color(/^#[0-9a-f]{6}$/i.test(e.c || '') ? e.c : '#2a2a2a');
+      const thick = THICK[f.mat] || 0.3;
+      if (msk && msk.outer.length > 8) {
+        // 2.5D: the cut-out's outline extruded by the material's thickness; the photo on the faces, the rim colour on the sides
+        const toV = ([x, y]) => new THREE.Vector2(x, e.p[1] - y);
+        const shape = new THREE.Shape(msk.outer.map(toV));
+        msk.holes.forEach(hp => shape.holes.push(new THREE.Path(hp.map(toV))));
+        const geo = new THREE.ExtrudeGeometry(shape, { depth: thick / mm, bevelEnabled: false });   // px units: the mesh scales by mm
+        tex.repeat.set(1 / e.p[0], 1 / e.p[1]); tex.offset.set(0, 0);
+        const matF = new THREE.MeshStandardMaterial({ map: tex, alphaTest: 0.45, roughness: 0.35, metalness: 0.15, side: THREE.DoubleSide });
+        const matS = new THREE.MeshStandardMaterial({ color: col, roughness: 0.4, metalness: 0.2 });
+        const solid = new THREE.Mesh(geo, [matF, matS]);
+        solid.scale.set(mm, mm, mm);
+        solid.position.set(-e.a[0] * mm, -(e.p[1] - e.a[1]) * mm, -thick);   // the anchor (lens centre) at the origin; the front face at z = 0
+        solid.renderOrder = 2;
+        glasses.add(solid);
+      } else {
+        const W = e.p[0] * mm, H = e.p[1] * mm;
+        const ax = (e.a[0] - e.p[0] / 2) * mm, ay = (e.p[1] / 2 - e.a[1]) * mm;
+        tex.repeat.set(1, 1);
+        const front = new THREE.Mesh(new THREE.PlaneGeometry(W, H), new THREE.MeshBasicMaterial({ map: tex, transparent: true, alphaTest: 0.45, side: THREE.DoubleSide }));
+        front.position.set(-ax, -ay, 0); front.renderOrder = 2;
+        glasses.add(front);
+      }
+      // the temples: from each end piece backwards, opening out until they rest on the ear and go down behind it (catalog length).
+      // With the temple's photo (e.pa: [w, h, mm] of assets/tryon/<SKU>-p.webp, hinge at the left) they are textured ribbons
+      // stretched to the catalog length; without it, a tube in the rim colour.
+      const pa = Array.isArray(e.pa) && e.pa.length === 3 ? e.pa : null;
+      const paUrl = pa ? `assets/tryon/${encodeURIComponent(f.id)}-p.webp?v=${e.v || 0}` : null;
+      const paTex = paUrl ? (texCache[paUrl] || (texCache[paUrl] = texLoader.load(paUrl, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; }))) : null;
+      const matT = new THREE.MeshStandardMaterial({ color: col, roughness: 0.45, metalness: 0.25 });
+      const matP = paTex ? new THREE.MeshStandardMaterial({ map: paTex, alphaTest: 0.4, side: THREE.DoubleSide, roughness: 0.4, metalness: 0.15 }) : null;
+      const hinges = Array.isArray(e.h) && e.h.length === 2 ? e.h : [[0, e.a[1]], [e.p[0], e.a[1]]];
+      hinges.forEach((hp, i) => {
+        const side = i === 0 ? -1 : 1;
+        const hx = (hp[0] - e.a[0]) * mm, hy = (e.a[1] - hp[1]) * mm;
+        const len = Math.max(10, (f.size.temple || 140) / 10);          // cm
+        const straight = Math.min(len - 3.5, Z_FRONT - EAR.z);         // up to the ear
+        const restY = EAR.top + 0.14 - glasses_y;                      // resting on the ear's top edge (group coordinates)
+        const pts = [
+          new THREE.Vector3(hx, hy, -thick * 0.5),
+          new THREE.Vector3(hx + side * 0.25, hy + (restY - hy) * 0.35, -straight * 0.35),
+          new THREE.Vector3(side * EAR.x, restY, -straight),
+          new THREE.Vector3(side * (EAR.x - 0.2), restY - 2.0, -straight - Math.min(2.2, (len - straight) * 0.9)),
+        ];
+        const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.3);
+        let temple;
+        if (matP) {
+          const hh = (pa[1] * pa[2] / 10) / 2, N = 48;                 // half height (cm); the alpha of the photo shapes the ribbon
+          const pos = new Float32Array(N * 6), uv = new Float32Array(N * 4), idx = [];
+          for (let k = 0; k < N; k++) {
+            const p = curve.getPointAt(k / (N - 1)), u = k / (N - 1);
+            pos.set([p.x, p.y - hh, p.z, p.x, p.y + hh, p.z], k * 6); uv.set([u, 0, u, 1], k * 4);
+            if (k) { const a = (k - 1) * 2, b = k * 2; if (side > 0) idx.push(a, b, a + 1, b, b + 1, a + 1); else idx.push(a, a + 1, b, b, a + 1, b + 1); }
+          }
+          const g = new THREE.BufferGeometry();
+          g.setAttribute('position', new THREE.BufferAttribute(pos, 3)); g.setAttribute('uv', new THREE.BufferAttribute(uv, 2));
+          g.setIndex(idx); g.computeVertexNormals();
+          temple = new THREE.Mesh(g, matP);
+        } else {
+          temple = new THREE.Mesh(new THREE.TubeGeometry(curve, 32, 0.13, 10, false), matT);
+        }
+        temple.renderOrder = 1;
+        glasses.add(temple);
+      });
+      glasses.position.set(0, glasses_y, Z_FRONT);
+      head.add(glasses);
+      if (mode === 'photo') drawPhoto();
     });
-    glasses.position.set(0, glasses_y, Z_FRONT);
-    head.add(glasses);
   }
 
   // the pose: data may come by columns or by rows → told apart by where the translation lands (the face's z ≈ −30…−80 cm)
