@@ -118,7 +118,7 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
   const FOV = 63;                                   // MediaPipe's virtual camera (face_geometry: vertical_fov_degrees 63)
   const Z_FRONT = 6.0;                              // the frame's front: ~12 mm in front of the cornea (canonical nasion z 5.24)
   const Y_DROP = 0.3;                               // the pupils sit ~3 mm above the lens centre
-  const EAR = { x: 7.9, z: -3.6, top: 3.3 };        // the ear: side, depth and the height of its top edge (cm): the temple RESTS there and goes down behind
+  const EAR = { x: 7.9, z: -4.2, top: 3.3 };        // the ear: side, depth and the height of its top edge (cm): the temple RESTS there and goes down behind (11/06: 6 mm further back, Armando's side photo)
 
   let lm = null, mode = 'idle', video = null, stream = null, photo = null, mirror = true, raf = 0;
   let mesh = null, lastErr = null;
@@ -263,7 +263,10 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
         if (x0 > W * 0.45) x0 = cols[0];
         let y0 = H, y1 = -1;
         for (let px = x0; px < W; px++) if (hgt[px]) { if (top[px] < y0) y0 = top[px]; if (bot[px] > y1) y1 = bot[px]; }
-        resolve({ x0, y0, y1, W, H });
+        let cy0 = 0, nc = 0;                                 // centre row of the temple where it meets the hinge (first 10 columns)
+        for (let px = x0; px < Math.min(W, x0 + 10); px++) if (hgt[px]) { cy0 += (top[px] + bot[px]) / 2; nc++; }
+        cy0 = nc ? cy0 / nc : (y0 + y1) / 2;
+        resolve({ x0, y0, y1, cy0, W, H });
       } catch (err) { dbg('pata falló: ' + err); resolve(null); }
     };
     im.onerror = () => resolve(null);
@@ -313,11 +316,11 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
       // stretched to the catalog length; without it, a tube in the rim colour.
       const pa = pa0, paUrl = paUrl0;
       const paTex = paUrl ? (texCache[paUrl] || (texCache[paUrl] = texLoader.load(paUrl, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; }))) : null;
-      let paH = pa ? pa[1] : 0;                                           // rows of the photo that the ribbon shows
+      let paUp = pa ? pa[1] / 2 : 0, paDown = paUp;                     // rows of the photo above / below the hinge line
       if (paTex && tinfo) {                                               // only the temple proper: skip the end-piece block on the left
         paTex.offset.set(tinfo.x0 / tinfo.W, (tinfo.H - 1 - tinfo.y1) / tinfo.H);
         paTex.repeat.set((tinfo.W - tinfo.x0) / tinfo.W, (tinfo.y1 - tinfo.y0 + 1) / tinfo.H);
-        paH = tinfo.y1 - tinfo.y0 + 1;
+        paUp = tinfo.cy0 - tinfo.y0 + 0.5; paDown = tinfo.y1 - tinfo.cy0 + 0.5;   // the temple's own centre line sits ON the hinge
       } else if (paTex) { paTex.offset.set(0, 0); paTex.repeat.set(1, 1); }
       const matT = new THREE.MeshStandardMaterial({ color: col, roughness: 0.45, metalness: 0.25 });
       const matP = paTex ? new THREE.MeshBasicMaterial({ map: paTex, alphaTest: 0.4, side: THREE.DoubleSide }) : null;   // unlit too (lit, a white temple came out dark grey)
@@ -329,7 +332,7 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
         const straight = Math.min(len - 3.5, Z_FRONT - EAR.z);         // up to the ear
         const restY = EAR.top + 0.14 - glasses_y;                      // resting on the ear's top edge (group coordinates)
         const pts = [
-          new THREE.Vector3(hx, hy, -thick * 0.5),
+          new THREE.Vector3(hx - side * 0.4, hy, -thick * 0.5),               // born INSIDE the end piece (4 mm in, mid-thickness): the join is hidden in the solid
           new THREE.Vector3(hx + side * 0.25, hy + (restY - hy) * 0.35, -straight * 0.35),
           new THREE.Vector3(side * EAR.x, restY, -straight),
           new THREE.Vector3(side * (EAR.x - 0.2), restY - 2.0, -straight - Math.min(2.2, (len - straight) * 0.9)),
@@ -337,11 +340,11 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
         const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.3);
         let temple;
         if (matP) {
-          const hh = (paH * pa[2] / 10) / 2, N = 48;                   // half height (cm); the alpha of the photo shapes the ribbon
+          const up = paUp * pa[2] / 10, down = paDown * pa[2] / 10, N = 48;   // cm above / below the curve; the photo's alpha shapes the ribbon
           const pos = new Float32Array(N * 6), uv = new Float32Array(N * 4), idx = [];
           for (let k = 0; k < N; k++) {
             const p = curve.getPointAt(k / (N - 1)), u = k / (N - 1);
-            pos.set([p.x, p.y - hh, p.z, p.x, p.y + hh, p.z], k * 6); uv.set([u, 0, u, 1], k * 4);
+            pos.set([p.x, p.y - down, p.z, p.x, p.y + up, p.z], k * 6); uv.set([u, 0, u, 1], k * 4);
             if (k) { const a = (k - 1) * 2, b = k * 2; if (side > 0) idx.push(a, b, a + 1, b, b + 1, a + 1); else idx.push(a, a + 1, b, b, a + 1, b + 1); }
           }
           const g = new THREE.BufferGeometry();
