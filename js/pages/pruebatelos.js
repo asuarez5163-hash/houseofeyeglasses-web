@@ -236,13 +236,49 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
     return { outer, holes };
   }
 
+  // the temple photo (assets/tryon/<SKU>-p.webp) starts with the end piece / hinge block: find where the temple proper
+  // begins (8 columns no taller than 1.7× the temple's median height) and the rows it spans, to map only that part
+  const templeCache = {};
+  const loadTemple = url => templeCache[url] || (templeCache[url] = new Promise(resolve => {
+    const im = new Image(); im.decoding = 'async';
+    im.onload = () => {
+      try {
+        const W = im.naturalWidth, H = im.naturalHeight;
+        const c = document.createElement('canvas'); c.width = W; c.height = H;
+        const x = c.getContext('2d', { willReadFrequently: true }); x.drawImage(im, 0, 0);
+        const d = x.getImageData(0, 0, W, H).data;
+        const top = new Int16Array(W).fill(-1), bot = new Int16Array(W).fill(-1), hgt = new Int16Array(W);
+        for (let px = 0; px < W; px++) for (let py = 0; py < H; py++) if (d[(py * W + px) * 4 + 3] > 100) { if (top[px] < 0) top[px] = py; bot[px] = py; }
+        const cols = [];
+        for (let px = 0; px < W; px++) { hgt[px] = top[px] < 0 ? 0 : bot[px] - top[px] + 1; if (hgt[px]) cols.push(px); }
+        if (cols.length < 20) { resolve(null); return; }
+        const mid = cols.slice(Math.floor(cols.length * 0.3), Math.floor(cols.length * 0.7)).map(px => hgt[px]).sort((a, b) => a - b);
+        const med = mid[Math.floor(mid.length / 2)] || 1;
+        let x0 = cols[0];
+        for (let i = 0; i < cols.length - 8; i++) {
+          let ok = true;
+          for (let k = 0; k < 8; k++) if (hgt[cols[i + k]] > 1.7 * med) { ok = false; break; }
+          if (ok) { x0 = cols[i]; break; }
+        }
+        if (x0 > W * 0.45) x0 = cols[0];
+        let y0 = H, y1 = -1;
+        for (let px = x0; px < W; px++) if (hgt[px]) { if (top[px] < y0) y0 = top[px]; if (bot[px] > y1) y1 = bot[px]; }
+        resolve({ x0, y0, y1, W, H });
+      } catch (err) { dbg('pata falló: ' + err); resolve(null); }
+    };
+    im.onerror = () => resolve(null);
+    im.src = url;
+  }));
+
   const THICK = { acetate: 0.42, tr90: 0.34, mixed: 0.3, metal: 0.14, titanium: 0.12 };   // front thickness, cm, by catalog material
   function buildGlasses() {
     if (!mesh || !entry) return Promise.resolve();
     const e = entry, f = frame;
     const url = imgUrl(f, e);
     const tex = texCache[url] || (texCache[url] = texLoader.load(url, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; }));
-    return loadMask(url).then(msk => {
+    const pa0 = Array.isArray(e.pa) && e.pa.length === 3 ? e.pa : null;
+    const paUrl0 = pa0 ? `assets/tryon/${encodeURIComponent(f.id)}-p.webp?v=${e.v || 0}` : null;
+    return Promise.all([loadMask(url), paUrl0 ? loadTemple(paUrl0) : null]).then(([msk, tinfo]) => {
       if (entry !== e) return;                                            // another frame was picked meanwhile
       if (glasses) { head.remove(glasses); glasses.traverse(o => { if (o.geometry) o.geometry.dispose(); }); }
       glasses = new THREE.Group();
@@ -257,7 +293,7 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
         msk.holes.forEach(hp => shape.holes.push(new THREE.Path(hp.map(toV))));
         const geo = new THREE.ExtrudeGeometry(shape, { depth: thick / mm, bevelEnabled: false });   // px units: the mesh scales by mm
         tex.repeat.set(1 / e.p[0], 1 / e.p[1]); tex.offset.set(0, 0);
-        const matF = new THREE.MeshStandardMaterial({ map: tex, alphaTest: 0.45, roughness: 0.35, metalness: 0.15, side: THREE.DoubleSide });
+        const matF = new THREE.MeshBasicMaterial({ map: tex, alphaTest: 0.45, side: THREE.DoubleSide });   // the photo carries its own light: unlit, so it keeps its colours
         const matS = new THREE.MeshStandardMaterial({ color: col, roughness: 0.4, metalness: 0.2 });
         const solid = new THREE.Mesh(geo, [matF, matS]);
         solid.scale.set(mm, mm, mm);
@@ -275,11 +311,16 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
       // the temples: from each end piece backwards, opening out until they rest on the ear and go down behind it (catalog length).
       // With the temple's photo (e.pa: [w, h, mm] of assets/tryon/<SKU>-p.webp, hinge at the left) they are textured ribbons
       // stretched to the catalog length; without it, a tube in the rim colour.
-      const pa = Array.isArray(e.pa) && e.pa.length === 3 ? e.pa : null;
-      const paUrl = pa ? `assets/tryon/${encodeURIComponent(f.id)}-p.webp?v=${e.v || 0}` : null;
+      const pa = pa0, paUrl = paUrl0;
       const paTex = paUrl ? (texCache[paUrl] || (texCache[paUrl] = texLoader.load(paUrl, t => { t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; }))) : null;
+      let paH = pa ? pa[1] : 0;                                           // rows of the photo that the ribbon shows
+      if (paTex && tinfo) {                                               // only the temple proper: skip the end-piece block on the left
+        paTex.offset.set(tinfo.x0 / tinfo.W, (tinfo.H - 1 - tinfo.y1) / tinfo.H);
+        paTex.repeat.set((tinfo.W - tinfo.x0) / tinfo.W, (tinfo.y1 - tinfo.y0 + 1) / tinfo.H);
+        paH = tinfo.y1 - tinfo.y0 + 1;
+      } else if (paTex) { paTex.offset.set(0, 0); paTex.repeat.set(1, 1); }
       const matT = new THREE.MeshStandardMaterial({ color: col, roughness: 0.45, metalness: 0.25 });
-      const matP = paTex ? new THREE.MeshStandardMaterial({ map: paTex, alphaTest: 0.4, side: THREE.DoubleSide, roughness: 0.4, metalness: 0.15 }) : null;
+      const matP = paTex ? new THREE.MeshBasicMaterial({ map: paTex, alphaTest: 0.4, side: THREE.DoubleSide }) : null;   // unlit too (lit, a white temple came out dark grey)
       const hinges = Array.isArray(e.h) && e.h.length === 2 ? e.h : [[0, e.a[1]], [e.p[0], e.a[1]]];
       hinges.forEach((hp, i) => {
         const side = i === 0 ? -1 : 1;
@@ -296,7 +337,7 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
         const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.3);
         let temple;
         if (matP) {
-          const hh = (pa[1] * pa[2] / 10) / 2, N = 48;                 // half height (cm); the alpha of the photo shapes the ribbon
+          const hh = (paH * pa[2] / 10) / 2, N = 48;                   // half height (cm); the alpha of the photo shapes the ribbon
           const pos = new Float32Array(N * 6), uv = new Float32Array(N * 4), idx = [];
           for (let k = 0; k < N; k++) {
             const p = curve.getPointAt(k / (N - 1)), u = k / (N - 1);
@@ -477,6 +518,6 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
   });
   window.addEventListener('pagehide', stopCam);
 
-  window.__tryon = { get mode() { return mode; }, get err() { return lastErr; }, get frame() { return frame; }, get entry() { return entry; }, strip, loadPhoto, scene, head, get glasses() { return glasses; }, THREE, loadMask, traceMask, buildGlasses, drawPhoto: () => { if (mode === 'photo') drawPhoto(); },
+  window.__tryon = { get mode() { return mode; }, get err() { return lastErr; }, get frame() { return frame; }, get entry() { return entry; }, strip, loadPhoto, scene, head, get glasses() { return glasses; }, THREE, loadMask, traceMask, loadTemple, buildGlasses, drawPhoto: () => { if (mode === 'photo') drawPhoto(); },
     pick(id) { const f = strip.find(x => x.id === id); if (!f) return false; frame = f; entry = tryon.get(f.id); renderNow(); buildGlasses(); if (mode === 'photo') drawPhoto(); return true; } };
 })();
