@@ -36,6 +36,14 @@
     C.order(sid).then(r => {
       if (r && r.estado === 'pagado') {
         data = r; paint(); show('ok');
+        try {                                                                                   // Google Analytics: una compra (una vez por sesión de pago)
+          const k = 'hoe-ga-' + sid;
+          if (typeof window.gtag === 'function' && !sessionStorage.getItem(k)) {
+            sessionStorage.setItem(k, '1');
+            window.gtag('event', 'purchase', { transaction_id: (data.pedidos && data.pedidos[0]) || data.ref || sid, currency: 'USD', value: Number(data.total) || 0,
+              items: (data.items || []).map(it => ({ item_id: it.sku, item_name: it.name, price: Number(it.price) || 0, quantity: 1 })) });
+          }
+        } catch (e) { /* nunca rompe la página */ }
         try { C.clear(); } catch (e) { /* storage blocked */ }
         return;
       }

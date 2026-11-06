@@ -34,7 +34,10 @@
   }
   let memory = read();
   const get = () => memory;
-  const add = item => { const d = get(); item.id = item.id || ('p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6)); d.items.push(item); write(d); return item.id; };
+  // Google Analytics (si la página lo carga: build.py GA_ID): add_to_cart · begin_checkout aquí, purchase en js/pages/gracias.js
+  const ga = (ev, params) => { try { if (typeof window.gtag === 'function') window.gtag('event', ev, params); } catch (e) { /* nunca rompe la compra */ } };
+  const gaItems = items => items.map(it => ({ item_id: it.sku, item_name: it.name, price: Number(it.price) || 0, quantity: 1 }));
+  const add = item => { const d = get(); item.id = item.id || ('p' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6)); d.items.push(item); write(d); ga('add_to_cart', { currency: 'USD', value: Number(item.price) || 0, items: gaItems([item]) }); return item.id; };
   const remove = id => { const d = get(); d.items = d.items.filter(i => i.id !== id); write(d); };
   const update = (id, patch) => { const d = get(); const it = d.items.find(i => i.id === id); if (it) Object.assign(it, patch); write(d); };
   const clear = () => write({ items: [], ship: get().ship || null });   // the ZIP stays for the next purchase
@@ -137,6 +140,7 @@
     const items = get().items.map(it => ({ id: it.id, sku: it.sku, price: it.price, use: it.use, ...(it.use === 'progressive' ? { tier: it.tier || 'estandar' } : {}), material: it.material, coatings: it.coatings || [], rx: it.rx || { path: 'none' } }));
     const body = { items, lang: L(), ship: ship() };
     if (opts && opts.ui) body.ui = opts.ui;
+    ga('begin_checkout', { currency: 'USD', value: total(), items: gaItems(get().items) });
     return fetchJson(API + '/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) }, 20000);
   };
   const order = sid => fetchJson(API + '/pedido?s=' + encodeURIComponent(sid), { method: 'GET' }, 20000);
