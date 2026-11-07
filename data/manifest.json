@@ -1,13 +1,13 @@
 {
- "v": "2026-11-07T11:14:43Z",
- "total": 6562,
+ "v": "2026-11-07T23:06:50Z",
+ "total": 6544,
  "chunks": {
-  "men": "data/c/men.80c6b374.json",
-  "women": "data/c/women.6bbfc33a.json",
-  "kids": "data/c/kids.47e357e3.json",
+  "men": "data/c/men.08f975f6.json",
+  "women": "data/c/women.86a95643.json",
+  "kids": "data/c/kids.9d229878.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.0856aeb0.json",
+ "search": "data/s/index.922fb5fc.json",
  "featured": [
   "HOE-W-155",
   "HOE-M-72",
@@ -112,7 +112,6 @@
    "Liz Claiborne",
    "Loewe",
    "Longchamp",
-   "Lotto",
    "Lucky Brand",
    "M Missoni",
    "MCM",
@@ -283,7 +282,7 @@
  },
  "tryon": {
   "kids": "data/t/kids.57cdc669.json",
-  "men": "data/t/men.8a6720de.json",
-  "women": "data/t/women.259a623d.json"
+  "men": "data/t/men.3df784c2.json",
+  "women": "data/t/women.ba71dd34.json"
  }
 }
