@@ -28,7 +28,14 @@
   const MINUS = '−';
   const OPTS = window.HOE_LENS_OPTIONS;
   const q = new URLSearchParams(location.search);
-  const id = (q.get('id') || '').trim();
+  // A static frame page (written by the Central: <brand>-<model>-<colour>-<sku>.html) brings the frame inside
+  // (<script type="application/json" id="pdp-data">: { rec, colors, also }) and needs no catalog download. The old
+  // producto.html?id=<SKU> still works: it reads the catalog and, where the static pages are published, sends the
+  // visitor on to the frame's own page (same ?edit= / ?step=).
+  let own = null;
+  try { const el = document.getElementById('pdp-data'); own = el ? JSON.parse(el.textContent) : null; } catch (e) { own = null; }
+  if (own && !(own.rec && own.rec.id)) own = null;
+  const id = own ? own.rec.id : (q.get('id') || '').trim();
   const SITE = 'https://houseofeyeglasses.com/';
 
   // SEO: each frame is its own URL. producto.html carries NO fixed canonical/og:url (a fixed one told Google that every
@@ -58,25 +65,29 @@
     if (unread && tries > 0) { CAT.reset(); return new Promise(ok => setTimeout(ok, 1200)).then(() => start(tries - 1)); }
     if (unread) { notFound(true); return; }
     if (!r.f) { notFound(false); return; }
+    if (CAT.hasPages()) {                                             // the frame has its own page: go there (edit / step travel along)
+      const keep = ['edit', 'step'].filter(k => q.get(k)).map(k => k + '=' + encodeURIComponent(q.get(k))).join('&');
+      location.replace(CAT.url(r.f, keep) + location.hash);
+      return;
+    }
     init(r.f);
   });
-  start(1);
+  if (own) {
+    // the manifest alone (≈5 KB: colours, lens prices); the page already shows the frame, written in its HTML
+    CAT.manifest().then(() => init(CAT.adopt(own.rec, own.colors)));
+  } else if (document.getElementById('pdp-gone')) {
+    notFound(false);                                                  // a frame that left the catalog: its page says so (and is not indexed)
+  } else start(1);
 
   function init(frame) {
   const name = CAT.name(frame);
   const inStock = Number(frame.st) > 0;
-  // this frame in each language (x.html English · x.es.html Spanish): the page's own URL is its canonical, the other its translation
-  const urlOf = l => SITE + (l === 'es' ? 'producto.es.html' : 'producto.html') + '?id=' + encodeURIComponent(frame.id);
-  const url = urlOf(document.documentElement.lang === 'es' ? 'es' : 'en');
+  // the frame's own address: its static page when this is one, else the old ?id= (which only lives until it forwards there)
+  const url = SITE + (own ? CAT.slug(frame.b, frame.n, frame.cc, frame.id) + '.html' : 'producto.html?id=' + encodeURIComponent(frame.id));
   // the clean square photos the Central publishes for Google (assets/p/<SKU>.webp, 800 × 800; -2 = second view): link
   // previews and Google's product results show the frame alone, never the stacked sprite
   const photos = [SITE + 'assets/p/' + encodeURIComponent(frame.id) + '.webp'].concat(frame.ph > 1 ? [SITE + 'assets/p/' + encodeURIComponent(frame.id) + '-2.webp'] : []);
   putHead('link', 'rel', 'canonical', 'href', url);
-  [['en', urlOf('en')], ['es', urlOf('es')], ['x-default', urlOf('en')]].forEach(([hl, href]) => {
-    let el = document.head.querySelector(`link[rel="alternate"][hreflang="${hl}"]`);
-    if (!el) { el = document.createElement('link'); el.rel = 'alternate'; el.setAttribute('hreflang', hl); document.head.appendChild(el); }
-    el.href = href;
-  });
   putHead('meta', 'property', 'og:url', 'content', url);
   setHead('meta[property="og:type"]', 'content', 'product');
   setHead('meta[property="og:image"]', 'content', photos[0]);
@@ -193,7 +204,7 @@
     $('#pdp-price-v').textContent = CAT.price(frame.p);
     $('#pdp-color-name').textContent = `${CAT.colorName(frame)} · ${frame.cc}`;
     $('#pdp-swatches').innerHTML = sibs().map((s, i) =>
-      `<a role="radio" aria-checked="${s.self}" tabindex="${i === 0 ? 0 : -1}" href="producto.html?id=${encodeURIComponent(s.id)}" style="--c:${CAT.colorHex(s.col)}" aria-label="${esc(sibName(s))}" data-sku="${esc(s.id)}"${s.self ? ' aria-current="page"' : ''}></a>`).join('');
+      `<a role="radio" aria-checked="${s.self}" tabindex="${i === 0 ? 0 : -1}" href="${esc(CAT.url({ id: s.id, b: frame.b, n: frame.n, cc: s.cc }))}" style="--c:${CAT.colorHex(s.col)}" aria-label="${esc(sibName(s))}" data-sku="${esc(s.id)}"${s.self ? ' aria-current="page"' : ''}></a>`).join('');
     $('#pdp-size').innerHTML = `<span class="pdp-size-band">${esc(T('band.' + frame.size.band))}</span><span aria-hidden="true">·</span><b class="pdp-size-mm">${mm()}</b>`;
     const stock = $('#pdp-stock');
     stock.textContent = T(inStock ? 'prod.stock' : 'prod.soo');
@@ -861,14 +872,14 @@
     if (window.hoeCart.setShip) window.hoeCart.setShip({ zip: state.zip, state: state.st });
     state.done[1] = state.done[3] = state.done[4] = true;
     const pkg = {
-      sku: frame.id, name, colorName: { en: (frame.colRaw && frame.colRaw.en) || frame.col, es: (frame.colRaw && frame.colRaw.es) || (frame.colRaw && frame.colRaw.en) || frame.col },
+      sku: frame.id, ...(CAT.hasPages() ? { u: CAT.slug(frame.b, frame.n, frame.cc, frame.id) } : {}), name, colorName: { en: (frame.colRaw && frame.colRaw.en) || frame.col, es: (frame.colRaw && frame.colRaw.es) || (frame.colRaw && frame.colRaw.en) || frame.col },
       colorKey: frame.col, cc: frame.cc, img: CAT.img(frame), price: totalPrice(), framePrice: Number(frame.p) || 0, band: frame.size.band,
       size: { lens: frame.size.lens, bridge: frame.size.bridge, temple: frame.size.temple, total: frame.size.total },
       use: state.use, material: noRx() ? '' : state.material, coatings: noRx() ? [] : [...LOCKED, ...state.extras], rx: rxForCart(),
       ...(state.use === 'progressive' ? { tier: state.tier } : {}),
     };
     if (pkg.use === 'non-rx') pkg.rx = { path: 'none' };
-    if (editing) { window.hoeCart.update(editing.id, pkg); location.href = window.hoePage('carrito.html'); return; }
+    if (editing) { window.hoeCart.update(editing.id, pkg); location.href = 'carrito.html'; return; }
     window.hoeCart.add(pkg);
     renderSummaries();
     addBtn.dataset.busy = '1';
@@ -897,6 +908,7 @@
   function renderMore() {
     if (moreList) { paintMore(); return; }
     const ok = f => f && f.id !== frame.id && Number(f.st) > 0;
+    if (own && Array.isArray(own.also)) { moreList = own.also.map(r => CAT.adopt(r)).filter(ok); paintMore(); return; }
     Promise.all((frame.v || []).map(s => CAT.byId(s.id))).then(sibsFound => {
       const list = sibsFound.filter(ok);
       if (list.length >= 3) return list.slice(0, 3);

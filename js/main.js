@@ -25,15 +25,11 @@
     set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* storage blocked: language still switches for this visit */ } },
   };
 
-  // The language lives in the URL: x.html is English, x.es.html Spanish, each with its text already in the HTML (so
-  // Google, Bing and the AI crawlers, which read the HTML as it comes, see both). The dictionaries below only fill what
-  // JS renders. <meta name="hoe-twin"> names the same page in the other language.
+  // One page, two languages (Armando 11/09: "la misma página trae los dos idiomas, se traduce y ya; mi página principal
+  // en inglés"): EN | ES translates THIS page in place and the choice is remembered. Nothing is decided by the browser's
+  // language: without a choice a page shows the language written in its HTML — English everywhere, Spanish only in the
+  // x.es.html copies that exist so Spanish searches can find the site (build.py).
   const pageLang = root.lang === 'es' ? 'es' : 'en';
-  const twinMeta = document.querySelector('meta[name="hoe-twin"]');
-  const NO_TWIN = /^legal\.html/i;                              // pages that exist in one language only
-  // a link to another page of the site, in the language of this page (x.html → x.es.html on a Spanish page)
-  const esHref = h => (/^[a-z0-9][a-z0-9_-]*\.html(?=$|[?#])/i.test(h) && !NO_TWIN.test(h) ? h.replace(/\.html(?=$|[?#])/i, '.es.html') : h);
-  window.hoePage = h => (pageLang === 'es' ? esHref(String(h)) : h);
   let lang = 'en';
   window.hoeLang = () => lang;
   window.hoeT = key => (dict[lang] && dict[lang][key]) || dict.en[key] || key;
@@ -51,26 +47,7 @@
     renderDynamic();
     document.dispatchEvent(new CustomEvent('hoe:lang', { detail: { lang } }));
   }
-  // EN | ES: go to the same page in the other language (same ?query and #anchor); the choice is remembered so the next
-  // English link a Spanish reader follows lands on its Spanish twin (the inline script in <head> does that jump)
-  function goLang(next) {
-    if (next === lang) return;
-    store.set('hoe-lang', next);
-    if (twinMeta && twinMeta.content) { location.assign(twinMeta.content + location.search + location.hash); return; }
-    setLang(next);                                              // a page without a twin still switches what it can in place
-  }
-  document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => goLang(b.dataset.lang)));
-  if (pageLang === 'es') {
-    store.set('hoe-lang', 'es');                                // reading in Spanish: stay in Spanish
-    // the links written in the HTML already point to Spanish pages (build.py); these are the ones JS writes later
-    // (frame cards, cart lines, search results, quiz results…)
-    const fix = a => { const h = a.getAttribute('href'); if (h) { const n = esHref(h); if (n !== h) a.setAttribute('href', n); } };
-    const sweep = n => { if (n.nodeType !== 1) return; if (n.matches('a[href]')) fix(n); n.querySelectorAll('a[href]').forEach(fix); };
-    sweep(document.body);
-    new MutationObserver(list => list.forEach(m => {
-      if (m.type === 'attributes') { if (m.target.matches && m.target.matches('a[href]')) fix(m.target); } else m.addedNodes.forEach(sweep);
-    })).observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['href'] });
-  }
+  document.querySelectorAll('[data-lang]').forEach(b => b.addEventListener('click', () => { setLang(b.dataset.lang); store.set('hoe-lang', lang); }));
 
   // ---------- press feedback: .is-pressed on pointerdown, off on release (never before 100ms, so a tap still reads) ----------
   (() => {
@@ -331,7 +308,7 @@
     const sib = [{ id: f.id, col: f.col }, ...(f.v || [])];
     const label = `${CAT.name(f)} · ${CAT.colorName(f)}`;
     return `<li class="fcard" data-id="${esc(f.id)}">
-      <a href="producto.html?id=${encodeURIComponent(f.id)}" data-press>
+      <a href="${esc(CAT.url(f))}" data-press>
         <figure class="fcard-tile paper"><div class="fcard-img" role="img" aria-label="${esc(label)}" data-ph="${f.ph}" data-bg="${esc(CAT.img(f))}" style="--ph:${f.ph}"></div></figure>
         <div class="fcard-meta"><span class="fcard-name">${esc(CAT.name(f))}</span><span class="fcard-price">${CAT.price(f.p)}</span></div>
         <ul class="fcard-swatches" aria-hidden="true">${sib.map((s, i) => `<li data-sku="${esc(s.id)}"${i ? '' : ' class="is-on"'} style="--c:${CAT.colorHex(s.col)}"></li>`).join('')}</ul>
@@ -409,8 +386,11 @@
     } else askHome();
   }
 
-  // first paint in the language of this page (arms the best sellers: they are fetched when block 4 comes near)
-  setLang(pageLang);
+  // first paint: the visitor's own choice if there is one, else the language of this page (arms the best sellers: they
+  // are fetched when block 4 comes near). Someone who arrives at a Spanish copy keeps reading in Spanish on the next pages.
+  const saved = store.get('hoe-lang');
+  if (!saved && pageLang === 'es') store.set('hoe-lang', 'es');
+  setLang(saved || pageLang);
 
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();

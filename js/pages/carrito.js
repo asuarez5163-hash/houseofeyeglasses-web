@@ -28,7 +28,9 @@
   const RXS = window.hoeRxStates;
   const stateName = c => (RXS ? RXS.nameOf(c, L()) : c);
   // what still blocks the payment: no ZIP yet (older carts), or an item that needs the eye doctor in this state; each message links to the step that fixes it
-  const editHref = (it, step) => `producto.html?id=${encodeURIComponent(it.sku)}&edit=${encodeURIComponent(it.id)}&step=${step}`;
+  // back to the frame's page to edit: its own static page when the line knows it (it.u, saved when it was added), else the old ?id= one
+  const frameHref = (it, query) => (it.u ? `${it.u}.html?${query}` : `producto.html?id=${encodeURIComponent(it.sku)}&${query}`);
+  const editHref = (it, step) => frameHref(it, `edit=${encodeURIComponent(it.id)}&step=${step}`);
   function blocker() {
     const items = C.get().items, sh = C.ship();
     if (!items.length) return null;
@@ -74,7 +76,7 @@
         <div class="cart-line-top"><span class="cart-line-name">${esc(it.name)}</span><span class="cart-line-price">${C.price(it.price)}</span></div>
         <p class="cart-line-meta">${esc(C.colorOf(it))}${it.cc ? ` · ${esc(it.cc)}` : ''} · ${esc(T('band.' + it.band))} · ${esc(sizeOf(it))}</p>
         <p class="cart-line-meta"><span class="k">${T('cart.lenses')}:</span> ${esc(lenses)} · ${esc(T('prod.included'))}</p>
-        <p class="cart-line-meta cart-line-rx"><span class="k">${T('cart.rx')}:</span> <b>${esc(rxText(it))}</b> <a class="cart-line-edit" href="producto.html?id=${encodeURIComponent(it.sku)}&edit=${encodeURIComponent(it.id)}&step=3">${T('cart.edit')}</a></p>
+        <p class="cart-line-meta cart-line-rx"><span class="k">${T('cart.rx')}:</span> <b>${esc(rxText(it))}</b> <a class="cart-line-edit" href="${esc(editHref(it, 3))}">${T('cart.edit')}</a></p>
         <p class="cart-line-actions"><button type="button" data-ask="${esc(it.id)}">${T('cart.remove')}</button></p>
         <p class="cart-confirm" data-confirm="${esc(it.id)}"${confirming === it.id ? '' : ' hidden'}><span>${T('cart.removeQ')}</span><button type="button" data-yes="${esc(it.id)}">${T('cart.yes')}</button><button type="button" data-no="${esc(it.id)}">${T('cart.no')}</button></p>
       </div>
@@ -179,7 +181,7 @@
     const block = blocker();
     if (block) { paintShip(); $('#cart-rx-msg').scrollIntoView({ block: 'center', behavior: reduced.matches ? 'auto' : 'smooth' }); return; }
     if (!canPay()) { showProto(cfg === null); return; }
-    if (cfg.checkout === 'elements') { location.href = window.hoePage('pago.html'); return; }   // the payment page inside the site (Worker updated); else the hosted Stripe page below
+    if (cfg.checkout === 'elements') { location.href = 'pago.html'; return; }   // the payment page inside the site (Worker updated); else the hosted Stripe page below
     busy(true);
     C.pay().then(r => {
       if (!r || !r.url) throw new Error('sin url');

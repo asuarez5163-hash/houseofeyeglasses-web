@@ -16,6 +16,9 @@
 //   size(l, b, t)     → { lens, bridge, temple, total, band }   (UNA fórmula: total = 2·lente + puente + HINGE; talla.js la usa)
 //   price(n)          → "$129" en el idioma activo · colorHex(key) → hex de manifest.colors · name(f) → "Marca Modelo"
 //   colorName(f)      → texto del color en el idioma activo · catOf(sku) → 'men' | 'women' | 'kids' | 'sun' | null
+//   url(f[, query])   → la página del armazón: '<marca>-<modelo>-<color>-<sku>.html' si el Central ya publicó las páginas
+//                       estáticas (manifest.pages), si no 'producto.html?id=<SKU>' · slug(b, n, cc, id) → ese nombre sin .html
+//   adopt(rec, cols)  → registra el armazón que una página estática trae dentro (sin bajar ningún chunk)
 // Evento 'hoe:catalog' en document tras cada chunk ({ detail: { cat, list } }) y 'hoe:catalog' con { cat: null, empty: true }
 // cuando no hay manifest (catálogo en actualización: las páginas muestran su estado vacío sin errores).
 window.hoeCatalog = (() => {
@@ -120,12 +123,27 @@ window.hoeCatalog = (() => {
     const y = n > 1 ? (Math.min(k, n - 1) / (n - 1)) * 100 : 0;
     return `background-image:url('${img(f)}');background-size:100% ${n ? n * 100 + '%' : 'auto'};background-position:0 ${y}%;--ph:${n || 1}`;
   };
-  const colorHex = key => (S.m && S.m.colors && S.m.colors[key]) || '#8a8a8a';
+  const colorHex = key => (S.m && S.m.colors && S.m.colors[key]) || (S.colors && S.colors[key]) || '#8a8a8a';
+  // ---- the frame's own page. The Central writes one static page per frame and language, with the frame's data inside
+  // (<brand>-<model>-<colour code>-<sku>.html; lib/optica/paginas.py, same slug rule: the tests of both sides share the
+  // vectors). manifest.pages says they are published; until then —and for a SKU known only by its id— the link is the
+  // old producto.html?id=, which sends the visitor on to the static page once it knows the frame.
+  const slug = (b, n, cc, id) => {
+    const t = [b, n, cc].filter(Boolean).join(' ').replace(/[^A-Za-z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase().slice(0, 80).replace(/-+$/, '');
+    return (t ? t + '-' : '') + String(id || '').toLowerCase();
+  };
+  const hasPages = () => !!(S.pages || (S.m && S.m.pages));
+  const url = (f, query) => {
+    if (f && typeof f === 'object' && f.id && f.b && hasPages()) return slug(f.b, f.n, f.cc, f.id) + '.html' + (query ? '?' + query : '');
+    return 'producto.html?id=' + encodeURIComponent(typeof f === 'string' ? f : (f && f.id) || '') + (query ? '&' + query : '');
+  };
+  // a static frame page brings its own record (and the colours it paints): no chunk is downloaded for it
+  const adopt = (rec, colors) => { S.pages = true; if (colors) S.colors = Object.assign(S.colors || {}, colors); return prep(rec, catOf(rec && rec.id) || 'men'); };
   const name = f => `${f.b || ''} ${f.n || ''}`.trim();
   const colorName = f => { const r = f && f.colRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('color.' + (f && f.col)) : (f && f.col)) || ''; };
   const lensName = f => { const r = f && f.lcRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('lc.' + (f && f.lc)) : (f && f.lc)) || ''; };
 
-  return { manifest, chunk, all, byId, unknown, reset, featured, search, img, sprite, size, price, colorHex, name, colorName, lensName, catOf, HINGE, BANDS, get m() { return S.m; }, _s: S };
+  return { manifest, chunk, all, byId, unknown, reset, featured, search, img, sprite, size, price, colorHex, name, colorName, lensName, catOf, slug, url, adopt, hasPages, HINGE, BANDS, get m() { return S.m; }, _s: S };
 })();
 window.hoeFrameById = id => window.hoeCatalog.byId(id);
 window.hoeFrameSize = f => `${f.size.lens} □ ${f.size.bridge} — ${f.size.temple}`;

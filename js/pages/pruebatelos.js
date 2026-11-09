@@ -58,7 +58,7 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
     if (!frame) { notAvailable('tryon.notFound'); return; }
     await loadCat(CAT.catOf(wanted) || frame.cats[0]);
     entry = tryon.get(wanted) || null;
-    if (!entry) { notAvailable('tryon.notReady', 'producto.html?id=' + encodeURIComponent(frame.id)); return; }
+    if (!entry) { notAvailable('tryon.notReady', CAT.url(frame)); return; }
   }
   // the strip: this model in its other colours, then more frames of the same category (in stock, ready to try on)
   async function buildStrip() {
@@ -91,7 +91,7 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
     const size = window.hoeFrameSize ? window.hoeFrameSize(frame) : '';
     nowEl.innerHTML = `<p class="kicker">${esc(frame.b || '')}</p><h2>${esc(CAT.name(frame))}</h2>
       <p class="ty-price"><b>${esc(CAT.price(frame.p))}</b> ${esc(T('tryon.frame'))} · ${esc(size)}</p>
-      <a class="link-u" href="producto.html?id=${encodeURIComponent(frame.id)}">${esc(T('tryon.see'))}</a>`;
+      <a class="link-u" href="${esc(CAT.url(frame))}">${esc(T('tryon.see'))}</a>`;
     stripT.hidden = strip.length < 2;
     stripEl.innerHTML = strip.map(f => `<button class="ty-tile${f.id === frame.id ? ' is-on' : ''}" type="button" data-id="${esc(f.id)}" aria-pressed="${f.id === frame.id}" aria-label="${esc(fill(T('tryon.tile'), { name: CAT.name(frame) }))}">
         <span class="ty-img"><img src="${imgUrl(f, tryon.get(f.id))}" alt="" loading="lazy" decoding="async"></span>
