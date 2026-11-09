@@ -65,11 +65,18 @@
   function init(frame) {
   const name = CAT.name(frame);
   const inStock = Number(frame.st) > 0;
-  const url = SITE + 'producto.html?id=' + encodeURIComponent(frame.id);
+  // this frame in each language (x.html English · x.es.html Spanish): the page's own URL is its canonical, the other its translation
+  const urlOf = l => SITE + (l === 'es' ? 'producto.es.html' : 'producto.html') + '?id=' + encodeURIComponent(frame.id);
+  const url = urlOf(document.documentElement.lang === 'es' ? 'es' : 'en');
   // the clean square photos the Central publishes for Google (assets/p/<SKU>.webp, 800 × 800; -2 = second view): link
   // previews and Google's product results show the frame alone, never the stacked sprite
   const photos = [SITE + 'assets/p/' + encodeURIComponent(frame.id) + '.webp'].concat(frame.ph > 1 ? [SITE + 'assets/p/' + encodeURIComponent(frame.id) + '-2.webp'] : []);
   putHead('link', 'rel', 'canonical', 'href', url);
+  [['en', urlOf('en')], ['es', urlOf('es')], ['x-default', urlOf('en')]].forEach(([hl, href]) => {
+    let el = document.head.querySelector(`link[rel="alternate"][hreflang="${hl}"]`);
+    if (!el) { el = document.createElement('link'); el.rel = 'alternate'; el.setAttribute('hreflang', hl); document.head.appendChild(el); }
+    el.href = href;
+  });
   putHead('meta', 'property', 'og:url', 'content', url);
   setHead('meta[property="og:type"]', 'content', 'product');
   setHead('meta[property="og:image"]', 'content', photos[0]);
@@ -204,14 +211,16 @@
     if (!el) { el = document.createElement('script'); el.type = 'application/ld+json'; el.id = 'pdp-jsonld'; document.head.appendChild(el); }
     // one source per fact: shipping = what the site says (free in the USA, 5–10 business days: footer, cart, legal.html §6);
     // returns = legal.html §7 (unworn non-prescription frames, 30 days, by mail, the customer pays the return label)
-    const color = (frame.colRaw && frame.colRaw.en) || frame.col;
-    const kindEn = isSun ? 'Sunglasses' : 'Eyeglasses';
+    // in the language of the page: the texts come from the dictionary (prod.kind, prod.ld, prod.ldCc, mat.*)
+    const color = CAT.colorName(frame);
+    const kind = T(isSun ? 'prod.kindSun' : 'prod.kind');
+    const size = `${frame.size.lens}-${frame.size.bridge}-${frame.size.temple}`;
     el.textContent = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Product',
-      name: [name, color, frame.cc, kindEn].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '),
-      brand: { '@type': 'Brand', name: frame.b }, category: kindEn, color, material: { acetate: 'Acetate', metal: 'Metal', titanium: 'Titanium', tr90: 'TR-90' }[frame.mat],
-      size: `${frame.size.lens}-${frame.size.bridge}-${frame.size.temple}`, inProductGroupWithID: frame.m || undefined,
-      description: `${frame.b} ${frame.n} ${kindEn.toLowerCase()} frame in ${color}${frame.cc ? ` (color code ${frame.cc})` : ''}, size ${frame.size.lens}-${frame.size.bridge}-${frame.size.temple} mm. New, with free U.S. shipping; add prescription lenses made to your prescription.`,
+      name: [name, color, frame.cc, kind].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '),
+      brand: { '@type': 'Brand', name: frame.b }, category: kind, color, material: ['acetate', 'metal', 'titanium', 'tr90'].includes(frame.mat) ? T('mat.' + frame.mat) : undefined,
+      size, inProductGroupWithID: frame.m || undefined,
+      description: fill(T('prod.ld'), { brand: frame.b, model: frame.n, kind: kind.toLowerCase(), color, cc: frame.cc ? fill(T('prod.ldCc'), { cc: frame.cc }) : '', size }),
       image: photos, url,
       offers: {
         '@type': 'Offer', url, priceCurrency: 'USD', price: Number(frame.p) || 0,
@@ -859,7 +868,7 @@
       ...(state.use === 'progressive' ? { tier: state.tier } : {}),
     };
     if (pkg.use === 'non-rx') pkg.rx = { path: 'none' };
-    if (editing) { window.hoeCart.update(editing.id, pkg); location.href = 'carrito.html'; return; }
+    if (editing) { window.hoeCart.update(editing.id, pkg); location.href = window.hoePage('carrito.html'); return; }
     window.hoeCart.add(pkg);
     renderSummaries();
     addBtn.dataset.busy = '1';

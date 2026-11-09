@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Centro de ayuda — House of Eyeglasses</title>
+  <meta name="description" content="Respuestas sobre recetas, DP, lentes, tratamientos, ajuste del armazón, pedidos y seguro de visión. Escríbenos por correo, teléfono o WhatsApp.">
+  <meta name="theme-color" content="#0b0b0d">
+  <link rel="canonical" href="https://houseofeyeglasses.com/ayuda.es.html">
+  <link rel="alternate" hreflang="en" href="https://houseofeyeglasses.com/ayuda.html">
+  <link rel="alternate" hreflang="es" href="https://houseofeyeglasses.com/ayuda.es.html">
+  <link rel="alternate" hreflang="x-default" href="https://houseofeyeglasses.com/ayuda.html">
+  <meta name="hoe-twin" content="ayuda.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="House of Eyeglasses">
+  <meta property="og:locale" content="es_US">
+  <meta property="og:title" content="Centro de ayuda — House of Eyeglasses">
+  <meta property="og:description" content="Respuestas sobre recetas, DP, lentes, tratamientos, ajuste del armazón, pedidos y seguro de visión. Escríbenos por correo, teléfono o WhatsApp.">
+  <meta property="og:url" content="https://houseofeyeglasses.com/ayuda.es.html">
+  <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="favicon.ico" sizes="32x32">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=20261109b">
+  <link rel="stylesheet" href="css/pages/ayuda.css?v=20261109b">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0LM7KG67S"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-V0LM7KG67S");</script>
+  <script>
+    document.documentElement.classList.add('js');
+    // the language lives in the URL (x.html English · x.es.html Spanish, each with its text in the HTML). A visitor whose
+    // last page was Spanish —or, with nothing saved, whose browser is in Spanish— goes from an English page to its
+    // Spanish twin before anything paints. Search engines keep nothing and browse in English: they read each URL as it is.
+    try {
+      var hoeWant = null; try { hoeWant = localStorage.getItem('hoe-lang'); } catch (e) {}
+      if (!hoeWant) hoeWant = /^es/i.test(navigator.language || '') ? 'es' : 'en';
+      var hoeTwin = document.querySelector('meta[name="hoe-twin"]');
+      if (document.documentElement.lang === 'en' && hoeWant === 'es' && hoeTwin) location.replace(hoeTwin.content + location.search + location.hash);
+    } catch (e) {}
+    // home, first visit of the session, motion allowed: the headline, button and price line wait for the load choreography
+    // (js/main.js). The class falls on its own after 2.6 s, so nothing can stay hidden if a script never runs.
+    try { if (/(\/|index\.html)$/.test(location.pathname) && !sessionStorage.getItem('hoe-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) { document.documentElement.classList.add('intro'); setTimeout(function () { document.documentElement.classList.remove('intro'); }, 2600); } } catch (e) {}
+  </script>
+</head>
+<body data-page="ayuda">
+  <a class="skip-link" href="#main" data-i18n="skip">Ir al contenido</a>
+
+
+  <!-- ============ HEADER: one 72 px row, transparent over the hero, glass once the page moves (main.js .is-glass) ============ -->
+  <header class="site-header" id="top">
+    <div class="hdr-in">
+      <div class="header-bar">
+        <button class="icon-btn menu-btn" type="button" aria-controls="drawer" aria-expanded="false" data-i18n-aria="openMenu" aria-label="Abrir menú">
+          <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M3 8h22M3 14h22M3 20h22"/></svg>
+        </button>
+
+        <a class="brand" href="index.es.html" aria-label="House of Eyeglasses — Home">
+          <img class="brand-mark" src="assets/brand/logo-mark-light.png" width="462" height="360" alt="">
+          <span class="brand-name">House of Eyeglasses</span>
+        </a>
+
+        <nav class="main-nav" data-i18n-aria="mainNav" aria-label="Principal">
+          <ul>
+            <li><a href="catalogo.es.html?cat=men" data-i18n="nav.men">Hombre</a></li>
+            <li><a href="catalogo.es.html?cat=women" data-i18n="nav.women">Mujer</a></li>
+            <li><a href="catalogo.es.html?cat=kids" data-i18n="nav.kids">Niños</a></li>
+            <li><a href="catalogo.es.html?cat=sun" data-i18n="nav.sun">Lentes de sol</a></li>
+            <li><a href="contacts.es.html" data-i18n="nav.contacts">Lentes de contacto</a></li>
+          </ul>
+        </nav>
+
+        <div class="header-actions">
+          <div class="lang-switch" role="group" data-i18n-aria="language" aria-label="Idioma">
+            <button type="button" data-lang="en" aria-pressed="true">EN</button>
+            <span aria-hidden="true">|</span>
+            <button type="button" data-lang="es" aria-pressed="false">ES</button>
+          </div>
+          <button class="icon-btn" type="button" data-open="search" aria-controls="search-panel" aria-expanded="false" data-i18n-aria="search" aria-label="Buscar">
+            <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+          </button>
+          <a class="icon-btn" href="ayuda.es.html#orders" data-i18n-aria="account" aria-label="Mi cuenta">
+            <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="9" r="5"/><path d="M4.5 25c.8-5.2 4.6-8.5 9.5-8.5s8.7 3.3 9.5 8.5"/></svg>
+          </a>
+          <button class="icon-btn cart-btn" type="button" data-open="cart" aria-controls="cart" aria-expanded="false" data-i18n-aria="cart" aria-label="Carrito">
+            <svg viewBox="0 0 28 28" aria-hidden="true"><path d="M5 9h18l-1.4 16H6.4z"/><path d="M10 12V7.5a4 4 0 0 1 8 0V12"/></svg>
+            <span class="cart-count" aria-hidden="true">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ SEARCH PANEL ============ -->
+  <div class="search-panel" id="search-panel" hidden>
+    <form class="search-form" role="search" action="#" id="search-form">
+      <label class="visually-hidden" for="q" data-i18n="search">Buscar</label>
+      <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+      <input id="q" name="q" type="search" autocomplete="off" role="combobox" aria-autocomplete="list" aria-controls="search-results" aria-expanded="false" data-i18n-ph="searchPh" placeholder="Busca lentes, recetas, medidas…">
+      <button type="button" class="text-btn" data-close="search" data-i18n="close">Cerrar</button>
+    </form>
+    <div class="search-suggest">
+      <p class="suggest-title" id="search-title" data-i18n="popular">Guías y herramientas</p>
+      <ul id="search-results" class="search-results" role="listbox" aria-labelledby="search-title"></ul>
+      <p class="search-empty" id="search-empty" hidden></p>
+    </div>
+  </div>
+
+  <!-- ============ MAIN ============ -->
+<main id="main" class="help">
+    <header class="sec sec--tight help-head">
+      <div class="page-head offset-1">
+        <p class="kicker" data-i18n="ayuda.kicker">Centro de ayuda</p>
+        <h1 data-i18n="ayuda.title">Preguntas sobre tus lentes</h1>
+        <p class="lead" data-i18n="ayuda.lead">Respuestas sobre recetas, lentes, armazones y seguros.</p>
+      </div>
+
+      <div class="help-find offset-1">
+        <form class="help-search" id="help-search" role="search" action="#">
+          <label class="visually-hidden" for="help-q" data-i18n="ayuda.searchLabel">Buscar en la ayuda</label>
+          <svg viewBox="0 0 28 28" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m18 18 7 7"/></svg>
+          <input id="help-q" name="q" type="search" autocomplete="off" spellcheck="false" enterkeyhint="search" aria-controls="help-results" aria-describedby="help-status" data-i18n-ph="ayuda.searchPh" placeholder="Prueba con “receta”, “DP” o “progresivos”">
+          <button type="button" class="text-btn help-clear" id="help-clear" data-i18n="ayuda.clear" hidden>Borrar</button>
+        </form>
+        <div class="help-pop">
+          <span class="help-pop-k" id="help-pop-k" data-i18n="ayuda.pop">Lo más buscado</span>
+          <ul aria-labelledby="help-pop-k">
+            <li><button type="button" class="help-pop-btn" data-i18n="ayuda.pop.1">DP</button></li>
+            <li><button type="button" class="help-pop-btn" data-i18n="ayuda.pop.2">receta</button></li>
+            <li><button type="button" class="help-pop-btn" data-i18n="ayuda.pop.3">progresivos</button></li>
+            <li><button type="button" class="help-pop-btn" data-i18n="ayuda.pop.4">seguro</button></li>
+          </ul>
+        </div>
+        <p class="help-status" id="help-status" role="status" aria-live="polite"></p>
+      </div>
+    </header>
+
+    <div class="help-wrap">
+      <nav class="help-toc" aria-labelledby="help-toc-title">
+        <p class="help-toc-title" id="help-toc-title" data-i18n="ayuda.topics">Temas</p>
+        <ul>
+          <span class="help-toc-bar" id="help-toc-bar" aria-hidden="true"></span>
+          <li><a href="#prescriptions" data-cat="prescriptions" data-i18n="ayuda.cat.rx">Recetas y distancia pupilar</a></li>
+          <li><a href="#lenses" data-cat="lenses" data-i18n="ayuda.cat.lenses">Lentes y tratamientos</a></li>
+          <li><a href="#frames" data-cat="frames" data-i18n="ayuda.cat.frames">Armazones y medida</a></li>
+          <li><a href="#orders" data-cat="orders" data-i18n="ayuda.cat.orders">Pedidos y tu cuenta</a></li>
+          <li><a href="#insurance-fsa" data-cat="insurance-fsa" data-i18n="ayuda.cat.ins">Seguros y FSA/HSA</a></li>
+          <li><a href="#contacto" data-cat="contacto" data-i18n="ayuda.emptyContact">Contáctanos</a></li>
+        </ul>
+      </nav>
+
+      <div class="help-body" id="help-results">
+        <section class="help-cat" id="prescriptions" aria-labelledby="h-prescriptions">
+          <h2 id="h-prescriptions" data-i18n="ayuda.cat.rx">Recetas y distancia pupilar</h2>
+          <div class="faq" data-reveal="stagger" style="--rv-step:40ms">
+            <details class="faq-item" id="read-prescription" data-k="od os ou sph cyl axis add esf cil eje astigmatism astigmatismo numbers numeros abbreviations abreviaturas">
+              <summary><span class="faq-q" data-i18n="ayuda.q.rxRead">¿Cómo leo mi receta de lentes?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.rxRead">OD es el ojo derecho y OI (u OS) el izquierdo; OU significa ambos. ESF (SPH) es la graduación principal, CIL y EJE corrigen el astigmatismo, y ADD es el aumento extra para leer que usan los lentes progresivos y de lectura.</div>
+            </details>
+            <details class="faq-item" id="send-prescription" data-k="upload subir photo foto type escribir send enviar mandar checkout pagar">
+              <summary><span class="faq-q" data-i18n="ayuda.q.rxSend">¿Cómo les envío mi receta?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.rxSend">Escribe los números al elegir tus lentes o sube una foto de tu receta. Revisamos cada receta antes de fabricar tus lentes.</div>
+            </details>
+            <details class="faq-item" id="expired-prescription" data-k="expired vencida caducada old vieja exam examen doctor medico">
+              <summary><span class="faq-q" data-i18n="ayuda.q.rxExpired">¿Puedo usar una receta vencida?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.rxExpired">Tu médico de la vista le pone fecha de vencimiento porque la vista cambia con el tiempo. Si la tuya ya venció, te recomendamos un examen de la vista nuevo antes de pedir; si tienes dudas, escríbenos.</div>
+            </details>
+            <details class="faq-item" id="pd" data-k="pd dp pupillary pupilar distance distancia measure medir ruler regla mirror espejo dual monocular">
+              <summary><span class="faq-q" data-i18n="ayuda.q.pd">¿Qué es la distancia pupilar (DP) y cómo la mido?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.pd">La distancia pupilar (DP, o PD en inglés) es la separación en milímetros entre el centro de tus pupilas, y le dice al laboratorio dónde centrar cada lente. Muchos médicos de la vista la anotan en la receta; si la tuya no la trae, mídela con una regla en milímetros frente a un espejo o pídesela a tu médico. Dos números, como 31.5/32, son una DP dual (uno por ojo): mándanos los dos.</div>
+            </details>
+          </div>
+        </section>
+
+        <section class="help-cat" id="lenses" aria-labelledby="h-lenses">
+          <h2 id="h-lenses" data-i18n="ayuda.cat.lenses">Lentes y tratamientos</h2>
+          <div class="faq" data-reveal="stagger" style="--rv-step:40ms">
+            <details class="faq-item" id="lens-types" data-k="single vision monofocal monofocales progressive progresivos bifocal multifocal office oficina escritorio computadora lectura add">
+              <summary><span class="faq-q" data-i18n="ayuda.q.lensTypes">¿Monofocales, progresivos o lente de oficina: cuáles necesito?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.lensTypes">Los monofocales tienen una sola graduación en todo el lente, para lejos o para cerca. Los progresivos combinan zonas para lejos, computadora y lectura sin línea visible y necesitan un valor ADD en tu receta; el lente de oficina es para el escritorio: nítido para la computadora y para leer, sin zona de lejos, y también necesita ADD. Más detalles en la <a href="lentes.es.html">guía de lentes</a>.</div>
+            </details>
+            <details class="faq-item" id="blue-light" data-k="blue light luz azul screen pantalla computer computadora digital">
+              <summary><span class="faq-q" data-i18n="ayuda.q.blue">¿Necesito filtro de luz azul?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.blue">Es opcional. El filtro de luz azul está pensado para muchas horas frente al celular y la computadora, y el antirreflejo también reduce los brillos de la pantalla. Puedes pedirlo con o sin graduación.</div>
+            </details>
+            <details class="faq-item" id="thin-lenses" data-k="thin delgado index indice high alto thickness grosor strong fuerte polycarbonate policarbonato">
+              <summary><span class="faq-q" data-i18n="ayuda.q.thin">¿Qué material de lente conviene para una graduación alta?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.thin">Mientras más alta la graduación, más adelgaza y aligera los bordes un lente de alto índice (1.67 o 1.74). Para niños y deporte recomendamos policarbonato, que resiste los golpes.</div>
+            </details>
+            <details class="faq-item" id="coatings" data-k="coating tratamiento antirreflejo antirrayas scratch uv photochromic fotocromaticos transitions polarized polarizados">
+              <summary><span class="faq-q" data-i18n="ayuda.q.coatings">¿Para qué sirven el antirreflejo, el antirrayas y la protección UV?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.coatings">El antirreflejo reduce brillos y reflejos, el antirrayas agrega una capa dura protectora y la protección UV bloquea la luz ultravioleta. Para el sol, los fotocromáticos se oscurecen afuera y los polarizados eliminan el reflejo del agua y la carretera.</div>
+            </details>
+          </div>
+        </section>
+
+        <section class="help-cat" id="frames" aria-labelledby="h-frames">
+          <h2 id="h-frames" data-i18n="ayuda.cat.frames">Armazones y medida</h2>
+          <div class="faq" data-reveal="stagger" style="--rv-step:40ms">
+            <details class="faq-item" id="frame-size" data-k="size talla measurements medidas width ancho bridge puente temple patilla">
+              <summary><span class="faq-q" data-i18n="ayuda.q.size">¿Cómo sé la medida de mi armazón?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.size">Mira por dentro la patilla de unos lentes que ya tengas: los tres números (por ejemplo 52-18-140) son el ancho del lente, el puente y el largo de la patilla, en milímetros. Un armazón con números parecidos te quedará de forma parecida; la <a href="talla.es.html">guía de medidas</a> explica cada uno.</div>
+            </details>
+            <details class="faq-item" id="face-shape" data-k="face cara rostro shape forma quiz round redonda square cuadrada oval ovalada">
+              <summary><span class="faq-q" data-i18n="ayuda.q.face">¿Qué armazones van con la forma de mi cara?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.face">Como regla general, los armazones angulares le dan definición a una cara redonda y los redondeados suavizan una cara cuadrada. Haz el <a href="quiz.es.html">quiz de estilo</a> para ver tres formas según tu cara y tu gusto, o mira la <a href="talla.es.html#face">guía por forma de cara</a>.</div>
+            </details>
+            <details class="faq-item" id="adjustments" data-k="adjust ajustar ajuste loose flojos tight aprietan slide resbalan nose pads plaquetas">
+              <summary><span class="faq-q" data-i18n="ayuda.q.adjust">Mis lentes se resbalan o me aprietan. ¿Se pueden ajustar?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.adjust">Por lo general, sí. Los armazones de metal con plaquetas son los más fáciles de ajustar, y un óptico puede moldear las patillas de acetato con calor suave. Escríbenos y te ayudamos a encontrar la mejor solución.</div>
+            </details>
+            <details class="faq-item" id="kids" data-k="kids ninos children child hijos polycarbonate policarbonato tr90 flexible">
+              <summary><span class="faq-q" data-i18n="ayuda.q.kids">¿Hacen lentes para niños?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.kids">Sí. Para niños recomendamos lentes de policarbonato, livianos y resistentes a los golpes, en armazones para caras pequeñas; los materiales flexibles como el TR-90 aguantan bien el juego de todos los días.</div>
+            </details>
+          </div>
+        </section>
+
+        <section class="help-cat" id="orders" aria-labelledby="h-orders">
+          <h2 id="h-orders" data-i18n="ayuda.cat.orders">Pedidos y tu cuenta</h2>
+          <div class="faq" data-reveal="stagger" style="--rv-step:40ms">
+            <details class="faq-item" id="shipping-times" data-k="shipping envio delivery entrega cost costo time tiempo tarda">
+              <summary><span class="faq-q" data-i18n="ayuda.q.shipping">¿Cuánto tarda la entrega y cuánto cuesta el envío?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.shipping">Los lentes graduados se fabrican por pedido, así que el tiempo depende de los lentes que elijas. Las opciones, tiempos y costos de envío vigentes están en nuestra <a href="legal.html#shipping">política de envíos</a>.</div>
+            </details>
+            <details class="faq-item" id="track-order" data-k="track rastrear tracking seguimiento order pedido number numero status estado">
+              <summary><span class="faq-q" data-i18n="ayuda.q.track">¿Cómo rastreo mi pedido?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.track">Cuando tu pedido sale, te enviamos por correo un enlace de rastreo. Si no lo encuentras, escríbenos con tu número de pedido y el correo que usaste, y lo buscamos.</div>
+            </details>
+            <details class="faq-item" id="changes-returns" data-k="return devolucion refund reembolso exchange cambio cancel cancelar change modificar">
+              <summary><span class="faq-q" data-i18n="ayuda.q.returns">¿Puedo cambiar mi pedido o devolver mis lentes?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.returns">Escríbenos lo antes posible con tu número de pedido: los lentes se hacen con tu receta, así que los cambios son más fáciles antes de que el laboratorio empiece. Las condiciones de devolución y cambio están en nuestra <a href="legal.html#returns">política de devoluciones</a>.</div>
+            </details>
+            <details class="faq-item" id="spanish" data-k="spanish espanol english ingles language idioma whatsapp">
+              <summary><span class="faq-q" data-i18n="ayuda.q.spanish">¿Me pueden atender en español?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.spanish">Sí. Cambia el idioma arriba en cualquier página, y escríbenos o llámanos en español cuando quieras.</div>
+            </details>
+          </div>
+        </section>
+
+        <section class="help-cat" id="insurance-fsa" aria-labelledby="h-insurance-fsa">
+          <h2 id="h-insurance-fsa" data-i18n="ayuda.cat.ins">Seguros y FSA/HSA</h2>
+          <div class="faq" data-reveal="stagger" style="--rv-step:40ms">
+            <details class="faq-item" id="insurance" data-k="insurance seguro vision plan network red reimbursement reembolso claim reclamo receipt recibo">
+              <summary><span class="faq-q" data-i18n="ayuda.q.insurance">¿Puedo usar mi seguro de visión?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.insurance"><p>Muchos planes de visión reembolsan lentes comprados fuera de la red; el monto depende de tu plan. Funciona en tres pasos.</p><ol><li>Consulta con tu aseguradora tus beneficios fuera de la red.</li><li>Haz tu pedido y guarda el recibo detallado.</li><li>Envía el recibo con el formulario de reclamo de tu plan a tu aseguradora, que te reembolsa directamente.</li></ol></div>
+            </details>
+            <details class="faq-item" id="fsa-hsa" data-k="fsa hsa flexible spending health savings cuenta pay pagar card tarjeta receipt recibo">
+              <summary><span class="faq-q" data-i18n="ayuda.q.fsa">¿Puedo pagar con FSA o HSA?</span><span class="faq-ico" aria-hidden="true"></span></summary>
+              <div class="faq-a" data-i18n-html="ayuda.a.fsa">Por lo general, los lentes graduados son un gasto elegible para cuentas FSA y HSA. Antes de pagar, pregúntanos por WhatsApp si tu tarjeta FSA/HSA sirve para tu pedido; también puedes pagar de otra forma y presentar tu recibo detallado a tu plan.</div>
+            </details>
+          </div>
+        </section>
+
+        <div class="help-empty" id="help-empty" hidden>
+          <p data-i18n="ayuda.emptyText">Prueba con una palabra más simple, como “receta”, “DP” o “seguro”, o pregúntanos directamente.</p>
+          <div class="help-empty-actions">
+            <button type="button" class="link-u" id="help-empty-clear" data-i18n="ayuda.emptyClear">Borrar búsqueda</button>
+            <a class="link-u" href="#contacto" data-i18n="ayuda.emptyContact">Contáctanos</a>
+          </div>
+        </div>
+
+        <section class="help-contact" id="contacto" aria-labelledby="h-contacto">
+          <div class="page-head help-contact-head">
+            <p class="kicker" data-i18n="ayuda.c.kicker">Contacto</p>
+            <h2 id="h-contacto" data-i18n="ayuda.c.title">Habla con nosotros</h2>
+            <p class="lead" data-i18n="ayuda.c.lead">Escríbenos, llámanos o mándanos un WhatsApp.</p>
+          </div>
+          <ul class="contact-rows" data-reveal="stagger">
+            <li><a href="mailto:amm@houseofeyeglasses.com" data-press>
+              <svg class="cr-ico" viewBox="0 0 28 28" aria-hidden="true"><rect x="3.5" y="6.5" width="21" height="15" rx="1.5"/><path d="m4.5 8 9.5 7 9.5-7"/></svg>
+              <span class="cr-k" data-i18n="ayuda.c.email">Correo</span>
+              <span class="cr-v">amm@houseofeyeglasses.com</span>
+              <svg class="cr-go" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+            </a></li>
+            <li><a href="tel:+17866148629" data-press>
+              <svg class="cr-ico" viewBox="0 0 28 28" aria-hidden="true"><path d="M10.2 4.5 7 4.5C5.6 4.5 4.5 5.7 4.6 7.1 5.4 16.1 11.9 22.6 20.9 23.4c1.4.1 2.6-1 2.6-2.4v-3.2l-4.6-1.8-2.3 2.3a13.2 13.2 0 0 1-6-6l2.3-2.3z"/></svg>
+              <span class="cr-k" data-i18n="ayuda.c.phone">Teléfono</span>
+              <span class="cr-v">(786) 614-8629</span>
+              <svg class="cr-go" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+            </a></li>
+            <li><a href="https://wa.me/17866148629" data-press target="_blank" rel="noopener">
+              <svg class="cr-ico" viewBox="0 0 28 28" aria-hidden="true"><path d="M5 23.5 6.4 19A10 10 0 1 1 10 22.3z"/><path d="M10 12.5h8M10 16h5"/></svg>
+              <span class="cr-k" data-i18n="ayuda.c.wa">WhatsApp</span>
+              <span class="cr-v">(786) 614-8629 <span class="visually-hidden" data-i18n="newTab">(se abre en otra pestaña)</span></span>
+              <svg class="cr-go" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+            </a></li>
+            <li><a href="https://maps.apple.com/?q=16064+Dawnview+Dr,+Tampa,+FL+33624" data-press target="_blank" rel="noopener">
+              <svg class="cr-ico" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 25s8-7.2 8-13.2A8 8 0 0 0 6 11.8C6 17.8 14 25 14 25z"/><circle cx="14" cy="11.8" r="3"/></svg>
+              <span class="cr-k" data-i18n="ayuda.c.address">Dirección</span>
+              <span class="cr-v">16064 Dawnview Dr, Tampa, FL 33624 <span class="visually-hidden" data-i18n="newTab">(se abre en otra pestaña)</span></span>
+              <svg class="cr-go" viewBox="0 0 20 20" aria-hidden="true"><path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5"/></svg>
+            </a></li>
+          </ul>
+          <ul class="help-notes">
+            <li data-i18n="ayuda.c.tip">¿Es sobre un pedido? Incluye tu número de pedido y el correo que usaste.</li>
+            <li data-i18n="ayuda.c.safe">Nunca te pediremos el número completo de tu tarjeta por correo, teléfono ni WhatsApp.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer" id="contact">
+    <div class="foot-band">
+      <div class="foot-band-in">
+        <div class="foot-band-row">
+          <a class="foot-brand" href="index.es.html"><img src="assets/brand/logo-900-light.png" width="900" height="702" alt="House of Eyeglasses" loading="lazy"></a>
+        </div>
+        <p class="foot-line" data-i18n="foot.line">Óptica en Tampa. Lentes hechos con tu receta.</p>
+      </div>
+    </div>
+    <div class="foot-top">
+      <nav class="foot-mini" data-i18n-aria="footer" aria-label="Pie de página">
+        <a href="catalogo.es.html" data-i18n="foot.frames">Armazones</a>
+        <a href="ayuda.es.html" data-i18n="nav.help">Ayuda y preguntas</a>
+        <a href="https://wa.me/17866148629" target="_blank" rel="noopener">WhatsApp <span class="visually-hidden" data-i18n="newTab">(se abre en otra pestaña)</span></a>
+        <a href="ayuda.es.html#contacto" data-i18n="drawer.contact">Contacto</a>
+      </nav>
+      <nav class="foot-cols" data-i18n-aria="footer" aria-label="Pie de página">
+        <div>
+          <h3 data-i18n="foot.shop">Tienda</h3>
+          <ul>
+            <li><a href="men.es.html" data-i18n="nav.men">Hombre</a></li>
+            <li><a href="women.es.html" data-i18n="nav.women">Mujer</a></li>
+            <li><a href="kids.es.html" data-i18n="nav.kids">Niños</a></li>
+            <li><a href="sunglasses.es.html" data-i18n="nav.sun">Lentes de sol</a></li>
+            <li><a href="contacts.es.html" data-i18n="cat.contacts">Lentes de contacto</a></li>
+            <li><a href="catalogo.es.html" data-i18n="best.all">Ver todos los armazones</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.help">Ayuda</h3>
+          <ul>
+            <li><a href="ayuda.es.html" data-i18n="nav.help">Ayuda y preguntas</a></li>
+            <li><a href="legal.html#shipping" data-i18n="foot.ship">Envíos</a></li>
+            <li><a href="legal.html#returns" data-i18n="foot.returns">Devoluciones</a></li>
+            <li><a href="ayuda.es.html#track-order" data-i18n="foot.track">Rastrea tu pedido</a></li>
+            <li><a href="ayuda.es.html#contacto" data-i18n="drawer.contact">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.learn">Aprende</h3>
+          <ul>
+            <li><a href="lentes.es.html" data-i18n="nav.lensOptions">Opciones de lentes</a></li>
+            <li><a href="talla.es.html" data-i18n="fit.title">Encuentra tu medida</a></li>
+            <li><a href="receta.es.html" data-i18n="lens.rx">Cómo leer tu receta</a></li>
+            <li><a href="receta.es.html#pd" data-i18n="lens.pd">Mide tu distancia pupilar</a></li>
+            <li><a href="quiz.es.html" data-i18n="nav.quiz">Quiz de estilo</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 data-i18n="foot.contact">Contáctanos</h3>
+          <ul class="foot-contact">
+            <li><a href="mailto:amm@houseofeyeglasses.com">amm@houseofeyeglasses.com</a></li>
+            <li><a href="tel:+17866148629">(786) 614-8629</a></li>
+            <li><address>16064 Dawnview Dr<br>Tampa, FL 33624</address></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <div class="foot-bottom">
+      <p>© <span id="year">2026</span> House of Eyeglasses</p>
+      <ul class="legal legal-full">
+        <li><a href="legal.html#privacy" data-i18n="foot.privacy">Política de privacidad</a></li>
+        <li><a href="legal.html#terms" data-i18n="foot.terms">Términos de uso</a></li>
+        <li><a href="legal.html#cookies" data-i18n="foot.cookies">Política de cookies</a></li>
+        <li><a href="legal.html#ccpa" data-i18n="foot.ccpa">Aviso de privacidad de California</a></li>
+        <li><a href="legal.html#accessibility" data-i18n="foot.a11y">Accesibilidad</a></li>
+        <li><a href="legal.html#do-not-sell" data-i18n="foot.dns">No vender ni compartir mi información personal</a></li>
+      </ul>
+      <ul class="legal legal-mini">
+        <li><a href="legal.html#privacy" data-i18n="foot.privacyS">Privacidad</a></li>
+        <li><a href="legal.html#terms" data-i18n="foot.termsS">Términos</a></li>
+        <li><a href="legal.html" data-i18n="foot.allPolicies">Todas las políticas</a></li>
+      </ul>
+      <div class="lang-switch lang-switch--foot" role="group" data-i18n-aria="language" aria-label="Idioma">
+        <button type="button" data-lang="en" aria-pressed="true">English</button>
+        <span aria-hidden="true">|</span>
+        <button type="button" data-lang="es" aria-pressed="false">Español</button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ DRAWER MENU (mockup 2) ============ -->
+  <div class="scrim" data-close="all" hidden></div>
+
+  <aside class="drawer" id="drawer" aria-label="Menú" data-i18n-aria="menu" tabindex="-1" inert>
+    <div class="drawer-head">
+      <a class="drawer-brand" href="index.es.html" aria-label="House of Eyeglasses — Home">
+        <img src="assets/brand/logo-900-light.png" width="900" height="702" alt="House of Eyeglasses" decoding="async">
+      </a>
+      <button class="icon-btn close-btn" type="button" data-close="drawer" data-i18n-aria="closeMenu" aria-label="Cerrar menú">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+
+    <div class="lang-switch lang-switch--drawer" role="group" data-i18n-aria="language" aria-label="Idioma">
+      <button type="button" data-lang="en" aria-pressed="true">English</button>
+      <span aria-hidden="true">|</span>
+      <button type="button" data-lang="es" aria-pressed="false">Español</button>
+    </div>
+
+    <nav class="drawer-nav" aria-label="Tienda" data-i18n-aria="shop">
+      <ul class="drawer-cats">
+        <li><a href="catalogo.es.html?cat=men" data-i18n="nav.men">Hombre</a></li>
+        <li><a href="catalogo.es.html?cat=women" data-i18n="nav.women">Mujer</a></li>
+        <li><a href="catalogo.es.html?cat=kids" data-i18n="nav.kids">Niños</a></li>
+        <li><a href="catalogo.es.html?cat=sun" data-i18n="nav.sun">Lentes de sol</a></li>
+      </ul>
+      <ul class="drawer-secondary drawer-all">
+        <li><a href="catalogo.es.html" data-i18n="home.samplesAll">Ver todos los armazones</a></li>
+      </ul>
+
+      <p class="drawer-h" id="drawer-guides" data-i18n="drawer.guides">Guías</p>
+      <ul class="drawer-secondary" aria-labelledby="drawer-guides">
+        <li><a href="receta.es.html" data-i18n="drawer.rx">Leer tu receta</a></li>
+        <li><a href="lentes.es.html" data-i18n="nav.lensOptions">Opciones de lentes</a></li>
+        <li><a href="talla.es.html" data-i18n="fit.title">Encuentra tu medida</a></li>
+        <li><a href="quiz.es.html" data-i18n="nav.quiz">Quiz de estilo</a></li>
+      </ul>
+
+      <p class="drawer-h" id="drawer-help" data-i18n="foot.help">Ayuda</p>
+      <ul class="drawer-secondary" aria-labelledby="drawer-help">
+        <li><a href="ayuda.es.html" data-i18n="nav.help">Ayuda y preguntas</a></li>
+        <li><a href="https://wa.me/17866148629" target="_blank" rel="noopener"><span data-i18n="drawer.wa">Ayuda por WhatsApp</span> <span class="visually-hidden" data-i18n="newTab">(se abre en otra pestaña)</span></a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- ============ CART DRAWER ============ -->
+  <aside class="cart" id="cart" aria-label="Carrito" data-i18n-aria="cart" tabindex="-1" inert>
+    <div class="cart-head">
+      <h2 data-i18n="cart.title">Tu carrito</h2>
+      <button class="icon-btn" type="button" data-close="cart" data-i18n-aria="close" aria-label="Cerrar">
+        <svg viewBox="0 0 28 28" aria-hidden="true"><path d="m5 5 18 18M23 5 5 23"/></svg>
+      </button>
+    </div>
+    <div class="cart-empty">
+      <svg viewBox="0 0 48 24" aria-hidden="true"><circle cx="12" cy="13" r="8.5"/><circle cx="36" cy="13" r="8.5"/><path d="M20.5 11.5c2-2 5-2 7 0"/></svg>
+      <p data-i18n="cart.empty">Tu carrito está vacío.</p>
+      <a class="btn btn-gold" href="catalogo.es.html" data-close="cart"><span data-i18n="cart.cta">Encuentra tus armazones</span></a>
+    </div>
+  </aside>
+
+
+  <script src="js/i18n.js?v=20261109b"></script>
+  <script src="js/i18n/ayuda.js?v=20261109b"></script>
+  <script src="js/catalog.js?v=20261109b"></script>
+  <script src="js/data/search.js?v=20261109b"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="js/motion.js?v=20261109b"></script>
+  <script src="js/main.js?v=20261109b"></script>
+  <script src="js/data/lenses.js?v=20261109b"></script>
+  <script src="js/cart.js?v=20261109b"></script>
+  <script src="js/pages/ayuda.js?v=20261109b"></script>
+</body>
+</html>

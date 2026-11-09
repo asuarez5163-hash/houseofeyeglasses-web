@@ -4,6 +4,7 @@
 // rx.od / rx.os (OD / OI) live in js/i18n.js because the header drawer uses them.
 Object.assign(window.HOE_I18N.en, {
   "prod.meta": "{name} {color} {cc} {kind} — House of Eyeglasses", "prod.kind": "Eyeglasses", "prod.kindSun": "Sunglasses",
+  "prod.ld": "{brand} {model} {kind} frame in {color}{cc}, size {size} mm. New, with free U.S. shipping; add prescription lenses made to your prescription.", "prod.ldCc": " (color code {cc})",
   "prod.desc": "{name} {kind} in {color} ({cc}), {price} for the frame with free U.S. shipping. Add your prescription lenses in four short steps; an optician in Tampa checks every prescription.",
   "prod.views": "Views", "prod.view.size": "Size", "prod.tryon": "Try them on with your camera",
   "prod.colorOf": "Color",
@@ -69,6 +70,7 @@ Object.assign(window.HOE_I18N.en, {
 
 Object.assign(window.HOE_I18N.es, {
   "prod.meta": "{name} {color} {cc} · {kind} — House of Eyeglasses", "prod.kind": "Espejuelos", "prod.kindSun": "Lentes de sol",
+  "prod.ld": "Armazón {brand} {model} ({kind}) en {color}{cc}, medida {size} mm. Nuevo, con envío gratis en EE. UU.; agrega lentes graduados hechos a tu receta.", "prod.ldCc": " (código de color {cc})",
   "prod.desc": "{kind} {name} en {color} ({cc}), {price} el armazón con envío gratis en EE. UU. Agrega tus lentes graduados en cuatro pasos cortos; un óptico en Tampa revisa cada receta.",
   "prod.views": "Vistas", "prod.view.size": "Medida", "prod.tryon": "Pruébatelos con tu cámara",
   "prod.colorOf": "Color",

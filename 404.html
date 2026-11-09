@@ -8,8 +8,10 @@
   <meta name="robots" content="noindex,nofollow">
   <meta name="theme-color" content="#0b0b0d">
   <link rel="canonical" href="https://houseofeyeglasses.com/404.html">
+  <meta name="hoe-twin" content="404.es.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="House of Eyeglasses">
+  <meta property="og:locale" content="en_US">
   <meta property="og:title" content="Page not found — House of Eyeglasses">
   <meta property="og:description" content="That page doesn’t exist. Go back to House of Eyeglasses, an optical shop in Tampa.">
   <meta property="og:url" content="https://houseofeyeglasses.com/404.html">
@@ -23,18 +25,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261109a">
-  <link rel="stylesheet" href="css/pages/categoria.css?v=20261109a">
+  <link rel="stylesheet" href="css/styles.css?v=20261109b">
+  <link rel="stylesheet" href="css/pages/categoria.css?v=20261109b">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0LM7KG67S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-V0LM7KG67S");</script>
   <script>
     document.documentElement.classList.add('js');
+    // the language lives in the URL (x.html English · x.es.html Spanish, each with its text in the HTML). A visitor whose
+    // last page was Spanish —or, with nothing saved, whose browser is in Spanish— goes from an English page to its
+    // Spanish twin before anything paints. Search engines keep nothing and browse in English: they read each URL as it is.
+    try {
+      var hoeWant = null; try { hoeWant = localStorage.getItem('hoe-lang'); } catch (e) {}
+      if (!hoeWant) hoeWant = /^es/i.test(navigator.language || '') ? 'es' : 'en';
+      var hoeTwin = document.querySelector('meta[name="hoe-twin"]');
+      if (document.documentElement.lang === 'en' && hoeWant === 'es' && hoeTwin) location.replace(hoeTwin.content + location.search + location.hash);
+    } catch (e) {}
     // home, first visit of the session, motion allowed: the headline, button and price line wait for the load choreography
     // (js/main.js). The class falls on its own after 2.6 s, so nothing can stay hidden if a script never runs.
     try { if (/(\/|index\.html)$/.test(location.pathname) && !sessionStorage.getItem('hoe-intro') && !matchMedia('(prefers-reduced-motion: reduce)').matches) { document.documentElement.classList.add('intro'); setTimeout(function () { document.documentElement.classList.remove('intro'); }, 2600); } } catch (e) {}
   </script>
 </head>
-<body>
+<body data-page="404">
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
 
 
@@ -259,16 +270,16 @@
   </aside>
 
 
-  <script src="js/i18n.js?v=20261109a"></script>
-  <script src="js/i18n/categoria.js?v=20261109a"></script>
-  <script src="js/catalog.js?v=20261109a"></script>
-  <script src="js/data/search.js?v=20261109a"></script>
+  <script src="js/i18n.js?v=20261109b"></script>
+  <script src="js/i18n/categoria.js?v=20261109b"></script>
+  <script src="js/catalog.js?v=20261109b"></script>
+  <script src="js/data/search.js?v=20261109b"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/motion.js?v=20261109a"></script>
-  <script src="js/main.js?v=20261109a"></script>
-  <script src="js/data/lenses.js?v=20261109a"></script>
-  <script src="js/cart.js?v=20261109a"></script>
-  <script src="js/pages/categoria.js?v=20261109a"></script>
+  <script src="js/motion.js?v=20261109b"></script>
+  <script src="js/main.js?v=20261109b"></script>
+  <script src="js/data/lenses.js?v=20261109b"></script>
+  <script src="js/cart.js?v=20261109b"></script>
+  <script src="js/pages/categoria.js?v=20261109b"></script>
 </body>
 </html>

@@ -179,7 +179,7 @@
     const block = blocker();
     if (block) { paintShip(); $('#cart-rx-msg').scrollIntoView({ block: 'center', behavior: reduced.matches ? 'auto' : 'smooth' }); return; }
     if (!canPay()) { showProto(cfg === null); return; }
-    if (cfg.checkout === 'elements') { location.href = 'pago.html'; return; }   // the payment page inside the site (Worker updated); else the hosted Stripe page below
+    if (cfg.checkout === 'elements') { location.href = window.hoePage('pago.html'); return; }   // the payment page inside the site (Worker updated); else the hosted Stripe page below
     busy(true);
     C.pay().then(r => {
       if (!r || !r.url) throw new Error('sin url');
