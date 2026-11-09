@@ -281,6 +281,7 @@
 "mat.titanium": "Titanium",
 "mat.tr90": "TR-90 (flexible)",
 "menu": "Menu",
+"nav.brands": "Shop by brand",
 "nav.contacts": "Contacts",
 "nav.help": "Help & FAQ",
 "nav.kids": "Shop Kids",
@@ -682,6 +683,7 @@
 "mat.titanium": "Titanio",
 "mat.tr90": "TR-90 (flexible)",
 "menu": "Menú",
+"nav.brands": "Comprar por marca",
 "nav.contacts": "Lentes de contacto",
 "nav.help": "Ayuda y preguntas",
 "nav.kids": "Niños",
@@ -833,6 +835,7 @@
 "lead"
 ],
 "producto": [
+"also",
 "color",
 "data",
 "details",
@@ -949,5 +952,5 @@
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261109e"
+"v": "20261109f"
 }
