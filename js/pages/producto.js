@@ -31,31 +31,50 @@
   const id = (q.get('id') || '').trim();
   const SITE = 'https://houseofeyeglasses.com/';
 
-  // SEO: each frame is its own URL (canonical + og:url carry ?id=…); an unknown SKU, a sold-out one and a catalog being
-  // updated are soft 404s and must not be indexed
+  // SEO: each frame is its own URL. producto.html carries NO fixed canonical/og:url (a fixed one told Google that every
+  // frame was the same page): they are written here once the frame is known. An unknown SKU and a sold-out one are soft 404s
+  // and are not indexed; a catalog that COULD NOT BE READ (download failed, publish in progress) is neither: the page retries
+  // once and, if it still cannot read it, says so without touching robots (11/06: 276 live frames were left "noindex" in
+  // Google because a failed download was treated as "this frame does not exist").
   const setHead = (sel, attr, val) => { const el = document.head.querySelector(sel); if (el) el.setAttribute(attr, val); };
+  const putHead = (tag, key, name, attr, val) => {
+    let el = document.head.querySelector(`${tag}[${key}="${name}"]`);
+    if (!el) { el = document.createElement(tag); el.setAttribute(key, name); document.head.appendChild(el); }
+    el.setAttribute(attr, val);
+  };
   const noindex = () => { if (document.head.querySelector('meta[name="robots"]')) return; const nf = document.createElement('meta'); nf.name = 'robots'; nf.content = 'noindex,nofollow'; document.head.appendChild(nf); };
   function notFound(updating) {
-    noindex();
+    if (!updating) noindex();
     $('#pdp-top').hidden = true; const box = $('#pdp-404'); box.hidden = false;
     const p = box.querySelector('p'); const key = updating ? 'cat.updating' : 'prod.notFound';
     p.dataset.i18n = key; p.textContent = T(key);
+    // "could not read the catalog" keeps the page's own title: if Google ever keeps this snapshot, it is not a result titled "being updated"
     const title = () => { document.title = `${T(key)} — House of Eyeglasses`; };
-    title(); document.addEventListener('hoe:lang', title);
+    if (!updating) { title(); document.addEventListener('hoe:lang', title); }
   }
-  CAT.manifest().then(m => (m ? CAT.byId(id).then(f => ({ f })) : { updating: true })).then(r => {
-    if (r.updating) { notFound(true); return; }
+  const read = () => CAT.manifest().then(m => (m ? CAT.byId(id).then(f => ({ f })) : { updating: true }));
+  const start = tries => read().then(r => {
+    const unread = r.updating || (!r.f && CAT.unknown(id));           // not "gone": the data could not be read
+    if (unread && tries > 0) { CAT.reset(); return new Promise(ok => setTimeout(ok, 1200)).then(() => start(tries - 1)); }
+    if (unread) { notFound(true); return; }
     if (!r.f) { notFound(false); return; }
     init(r.f);
   });
+  start(1);
 
   function init(frame) {
   const name = CAT.name(frame);
   const inStock = Number(frame.st) > 0;
   const url = SITE + 'producto.html?id=' + encodeURIComponent(frame.id);
-  setHead('link[rel="canonical"]', 'href', url);
-  setHead('meta[property="og:url"]', 'content', url);
-  setHead('meta[property="og:image"]', 'content', SITE + CAT.img(frame));
+  // the clean square photos the Central publishes for Google (assets/p/<SKU>.webp, 800 × 800; -2 = second view): link
+  // previews and Google's product results show the frame alone, never the stacked sprite
+  const photos = [SITE + 'assets/p/' + encodeURIComponent(frame.id) + '.webp'].concat(frame.ph > 1 ? [SITE + 'assets/p/' + encodeURIComponent(frame.id) + '-2.webp'] : []);
+  putHead('link', 'rel', 'canonical', 'href', url);
+  putHead('meta', 'property', 'og:url', 'content', url);
+  setHead('meta[property="og:type"]', 'content', 'product');
+  setHead('meta[property="og:image"]', 'content', photos[0]);
+  setHead('meta[property="og:image:width"]', 'content', '800');
+  setHead('meta[property="og:image:height"]', 'content', '800');
   if (!inStock) noindex();
   try { localStorage.setItem('hoe-view-' + frame.id, String(Number(localStorage.getItem('hoe-view-' + frame.id) || 0) + 1)); } catch (e) { /* per visit */ }
 
@@ -156,10 +175,11 @@
   const sibName = s => (s.self ? CAT.colorName(frame) : T('color.' + s.col)) + (s.cc ? ` · ${s.cc}` : '');
   function renderBuy() {
     $('#pdp-name').textContent = name;
-    document.title = fill(T('prod.meta'), { name });
+    const head = { name, color: CAT.colorName(frame), cc: frame.cc || '', kind: T(isSun ? 'prod.kindSun' : 'prod.kind'), price: CAT.price(frame.p) };
+    document.title = fill(T('prod.meta'), head).replace(/\s{2,}/g, ' ');
     setHead('meta[property="og:title"]', 'content', document.title);
-    setHead('meta[name="description"]', 'content', fill(T('prod.desc'), { name, color: CAT.colorName(frame), price: CAT.price(frame.p) }));
-    setHead('meta[property="og:description"]', 'content', fill(T('prod.desc'), { name, color: CAT.colorName(frame), price: CAT.price(frame.p) }));
+    setHead('meta[name="description"]', 'content', fill(T('prod.desc'), head).replace(/\s{2,}/g, ' '));
+    setHead('meta[property="og:description"]', 'content', fill(T('prod.desc'), head).replace(/\s{2,}/g, ' '));
     // kicker: who it is for and the material ("Women · Acetate", "Sunglasses · Metal")
     const who = isSun ? T('prod.kickerSun') : T('gender.' + (['men', 'women', 'kids', 'unisex'].includes(frame.g) ? frame.g : 'unisex'));
     $('#pdp-kicker').textContent = [who, T('mat.' + frame.mat)].join(' · ');
@@ -182,10 +202,33 @@
   function renderJsonLd() {
     let el = document.getElementById('pdp-jsonld');
     if (!el) { el = document.createElement('script'); el.type = 'application/ld+json'; el.id = 'pdp-jsonld'; document.head.appendChild(el); }
+    // one source per fact: shipping = what the site says (free in the USA, 5–10 business days: footer, cart, legal.html §6);
+    // returns = legal.html §7 (unworn non-prescription frames, 30 days, by mail, the customer pays the return label)
+    const color = (frame.colRaw && frame.colRaw.en) || frame.col;
+    const kindEn = isSun ? 'Sunglasses' : 'Eyeglasses';
     el.textContent = JSON.stringify({
-      '@context': 'https://schema.org', '@type': 'Product', name, sku: frame.id, brand: { '@type': 'Brand', name: frame.b },
-      color: (frame.colRaw && frame.colRaw.en) || frame.col, image: [SITE + CAT.img(frame)], url,
-      offers: { '@type': 'Offer', url, priceCurrency: 'USD', price: Number(frame.p) || 0, availability: 'https://schema.org/' + (inStock ? 'InStock' : 'OutOfStock'), itemCondition: 'https://schema.org/NewCondition' },
+      '@context': 'https://schema.org', '@type': 'Product',
+      name: [name, color, frame.cc, kindEn].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '),
+      brand: { '@type': 'Brand', name: frame.b }, category: kindEn, color, material: { acetate: 'Acetate', metal: 'Metal', titanium: 'Titanium', tr90: 'TR-90' }[frame.mat],
+      size: `${frame.size.lens}-${frame.size.bridge}-${frame.size.temple}`, inProductGroupWithID: frame.m || undefined,
+      description: `${frame.b} ${frame.n} ${kindEn.toLowerCase()} frame in ${color}${frame.cc ? ` (color code ${frame.cc})` : ''}, size ${frame.size.lens}-${frame.size.bridge}-${frame.size.temple} mm. New, with free U.S. shipping; add prescription lenses made to your prescription.`,
+      image: photos, url,
+      offers: {
+        '@type': 'Offer', url, priceCurrency: 'USD', price: Number(frame.p) || 0,
+        availability: 'https://schema.org/' + (inStock ? 'InStock' : 'OutOfStock'), itemCondition: 'https://schema.org/NewCondition',
+        seller: { '@type': 'Organization', name: 'House of Eyeglasses' },
+        shippingDetails: {
+          '@type': 'OfferShippingDetails',
+          shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
+          shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
+          deliveryTime: { '@type': 'ShippingDeliveryTime', transitTime: { '@type': 'QuantitativeValue', minValue: 5, maxValue: 10, unitCode: 'DAY' } },
+        },
+        hasMerchantReturnPolicy: {
+          '@type': 'MerchantReturnPolicy', applicableCountry: 'US', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+          merchantReturnDays: 30, returnMethod: 'https://schema.org/ReturnByMail', returnFees: 'https://schema.org/ReturnFeesCustomerResponsibility',
+          merchantReturnLink: SITE + 'legal.html#returns',
+        },
+      },
     });
   }
   const swatches = $('#pdp-swatches');

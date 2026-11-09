@@ -6,6 +6,10 @@
 //   chunk(cat)        → Promise<registro[]>     (con caché; cada registro recibe .size = size(...sz))
 //   all(onPartial)    → Promise<registro[]>     (los cuatro chunks EN SECUENCIA, deduplicados; onPartial(lista) tras cada uno)
 //   byId(sku)         → Promise<registro|null>  (el chunk sale de la letra del SKU: HOE-W-77 → women)
+//   unknown(sku)      → true si byId dio null porque NO SE PUDO LEER (sin manifest o chunk caído), no porque el armazón no exista
+//   reset()           → olvida lo que falló: el siguiente manifest()/chunk() vuelve al servidor con URLs sin caché
+//   Lectura robusta: manifest y chunk se reintentan una vez con el manifest pedido sin caché (un catálogo recién publicado
+//   retira los chunks del anterior a las 48 h; quien tenga el manifest viejo debe poder seguir).
 //   featured()        → Promise<registro[]>     (manifest.featuredItems inline → ningún chunk; si falta, manifest.featured por chunks; sólo con stock)
 //   search()          → Promise<[{s,t}]>        (índice del buscador, una sola vez)
 //   img(f)            → 'assets/frames/<SKU>.webp'   · sprite(f, k) → estilo inline del sprite en la vista k (0..ph-1)
@@ -15,7 +19,7 @@
 // Evento 'hoe:catalog' en document tras cada chunk ({ detail: { cat, list } }) y 'hoe:catalog' con { cat: null, empty: true }
 // cuando no hay manifest (catálogo en actualización: las páginas muestran su estado vacío sin errores).
 window.hoeCatalog = (() => {
-  const S = { manifest: null, m: null, byId: new Map(), chunks: {}, search: null, featured: null, lists: {} };
+  const S = { manifest: null, m: null, byId: new Map(), chunks: {}, search: null, featured: null, lists: {}, bad: {}, fresh: false };
   const V = Math.floor(Date.now() / 36e5);                       // one value per hour: the CDN keys by full URL
   const LETTER = { M: 'men', W: 'women', K: 'kids', S: 'sun' };
   const HINGE = 8;                                              // mm added by rims and hinges (contract §4)
@@ -37,8 +41,11 @@ window.hoeCatalog = (() => {
   const json = url => fetch(url).then(r => (r.ok ? r.json() : null)).catch(() => null);
   const emit = detail => document.dispatchEvent(new CustomEvent('hoe:catalog', { detail }));
 
-  const manifest = () => S.manifest || (S.manifest = json(`data/manifest.json?v=${V}`).then(m => {
-    S.m = m && m.chunks ? m : null;
+  // the manifest, and once more with a URL nobody has cached when the first answer is missing or broken (a download that
+  // fails is not "the catalog is empty": 11/06 Google read 276 live frames as "not found" during a catalog publish)
+  const readManifest = fresh => json(`data/manifest.json?v=${fresh ? Date.now() : V}`).then(m => (m && m.chunks ? m : null));
+  const manifest = () => S.manifest || (S.manifest = readManifest(S.fresh).then(m => m || readManifest(true)).then(m => {
+    S.m = m;
     if (!S.m) emit({ cat: null, empty: true });
     return S.m;
   }));
@@ -53,7 +60,14 @@ window.hoeCatalog = (() => {
   };
   const chunk = cat => S.chunks[cat] || (S.chunks[cat] = manifest().then(m => {
     if (!m || !m.chunks[cat]) return [];
-    return json(m.chunks[cat]).then(list => {
+    return json(m.chunks[cat]).then(list => (Array.isArray(list) ? list : readManifest(true).then(m2 => {
+      // the file this manifest names is gone (a newer catalog went live) or the download failed: ask for the manifest
+      // again, uncached, and read the chunk it names now
+      if (m2) { S.m = m2; S.manifest = Promise.resolve(m2); }
+      const rel = (m2 || m).chunks[cat];
+      return rel ? json(rel) : null;
+    }))).then(list => {
+      if (!Array.isArray(list)) S.bad[cat] = true;                  // unread ≠ empty: unknown(sku) tells the pages apart
       const out = (Array.isArray(list) ? list : []).map(f => prep(f, cat)).filter(Boolean);
       S.lists[cat] = out;
       emit({ cat, list: out });
@@ -83,6 +97,10 @@ window.hoeCatalog = (() => {
     if (!cat) return Promise.resolve(null);
     return chunk(cat).then(() => S.byId.get(id) || null);
   };
+  // byId() answered null: is the frame really gone, or could its data not be read (no manifest, chunk download failed)?
+  const unknown = sku => { const cat = catOf(String(sku || '').trim()); return !S.m || !!(cat && S.bad[cat]); };
+  // forget what failed so the next manifest()/chunk() asks the server again with uncached URLs (the product page retries once)
+  const reset = () => { S.manifest = null; S.m = null; S.fresh = true; Object.keys(S.chunks).forEach(c => { if (S.bad[c] || !S.lists[c]) delete S.chunks[c]; }); S.bad = {}; };
   // the home grid: manifest.featuredItems carries the twelve records inline (≈5 KB), so the home never asks for a chunk;
   // without it (an older manifest) the SKUs of manifest.featured are looked up chunk by chunk (grouped by letter)
   const featured = () => S.featured || (S.featured = manifest().then(m => {
@@ -107,7 +125,7 @@ window.hoeCatalog = (() => {
   const colorName = f => { const r = f && f.colRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('color.' + (f && f.col)) : (f && f.col)) || ''; };
   const lensName = f => { const r = f && f.lcRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('lc.' + (f && f.lc)) : (f && f.lc)) || ''; };
 
-  return { manifest, chunk, all, byId, featured, search, img, sprite, size, price, colorHex, name, colorName, lensName, catOf, HINGE, BANDS, get m() { return S.m; }, _s: S };
+  return { manifest, chunk, all, byId, unknown, reset, featured, search, img, sprite, size, price, colorHex, name, colorName, lensName, catOf, HINGE, BANDS, get m() { return S.m; }, _s: S };
 })();
 window.hoeFrameById = id => window.hoeCatalog.byId(id);
 window.hoeFrameSize = f => `${f.size.lens} □ ${f.size.bridge} — ${f.size.temple}`;

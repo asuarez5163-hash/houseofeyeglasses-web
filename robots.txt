@@ -3,4 +3,5 @@ Allow: /
 Disallow: /clasica/
 Disallow: /nueva/
 Disallow: /carrito.html
+Disallow: /pruebatelos.html?
 Sitemap: https://houseofeyeglasses.com/sitemap.xml

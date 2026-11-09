@@ -3,8 +3,8 @@
 // Colours, lens colours, bands, rims, genders and stock come from js/i18n.js (contract keys); lens option names from js/data/lenses.js;
 // rx.od / rx.os (OD / OI) live in js/i18n.js because the header drawer uses them.
 Object.assign(window.HOE_I18N.en, {
-  "prod.meta": "{name} — House of Eyeglasses",
-  "prod.desc": "{name} in {color}, {price} for the frame. Add your prescription lenses in four short steps; an optician in Tampa checks every prescription.",
+  "prod.meta": "{name} {color} {cc} {kind} — House of Eyeglasses", "prod.kind": "Eyeglasses", "prod.kindSun": "Sunglasses",
+  "prod.desc": "{name} {kind} in {color} ({cc}), {price} for the frame with free U.S. shipping. Add your prescription lenses in four short steps; an optician in Tampa checks every prescription.",
   "prod.views": "Views", "prod.view.size": "Size", "prod.tryon": "Try them on with your camera",
   "prod.colorOf": "Color",
   "prod.trust": "If the prescription isn’t right, we remake it free",
@@ -68,8 +68,8 @@ Object.assign(window.HOE_I18N.en, {
 });
 
 Object.assign(window.HOE_I18N.es, {
-  "prod.meta": "{name} — House of Eyeglasses",
-  "prod.desc": "{name} en {color}, {price} el armazón. Agrega tus lentes graduados en cuatro pasos cortos; un óptico en Tampa revisa cada receta.",
+  "prod.meta": "{name} {color} {cc} · {kind} — House of Eyeglasses", "prod.kind": "Espejuelos", "prod.kindSun": "Lentes de sol",
+  "prod.desc": "{kind} {name} en {color} ({cc}), {price} el armazón con envío gratis en EE. UU. Agrega tus lentes graduados en cuatro pasos cortos; un óptico en Tampa revisa cada receta.",
   "prod.views": "Vistas", "prod.view.size": "Medida", "prod.tryon": "Pruébatelos con tu cámara",
   "prod.colorOf": "Color",
   "prod.trust": "Si la graduación no está bien, la rehacemos gratis",
