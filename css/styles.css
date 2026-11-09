@@ -587,6 +587,7 @@ body.is-locked { overflow: hidden; }
 .foot-cols a { display: inline-block; padding: 5px 0; font-size: 15px; color: var(--ink-2); transition: color .2s; }
 .foot-cols a:hover { color: var(--ink); }
 .foot-contact address { font-style: normal; padding: 5px 0; font-size: 15px; line-height: 1.6; color: var(--ink-2); }
+.foot-contact .foot-follow { font-size: 15px; line-height: 1.6; color: var(--ink-2); }      /* "Follow us:" in the same voice as the lines above it */
 .foot-bottom { max-width: var(--maxw); margin: 0 auto; padding: 22px var(--gutter) calc(28px + env(safe-area-inset-bottom)); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid var(--line-2); font-size: 13px; color: var(--ink-3); }
 .foot-bottom p { margin: 0; }
 .legal { display: flex; gap: 24px; }

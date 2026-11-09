@@ -198,6 +198,7 @@
 "foot.contact": "Contact us",
 "foot.cookies": "Cookie Policy",
 "foot.dns": "Do Not Sell or Share My Personal Information",
+"foot.follow": "Follow us",
 "foot.frames": "Frames",
 "foot.help": "Help",
 "foot.learn": "Learn",
@@ -600,6 +601,7 @@
 "foot.contact": "Contáctanos",
 "foot.cookies": "Política de cookies",
 "foot.dns": "No vender ni compartir mi información personal",
+"foot.follow": "Síguenos",
 "foot.frames": "Armazones",
 "foot.help": "Ayuda",
 "foot.learn": "Aprende",
@@ -952,5 +954,5 @@
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261109f"
+"v": "20261109g"
 }
