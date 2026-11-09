@@ -1,0 +1,28 @@
+# House of Eyeglasses
+
+> Online eyewear store in the United States (Tampa, Florida). Designer eyeglasses frames from 150+ brands, new and in stock, with prescription lenses made to the customer's prescription. Free shipping in the USA, delivered in 5–10 business days. An optician checks every prescription before the lab starts. Unworn non-prescription frames can be returned within 30 days.
+
+Every frame has its own page with brand, model, color code, size in millimetres, price in US dollars and availability. Prices shown are for the frame; prescription lenses are added in four short steps on the frame's page. The site is in English with a Spanish version of every text (EN | ES).
+
+## Shop
+- [All brands](https://houseofeyeglasses.com/brands.html): every brand carried, with the number of frames in stock and a page per brand
+- [Designer Eyeglasses Frames](https://houseofeyeglasses.com/catalogo.html): Shop designer eyeglasses frames from 150+ brands by brand, shape, material, color and size. Add prescription lenses to any frame. Free U.S. shipping.
+- [Men’s Eyeglasses](https://houseofeyeglasses.com/men.html): Men’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. An optician in Tampa checks every prescription.
+- [Women’s Eyeglasses](https://houseofeyeglasses.com/women.html): Women’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. An optician in Tampa checks every prescription.
+- [Kids’ Eyeglasses](https://houseofeyeglasses.com/kids.html): Kids’ prescription eyeglasses: flexible frames for small faces with impact-resistant lenses made to the prescription, and free U.S. shipping.
+- [Virtual Try-On](https://houseofeyeglasses.com/pruebatelos.html): Try our frames on with your camera or a photo. The frame sits on your face in 3D, with the temples behind your ears. Nothing leaves your device.
+
+## Guides
+- [What the Numbers on Your Prescription Mean](https://houseofeyeglasses.com/receta.html): What OD, OS, SPH, CYL, AXIS, ADD and PD mean on your eyeglass prescription, a free sign checker that stays on your device, and how to measure your PD at home.
+- [Lens Options](https://houseofeyeglasses.com/lentes.html): Compare lens types, materials and coatings, see who each one is for, and find the right lens thickness for your prescription.
+- [Find Your Fit: Frame Size Guide](https://houseofeyeglasses.com/talla.html): Work out your frame size from the three numbers on the glasses you own, or measure your face with a card. Standard or low nose bridge, and the frame shapes that suit your face.
+- [Style Quiz](https://houseofeyeglasses.com/quiz.html): Six quick questions to find the frame shapes, materials, colors and lenses that suit you. No sign-up needed.
+
+## Help and policies
+- [Help Center](https://houseofeyeglasses.com/ayuda.html): Answers about prescriptions, PD, lenses, coatings, frame fit, orders and vision insurance. Contact us by email, phone or WhatsApp.
+- [Shipping, returns, privacy and terms](https://houseofeyeglasses.com/legal.html)
+- Contact: amm@houseofeyeglasses.com · +1 786-614-8629 (phone and WhatsApp)
+
+## Data
+- [Sitemap](https://houseofeyeglasses.com/sitemap.xml): every page, including one per frame and one per brand
+- [Product feed](https://houseofeyeglasses.com/data/google-feed.txt): tab-separated, one row per frame (title, price, availability, brand, GTIN, link, image)

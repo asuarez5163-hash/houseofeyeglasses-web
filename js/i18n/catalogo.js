@@ -1,10 +1,10 @@
 // Catálogo de armazones (catalogo.html) — bilingual copy. Keys prefixed "catalogo.".
 // Colours, lens colours, bands, genders, shapes and materials come from js/i18n.js (the contract keys).
 Object.assign(window.HOE_I18N.en, {
-  "catalogo.meta": "Frames — House of Eyeglasses",
-  "catalogo.meta.men": "Men’s Frames — House of Eyeglasses",
-  "catalogo.meta.women": "Women’s Frames — House of Eyeglasses",
-  "catalogo.meta.kids": "Kids’ Frames — House of Eyeglasses",
+  "catalogo.meta": "Designer Eyeglasses Frames — House of Eyeglasses",
+  "catalogo.meta.men": "Men’s Eyeglasses Frames — House of Eyeglasses",
+  "catalogo.meta.women": "Women’s Eyeglasses Frames — House of Eyeglasses",
+  "catalogo.meta.kids": "Kids’ Eyeglasses Frames — House of Eyeglasses",
   "catalogo.meta.sun": "Sunglasses — House of Eyeglasses",
   "catalogo.h1": "All frames", "catalogo.h1.men": "Men’s frames", "catalogo.h1.women": "Women’s frames", "catalogo.h1.kids": "Kids’ frames", "catalogo.h1.sun": "Sunglasses",
   "catalogo.sub": "Frame prices shown · add your prescription lenses in four short steps",

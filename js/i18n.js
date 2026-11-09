@@ -60,7 +60,7 @@ window.HOE_I18N = {
     footer: "Footer", "best.all": "Shop all frames",
     "prod.lenses": "Select lenses", "prod.fav": "Save to favorites", "prod.color": "Color",
     "lens.ar": "Anti-reflective coating",
-    "index.docTitle": "House of Eyeglasses — Eyewear & Contact Lenses",
+    "index.docTitle": "Designer Eyeglasses Frames & Prescription Lenses — House of Eyeglasses",
     "nf.title": "This page doesn’t exist", "nf.lead": "The address may be wrong, or the page moved. Everything we offer is one tap away from the home page.", "nf.home": "Back to the home page",
     "foot.line": "An optical shop in Tampa. Lenses made to your prescription.",
     "fit.title": "Find your fit",

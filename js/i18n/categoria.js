@@ -16,15 +16,15 @@ Object.assign(window.HOE_I18N.en, {
   "catpage.mean": "In the meantime",
   "catpage.viewAll": "See all frames",
 
-  "catpage.meta.men": "Men’s Glasses — House of Eyeglasses",
+  "catpage.meta.men": "Men’s Eyeglasses — Designer Frames for Men | House of Eyeglasses",
   "catpage.men.title": "Men’s glasses",
   "catpage.men.lead": "Optical frames in metal, titanium and acetate, fitted by an optician in Tampa and delivered anywhere in the U.S.",
 
-  "catpage.meta.women": "Women’s Glasses — House of Eyeglasses",
+  "catpage.meta.women": "Women’s Eyeglasses — Designer Frames for Women | House of Eyeglasses",
   "catpage.women.title": "Women’s glasses",
   "catpage.women.lead": "Frames in acetate and metal, from cat-eye to round, made to your prescription and checked by an optician before they ship.",
 
-  "catpage.meta.kids": "Kids’ Glasses — House of Eyeglasses",
+  "catpage.meta.kids": "Kids’ Eyeglasses — Frames for Kids | House of Eyeglasses",
   "catpage.kids.title": "Kids’ glasses",
   "catpage.kids.lead": "Flexible frames for small faces, with light, impact-resistant lenses. Sized to fit, built to be played in.",
 

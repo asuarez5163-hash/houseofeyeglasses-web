@@ -1,0 +1,21 @@
+/* Brand pages (one per brand: <brand>-eyeglasses.html) and the brands index (brands.html). Both are written by the
+   Central from src/pages/marca.html and src/pages/marcas.html. The frames use the catalog's own grid and card
+   (.catp-grid in catalogo.css, .fcard in styles.css): nothing here redraws them. Prefix brandp-. */
+.brandp { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter) var(--sec-y); }
+.brandp-head { padding: var(--sec-y-sm) 0 0; max-width: none; }
+.brandp-head .kicker a { color: inherit; text-decoration: none; }
+.brandp-head .kicker a:hover { color: var(--ink); }
+.brandp-body { padding-top: clamp(40px, 5vw, 72px); }
+.brandp-more { display: flex; flex-wrap: wrap; align-items: center; gap: 20px 32px; margin: clamp(48px, 6vw, 88px) 0 0; }
+
+/* the index: brand · how many frames, on hairlines, in columns */
+.brandp-list { list-style: none; margin: 0; padding: 0; columns: 2; column-gap: clamp(24px, 4vw, 64px); border-top: 1px solid var(--gold); }
+.brandp-list li { break-inside: avoid; border-bottom: 1px solid var(--line); }
+.brandp-list a { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 15px 0; font-size: 17px; color: var(--ink); text-decoration: none; transition: color .2s; }
+.brandp-list a .num { font-size: var(--fs-small); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+@media (hover: hover) { .brandp-list a:hover { color: var(--gold); } }
+.brandp-list a:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+@media (min-width: 861px) { .brandp-list { columns: 3; } }
+@media (min-width: 1280px) { .brandp-list { columns: 4; } }
+@media (max-width: 860px) { .brandp-head .offset-1 { margin-left: 0; } .brandp-head { padding-top: var(--block); } }
+@media (prefers-reduced-motion: reduce) { .brandp-list a { transition: none; } }

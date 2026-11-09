@@ -214,7 +214,8 @@
       ['prod.d.brand', frame.b], ['prod.d.model', frame.n], ['prod.d.colorCode', frame.cc], ['prod.d.color', CAT.colorName(frame)], ['prod.d.lens', CAT.lensName(frame)],
       ['prod.d.material', T('mat.' + frame.mat)], ['prod.d.shape', T(window.HOE_SHAPE_LABEL[frame.sh] || 'shape.rect')], ['prod.d.rim', T('rim.' + frame.rim)],
       ['prod.d.size', `${sizeLine()} · ${frame.size.total} mm`], ['prod.d.incl', T('prod.d.inclText')],
-    ].map(([k, v]) => `<dt>${esc(T(k))}</dt><dd>${esc(v)}</dd>`).join('');
+    // the brand links to its page (<brand>-eyeglasses.html) when this static page says which one it is (own.brand)
+    ].map(([k, v]) => `<dt>${esc(T(k))}</dt><dd>${k === 'prod.d.brand' && own && own.brand ? `<a class="link-u" href="${esc(own.brand)}">${esc(v)}</a>` : esc(v)}</dd>`).join('');
     renderJsonLd();
   }
   function renderJsonLd() {
