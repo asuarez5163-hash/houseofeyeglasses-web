@@ -1,14 +1,15 @@
 {
- "v": "2026-11-11T11:09:46Z",
- "total": 6569,
+ "v": "2026-11-11T23:08:44Z",
+ "total": 6538,
  "chunks": {
-  "men": "data/c/men.b6abff7e.json",
-  "women": "data/c/women.1c4eb772.json",
-  "kids": "data/c/kids.fa67b4aa.json",
+  "men": "data/c/men.2cf5e6e4.json",
+  "women": "data/c/women.7b12897d.json",
+  "kids": "data/c/kids.56f4f92f.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.b01f0847.json",
+ "search": "data/s/index.925dcb4d.json",
  "featured": [
+  "HOE-K-58",
   "HOE-W-155",
   "HOE-M-72",
   "HOE-W-1084",
@@ -19,8 +20,7 @@
   "HOE-W-1144",
   "HOE-W-3007",
   "HOE-W-816",
-  "HOE-M-1102",
-  "HOE-M-2619"
+  "HOE-M-1102"
  ],
  "facets": {
   "brand": [
@@ -66,6 +66,7 @@
    "Donna Karan New York",
    "Draper James",
    "Elasta",
+   "Elie Saab",
    "Emozioni",
    "Emporio Armani",
    "Ermenegildo Zegna",
@@ -139,6 +140,7 @@
    "Palm Angels",
    "Pepe Jeans",
    "Philipp Plein",
+   "Phillip Lim by Linda Farrow",
    "Pierre Cardin",
    "Polaroid",
    "Polaroid Core",
@@ -228,7 +230,8 @@
   "lensColor": [
    "clear",
    "blue-light",
-   "tinted"
+   "tinted",
+   "polarized"
   ],
   "price": [
    37,
@@ -281,8 +284,8 @@
  },
  "tryon": {
   "kids": "data/t/kids.57cdc669.json",
-  "men": "data/t/men.852aa26f.json",
-  "women": "data/t/women.f4298dd2.json"
+  "men": "data/t/men.9cee08b2.json",
+  "women": "data/t/women.0199cd78.json"
  },
  "pages": 1
 }
