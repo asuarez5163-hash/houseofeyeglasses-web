@@ -1,15 +1,16 @@
 {
- "v": "2026-11-12T18:06:37Z",
- "total": 6555,
+ "v": "2026-11-12T23:14:19Z",
+ "total": 6543,
  "chunks": {
-  "men": "data/c/men.2730e356.json",
-  "women": "data/c/women.13f8dea0.json",
-  "kids": "data/c/kids.1f1f2ef0.json",
+  "men": "data/c/men.9737a31d.json",
+  "women": "data/c/women.39d70bf8.json",
+  "kids": "data/c/kids.bc9a10d8.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.5dc8cdb6.json",
+ "search": "data/s/index.8f1efec1.json",
  "featured": [
   "HOE-K-58",
+  "HOE-W-4026",
   "HOE-W-155",
   "HOE-M-72",
   "HOE-W-1084",
@@ -19,8 +20,7 @@
   "HOE-M-752",
   "HOE-W-1144",
   "HOE-W-3007",
-  "HOE-W-816",
-  "HOE-M-1102"
+  "HOE-W-816"
  ],
  "facets": {
   "brand": [
@@ -29,6 +29,7 @@
    "Adidas",
    "Adidas Original",
    "Adidas Sport",
+   "Agent Provocateur by Linda Farrow",
    "Airlock",
    "Alexander McQueen",
    "Anne Klein",
@@ -48,6 +49,7 @@
    "Canada Goose",
    "Carolina Herrera",
    "Carrera",
+   "Carrera Ducati",
    "Celine",
    "Charriol",
    "Chesterfield",
@@ -89,6 +91,7 @@
    "Guess",
    "Guess by Marciano",
    "Hackett",
+   "Hackett Bespoke",
    "Harley Davidson",
    "Hugo",
    "Hugo Boss",
@@ -104,6 +107,7 @@
    "Juicy Couture",
    "KARL LAGERFELD",
    "Kate Spade",
+   "Kenneth Cole",
    "Kenneth Cole New York",
    "Kenneth Cole Reaction",
    "Kenzo",
@@ -135,6 +139,7 @@
    "Nautica",
    "Nike",
    "Nine West",
+   "No 21 by Linda Farrow",
    "ONeill",
    "Oakley",
    "Off-White",
@@ -151,6 +156,7 @@
    "Prada",
    "Prada Sport",
    "Pure",
+   "Quiksilver",
    "RETROSUPERFUTURE",
    "Rag & Bone",
    "Ralph Lauren",
@@ -158,6 +164,7 @@
    "Ray Ban",
    "Rims",
    "Roberto Cavalli",
+   "Roxy",
    "SPY",
    "Saint Laurent",
    "Salt",
@@ -231,8 +238,7 @@
   "lensColor": [
    "clear",
    "blue-light",
-   "tinted",
-   "polarized"
+   "tinted"
   ],
   "price": [
    37,
@@ -285,8 +291,8 @@
  },
  "tryon": {
   "kids": "data/t/kids.efc32e7b.json",
-  "men": "data/t/men.17035b81.json",
-  "women": "data/t/women.2da0d438.json"
+  "men": "data/t/men.3f9ff3d2.json",
+  "women": "data/t/women.2627e4a3.json"
  },
  "pages": 1
 }
