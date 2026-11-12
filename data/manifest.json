@@ -1,13 +1,13 @@
 {
- "v": "2026-11-12T07:31:17Z",
- "total": 6538,
+ "v": "2026-11-12T18:06:37Z",
+ "total": 6555,
  "chunks": {
-  "men": "data/c/men.3fd441a5.json",
-  "women": "data/c/women.b009773b.json",
+  "men": "data/c/men.2730e356.json",
+  "women": "data/c/women.13f8dea0.json",
   "kids": "data/c/kids.1f1f2ef0.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.925dcb4d.json",
+ "search": "data/s/index.5dc8cdb6.json",
  "featured": [
   "HOE-K-58",
   "HOE-W-155",
@@ -128,6 +128,7 @@
    "Mercedes-Benz",
    "Michael Kors",
    "Missoni",
+   "Miu Miu",
    "Montblanc",
    "Moschino",
    "Moschino Love",
@@ -284,8 +285,8 @@
  },
  "tryon": {
   "kids": "data/t/kids.efc32e7b.json",
-  "men": "data/t/men.ff2c6a3e.json",
-  "women": "data/t/women.8b740ed5.json"
+  "men": "data/t/men.17035b81.json",
+  "women": "data/t/women.2da0d438.json"
  },
  "pages": 1
 }
