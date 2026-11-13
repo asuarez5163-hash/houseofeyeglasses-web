@@ -13,6 +13,15 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 - [Kids’ Eyeglasses](https://houseofeyeglasses.com/kids.html): Kids’ prescription eyeglasses: flexible frames for small faces with impact-resistant lenses made to the prescription, and free U.S. shipping.
 - [Virtual Try-On](https://houseofeyeglasses.com/pruebatelos.html): Try our frames on with your camera or a photo. The frame sits on your face in 3D, with the temples behind your ears. Nothing leaves your device.
 
+## Prescription lenses (one page per lens type; the lens prices shown on them are added to the price of the frame)
+- [Prescription Glasses Online](https://houseofeyeglasses.com/prescription-glasses.html): Order prescription glasses online: thousands of designer frames in stock, with single vision, progressive or office lenses made to your prescription. Free U.S. shipping.
+- [Progressive Glasses Online](https://houseofeyeglasses.com/progressive-glasses.html): Progressive glasses online: no-line lenses for far, computer and reading in any of our designer frames. Three levels, made to your prescription. Free U.S. shipping.
+- [Single Vision Glasses Online](https://houseofeyeglasses.com/single-vision-glasses.html): Single vision glasses online: one clear power for distance or for reading, in any of our designer frames, made to your prescription. Free U.S. shipping.
+- [Prescription Sunglasses Online](https://houseofeyeglasses.com/sunglasses.html): Prescription sunglasses online: turn any of our designer frames into sunglasses with tinted lenses made to your prescription. Free U.S. shipping.
+- [Blue Light Glasses Online](https://houseofeyeglasses.com/blue-light-glasses.html): Blue light glasses online: add a blue-light filter to prescription lenses in any of our designer frames. Made to your prescription, with free U.S. shipping.
+- [Computer Glasses Online](https://houseofeyeglasses.com/computer-glasses.html): Computer glasses online: office lenses made to your prescription, sharp for the screen and for reading, in any of our designer frames. Free U.S. shipping.
+- [Photochromic Glasses Online](https://houseofeyeglasses.com/photochromic-glasses.html): Photochromic glasses online: light-responsive lenses that are clear indoors and darken in the sun, made to your prescription in any of our designer frames.
+
 ## Guides
 - [What the Numbers on Your Prescription Mean](https://houseofeyeglasses.com/receta.html): What OD, OS, SPH, CYL, AXIS, ADD and PD mean on your eyeglass prescription, a free sign checker that stays on your device, and how to measure your PD at home.
 - [Lens Options](https://houseofeyeglasses.com/lentes.html): Compare lens types, materials and coatings, see who each one is for, and find the right lens thickness for your prescription.
@@ -21,6 +30,7 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 
 ## Help and policies
 - [Help Center](https://houseofeyeglasses.com/ayuda.html): Answers about prescriptions, PD, lenses, coatings, frame fit, orders and vision insurance. Contact us by email, phone or WhatsApp.
+- [About House of Eyeglasses](https://houseofeyeglasses.com/about.html): House of Eyeglasses is an online eyeglasses store based in Tampa, Florida: designer frames in stock and prescription lenses made to order, shipped free across the U.S.
 - [Shipping, returns, privacy and terms](https://houseofeyeglasses.com/legal.html)
 - Contact: amm@houseofeyeglasses.com · +1 786-614-8629 (phone and WhatsApp)
 

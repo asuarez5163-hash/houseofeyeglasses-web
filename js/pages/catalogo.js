@@ -201,6 +201,9 @@
     const empty = $('#cat-empty'), emptyP = $('#cat-empty-p'), emptyBtn = $('#cat-empty-cta');
     empty.hidden = !(ready ? n === 0 && !loading : true) && ready;
     if (!ready) { emptyP.dataset.i18n = 'cat.updating'; emptyP.textContent = T('cat.updating'); emptyBtn.hidden = true; empty.hidden = false; }
+    else if (singleCat() === 'sun' && !FR.length) {   // no ready-made sunglasses in the catalog: say what there is instead (any frame + sun tint)
+      delete emptyP.dataset.i18n; emptyP.innerHTML = `${esc(T('catalogo.emptySun'))} <a class="link-u" href="sunglasses.html">${esc(T('catalogo.emptySunCta'))}</a>`; emptyBtn.hidden = true;
+    }
     else { emptyP.dataset.i18n = 'catalogo.empty'; emptyP.textContent = T('catalogo.empty'); emptyBtn.hidden = false; }
     const active = PANEL.reduce((a, fa) => a + state.sel[fa.id].size, 0);
     const nEl = $('#cat-filters-n'); nEl.hidden = !active; nEl.textContent = String(active);

@@ -121,6 +121,7 @@ html { scrollbar-color: #3a3a40 var(--bg); }
 .sec-head { display: flex; align-items: end; justify-content: space-between; gap: 24px 48px; margin-bottom: var(--block); }
 .sec-head .lead, .sec-head .sec-lead { margin-top: 14px; }
 .sec-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin: 0; }                 /* two quiet links at the end of a section head */
+.home-lens { margin-top: var(--block); padding-top: 22px; border-top: 1px solid var(--line); }   /* home: the pages by lens type, under the best sellers */
 .sec-title--center { text-align: center; margin-bottom: clamp(28px, 3.5vw, 48px); }
 .prose { font-size: 17px; line-height: 1.65; max-width: var(--measure); text-wrap: pretty; color: var(--ink-2); }
 .prose p { margin: 0 0 1em; }

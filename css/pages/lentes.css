@@ -164,6 +164,7 @@ details.lx-q.is-closing .lx-q-a { transition-duration: 180ms; }
 
 /* ---------- next steps ---------- */
 .lx-next { padding-top: var(--sec-y); padding-bottom: var(--sec-y); }
+.lx-shop { padding-bottom: 0; }                               /* the list of pages by lens type, right above "Next steps" */
 .lx-next-head { margin-bottom: var(--block); }
 .lx-next-list { border-top: 1px solid var(--gold); }
 .lx-next-list li { border-bottom: 1px solid var(--line); }

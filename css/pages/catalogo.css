@@ -42,6 +42,8 @@ main.catp { padding-bottom: var(--sec-y); }
 .catp-sort select:hover { border-bottom-color: var(--gold); }
 .catp-sort select:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 .catp-sort select option { background: var(--bg-2); color: var(--ink); text-transform: none; letter-spacing: 0; }
+/* a phone zooms the whole page when a field under 16 px takes focus (iOS): on touch screens the sort menu is 16 px */
+@media (hover: none) and (pointer: coarse) { .catp-sort select { font-size: 16px; letter-spacing: .08em; } }
 
 /* active filters: hairline chips, Jost caps, × */
 .catp-chips { display: flex; align-items: center; gap: 8px; min-width: 0; flex: 1; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; padding: 4px 0; }

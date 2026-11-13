@@ -1,0 +1,35 @@
+/* Lens-type pages (prescription-glasses, progressive-glasses, single-vision-glasses, sunglasses, blue-light-glasses,
+   computer-glasses, photochromic-glasses) and about.html: a quiet text page. The head is the system's .page-head, the text
+   goes in hairline rows (headline on the left, copy on the right), the frames reuse the category grid (categoria.css), the
+   questions reuse the help page's .faq (ayuda.css) and the list of sibling pages reuses .brandp-list (marca.css). Prefix tp-. */
+.tp-head { padding-bottom: 0; }
+.tp-head .page-head { max-width: 62ch; }
+.tp-head .lead { max-width: 52ch; }
+.tp-head .kicker a { color: inherit; }
+.tp-head--after { padding-top: var(--block); }                    /* sunglasses.html: price and button under the photo */
+.tp-price { margin: 4px 0 0; max-width: 56ch; font: 400 var(--fs-body)/1.55 var(--font-ui); color: var(--ink-2); text-wrap: pretty; }
+.tp-price b { font-weight: 500; color: var(--gold); font-variant-numeric: lining-nums tabular-nums; }
+.tp-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin: 14px 0 0; }
+
+.tp-rows { border-top: 1px solid var(--gold); }
+.tp-row { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: 16px clamp(24px, 4vw, 64px); padding: clamp(28px, 3.4vw, 48px) 0; border-bottom: 1px solid var(--line); }
+.tp-row h2 { margin: 0; font: 300 clamp(24px, 1.1rem + 1vw, 32px)/1.15 var(--font-ui); letter-spacing: -.005em; color: var(--ink); text-wrap: balance; }
+.tp-txt { max-width: var(--measure); font-size: calc(var(--fs-body) + 1px); line-height: 1.65; color: var(--ink-2); }
+.tp-txt p { margin: 0; text-wrap: pretty; }
+.tp-txt p + p { margin-top: 14px; }
+.tp-txt strong { font-weight: 500; color: var(--ink); }
+.tp-txt em { font-style: normal; color: var(--ink); }
+.tp-txt a, .faq-a a { color: var(--ink); background: linear-gradient(var(--gold), var(--gold)) 0 100% / 100% 1px no-repeat; transition: color .2s; }
+@media (hover: hover) { .tp-txt a:hover, .faq-a a:hover { color: var(--gold); } }
+.tp-txt a:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+
+.tp-faq .faq { margin-top: var(--block); }
+.tp-help { margin: 28px 0 0; }
+.tp-more .brandp-list { margin-top: var(--block); }
+
+@media (max-width: 860px) {
+  .tp-head .offset-1, .tp-rows.offset-1, .tp-faq .offset-1, .tp-more .offset-1 { margin-left: 0; }
+  .tp-row { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .tp-cta .btn { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .tp-txt a, .faq-a a { transition: none; } }
