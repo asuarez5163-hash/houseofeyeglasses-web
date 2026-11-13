@@ -5,7 +5,7 @@
    reveal(target, {stagger}) → target is a root element (its [data-reveal] containers and [data-reveal-self] elements
      are collected), a selector, an element or a list. With GSAP: ScrollTrigger.batch, autoAlpha 0→1, y 24→0, 900 ms,
      expo.out, once, stagger (default 70 ms). Without: IntersectionObserver + the CSS transition. Reduced motion: opacity only.
-   band(videoEl) → loads (data-src → src) and plays a muted video only while it is on screen, pauses when it leaves;
+   band(videoEl) → loads (data-src → src, data-poster → poster) and plays a muted video only while it is on screen, pauses when it leaves;
      (the browser decides about autoplay; no saveData/reduced-motion gating of our own)
    count(el, to, {duration, trigger}) → the number counts from 0 to `to` when it enters (GSAP); without GSAP the value lands.
    spring({from,to,velocity,damping,response,onUpdate,onDone}) → {stop()}: Apple-style spring on rAF.
@@ -142,7 +142,9 @@
   function band(v) {
     if (!v || v.dataset.bandDone) return; v.dataset.bandDone = '1';
     v.muted = true;
-    const load = () => { if (v.dataset.src && !v.getAttribute('src')) { v.src = v.dataset.src; v.load(); } };
+    // a band that is not on screen at load carries no file (data-src) and no poster of its own (data-poster: a lazy <img>
+    // under it shows the same picture): both arrive here, when the band comes near
+    const load = () => { if (v.dataset.src && !v.getAttribute('src')) { if (v.dataset.poster && !v.getAttribute('poster')) v.poster = v.dataset.poster; v.src = v.dataset.src; v.load(); } };
     const play = () => { load(); const p = v.play(); if (p && p.catch) p.catch(() => {}); };
     if (!('IntersectionObserver' in window)) { play(); return; }
     const o = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) play(); else if (!v.paused) v.pause(); }), { rootMargin: '200px 0px' });

@@ -26,8 +26,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=20261112a">
-  <link rel="preload" as="image" href="assets/img/hero-woman-2x.jpg" imagesrcset="assets/img/hero-woman-2x.jpg 1x, assets/img/hero-woman@2x.jpg 2x" fetchpriority="high">
+  <link rel="stylesheet" href="css/styles.css?v=20261113a">
+  <link rel="preload" as="image" href="assets/img/hero-woman-phone.webp" type="image/webp" media="(max-width: 860px) and (max-aspect-ratio: 3/5)" fetchpriority="high">
+  <link rel="preload" as="image" href="assets/img/hero-woman-2x.jpg" imagesrcset="assets/img/hero-woman-2x.jpg 1x, assets/img/hero-woman@2x.jpg 2x" media="not all and (max-width: 860px) and (max-aspect-ratio: 3/5)" fetchpriority="high">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0LM7KG67S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-V0LM7KG67S");</script>
   <script>
@@ -106,7 +107,13 @@
     <!-- 1 · HERO: the owner's model full screen, the headline on the diffuse side, one primary button -->
     <section class="hero grain" aria-labelledby="hero-title">
       <div class="hero-media">
-        <img src="assets/img/hero-woman-2x.jpg" srcset="assets/img/hero-woman-2x.jpg 1x, assets/img/hero-woman@2x.jpg 2x" width="1752" height="930" alt="" fetchpriority="high" decoding="async">
+        <!-- a phone held upright only ever shows the middle of the photo (object-fit: cover, centred): it gets that middle
+             alone, at the same pixel density (hero-woman-phone.webp = the centre 1340 px of hero-woman@2x.jpg, full height).
+             The condition must match the hero preload of build.py -->
+        <picture>
+          <source media="(max-width: 860px) and (max-aspect-ratio: 3/5)" type="image/webp" srcset="assets/img/hero-woman-phone.webp" width="1340" height="1860">
+          <img src="assets/img/hero-woman-2x.jpg" srcset="assets/img/hero-woman-2x.jpg 1x, assets/img/hero-woman@2x.jpg 2x" width="1752" height="930" alt="" fetchpriority="high" decoding="async">
+        </picture>
       </div>
       <div class="hero-veil" aria-hidden="true"></div>
       <div class="hero-copy">
@@ -147,7 +154,8 @@
     <!-- 3 · VIDEO BAND "Your prescription": the video plays only on screen (hoeMotion.band); the text sits on the right -->
     <section class="media-band media-band--text-right grain" id="lenses" aria-labelledby="band1-title" style="--fade: var(--bg-2)">
       <div class="media-band__media" data-gs-trigger>
-        <video data-band src="assets/video/video-mujer-1080.mp4" poster="assets/video/video-mujer-1080-poster.jpg" width="1920" height="1080" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+        <img src="assets/video/video-mujer-1080-poster.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        <video data-band data-src="assets/video/video-mujer-1080.mp4" data-poster="assets/video/video-mujer-1080-poster.jpg" width="1920" height="1080" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
       <div class="media-band__veil" aria-hidden="true"></div>
       <div class="wrap">
@@ -210,7 +218,8 @@
     <!-- 6 · VIDEO BAND "Sun": the text on the left, the one primary button of the screen -->
     <section class="media-band media-band--text-left grain" id="sun" aria-labelledby="band2-title" style="--fade: var(--bg-2)">
       <div class="media-band__media" data-gs-trigger style="--media-pos: 50% 40%">
-        <video data-band src="assets/video/video-sol-1080.mp4" poster="assets/video/video-sol-1080-poster.jpg" width="1920" height="1080" autoplay muted loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>
+        <img src="assets/video/video-sol-1080-poster.jpg" width="1920" height="1080" alt="" loading="lazy" decoding="async">
+        <video data-band data-src="assets/video/video-sol-1080.mp4" data-poster="assets/video/video-sol-1080-poster.jpg" width="1920" height="1080" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
       </div>
       <div class="media-band__veil" aria-hidden="true"></div>
       <div class="wrap">
@@ -277,6 +286,7 @@
             <li><a href="contacts.es.html" data-i18n="cat.contacts">Lentes de contacto</a></li>
             <li><a href="catalogo.es.html" data-i18n="best.all">Ver todos los armazones</a></li>
             <li><a href="brands.html" data-i18n="nav.brands">Comprar por marca</a></li>
+            <li><a href="styles.html" data-i18n="nav.styles">Comprar por estilo</a></li>
           </ul>
         </div>
         <div>
@@ -363,6 +373,7 @@
       <ul class="drawer-secondary drawer-all">
         <li><a href="catalogo.es.html" data-i18n="home.samplesAll">Ver todos los armazones</a></li>
         <li><a href="brands.html" data-i18n="nav.brands">Comprar por marca</a></li>
+        <li><a href="styles.html" data-i18n="nav.styles">Comprar por estilo</a></li>
       </ul>
 
       <p class="drawer-h" id="drawer-guides" data-i18n="drawer.guides">Guías</p>
@@ -397,14 +408,14 @@
   </aside>
 
 
-  <script src="js/i18n.js?v=20261112a"></script>
-  <script src="js/catalog.js?v=20261112a"></script>
-  <script src="js/data/search.js?v=20261112a"></script>
+  <script src="js/i18n.js?v=20261113a"></script>
+  <script src="js/catalog.js?v=20261113a"></script>
+  <script src="js/data/search.js?v=20261113a"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="js/motion.js?v=20261112a"></script>
-  <script src="js/main.js?v=20261112a"></script>
-  <script src="js/data/lenses.js?v=20261112a"></script>
-  <script src="js/cart.js?v=20261112a"></script>
+  <script src="js/motion.js?v=20261113a"></script>
+  <script src="js/main.js?v=20261113a"></script>
+  <script src="js/data/lenses.js?v=20261113a"></script>
+  <script src="js/cart.js?v=20261113a"></script>
 </body>
 </html>

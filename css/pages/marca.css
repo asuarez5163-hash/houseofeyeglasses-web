@@ -1,5 +1,6 @@
-/* Brand pages (one per brand: <brand>-eyeglasses.html) and the brands index (brands.html). Both are written by the
-   Central from src/pages/marca.html and src/pages/marcas.html. The frames use the catalog's own grid and card
+/* Brand pages (one per brand: <brand>-eyeglasses.html), the brands index (brands.html), the style pages (one per shape,
+   material, rim, color: <style>-glasses.html) and the styles index (styles.html). All written by the Central from
+   src/pages/marca.html, marcas.html, estilo.html and estilos.html. The frames use the catalog's own grid and card
    (.catp-grid in catalogo.css, .fcard in styles.css): nothing here redraws them. Prefix brandp-. */
 .brandp { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter) var(--sec-y); }
 .brandp-head { padding: var(--sec-y-sm) 0 0; max-width: none; }
@@ -15,7 +16,20 @@
 .brandp-list a .num { font-size: var(--fs-small); color: var(--ink-3); font-variant-numeric: tabular-nums; }
 @media (hover: hover) { .brandp-list a:hover { color: var(--gold); } }
 .brandp-list a:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
+/* style pages (<style>-glasses.html) and the styles index (styles.html): the same list, one group per family under a small head;
+   the style of the page itself is marked, not linked */
+.brandp-group { margin-top: clamp(40px, 5vw, 72px); }
+.brandp-group:first-child { margin-top: 0; }
+.brandp-group h2 { margin: 0 0 18px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-3); }
+.brandp-list [aria-current="page"] { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 15px 0; font-size: 17px; color: var(--gold); }
+.brandp-list [aria-current="page"] .num { font-size: var(--fs-small); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.brandp-sibs { padding-top: clamp(56px, 7vw, 104px); }
 @media (min-width: 861px) { .brandp-list { columns: 3; } }
 @media (min-width: 1280px) { .brandp-list { columns: 4; } }
-@media (max-width: 860px) { .brandp-head .offset-1 { margin-left: 0; } .brandp-head { padding-top: var(--block); } }
+@media (max-width: 860px) {
+  .brandp-head .offset-1 { margin-left: 0; } .brandp-head { padding-top: var(--block); }
+  /* phones: the button takes the row and a long label wraps inside it ("Filter and sort these frames" needs 360 px: on a
+     360–375 px phone it made the whole page scroll sideways) */
+  .brandp-more .btn { width: 100%; white-space: normal; text-align: center; line-height: 1.35; }
+}
 @media (prefers-reduced-motion: reduce) { .brandp-list a { transition: none; } }

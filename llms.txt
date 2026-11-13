@@ -6,6 +6,7 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 
 ## Shop
 - [All brands](https://houseofeyeglasses.com/brands.html): every brand carried, with the number of frames in stock and a page per brand
+- [All styles](https://houseofeyeglasses.com/styles.html): eyeglasses by shape, material, rim and color, with the number of frames in stock and a page per style
 - [Designer Eyeglasses Frames](https://houseofeyeglasses.com/catalogo.html): Shop designer eyeglasses frames from 150+ brands by brand, shape, material, color and size. Add prescription lenses to any frame. Free U.S. shipping.
 - [Men’s Eyeglasses](https://houseofeyeglasses.com/men.html): Men’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. An optician in Tampa checks every prescription.
 - [Women’s Eyeglasses](https://houseofeyeglasses.com/women.html): Women’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. An optician in Tampa checks every prescription.
@@ -24,5 +25,5 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 - Contact: amm@houseofeyeglasses.com · +1 786-614-8629 (phone and WhatsApp)
 
 ## Data
-- [Sitemap](https://houseofeyeglasses.com/sitemap.xml): every page, including one per frame and one per brand
+- [Sitemap](https://houseofeyeglasses.com/sitemap.xml): every page, including one per frame, one per brand and one per style
 - [Product feed](https://houseofeyeglasses.com/data/google-feed.txt): tab-separated, one row per frame (title, price, availability, brand, GTIN, link, image)

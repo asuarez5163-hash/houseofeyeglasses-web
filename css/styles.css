@@ -261,6 +261,7 @@ main [id] { scroll-margin-top: calc(var(--hdr-glass) + 16px); }
 .hero { position: relative; min-height: 100svh; margin-top: calc(-1 * var(--hdr-h)); display: grid; align-items: center; overflow: hidden; isolation: isolate; background: var(--bg); }
 /* the photo sits on the right 82 % (her face lands past the 7th column at 1280 and 1440); its left edge fades into the stage */
 .hero-media { position: absolute; inset: 0 0 0 18%; z-index: -3; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%); mask-image: linear-gradient(90deg, transparent 0, #000 24%); }
+.hero-media picture { display: contents; }                       /* the <picture> only chooses the file: the img lays out as before */
 .hero-media img { width: 100%; height: 100%; object-fit: cover; object-position: var(--hero-pos, 20% 28%); transform-origin: 55% 38%; animation: kenburns 28s var(--ease-in-out) infinite alternate; will-change: transform; }
 @keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.07); } }
 .hero-veil { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: var(--veil-side), var(--veil-down), linear-gradient(180deg, rgba(11, 11, 13, .55) 0, transparent 180px); }
@@ -324,6 +325,7 @@ main [id] { scroll-margin-top: calc(var(--hdr-glass) + 16px); }
 .media-band { position: relative; min-height: var(--band-h); display: grid; align-items: center; overflow: hidden; isolation: isolate; background: var(--bg-2); }
 .media-band__media { position: absolute; inset: -8% 0; z-index: -3; }                        /* taller than the band: room for the parallax */
 .media-band__media video, .media-band__media img { width: 100%; height: 100%; object-fit: cover; object-position: var(--media-pos, 50% 35%); }
+.media-band__media img + video { position: absolute; inset: 0; }    /* the poster is a plain lazy photo; the video (no file until the band is near: js/motion.js) plays on top of it */
 .media-band__veil { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: var(--veil-side), var(--veil-down), linear-gradient(180deg, rgba(11, 11, 13, .35) 0, transparent 26%); }
 .media-band--text-right { --veil-side: linear-gradient(270deg, rgba(11, 11, 13, .84) 0%, rgba(11, 11, 13, .5) 45%, rgba(11, 11, 13, .08) 100%); }
 .media-band .wrap { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: 24px; padding-block: clamp(80px, 10vw, 128px); }
@@ -355,6 +357,8 @@ main [id] { scroll-margin-top: calc(var(--hdr-glass) + 16px); }
 .frame-tile svg, .fcard-tile svg { width: 80%; height: auto; }
 .fcard-img { width: 100%; height: 100%; background-repeat: no-repeat; background-position: 0 0; background-size: 100% calc(var(--ph, 1) * 100%); mix-blend-mode: multiply; transition: transform .6s var(--ease-out); }
 .fcard-img.is-alt { background-size: 100% auto; }                /* a colour sibling's sprite (its photo count unknown): the top square is its front */
+.fcard-img > img { width: 100%; height: 100%; object-fit: cover; }   /* a card written with the frame's clean square photo as a real <img> (brand and style pages) */
+.fcard-img.is-alt > img { visibility: hidden; }                 /* while a colour sibling shows in the tile's background */
 @media (hover: hover) and (pointer: fine) {
   .fcard > a:hover .fcard-tile { background: #f4efe6; }
   .fcard > a:hover .fcard-img { transform: scale(1.03); }

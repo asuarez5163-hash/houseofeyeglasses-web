@@ -17,6 +17,253 @@
 "max": null
 }
 ],
+"estilos": {
+"fams": [
+{
+"attr": "sh",
+"fam": "shape",
+"head": "catalogo.f.shape",
+"param": "shape",
+"vals": [
+[
+"round",
+"round",
+"shape.round"
+],
+[
+"square",
+"square",
+"shape.square"
+],
+[
+"rect",
+"rectangle",
+"shape.rect"
+],
+[
+"cateye",
+"cat-eye",
+"shape.cateye"
+],
+[
+"aviator",
+"aviator",
+"shape.aviator"
+],
+[
+"browline",
+"browline",
+"shape.browline"
+],
+[
+"oval",
+"oval",
+"shape.oval"
+],
+[
+"geo",
+"geometric",
+"shape.geo"
+]
+]
+},
+{
+"attr": "mat",
+"fam": "material",
+"head": "catalogo.f.material",
+"param": "material",
+"vals": [
+[
+"acetate",
+"acetate",
+"mat.acetate"
+],
+[
+"metal",
+"metal",
+"mat.metal"
+],
+[
+"titanium",
+"titanium",
+"mat.titanium"
+],
+[
+"tr90",
+"tr90",
+"mat.tr90"
+]
+]
+},
+{
+"attr": "rim",
+"fam": "rim",
+"head": "catalogo.f.rim",
+"param": "rim",
+"vals": [
+[
+"full",
+"full-rim",
+"rim.full"
+],
+[
+"half",
+"half-rim",
+"rim.half"
+],
+[
+"rimless",
+"rimless",
+"rim.rimless"
+]
+]
+},
+{
+"attr": "col",
+"fam": "color",
+"head": "catalogo.f.color",
+"param": "color",
+"vals": [
+[
+"black",
+"black",
+"color.black"
+],
+[
+"tortoise",
+"tortoise",
+"color.tortoise"
+],
+[
+"gold",
+"gold",
+"color.gold"
+],
+[
+"silver",
+"silver",
+"color.silver"
+],
+[
+"gunmetal",
+"gunmetal",
+"color.gunmetal"
+],
+[
+"brown",
+"brown",
+"color.brown"
+],
+[
+"havana",
+"havana",
+"color.havana"
+],
+[
+"blue",
+"blue",
+"color.blue"
+],
+[
+"red",
+"red",
+"color.red"
+],
+[
+"pink",
+"pink",
+"color.pink"
+],
+[
+"green",
+"green",
+"color.green"
+],
+[
+"grey",
+"grey",
+"color.grey"
+],
+[
+"transparent",
+"clear",
+"color.transparent"
+],
+[
+"white",
+"white",
+"color.white"
+],
+[
+"purple",
+"purple",
+"color.purple"
+],
+[
+"violet",
+"violet",
+"color.violet"
+],
+[
+"beige",
+"beige",
+"color.beige"
+],
+[
+"bronze",
+"bronze",
+"color.bronze"
+],
+[
+"copper",
+"copper",
+"color.copper"
+],
+[
+"orange",
+"orange",
+"color.orange"
+],
+[
+"yellow",
+"yellow",
+"color.yellow"
+],
+[
+"ivory",
+"ivory",
+"color.ivory"
+],
+[
+"multicolor",
+"multicolor",
+"color.multicolor"
+]
+]
+}
+],
+"gshape": {
+"fam": "gshape",
+"param": "cat",
+"vals": [
+[
+"men",
+"mens",
+"gender.men",
+"catalogo.h1.men"
+],
+[
+"women",
+"womens",
+"gender.women",
+"catalogo.h1.women"
+]
+]
+},
+"max": 240,
+"min": 6,
+"suffix": "-glasses.html"
+},
 "hinge": 8,
 "i18n": {
 "en": {
@@ -77,6 +324,7 @@
 "catalogo.f.lensColor": "Lens",
 "catalogo.f.material": "Material",
 "catalogo.f.price": "Price",
+"catalogo.f.rim": "Rim",
 "catalogo.f.shape": "Shape",
 "catalogo.f.size": "Size",
 "catalogo.filters": "Filters",
@@ -184,6 +432,36 @@
 "drawer.lenses": "Lenses education",
 "drawer.rx": "Read your prescription",
 "drawer.wa": "Help on WhatsApp",
+"estilo.all": "See all {n} in the catalog",
+"estilo.allStyles": "All styles",
+"estilo.desc": "{name}: {n} frames, new and in stock, from {min} with free U.S. shipping. Add prescription lenses made to your prescription; an optician in Tampa checks every prescription.",
+"estilo.lead": "{n} frames in stock, from {min}. Add your prescription lenses in four short steps.",
+"estilo.leadTop": "{n} frames in stock, from {min}; here are {shown} of them. Add your prescription lenses in four short steps.",
+"estilo.n.color": "{x} glasses",
+"estilo.n.color.transparent": "Clear glasses",
+"estilo.n.gshape": "{g}’s {xl} glasses",
+"estilo.n.material": "{x} glasses",
+"estilo.n.material.tr90": "TR-90 glasses",
+"estilo.n.rim": "{x} glasses",
+"estilo.n.rim.rimless": "Rimless glasses",
+"estilo.n.shape": "{x} glasses",
+"estilo.none": "Not enough frames in this style right now.",
+"estilo.t.color": "{x} Glasses — {x} Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.color.transparent": "Clear Glasses — Transparent Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.gshape": "{g}’s {x} Glasses & Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.material": "{x} Glasses — {x} Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.material.tr90": "TR-90 Glasses — Flexible TR-90 Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.rim": "{x} Glasses — {x} Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.rim.full": "Full-Rim Glasses — Full-Rim Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.rim.half": "Half-Rim Glasses — Semi-Rimless Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.rim.rimless": "Rimless Glasses — Rimless Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.shape": "{x} Glasses — {x} Eyeglasses Frames | House of Eyeglasses",
+"estilo.t.shape.cateye": "Cat-Eye Glasses — Cat-Eye Eyeglasses Frames | House of Eyeglasses",
+"estilos.aria": "Styles",
+"estilos.desc": "Shop eyeglasses frames by style: round, square, cat-eye and more shapes, acetate, metal or titanium, full rim or rimless, and every color. New and in stock, with free U.S. shipping and prescription lenses made to your prescription.",
+"estilos.h1": "Shop glasses by style",
+"estilos.lead": "Every frame is new and in stock. Start from a shape, a material, a rim or a color, then add your prescription lenses.",
+"estilos.meta": "Eyeglasses by Style: Shape, Material, Rim & Color — House of Eyeglasses",
 "fit.br": "Bridge",
 "fit.calc": "Find your fit",
 "fit.cap": "Look inside the arm of the glasses you own now: those three numbers are your size.",
@@ -289,6 +567,7 @@
 "nav.lensOptions": "Lens options",
 "nav.men": "Shop Men",
 "nav.quiz": "Style quiz",
+"nav.styles": "Shop by style",
 "nav.sun": "Sunglasses",
 "nav.women": "Shop Women",
 "newTab": "(opens in a new tab)",
@@ -309,6 +588,9 @@
 "pd.sum": "Right + left is your total PD (an adult averages about 63 mm).",
 "pd.title": "How to measure your PD",
 "popular": "Guides & tools",
+"prod.about": "The {brand} {model} in {color}{cc} is one of our {shape} frames: {rim}{mat}.{size} {who}",
+"prod.aboutMat": ", in {mat}",
+"prod.aboutSize": " It measures {mm}: {lens} mm lenses, a {bridge} mm bridge and {temple} mm temples, about {total} mm across the front, in our {band} fit.",
 "prod.color": "Color",
 "prod.colorOf": "Color",
 "prod.d.brand": "Brand",
@@ -334,6 +616,7 @@
 "prod.lenses": "Select lenses",
 "prod.lensesIncluded": "frame · add your lenses below",
 "prod.meta": "{name} {color} {cc} {kind} — House of Eyeglasses",
+"prod.metaTwin": "{name} {color} {cc} {kind} {size} — House of Eyeglasses",
 "prod.more": "You may also like",
 "prod.moreAll": "See all frames",
 "prod.notFound": "We couldn’t find that frame.",
@@ -346,6 +629,10 @@
 "prod.tryon": "Try them on with your camera",
 "prod.view.size": "Size",
 "prod.views": "Views",
+"prod.who.kids": "Sized for kids.",
+"prod.who.men": "Made for men.",
+"prod.who.unisex": "A unisex frame, for men and women.",
+"prod.who.women": "Made for women.",
 "promise.title": "An optician in Tampa checks every pair",
 "rim.full": "Full rim",
 "rim.half": "Half rim",
@@ -480,6 +767,7 @@
 "catalogo.f.lensColor": "Lente",
 "catalogo.f.material": "Material",
 "catalogo.f.price": "Precio",
+"catalogo.f.rim": "Aro",
 "catalogo.f.shape": "Forma",
 "catalogo.f.size": "Medida",
 "catalogo.filters": "Filtros",
@@ -587,6 +875,36 @@
 "drawer.lenses": "Guía de lentes",
 "drawer.rx": "Leer tu receta",
 "drawer.wa": "Ayuda por WhatsApp",
+"estilo.all": "Ver los {n} en el catálogo",
+"estilo.allStyles": "Todos los estilos",
+"estilo.desc": "{name}: {n} armazones nuevos y en existencia, desde {min} con envío gratis en EE. UU. Agrega lentes graduados hechos a tu receta; un óptico en Tampa revisa cada receta.",
+"estilo.lead": "{n} armazones en existencia, desde {min}. Agrega tus lentes graduados en cuatro pasos cortos.",
+"estilo.leadTop": "{n} armazones en existencia, desde {min}; aquí van {shown}. Agrega tus lentes graduados en cuatro pasos cortos.",
+"estilo.n.color": "Espejuelos de color {xl}",
+"estilo.n.color.transparent": "Espejuelos transparentes",
+"estilo.n.gshape": "Espejuelos {xl} para {gl}",
+"estilo.n.material": "Espejuelos de {xl}",
+"estilo.n.material.tr90": "Espejuelos de TR-90",
+"estilo.n.rim": "Espejuelos de {xl}",
+"estilo.n.rim.rimless": "Espejuelos sin aro",
+"estilo.n.shape": "Espejuelos {xl}",
+"estilo.none": "Por ahora no hay suficientes armazones de este estilo.",
+"estilo.t.color": "{name} — Armazones de color {xl} | House of Eyeglasses",
+"estilo.t.color.transparent": "Espejuelos transparentes — Armazones transparentes | House of Eyeglasses",
+"estilo.t.gshape": "{name} | House of Eyeglasses",
+"estilo.t.material": "{name} — Armazones de {xl} | House of Eyeglasses",
+"estilo.t.material.tr90": "Espejuelos de TR-90 — Armazones flexibles de TR-90 | House of Eyeglasses",
+"estilo.t.rim": "{name} — Armazones de {xl} | House of Eyeglasses",
+"estilo.t.rim.full": "Espejuelos de aro completo — Armazones de aro completo | House of Eyeglasses",
+"estilo.t.rim.half": "Espejuelos de medio aro — Armazones de medio aro | House of Eyeglasses",
+"estilo.t.rim.rimless": "Espejuelos sin aro — Armazones sin aro | House of Eyeglasses",
+"estilo.t.shape": "{name} — Armazones {xl} | House of Eyeglasses",
+"estilo.t.shape.cateye": "Espejuelos ojo de gato — Armazones ojo de gato | House of Eyeglasses",
+"estilos.aria": "Estilos",
+"estilos.desc": "Armazones por estilo: redondos, cuadrados, ojo de gato y más formas, en acetato, metal o titanio, de aro completo o sin aro, y en todos los colores. Nuevos y en existencia, con envío gratis en EE. UU. y lentes graduados hechos a tu receta.",
+"estilos.h1": "Espejuelos por estilo",
+"estilos.lead": "Todos los armazones son nuevos y están en existencia. Empieza por una forma, un material, un aro o un color y agrega tus lentes graduados.",
+"estilos.meta": "Espejuelos por estilo: forma, material, aro y color — House of Eyeglasses",
 "fit.br": "Puente",
 "fit.calc": "Encuentra tu medida",
 "fit.cap": "Mira por dentro la patilla de los lentes que ya usas: esos tres números son tu medida.",
@@ -692,6 +1010,7 @@
 "nav.lensOptions": "Opciones de lentes",
 "nav.men": "Hombre",
 "nav.quiz": "Quiz de estilo",
+"nav.styles": "Comprar por estilo",
 "nav.sun": "Lentes de sol",
 "nav.women": "Mujer",
 "newTab": "(se abre en otra pestaña)",
@@ -712,6 +1031,9 @@
 "pd.sum": "Derecho + izquierdo es tu DP total (un adulto promedia unos 63 mm).",
 "pd.title": "Cómo medir tu DP",
 "popular": "Guías y herramientas",
+"prod.about": "El {brand} {model} en {color}{cc} es uno de nuestros armazones {shape}: {rim}{mat}.{size} {who}",
+"prod.aboutMat": ", en {mat}",
+"prod.aboutSize": " Mide {mm}: lentes de {lens} mm, puente de {bridge} mm y patillas de {temple} mm, unos {total} mm de frente, en nuestro ajuste {band}.",
 "prod.color": "Color",
 "prod.colorOf": "Color",
 "prod.d.brand": "Marca",
@@ -737,6 +1059,7 @@
 "prod.lenses": "Elegir lentes",
 "prod.lensesIncluded": "armazón · agrega tus lentes abajo",
 "prod.meta": "{name} {color} {cc} · {kind} — House of Eyeglasses",
+"prod.metaTwin": "{name} {color} {cc} {size} · {kind} — House of Eyeglasses",
 "prod.more": "También te pueden gustar",
 "prod.moreAll": "Ver todos los armazones",
 "prod.notFound": "No encontramos ese armazón.",
@@ -749,6 +1072,10 @@
 "prod.tryon": "Pruébatelos con tu cámara",
 "prod.view.size": "Medida",
 "prod.views": "Vistas",
+"prod.who.kids": "A la medida de los niños.",
+"prod.who.men": "Hecho para hombre.",
+"prod.who.unisex": "Unisex: para hombre y para mujer.",
+"prod.who.women": "Hecho para mujer.",
 "promise.title": "Un óptico en Tampa revisa cada par",
 "rim.full": "Aro completo",
 "rim.half": "Medio aro",
@@ -830,13 +1157,24 @@
 "brands": [
 "list"
 ],
+"estilo": [
+"all",
+"allhref",
+"data",
+"h1",
+"imgcards",
+"lead",
+"sibs"
+],
 "marca": [
 "cards",
 "data",
 "h1",
+"imgcards",
 "lead"
 ],
 "producto": [
+"about",
 "also",
 "color",
 "data",
@@ -844,12 +1182,26 @@
 "img",
 "kicker",
 "name",
+"photo",
 "price",
 "size",
 "stock",
 "swatches"
+],
+"styles": [
+"groups"
 ]
 },
+"shapeOrder": [
+"round",
+"square",
+"rect",
+"cateye",
+"aviator",
+"browline",
+"oval",
+"geo"
+],
 "shapes": {
 "aviator": "shape.aviator",
 "browline": "shape.browline",
@@ -954,5 +1306,5 @@
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261112a"
+"v": "20261113a"
 }

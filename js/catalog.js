@@ -13,6 +13,7 @@
 //   featured()        → Promise<registro[]>     (manifest.featuredItems inline → ningún chunk; si falta, manifest.featured por chunks; sólo con stock)
 //   search()          → Promise<[{s,t}]>        (índice del buscador, una sola vez)
 //   img(f)            → 'assets/frames/<SKU>.webp'   · sprite(f, k) → estilo inline del sprite en la vista k (0..ph-1)
+//   photo(f, k)       → 'assets/p/<SKU>.webp' (k = 0) · 'assets/p/<SKU>-2.webp' (k = 1): las fotos limpias 800 × 800 (vistas 1 y 2)
 //   size(l, b, t)     → { lens, bridge, temple, total, band }   (UNA fórmula: total = 2·lente + puente + HINGE; talla.js la usa)
 //   price(n)          → "$129" en el idioma activo · colorHex(key) → hex de manifest.colors · name(f) → "Marca Modelo"
 //   colorName(f)      → texto del color en el idioma activo · catOf(sku) → 'men' | 'women' | 'kids' | 'sun' | null
@@ -117,6 +118,9 @@ window.hoeCatalog = (() => {
   const search = () => S.search || (S.search = manifest().then(m => (m && m.search ? json(m.search) : null)).then(l => (Array.isArray(l) ? l : [])));
 
   const img = f => `assets/frames/${encodeURIComponent(typeof f === 'string' ? f : f.id)}.webp`;
+  // the frame's clean square photos (800 × 800, the sprite's own squares, published by the Central for Google): the first
+  // view (k = 0) and the second (k = 1, when ph > 1). The product page shows them as real <img>
+  const photo = (f, k) => `assets/p/${encodeURIComponent(typeof f === 'string' ? f : f.id)}${k ? '-2' : ''}.webp`;
   // inline style for a sprite view: k = 0 (front) … ph-1; ph unknown (a colour sibling) → view 0 with the natural height
   const sprite = (f, k = 0, ph) => {
     const n = ph || (f && f.ph) || 0;
@@ -143,7 +147,7 @@ window.hoeCatalog = (() => {
   const colorName = f => { const r = f && f.colRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('color.' + (f && f.col)) : (f && f.col)) || ''; };
   const lensName = f => { const r = f && f.lcRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('lc.' + (f && f.lc)) : (f && f.lc)) || ''; };
 
-  return { manifest, chunk, all, byId, unknown, reset, featured, search, img, sprite, size, price, colorHex, name, colorName, lensName, catOf, slug, url, adopt, hasPages, HINGE, BANDS, get m() { return S.m; }, _s: S };
+  return { manifest, chunk, all, byId, unknown, reset, featured, search, img, photo, sprite, size, price, colorHex, name, colorName, lensName, catOf, slug, url, adopt, hasPages, HINGE, BANDS, get m() { return S.m; }, _s: S };
 })();
 window.hoeFrameById = id => window.hoeCatalog.byId(id);
 window.hoeFrameSize = f => `${f.size.lens} □ ${f.size.bridge} — ${f.size.temple}`;

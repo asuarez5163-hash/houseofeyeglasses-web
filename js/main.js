@@ -325,6 +325,13 @@
     arm(document);
     if ('MutationObserver' in window) new MutationObserver(muts => muts.forEach(m => m.addedNodes.forEach(n => { if (n.nodeType === 1) arm(n); }))).observe(document.body, { childList: true, subtree: true });
   })();
+  // a card written with the frame's clean photo as a real <img> (the brand and style pages the Central writes): if that file
+  // is not there, the sprite takes over as in every other card
+  (() => {
+    const fallback = im => { const box = im.parentElement, card = box && box.closest('.fcard'); if (!card || !box.classList.contains('fcard-img') || box.dataset.bg) return; im.remove(); box.dataset.bg = CAT.img(card.dataset.id); if (window.hoeLazy) window.hoeLazy(box.parentElement); };
+    document.addEventListener('error', e => { if (e.target && e.target.tagName === 'IMG') fallback(e.target); }, true);
+    document.querySelectorAll('.fcard-img > img').forEach(im => { if (im.complete && !im.naturalWidth) fallback(im); });
+  })();
   // hover on a card: a colour dot under the pointer swaps the photo for that sibling's (its sprite, front view, preloaded on
   // entering the card); leaving the dot or the card brings the frame's own photo back. One listener for every card, present and future.
   (() => {
@@ -332,7 +339,8 @@
     const pre = new Set();
     const preload = src => { if (pre.has(src)) return; pre.add(src); const i = new Image(); i.decoding = 'async'; i.src = src; };
     const imgOf = card => card.querySelector('.fcard-img');
-    const restore = (img, card) => { img.classList.remove('is-alt'); img.dataset.bgd = '1'; img.style.backgroundImage = `url('${img.dataset.bg}')`; card.querySelectorAll('.fcard-swatches li').forEach(li => li.classList.toggle('is-on', li.dataset.sku === card.dataset.id)); };
+    // back to the frame's own photo: its sprite in the tile's background, or (a card written with a real <img>: no data-bg) nothing there
+    const restore = (img, card) => { img.classList.remove('is-alt'); if (img.dataset.bg) { img.dataset.bgd = '1'; img.style.backgroundImage = `url('${img.dataset.bg}')`; } else img.style.backgroundImage = ''; card.querySelectorAll('.fcard-swatches li').forEach(li => li.classList.toggle('is-on', li.dataset.sku === card.dataset.id)); };
     document.addEventListener('pointerover', e => {
       if (!fine.matches) return;
       const link = e.target.closest('.fcard > a'); if (!link) return;

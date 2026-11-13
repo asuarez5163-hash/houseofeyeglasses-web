@@ -1,5 +1,5 @@
 /* Ficha de armazón + configurador en 3 pasos (producto.html) — C-cine: la tienda a oscuras.
-   Galería = loseta --paper 1:1 grande (la única superficie clara) con la FOTO real (sprite assets/frames/<SKU>.webp: vista 1/2/3)
+   Galería = loseta --paper 1:1 grande (la única superficie clara) con la FOTO real (vistas 1 y 2: img assets/p/<SKU>.webp; vista 3: sprite assets/frames/<SKU>.webp)
    y la patilla dibujada en la pestaña "Medida", una placa al pie; columna de compra con jerarquía:
    kicker → nombre display → precio → swatches 28 px con aro dorado → medida → botón primario → promesa → Details → 3 pasos.
    Radios 0, sin sombras, hairlines --line, dorado como hilo. Tokens: css/styles.css :root.
@@ -21,6 +21,13 @@ main.pdp { padding-bottom: 0; }
 .pdp-art--img { width: 100%; height: 100%; }
 .pdp-img { width: 100%; height: 100%; background-repeat: no-repeat; background-size: 100% calc(var(--ph, 1) * 100%); background-position: 0 0; mix-blend-mode: multiply; }
 .pdp-img.is-alt { background-size: 100% auto; }
+/* views 1 and 2 are real <img> (the frame's clean square photo, assets/p/<SKU>.webp): same box, same multiply over the paper */
+img.pdp-img { object-fit: contain; }
+/* the signature moment of the page, once: the first photo comes into focus on the paper (fade + a touch of scale). It is css
+   because the photo is already in the HTML of a static page: the entrance starts with the first paint, so the photo never
+   shows and then hides while the scripts arrive. html.pdp-seen (js, at the first change of view) ends it for good. */
+html:not(.pdp-seen) #pdp-view-1 img.pdp-img { animation: pdp-focus .9s var(--ease-out) both; }
+@keyframes pdp-focus { from { opacity: 0; transform: scale(.97); } }
 .pdp-view .temple-arm, .pdp-view .temple-hinge { fill: var(--ink-paper); }
 .pdp-view .temple-core { stroke: rgba(239, 233, 223, .3); }
 .pdp-plate { position: absolute; left: clamp(16px, 3%, 28px); right: clamp(16px, 3%, 28px); bottom: clamp(14px, 2.6%, 24px); display: flex; justify-content: space-between; gap: 16px; font: 500 11px/1.3 var(--font-ui); letter-spacing: .16em; text-transform: uppercase; color: rgba(20, 19, 18, .52); font-variant-numeric: lining-nums tabular-nums; }
@@ -89,6 +96,9 @@ details.pdp-det::details-content { min-height: 0; overflow: hidden; }
 .det-body { min-height: 0; overflow: hidden; font-size: 15px; line-height: 1.65; color: var(--ink-2); opacity: 0; transition: opacity 200ms var(--ease-out); }
 .det-body::after { content: ""; display: block; height: 24px; }
 details.pdp-det[open]:not(.is-closing) .det-body { opacity: 1; transition-delay: 60ms; }
+/* the frame's own paragraph, on top of the list (the Central writes it; empty in producto.html?id=) */
+.pdp-about { margin: 4px 0 20px; text-wrap: pretty; }
+.pdp-about:empty { display: none; }
 .pdp-dl { margin: 4px 0 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 24px; }
 .pdp-dl dt { color: var(--ink-3); font-size: var(--fs-small); }
 .pdp-dl dd { margin: 0; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
@@ -320,4 +330,5 @@ details.cfg-step[open]:not(.is-closing) .cfg-body { opacity: 1; transition-delay
   .pd-help { transition: none; }
   details.pdp-det, details.cfg-step, .det-body, .cfg-body, .cfg-opt .dot::after, .rxf-pd-opt .dot::after, .rxf-confirm .dot::after, .pdp-thumbs button, .pdp-thumbs button::after, .cfg-bar { transition: none !important; }
   .pdp-view:not([hidden]) { animation: none; }
+  html:not(.pdp-seen) #pdp-view-1 img.pdp-img { animation: none; }
 }

@@ -1,7 +1,9 @@
-// Ficha de armazón (producto.html): la FOTO real del sprite (assets/frames/<SKU>.webp: hasta 3 vistas, pestañas 1 · 2 · 3)
-// sobre la loseta --paper 1:1 y la pestaña "Medida" con la patilla dibujada (hoeTempleSVG); al cargar, la primera foto entra
-// en foco (GSAP fade + scale; sin GSAP está desde el primer pintado). Variantes = hermanos de color (f.v): cada punto enlaza a
-// producto.html?id=<hermano> (su propia URL canónica) y, bajo el puntero, muestra su foto en la vista 1. Precio real + "lentes
+// Ficha de armazón (producto.html): la FOTO real sobre la loseta --paper 1:1, hasta 3 vistas (pestañas 1 · 2 · 3): la 1 y la 2
+// son las fotos limpias assets/p/<SKU>.webp y <SKU>-2.webp como <img> de verdad (en una página estática la 1 ya viene escrita
+// en el HTML: pinta antes que cualquier script y Google Imágenes la ve); la 3 es el tercer cuadro del sprite
+// assets/frames/<SKU>.webp. Y la pestaña "Medida" con la patilla dibujada (hoeTempleSVG). Al cargar, la primera foto entra en
+// foco (css: pdp-focus, una vez). Variantes = hermanos de color (f.v): cada punto enlaza a su página
+// (su propia URL canónica) y, bajo el puntero, muestra su foto en la vista 1. Precio real + "lentes
 // incluidos", stock (st<=0 → agotado, botón deshabilitado, noindex), Details con marca · modelo · código · color · lente ·
 // material · forma · aro · medida, JSON-LD Product, y el configurador de lentes en CUATRO pasos (código postal → uso → receta → lentes) con barra
 // pegajosa (nombre + precio) y "Agregar al carrito" (el botón dice "Añadido ✓" 1.2 s y se abre el cajón). En el paso 4 la lente
@@ -134,32 +136,57 @@
   const mm = () => `${frame.size.lens} □ ${frame.size.bridge} ${frame.size.temple}`;
   const tabs = $$('.pdp-thumbs [role="tab"]');
   const liveTabs = () => tabs.filter(b => !b.hidden);
-  let focused = false;
+  // Views 1 and 2 = the frame's clean square photos (assets/p/<SKU>.webp · <SKU>-2.webp: the sprite's own squares, published
+  // for Google) as real <img>. The first one is already in the HTML of a static page (the Central writes it), so it paints
+  // before any script runs: here it is only adopted (never re-created: no second download, no flicker) and its alt follows the
+  // language. Its entrance —the signature moment of the page, once: the photo comes into focus on the paper— is css
+  // (producto.css pdp-focus), so nothing ever shows and then hides. View 2 loads when its tab is first shown (or the pointer
+  // reaches the tabs); view 3 only lives in the sprite. A photo that cannot be read falls back to the sprite's square.
+  const photoLabel = i => `${name} · ${fill(T('prod.photo'), { k: i + 1, n: frame.ph })}`;
+  const photoAlt = i => (i ? photoLabel(i) : [name, CAT.colorName(frame), frame.cc].filter(Boolean).join(' '));
+  const spriteView = i => `<div class="pdp-img" role="img" aria-label="${esc(photoLabel(i))}" style="${CAT.sprite(frame, i)}"></div>`;
   function renderViews() {
     ['1', '2', '3'].forEach((k, i) => {
       const fig = $('#pdp-view-' + k), tab = tabs.find(b => b.dataset.view === k);
       const on = i < frame.ph;
       if (tab) tab.hidden = !on;
       if (!on) { fig.hidden = true; return; }
-      $('.pdp-art', fig).innerHTML = `<div class="pdp-img" role="img" aria-label="${esc(name)} · ${esc(fill(T('prod.photo'), { k: i + 1, n: frame.ph }))}" style="${CAT.sprite(frame, i)}"></div>`;
+      const art = $('.pdp-art', fig);
+      if (i > 1 || art.dataset.sprite) art.innerHTML = spriteView(i);
+      else {
+        let img = $('img.pdp-img', art);
+        if (!img) {
+          art.innerHTML = `<img class="pdp-img" src="${esc(CAT.photo(frame, i))}" alt="" width="800" height="800"${i ? ' loading="lazy"' : ' fetchpriority="high"'} decoding="async">`;
+          img = art.firstChild;
+        }
+        img.alt = photoAlt(i);
+        if (!img.dataset.own) {
+          img.dataset.own = img.getAttribute('src');
+          const toSprite = () => { art.dataset.sprite = '1'; art.innerHTML = spriteView(i); };
+          // its own file is missing → the sprite; a sibling's preview is missing → back to its own
+          img.addEventListener('error', () => { if (img.getAttribute('src') === img.dataset.own) toSprite(); else img.src = img.dataset.own; });
+          if (!i && img.complete && !img.naturalWidth) toSprite();
+        }
+      }
       $('.pdp-plate-l', fig).textContent = `${CAT.colorName(frame)} · ${frame.cc}`;
       $('.pdp-plate-r', fig).textContent = `${mm()} · ${frame.size.total} mm`;
     });
     $('#pdp-art-side').innerHTML = window.hoeTempleSVG(window.hoeFrameSize(frame), null, { marks: true });
     $('#pdp-plate-mm2').textContent = window.hoeFrameSize(frame);
-    // the signature moment of the page, once: the first photo comes into focus on the paper (fade + a touch of scale)
-    if (!focused && window.hoeMotion && window.hoeMotion.hasGsap) {
-      focused = true;
-      const img = $('#pdp-view-1 .pdp-img');
-      window.gsap.set(img, { autoAlpha: 0 });
-      window.hoeMotion.ready(() => window.gsap.fromTo(img, { autoAlpha: 0, scale: .97 }, { autoAlpha: 1, scale: 1, duration: .9, ease: 'expo.out', clearProps: 'opacity,visibility,transform' }));
-    }
   }
+  const gsapOn = () => window.hoeMotion && window.hoeMotion.hasGsap && !reduced.matches;
   function setView(v) {
+    document.documentElement.classList.add('pdp-seen');   // the css entrance of the first photo is over: from here the views change hands below
     $$('.pdp-view').forEach(f => { const on = f.dataset.view === v; f.hidden = !on; f.classList.toggle('is-on', on); });
     tabs.forEach(b => b.setAttribute('aria-selected', String(b.dataset.view === v)));
     const img = $(`.pdp-view[data-view="${v}"] .pdp-img, .pdp-view[data-view="${v}"] .temple-art`);
-    if (img && window.hoeMotion && window.hoeMotion.hasGsap && !reduced.matches) window.gsap.fromTo(img, { autoAlpha: 0, scale: .985 }, { autoAlpha: 1, scale: 1, duration: .5, ease: 'expo.out', clearProps: 'opacity,visibility,transform' });
+    if (!img || !gsapOn()) return;
+    const show = () => window.gsap.fromTo(img, { autoAlpha: 0, scale: .985 }, { autoAlpha: 1, scale: 1, duration: .5, ease: 'expo.out', clearProps: 'opacity,visibility,transform' });
+    if (img.tagName !== 'IMG' || img.complete) { show(); return; }
+    // a photo that is still on its way comes into focus when it arrives (never a fade over an empty tile)
+    window.gsap.set(img, { autoAlpha: 0 });
+    const done = () => { img.removeEventListener('load', done); img.removeEventListener('error', done); if (img.isConnected) show(); };
+    img.addEventListener('load', done); img.addEventListener('error', done);
   }
   tabs.forEach(b => {
     b.addEventListener('click', () => setView(b.dataset.view));
@@ -171,12 +198,25 @@
       n.focus(); setView(n.dataset.view);
     });
   });
-  // a colour sibling under the pointer shows its front photo in view 1; leaving brings this frame's back
   const pre = new Set();
   const preload = src => { if (pre.has(src)) return; pre.add(src); const i = new Image(); i.decoding = 'async'; i.src = src; };
+  // the other views are fetched once the pointer (or the focus, or a finger) reaches the tabs: the second photo, and the
+  // sprite when there is a third
+  const thumbs = $('.pdp-thumbs');
+  const warmViews = () => { if (frame.ph > 1 && !$('#pdp-view-2 .pdp-art').dataset.sprite) preload(CAT.photo(frame, 1)); if (frame.ph > 2) preload(CAT.img(frame)); };
+  if (thumbs) ['pointerenter', 'focusin', 'touchstart'].forEach(ev => thumbs.addEventListener(ev, warmViews, { once: true, passive: true }));
+  // a colour sibling under the pointer shows its front photo in view 1; leaving brings this frame's back
+  const firstImg = () => $('#pdp-view-1 .pdp-img');
+  const sibSrc = sku => { const el = firstImg(); return el && el.tagName === 'IMG' ? CAT.photo(sku, 0) : CAT.img(sku); };
   function previewSibling(sku) {
-    const img = $('#pdp-view-1 .pdp-img'); if (!img) return;
-    if (!sku || sku === frame.id) { img.classList.remove('is-alt'); img.style.cssText = CAT.sprite(frame, 0); return; }
+    const img = firstImg(); if (!img) return;
+    const back = !sku || sku === frame.id;
+    if (img.tagName === 'IMG') {   // the clean photo: another src (the browser keeps the one on screen until the new one is ready)
+      const src = back ? img.dataset.own : CAT.photo(sku, 0);
+      if (src && img.getAttribute('src') !== src) img.src = src;
+      return;
+    }
+    if (back) { img.classList.remove('is-alt'); img.style.cssText = CAT.sprite(frame, 0); return; }
     preload(CAT.img(sku));
     img.classList.add('is-alt'); img.style.cssText = CAT.sprite(sku, 0, 0);
   }
@@ -191,10 +231,13 @@
   const sizeLine = () => `${T('band.' + frame.size.band)} · ${mm()}`;
   const sibs = () => [{ id: frame.id, col: frame.col, cc: frame.cc, self: true }, ...(frame.v || [])];
   const sibName = s => (s.self ? CAT.colorName(frame) : T('color.' + s.col)) + (s.cc ? ` · ${s.cc}` : '');
+  const twin = (own && typeof own.twin === 'string' && own.twin) || '';
+  const detailLink = k => (!own ? '' : k === 'prod.d.brand' ? own.brand : (own.styles && own.styles[k.slice(7)])) || '';   // 'prod.d.shape' → own.styles.shape
   function renderBuy() {
     $('#pdp-name').textContent = name;
-    const head = { name, color: CAT.colorName(frame), cc: frame.cc || '', kind: T(isSun ? 'prod.kindSun' : 'prod.kind'), price: CAT.price(frame.p) };
-    document.title = fill(T('prod.meta'), head).replace(/\s{2,}/g, ' ');
+    const head = { name, color: CAT.colorName(frame), cc: frame.cc || '', kind: T(isSun ? 'prod.kindSun' : 'prod.kind'), price: CAT.price(frame.p), size: twin };
+    // a frame with a twin (same model and colour, another size) says its size in the title: the Central decides (pdp-data.twin)
+    document.title = fill(T(twin ? 'prod.metaTwin' : 'prod.meta'), head).replace(/\s{2,}/g, ' ');
     setHead('meta[property="og:title"]', 'content', document.title);
     setHead('meta[name="description"]', 'content', fill(T('prod.desc'), head).replace(/\s{2,}/g, ' '));
     setHead('meta[property="og:description"]', 'content', fill(T('prod.desc'), head).replace(/\s{2,}/g, ' '));
@@ -214,8 +257,12 @@
       ['prod.d.brand', frame.b], ['prod.d.model', frame.n], ['prod.d.colorCode', frame.cc], ['prod.d.color', CAT.colorName(frame)], ['prod.d.lens', CAT.lensName(frame)],
       ['prod.d.material', T('mat.' + frame.mat)], ['prod.d.shape', T(window.HOE_SHAPE_LABEL[frame.sh] || 'shape.rect')], ['prod.d.rim', T('rim.' + frame.rim)],
       ['prod.d.size', `${sizeLine()} · ${frame.size.total} mm`], ['prod.d.incl', T('prod.d.inclText')],
-    // the brand links to its page (<brand>-eyeglasses.html) when this static page says which one it is (own.brand)
-    ].map(([k, v]) => `<dt>${esc(T(k))}</dt><dd>${k === 'prod.d.brand' && own && own.brand ? `<a class="link-u" href="${esc(own.brand)}">${esc(v)}</a>` : esc(v)}</dd>`).join('');
+    // the brand links to its page (<brand>-eyeglasses.html) and the shape, material, rim and colour to their style pages
+    // (round-glasses.html…) when this static page says which ones exist (own.brand, own.styles: the Central decides)
+    ].map(([k, v]) => { const to = detailLink(k); return `<dt>${esc(T(k))}</dt><dd>${to ? `<a class="link-u" href="${esc(to)}">${esc(v)}</a>` : esc(v)}</dd>`; }).join('');
+    // the frame's own paragraph on top of the list: written by the Central in both languages (own.about); here only the one of the language
+    const about = $('#pdp-about');
+    if (about && own && own.about) about.textContent = own.about[L()] || own.about.en || '';
     renderJsonLd();
   }
   function renderJsonLd() {
@@ -229,7 +276,7 @@
     const size = `${frame.size.lens}-${frame.size.bridge}-${frame.size.temple}`;
     el.textContent = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Product',
-      name: [name, color, frame.cc, kind].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '),
+      name: [name, color, frame.cc, kind, twin].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '),
       brand: { '@type': 'Brand', name: frame.b }, category: kind, color, material: ['acetate', 'metal', 'titanium', 'tr90'].includes(frame.mat) ? T('mat.' + frame.mat) : undefined,
       size, inProductGroupWithID: frame.m || undefined,
       description: fill(T('prod.ld'), { brand: frame.b, model: frame.n, kind: kind.toLowerCase(), color, cc: frame.cc ? fill(T('prod.ldCc'), { cc: frame.cc }) : '', size }),
@@ -265,8 +312,8 @@
   swatches.addEventListener('pointerleave', () => { if (fine.matches) previewSibling(null); });
   swatches.addEventListener('focusin', e => { const a = e.target.closest('a'); if (a && a.matches(':focus-visible')) previewSibling(a.dataset.sku); });
   swatches.addEventListener('focusout', e => { if (!swatches.contains(e.relatedTarget)) previewSibling(null); });
-  // the siblings' sprites are fetched once the pointer reaches the swatches (one Image each)
-  swatches.addEventListener('pointerenter', () => (frame.v || []).forEach(s => preload(CAT.img(s.id))), { once: true });
+  // the siblings' photos are fetched once the pointer reaches the swatches (one Image each)
+  swatches.addEventListener('pointerenter', () => (frame.v || []).forEach(s => preload(sibSrc(s.id))), { once: true });
 
   // accordions: closing waits for the rows to shrink (css grid-template-rows)
   function accordion(selector, exclusive) {

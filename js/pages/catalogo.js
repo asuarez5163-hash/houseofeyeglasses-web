@@ -2,6 +2,7 @@
 // secuencia y pinta el primero en cuanto llega), filtra por marca · género · forma · material · color · lente · precio · talla
 // (multi-select por faceta: OR dentro, AND entre facetas), ordena (relevancia · precio ↑ · precio ↓ · marca A-Z) y pagina de a
 // 36 con "Ver más". La URL ES el estado (?cat=men&brand=…&shape=round,square&sort=price-asc&page=2; history.replaceState).
+// El aro (?rim=full|half|rimless) solo llega por la dirección, desde las páginas de estilo: filtra y sale como chip, sin grupo en el panel.
 // La categoría (?cat=men|women|kids|sun) titula la página, elige la FOTO grande de la cabecera (assets/img/foto-*) y marca la
 // pestaña. Los conteos del panel salen de UNA pasada sobre la lista (nunca un filtro por opción). Una opción con 0 se atenúa.
 // Panel: columna de 280 px en escritorio, hoja completa en móvil. Idioma: re-etiqueta en 'hoe:lang'.
@@ -42,8 +43,11 @@
     { id: 'lens',     key: 'catalogo.f.lensColor', vals: ['clear', 'blue-light', 'tinted', 'polarized', 'mirror', 'photochromic', 'other'], label: v => T('lc.' + v), of: f => [f.lc] },
     { id: 'price',    key: 'catalogo.f.price',     vals: ['p1', 'p2', 'p3', 'p4'], label: v => T('catalogo.price.' + v), of: f => [bucket(Number(f.p) || 0)] },
     { id: 'size',     key: 'catalogo.f.size',      vals: ['narrow', 'medium', 'wide', 'xwide'], label: v => T('band.' + v), of: f => [f.size.band] },
+    // the rim is not in the panel: it only arrives in the address (?rim=rimless, from the style pages) and shows as a chip
+    { id: 'rim',      vals: ['full', 'half', 'rimless'], label: v => T('rim.' + v), of: f => [f.rim], panel: false, chip: true },
   ];
   const PANEL = FACETS.filter(fa => fa.panel !== false);
+  const CHIPS = FACETS.filter(fa => fa.panel !== false || fa.chip);   // what a chip can show and "Clear" clears
   const facet = id => FACETS.find(fa => fa.id === id);
   const SORTS = ['rel', 'price-asc', 'price-desc', 'brand'];
   const state = { sel: {}, sort: 'rel', page: 1 };
@@ -137,7 +141,7 @@
   const chips = $('#cat-chips');
   function renderChips() {
     const items = [];
-    PANEL.forEach(fa => state.sel[fa.id].forEach(v => items.push({ fa, v })));
+    CHIPS.forEach(fa => state.sel[fa.id].forEach(v => items.push({ fa, v })));
     chips.hidden = !items.length;
     chips.innerHTML = items.map(({ fa, v }) => `<li><button type="button" class="catp-chip" data-press data-facet="${fa.id}" data-val="${esc(v)}" aria-label="${esc(T('catalogo.chipRemove'))}: ${esc(fa.label(v))}">
         <span>${esc(fa.label(v))}</span><svg viewBox="0 0 12 12" aria-hidden="true"><path d="m2 2 8 8M10 2l-8 8"/></svg>
@@ -298,7 +302,7 @@
   $('#cat-apply').addEventListener('click', () => setOpen(false));
   scrim.addEventListener('click', () => setOpen(false));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && open && phone.matches) setOpen(false); });
-  const clearAll = () => { PANEL.forEach(fa => state.sel[fa.id].clear()); state.page = 1; writeURL(); renderHead(); renderGrid(); renderPanel(); };
+  const clearAll = () => { CHIPS.forEach(fa => state.sel[fa.id].clear()); state.page = 1; writeURL(); renderHead(); renderGrid(); renderPanel(); };
   $('#cat-clear').addEventListener('click', clearAll);
   $('#cat-empty-cta').addEventListener('click', clearAll);
   window.addEventListener('resize', () => { if (!phone.matches) { scrim.hidden = true; scrim.classList.remove('is-on'); document.body.classList.remove('is-locked'); } });

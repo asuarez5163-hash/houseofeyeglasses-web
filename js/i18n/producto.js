@@ -4,6 +4,15 @@
 // rx.od / rx.os (OD / OI) live in js/i18n.js because the header drawer uses them.
 Object.assign(window.HOE_I18N.en, {
   "prod.meta": "{name} {color} {cc} {kind} — House of Eyeglasses", "prod.kind": "Eyeglasses", "prod.kindSun": "Sunglasses",
+  // the title of a frame that has a twin (the same model and color in another size; the Central says so: pdp-data.twin = its size, 52-17-140)
+  "prod.metaTwin": "{name} {color} {cc} {kind} {size} — House of Eyeglasses",
+  // the frame's own paragraph, on top of "Details". The Central writes it (both languages) from these patterns: {shape}, {rim},
+  // {mat} and {band} are the words of the Details list with a lower-case initial; prod.aboutMat only for the materials it names,
+  // prod.aboutSize only when the three measures are known
+  "prod.about": "The {brand} {model} in {color}{cc} is one of our {shape} frames: {rim}{mat}.{size} {who}",
+  "prod.aboutMat": ", in {mat}",
+  "prod.aboutSize": " It measures {mm}: {lens} mm lenses, a {bridge} mm bridge and {temple} mm temples, about {total} mm across the front, in our {band} fit.",
+  "prod.who.men": "Made for men.", "prod.who.women": "Made for women.", "prod.who.kids": "Sized for kids.", "prod.who.unisex": "A unisex frame, for men and women.",
   "prod.ld": "{brand} {model} {kind} frame in {color}{cc}, size {size} mm. New, with free U.S. shipping; add prescription lenses made to your prescription.", "prod.ldCc": " (color code {cc})",
   "prod.desc": "{name} {kind} in {color} ({cc}), {price} for the frame with free U.S. shipping. Add your prescription lenses in four short steps; an optician in Tampa checks every prescription.",
   "prod.views": "Views", "prod.view.size": "Size", "prod.tryon": "Try them on with your camera",
@@ -70,6 +79,11 @@ Object.assign(window.HOE_I18N.en, {
 
 Object.assign(window.HOE_I18N.es, {
   "prod.meta": "{name} {color} {cc} · {kind} — House of Eyeglasses", "prod.kind": "Espejuelos", "prod.kindSun": "Lentes de sol",
+  "prod.metaTwin": "{name} {color} {cc} {size} · {kind} — House of Eyeglasses",
+  "prod.about": "El {brand} {model} en {color}{cc} es uno de nuestros armazones {shape}: {rim}{mat}.{size} {who}",
+  "prod.aboutMat": ", en {mat}",
+  "prod.aboutSize": " Mide {mm}: lentes de {lens} mm, puente de {bridge} mm y patillas de {temple} mm, unos {total} mm de frente, en nuestro ajuste {band}.",
+  "prod.who.men": "Hecho para hombre.", "prod.who.women": "Hecho para mujer.", "prod.who.kids": "A la medida de los niños.", "prod.who.unisex": "Unisex: para hombre y para mujer.",
   "prod.ld": "Armazón {brand} {model} ({kind}) en {color}{cc}, medida {size} mm. Nuevo, con envío gratis en EE. UU.; agrega lentes graduados hechos a tu receta.", "prod.ldCc": " (código de color {cc})",
   "prod.desc": "{kind} {name} en {color} ({cc}), {price} el armazón con envío gratis en EE. UU. Agrega tus lentes graduados en cuatro pasos cortos; un óptico en Tampa revisa cada receta.",
   "prod.views": "Vistas", "prod.view.size": "Medida", "prod.tryon": "Pruébatelos con tu cámara",
