@@ -14,6 +14,8 @@
 .brandp-list li { break-inside: avoid; border-bottom: 1px solid var(--line); }
 .brandp-list a { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding: 15px 0; font-size: 17px; color: var(--ink); text-decoration: none; transition: color .2s; }
 .brandp-list a .num { font-size: var(--fs-small); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+/* a one-word name longer than a phone column (RETROSUPERFUTURE at 375 px) breaks inside its column instead of pushing the page sideways */
+.brandp-list a > span:not(.num), .brandp-list [aria-current="page"] > span:not(.num) { min-width: 0; overflow-wrap: anywhere; }
 @media (hover: hover) { .brandp-list a:hover { color: var(--gold); } }
 .brandp-list a:focus-visible { outline: 1px solid var(--gold); outline-offset: 2px; }
 /* style pages (<style>-glasses.html) and the styles index (styles.html): the same list, one group per family under a small head;
