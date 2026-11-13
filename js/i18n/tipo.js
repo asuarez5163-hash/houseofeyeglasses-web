@@ -157,7 +157,7 @@ Object.assign(window.HOE_I18N.en, {
   "about.r3h": "Online only",
   "about.r3p": "<p>We do not have a walk-in store: everything happens on this site. Real people answer on WhatsApp, by phone and by email, in English and in Spanish.</p><p><a href=\"ayuda.html\">Help &amp; FAQ</a> · <a href=\"legal.html#shipping\">Shipping</a> · <a href=\"legal.html#returns\">Returns</a></p>",
   "about.r4h": "Company details",
-  "about.r4p": "<p>House of Eyeglasses LLC<br>16064 Dawnview Dr, Tampa, FL 33624<br><a href=\"mailto:amm@houseofeyeglasses.com\">amm@houseofeyeglasses.com</a> · <a href=\"tel:+17866148629\">(786) 614-8629</a> · <a href=\"https://wa.me/17866148629\" target=\"_blank\" rel=\"noopener\">WhatsApp</a></p>",
+  "about.r4p": "<p>House of Eyeglasses LLC<br>16064 Dawnview Dr, Tampa, FL 33624<br><a href=\"mailto:amm@houseofeyeglasses.com\">amm@houseofeyeglasses.com</a> · <a href=\"tel:+17863166252\">(786) 316-6252</a> · <a href=\"https://wa.me/17866148629\" target=\"_blank\" rel=\"noopener\">WhatsApp</a></p>",
 });
 Object.assign(window.HOE_I18N.es, {
   "tp.kicker": "Lentes con receta",
@@ -313,5 +313,5 @@ Object.assign(window.HOE_I18N.es, {
   "about.r3h": "Solo por internet",
   "about.r3p": "<p>No tenemos tienda para visitar: todo pasa en este sitio. Te atienden personas reales por WhatsApp, por teléfono y por correo, en inglés y en español.</p><p><a href=\"ayuda.html\">Ayuda</a> · <a href=\"legal.html#shipping\">Envíos</a> · <a href=\"legal.html#returns\">Devoluciones</a></p>",
   "about.r4h": "Datos de la empresa",
-  "about.r4p": "<p>House of Eyeglasses LLC<br>16064 Dawnview Dr, Tampa, FL 33624<br><a href=\"mailto:amm@houseofeyeglasses.com\">amm@houseofeyeglasses.com</a> · <a href=\"tel:+17866148629\">(786) 614-8629</a> · <a href=\"https://wa.me/17866148629\" target=\"_blank\" rel=\"noopener\">WhatsApp</a></p>",
+  "about.r4p": "<p>House of Eyeglasses LLC<br>16064 Dawnview Dr, Tampa, FL 33624<br><a href=\"mailto:amm@houseofeyeglasses.com\">amm@houseofeyeglasses.com</a> · <a href=\"tel:+17863166252\">(786) 316-6252</a> · <a href=\"https://wa.me/17866148629\" target=\"_blank\" rel=\"noopener\">WhatsApp</a></p>",
 });
