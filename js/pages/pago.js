@@ -102,7 +102,7 @@
     const items = C.get().items;
     const lines = items.map(it => `• ${it.sku} · ${it.name} · ${C.colorOf(it)}${it.cc ? ` (${it.cc})` : ''} · ${C.price(it.price)}`).join('\n');
     const text = L() === 'es' ? `Hola, quiero apartar:\n${lines}\nTotal: ${C.price(C.total())}` : `Hi, I’d like to reserve:\n${lines}\nTotal: ${C.price(C.total())}`;
-    $('#pay-wa').href = 'https://wa.me/17866148629?text=' + encodeURIComponent(text);
+    $('#pay-wa').href = 'https://wa.me/17863166252?text=' + encodeURIComponent(text);
     $('#pay-retry').hidden = !!whatsappOnly;
     page.setAttribute('data-failed', '');
     fail.hidden = false;

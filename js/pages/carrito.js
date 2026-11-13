@@ -159,7 +159,7 @@
     const msg = L() === 'es'
       ? `Hola, quiero apartar:\n${lines}\nTotal: ${C.price(C.total())}`
       : `Hi, I’d like to reserve:\n${lines}\nTotal: ${C.price(C.total())}`;
-    $('#cart-proto-wa').href = 'https://wa.me/17866148629?text=' + encodeURIComponent(msg);
+    $('#cart-proto-wa').href = 'https://wa.me/17863166252?text=' + encodeURIComponent(msg);
     $('#cart-proto-h').textContent = T(down ? 'cart.payDownTitle' : 'cart.protoTitle');
     $('#cart-proto .lead').textContent = T(down ? 'cart.payDownLead' : 'cart.protoLead');
     proto.hidden = false; render();
