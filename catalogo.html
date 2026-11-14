@@ -23,6 +23,81 @@
   <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+  <style>
+    /* the band is as wide as the page at every window width. Its aspect-ratio turned min-height (480px) and max-height
+       (760px) into a min-width of 1120px and a max-width of 1773px: narrower windows scrolled sideways and wider ones
+       left the right of the band empty. A stated width stops that transfer; the heights stay as they were. */
+    .catp-hero { width: 100%; }
+    /* catalog page head, "All frames": a frame alone (the people are one per category). Its crop follows the HEIGHT of
+       the band, not only its width (the band stops growing at 760px and at 480px, the photo does not): the frame's rims
+       sit about a third down the band, under the header and over the title. A phone crops the sides of a landscape photo
+       and leaves no room up or down: there the photo is raised instead (the strip it uncovers lies under the band). */
+    .catp-hero__media[data-photo="all"] img { object-position: 50% max(100%, calc(36.6% - 8.6vw)); }
+    @media (max-width: 860px) { .catp-hero__media[data-photo="all"] img { object-position: 50% 50%; position: relative; top: -6%; } }
+  </style>
+  <script>
+    // Catalog page head: ONE photo per category (Armando 11/14: the man's photo came up for every category).
+    // Why: js/pages/catalogo.js only changes `src` of #cat-photo-img, and a `srcset` that has a 1x candidate wins over
+    // `src`, so the photo written in the HTML (the man) never left. This script owns the srcset: it follows
+    // <main data-cat> (that script keeps it on the category shown), so Men is the only place with the man and
+    // "All frames" shows a frame alone. It runs in the <head> BEFORE the stylesheets (head_first) so the photo of ?cat=
+    // starts downloading with the page; the <img> takes it the moment it is parsed (hoeCatPhoto.go(), called right
+    // after the <img> in src/pages/catalogo.html), so no other photo is ever painted or downloaded first.
+    (function () {
+      // assets/img/<file>.jpg + <file>@2x.jpg · its pixels · its crop (the 21:9 band · a tall phone); "all": the style above
+      var PHOTO = {
+        all:   ['ambiente-armazon',   2400, 1600],
+        men:   ['foto-hombre-grande', 1800, 1200, '50% 28%', '50% 22%'],
+        women: ['foto-mujer-grande',  1800, 1200, '50% 36%', '50% 30%'],
+        kids:  ['foto-ninos-retrato', 1200, 1800, '50% 30%', '50% 26%'],
+        sun:   ['foto-sol-retrato',   1200, 1800, '50% 34%', '50% 30%']
+      };
+      var ALIAS = { sunglasses: 'sun', sun: 'sun', men: 'men', women: 'women', kids: 'kids' };
+      var has = function (o, k) { return Object.prototype.hasOwnProperty.call(o, k); };
+      var srcset = function (c) { var f = 'assets/img/' + PHOTO[c][0]; return f + '.jpg 1x, ' + f + '@2x.jpg 2x'; };
+      // the category of the address, by the rule of js/pages/catalogo.js (readURL + singleCat): exactly one known ?cat=, else all
+      var first = 'all', seen = [];
+      try {
+        (new URLSearchParams(location.search).get('cat') || '').split(',').forEach(function (v) {
+          if (has(ALIAS, v) && seen.indexOf(ALIAS[v]) < 0) seen.push(ALIAS[v]);
+        });
+        if (seen.length === 1) first = seen[0];
+      } catch (e) { /* no URLSearchParams: "all" */ }
+      // imagesrcset alone (no href): a browser that does not know it preloads nothing, never the wrong file
+      var link = document.createElement('link');
+      link.rel = 'preload'; link.as = 'image'; link.setAttribute('imagesrcset', srcset(first)); link.setAttribute('fetchpriority', 'high');
+      document.head.appendChild(link);
+
+      window.hoeCatPhoto = {
+        go: function () {
+          var img = document.getElementById('cat-photo-img'), main = document.getElementById('main');
+          if (!img || !main) return;
+          var media = img.parentNode, wanted = null;
+          var put = function (c) {                                             // the photo and its crop, in the same frame
+            var p = PHOTO[c];
+            media.dataset.photo = c;
+            if (p[3]) { media.style.setProperty('--cat-pos', p[3]); media.style.setProperty('--cat-pos-m', p[4]); }
+            else { media.style.removeProperty('--cat-pos'); media.style.removeProperty('--cat-pos-m'); }
+            img.setAttribute('srcset', srcset(c));
+          };
+          var show = function () {
+            var c = has(PHOTO, main.dataset.cat) ? main.dataset.cat : 'all';
+            if (c === wanted) return;
+            wanted = c;
+            if (!img.getAttribute('srcset')) { put(c); return; }               // first paint: at once (its download began above)
+            // a change of category: the photo on screen stays until the next one is ready, then both change together
+            var next = new Image(), done = function () { if (wanted === c) put(c); };
+            next.srcset = srcset(c); next.src = 'assets/img/' + PHOTO[c][0] + '.jpg';
+            if (next.decode) next.decode().then(done, done); else next.onload = next.onerror = done;
+          };
+          main.dataset.cat = first;
+          show();
+          img.width = PHOTO[first][1]; img.height = PHOTO[first][2]; img.src = 'assets/img/' + PHOTO[first][0] + '.jpg';
+          if (window.MutationObserver) new MutationObserver(show).observe(main, { attributes: true, attributeFilter: ['data-cat'] });
+        }
+      };
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
@@ -103,8 +178,10 @@
   <!-- ============ MAIN ============ -->
 <main id="main" class="catp" data-cat="all">
     <header class="catp-hero grain" id="cat-head">
-      <div class="catp-hero__media" data-gs="parallax" data-speed=".06">
-        <img id="cat-photo-img" src="assets/img/foto-hombre-grande.jpg" srcset="assets/img/foto-hombre-grande.jpg 1x, assets/img/foto-hombre-grande@2x.jpg 2x" width="1800" height="1200" alt="" decoding="async" fetchpriority="high">
+      <div class="catp-hero__media" data-photo="all" data-gs="parallax" data-speed=".06">
+        <noscript><img src="assets/img/ambiente-armazon.jpg" srcset="assets/img/ambiente-armazon.jpg 1x, assets/img/ambiente-armazon@2x.jpg 2x" width="2400" height="1600" alt=""></noscript>
+        <img id="cat-photo-img" width="2400" height="1600" alt="" decoding="async" fetchpriority="high">
+        <script>window.hoeCatPhoto && hoeCatPhoto.go();</script>
       </div>
       <div class="catp-hero__veil" aria-hidden="true"></div>
       <div class="wrap catp-hero__copy">
