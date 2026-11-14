@@ -289,7 +289,9 @@
           '@type': 'OfferShippingDetails',
           shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
           shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'US' },
-          deliveryTime: { '@type': 'ShippingDeliveryTime', transitTime: { '@type': 'QuantitativeValue', minValue: 5, maxValue: 10, unitCode: 'DAY' } },
+          // handling + transit = the shipping policy declared in Merchant Center (handling 0–0, transit 5–10 business days): if it changes there, it changes here and in the Central (lib/optica/paginas.py)
+          deliveryTime: { '@type': 'ShippingDeliveryTime', handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 0, unitCode: 'DAY' },
+            transitTime: { '@type': 'QuantitativeValue', minValue: 5, maxValue: 10, unitCode: 'DAY' } },
         },
         hasMerchantReturnPolicy: {
           '@type': 'MerchantReturnPolicy', applicableCountry: 'US', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',

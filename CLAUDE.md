@@ -1,0 +1,85 @@
+# House of Eyeglasses · C-cine (la web publicada)
+
+Esta carpeta (rama `propuesta-C-cine` del repo `optica-web`) es la fuente de la web viva en houseofeyeglasses.com.
+
+## Graphify PRIMERO
+Antes de grepear o leer archivos, consultar el grafo en `graphify-out/` (desde esta carpeta):
+- `graphify query "¿cómo funciona el pago?"` — contexto amplio (BFS); `--dfs` para seguir un camino
+- `graphify explain "js_cart"` — un nodo y sus vecinos
+- `graphify path "src_pages_carrito" "js_pages_pago"` — camino más corto entre dos nodos
+- Mapa general: `graphify-out/GRAPH_REPORT.md`; visual: `graphify-out/graph.html`
+- Tras cambiar código: `graphify update .` (los HTML de la raíz, `assets/` y `graphify-out/` están excluidos en `.graphifyignore`)
+
+Recién después abrir los archivos puntuales.
+
+## Construir
+Se edita `src/pages/*.html`, `src/partials/*.html`, `css/`, `js/`. Los `*.html` de la raíz los genera `python3 build.py`: nunca editarlos a mano.
+
+## ASSET_V (regla CDN)
+El CDN de Porkbun guarda css/js 30 días por URL. Al cambiar cualquier css o js: subir `ASSET_V` en `build.py` (fecha AAAAMMDD) y volver a correr `python3 build.py`; si no, los visitantes mezclan HTML nuevo con CSS/JS viejo. Imágenes/vídeos: reemplazar siempre con un nombre nuevo.
+
+## TRAMPA del CDN al verificar (11/09)
+Tras un push, NUNCA pedir `archivo.js?v=<ASSET_V nuevo>` hasta que el origen ya tenga el archivo nuevo: si se pide antes, el CDN guarda el VIEJO bajo esa URL durante 30 días y toda la web carga el script viejo (pasó con `js/main.js?v=20261109c`). Verificar primero con una query desechable (`archivo.js?r=123`) y solo después la URL versionada. Si se envenenó: subir ASSET_V y republicar.
+
+## site-repo NO es fuente (LEY 11/09)
+Todo cambio a páginas, pie, cabecera, legal.html, css o js se hace AQUÍ (C-cine). Publicar copia estos archivos encima de los de `PUBLICAR/site-repo`: lo que otra sesión haya editado directamente allí se pierde (11/06–11/09 se perdieron así el «Follow us» del pie y la cláusula de YouTube de legal.html, en plena auditoría). Antes de copiar: `git log` de site-repo sobre `*.html css js` y, si hay commits que no son de esta carpeta ni del catálogo, traer ese cambio a la fuente primero. Otras sesiones solo deben añadir en site-repo carpetas propias (p. ej. `youtube-callback/`, `admin/`, `social/`).
+
+## Publicar
+1. `python3 build.py`
+2. Copiar a `../../PUBLICAR/site-repo` (rsync con lista explícita) SIN `src/`, `build.py`, `tools/`, `.git`, `CLAUDE.md`, `.graphifyignore`, `graphify-out/`, y SIN tocar `data/` (incluye `data/t/`, el probador), `assets/frames/`, `assets/tryon/` (frentes recortados del probador), `clasica/`, `nueva/`, `robots.txt` (estático: vive SOLO en site-repo y se edita ahí a mano) ni los sitemaps (esos los escribe el Central). Antes de copiar: `git pull` en site-repo (el Central empuja ahí sus respaldos).
+3. En `PUBLICAR/site-repo`: commit + `git push` a `github.com/asuarez5163-hash/houseofeyeglasses-web` (rama main). Porkbun publica solo (~15 s).
+
+Detalles e historial: `PUBLICAR/LEEME-PORKBUN.txt`.
+
+## Idiomas (regla de Armando 11/09)
+La web es UNA, en inglés; `EN | ES` traduce la MISMA página en el sitio y se recuerda. Por defecto SIEMPRE inglés: nada de detectar el idioma del navegador ni de redirigir. `build.py` escribe además una copia `x.es.html` de cada página que se indexa (texto en español ya en el HTML, hreflang) solo para que una búsqueda en español pueda encontrar la web.
+
+## Páginas que escribe el Central (11/09)
+- `src/pages/producto.html` lleva comentarios `ssr:nombre`; `src/pages/marca.html`, `marcas.html`, `estilo.html` y `estilos.html` tienen `central:` en la cabecera (son SOLO plantillas). `build.py` deja en `tpl/` las plantillas con `{{ssr:x}}` y `tpl/ssr.json` (diccionario, constantes de `js/catalog.js`, casos de prueba del slug). Hay que copiar `tpl/` a site-repo en cada publicación.
+- Con eso el Central (`lib/optica/paginas.py` en la PC) escribe en la raíz del sitio una página estática por armazón (`<marca>-<modelo>-<color>-<sku>.html`), una por marca (`<marca>-eyeglasses.html`), `brands.html`, una por estilo (`<estilo>-glasses.html`) y `styles.html`. Esas páginas llevan la plantilla dentro: cambiar header/footer/drawer o subir `ASSET_V` hace que el siguiente export las regenere y suba TODAS (~220 MB, ~1 h). Agrupar los cambios.
+- `hoeCatalog.slug()` (js/catalog.js) y `paginas.slug()` (Central) son la MISMA regla; si se toca una, se toca la otra (el Central se niega a escribir si los casos de `ssr.json` no le coinciden).
+- `llms.txt` y `sitemap-pages.xml` los escribe `build.py`; el `.txt` de 32 hex de la raíz es la clave IndexNow (no borrarlo).
+
+## Lote SEO del 11/13 (ASSET_V 20261113a; 20261113b = marca.css: un nombre de una sola palabra más largo que la columna del teléfono se parte)
+- **Páginas por estilo**: `src/pages/estilo.html` y `estilos.html` (`central:`) → `tpl/estilo.html`, `tpl/styles.html`. El Central escribe `<palabra>-glasses.html` (forma, material, aro, color y género × forma: `womens-cat-eye-glasses.html`) y `styles.html`. QUÉ estilos, con qué palabra en la dirección y qué filtro del catálogo: SOLO en `build.py` (`STYLE_*` → `tpl/ssr.json` → `estilos`); cambiar una palabra ahí = cambiar una URL ya indexada. Mínimo 6 armazones en existencia, 240 por página. Los textos son patrones de `js/i18n/estilo.js` (`estilo.n.<familia>` nombre, `estilo.t.<familia>` título; un estilo con texto propio: `estilo.n.<familia>.<valor>`); el Central los rellena en los DOS idiomas y los deja en `<script id="style-data">`: `js/pages/estilo.js` solo elige cuál enseñar (ninguna regla de texto en el navegador).
+- **Ficha**: la foto 1 es un `<img>` de verdad (`assets/p/<SKU>.webp`, marca `ssr:photo`), escrita en el HTML; `producto.js` la ADOPTA (no la vuelve a crear) y su entrada es css (`pdp-focus`, una vez; `html.pdp-seen` la termina). Vista 2 = `assets/p/<SKU>-2.webp`, vista 3 = sprite. `pdp-data` trae además `twin` (medida para el título de un armazón con gemelo: `prod.metaTwin`), `styles` (enlaces de Details a las páginas de estilo) y `about` (párrafo del armazón en/es, marca `ssr:about`, patrones `prod.about*`): los tres los decide y escribe el Central.
+- **Tarjetas** de marca y de estilo: marca `ssr:imgcards` → `<img>` dentro de `.fcard-img` (sin `data-bg`: el cargador no baja el sprite). Las que pinta el JS (catálogo, portada) siguen con el sprite de fondo.
+- **Compatibilidad**: el Central acepta el molde anterior (marcas `img` / `cards`, sin estilos) y con él escribe byte a byte lo de antes; y los moldes de hoy llevan el hueco viejo JUNTO al nuevo (`photo`+`img`, `imgcards`+`cards`) para que un `paginas.py` anterior al 11/13 también pueda escribir con ellos (no quitarlos). Lo nuevo cuelga de marcas o claves NUEVAS; nunca cambiar el significado de una clave del diccionario que ya usa un JS publicado (durante la publicación un JS viejo puede leer el diccionario nuevo): por eso `prod.metaTwin` es una clave aparte.
+- **Catálogo**: `?rim=full|half|rimless` filtra solo por la dirección (chip, sin grupo en el panel): lo usan las páginas de estilo de aro.
+- **Portada**: los videos de las bandas no se piden al cargar (`data-src` + `data-poster`; el poster es un `<img loading="lazy">` debajo; `hoeMotion.band` los carga al acercarse). El hero en un teléfono vertical usa `assets/img/hero-woman-phone.webp` (el centro de `hero-woman@2x.jpg`, misma densidad): la condición `HERO_PHONE` de `build.py` debe ser la del `<source>` de `index.html` (el build lo comprueba).
+
+## Páginas por tipo de lente y About (11/13, ASSET_V 20261113c) — enfoque INGLÉS / EE. UU.
+- Armando 11/13: «mi enfoque es en inglés, mercado estadounidense». La web no tenía ninguna página para lo que vende por tipo (lo que la gente escribe en Google: progressive glasses, prescription sunglasses…). Ahora: `prescription-glasses.html` (centro), `progressive-glasses.html`, `single-vision-glasses.html`, `sunglasses.html` (= prescription sunglasses; dejó de ser categoría vacía), `blue-light-glasses.html`, `computer-glasses.html`, `photochromic-glasses.html` y `about.html`.
+- Textos en `js/i18n/tipo.js` (`tp.<página>.*`, `about.*`). Los nombres cortos `tp.n.*`, `nav.rx` y `foot.about` viven en `js/i18n.js` porque los usan pie, cajón, portada y guía de lentes. Estilos `css/pages/tipo.css` (filas con hairline; reutiliza `.faq` de ayuda.css, la rejilla de categoria.css y `.brandp-list` de marca.css). `js/pages/tipo.js` pone el precio desde `data/manifest.json → lentes` (ningún precio escrito a mano) y doce más vendidos.
+- Hechos que afirman = `legal.html` §6–§7: envío estándar gratis, 5–10 días hábiles + tiempo de laboratorio para lentes con receta; devolución 30 días SOLO armazones sin receta; rehacer gratis SOLO si el error es nuestro. No se hacen bifocales con línea, polarizados ni lentes de sol sin receta (el configurador no los ofrece): si eso cambia, cambian estas páginas.
+- «Sunglasses» del menú y de la portada va a `sunglasses.html` (antes `catalogo.html?cat=sun`, que daba 0 armazones); el catálogo con `cat=sun` vacío dice qué sí hay (`catalogo.emptySun`).
+- Teléfono (auditoría 11/13): zona de toque de las pestañas de la galería y del enlace del probador ampliada con pseudo-elementos (nada dibujado); el menú «Sort» del catálogo va a 16 px en pantallas táctiles (iOS hace zoom por debajo).
+- `llms.txt`: sección «Prescription lenses» y About (lista escrita en `build.py → llms_txt`).
+- Guías por forma de cara (misma tanda, sin subir ASSET_V: archivos nuevos): `face-shape-guide.html` + `glasses-for-{round,square,heart,oval,long}-face.html`, textos en `js/i18n/caras.js` (`tp.face-<cara>.*`, `face.*`), con `js/pages/tipo.js`. Las formas recomendadas son las del quiz (`js/pages/quiz.js`, tabla `FACE`): si cambian allí, cambian aquí. Enlazan a las páginas por estilo del Central; las enlazan `quiz.html` y `talla.html#face`.
+- Teléfono y WhatsApp de la tienda (Armando 11/13): **(786) 316-6252** para los dos (`tel:+17863166252`, `wa.me/17863166252`); el 614-8629 era su número personal y ya no aparece en ningún archivo. Vive en: pie, cajón, portada, ayuda, About (`js/i18n/tipo.js`), carrito, contacts, gracias, pago, `js/pages/carrito.js`, `js/pages/pago.js`, legal y `build.py → llms_txt` (ASSET_V 20261113d = teléfono, 20261113e = WhatsApp).
+- REGLA para añadir páginas sin regenerar las fichas: texto en un diccionario NUEVO (no tocar un `js/i18n/*.js` ya publicado, el CDN lo guarda 30 días con el mismo `?v=`), sin tocar header/footer/drawer; enlazar desde páginas estáticas. Y no publicar mientras corre un export del Central.
+
+## Páginas por lente, segunda tanda (11/14, SIN subir ASSET_V: archivos nuevos)
+- Armando 11/14: «no es tampoco en cuanto a modelos, es en cuanto a los servicios que yo doy también». Tres páginas más, una por opción que el configurador SÍ ofrece y no tenía página: `high-index-lenses.html` (materiales 1.67 y 1.74), `anti-glare-glasses.html` (capa antirreflejo + antirrayas) y `polycarbonate-lenses.html` (el material incluido en cada par). Mismo molde que las del 11/13 (`main[data-tp]`, filas `.tp-row`, rejilla, `.faq`, lista de hermanas).
+- Textos en `js/i18n/tipo2.js` (`tp.hi.*`, `tp.ar.*`, `tp.poly.*`, los nombres cortos `tp.n.hi|ar|poly` y la fila nueva del centro `tp.rx.r5*`). Lo cargan las tres páginas nuevas, las siete del 11/13, `prescription-glasses.html` y `lentes.html` (todas enseñan los nombres nuevos en su lista).
+- Precio: `js/pages/tipo2.js` pinta `[data-lens-price="<clave del diccionario>"]` y TODOS los números de `data/manifest.json → lentes` son huecos (cada pieza por su id con `_` en vez de `-`: `{index_167}`, `{anti_reflective}`, `{scratch}`…, y `{estandar}`, `{premium}`, `{ultimate}`). `js/pages/tipo.js` sigue pintando la rejilla y el título de esas páginas (por eso llevan `data-tp`), pero NO su precio: su `[data-tp-price]` solo conoce ocho huecos y esconde la línea si ve otro.
+- PENDIENTE para el próximo cambio de ASSET_V (no antes: obliga a regenerar las fichas): fundir `js/i18n/tipo2.js` en `js/i18n/tipo.js` y `js/pages/tipo2.js` en `js/pages/tipo.js` (un solo pintor de precio, `[data-lens-price]` en todas), y enlazar las nuevas desde los textos de las del 11/13 (p. ej. «high-index lens (1.67 or 1.74)» de single vision).
+- Lo que afirman = lo que ofrece el paso 4 del configurador (`js/data/lenses.js`, `js/pages/producto.js`: policarbonato incluido, 1.67/1.74 y las capas como extras, material recomendado según la receta escrita) + `legal.html` §6–§7. No se afirma protección UV, ni que sean espejuelos de seguridad (la página de policarbonato dice que NO lo son), ni antirreflejo sin receta.
+- Descartadas a propósito: *reading glasses* con receta (el configurador no tiene opción «para leer»: un monofocal se hace con los números que se escriben, y una receta de lejos + ADD subida como foto se haría para lejos; hace falta esa opción antes de prometerlo), *tinted glasses* (pisa `sunglasses.html`), *designer glasses under $100* (el catálogo no filtra por precio en la dirección), *kids* (ya existe `kids.html`).
+- ARREGLADO 11/14 (en línea, sin subir ASSET_V): `.cp-hero` (men, women, kids, sunglasses, contacts) lleva `aspect-ratio: 21/9` con `min-height` en `svh`; el navegador pasaba esa altura mínima al ancho y en ventanas más altas que 21:9·64 % (1280×900 → 64 px; 1024×768 → 123 px) la página se desplazaba de lado. La `section.cp-hero` de esas cinco páginas lleva ahora `style="…; width: 100%; min-width: 0"` (misma altura que antes). PENDIENTE próximo ASSET_V: pasar ese `width: 100%; min-width: 0` a `css/pages/categoria.css` y quitarlo del HTML.
+
+## Bloque propio de cada marca (11/14, SIN subir ASSET_V: archivos nuevos; solo se regeneran las páginas de marca)
+- Por qué: en las búsquedas de marca poco disputada (Jones New York, Liz Claiborne, Banana Republic, Adensco, Charriol, Anne Klein…) la primera página de Google la ocupan tiendas pequeñas (selecteyewear, coolframes, designeroptics, simplyeyeglasses) cuyas páginas de marca llevan 570–880 palabras; las nuestras llevaban una frase y la rejilla (235 palabras, sin H2). Punto de partida 11/14 (Google limpio): «adensco eyeglasses» puesto 30, «stella mccartney eyeglasses frames» 39, «furla eyeglasses frames» 47; las demás, fuera de los primeros 40–50.
+- Qué: `src/pages/marca.html` lleva la marca `<!--ssr:about-->` debajo de la rejilla. El Central (`lib/optica/paginas.py → sobre_marca`, commit 16e3110 en la PC) escribe ahí la sección ENTERA (`section.brandp-sibs.brandp-about` → `div.tp-rows.offset-1#brand-about` → dos filas `.tp-row`): (1) qué hay de esa marca con los números de SUS armazones (cuántos y cuántos modelos, precio, formas, materiales, para quién, aros si no son todos de aro completo, ancho de lente), cada valor enlazado a su página de estilo si está viva o a men/women/kids; (2) con qué lentes se pide, con enlaces a las páginas por tipo de lente, y envío/devoluciones.
+- Textos: patrones `marca.about.*` de `js/i18n/marca2.js` (se escriben como HTML; los rótulos son los del catálogo `catalogo.f.*` y los valores `shape.*`, `mat.*`, `gender.*`, `rim.*`). El Central deja los dos idiomas en `#brand-data → about` y `js/pages/marca2.js` enseña el del visitante. Las filas usan `css/pages/tipo.css` (por eso está en `styles` del molde) y el margen de `.brandp-sibs`.
+- Reglas: nunca un enlace roto (el Central solo enlaza una página de la web si está en su clon, y un estilo si tiene página viva); SIN precios de lentes en el texto (cambian sin regenerar páginas: el precio vive en las páginas por lente); hechos = `legal.html` §6–§7 y lo que ofrece el configurador. Sin la marca en el molde o sin alguno de sus textos, la página de marca sale byte a byte como antes (el Central y la web se publican en cualquier orden).
+- PENDIENTE próximo ASSET_V: fundir `js/i18n/marca2.js` en `js/i18n/marca.js` y `js/pages/marca2.js` en `js/pages/marca.js`.
+- No volver a tocar estas páginas en 3–4 semanas: medir primero (mismas búsquedas, `tools/serp_deep.js`).
+
+## El nombre va PRIMERO en el título de la portada (11/12)
+`index.html` debe titularse «House of Eyeglasses — …» (y `index.docTitle` igual). El 11/09 lo puse al final y Google pasó a mostrar la portada como «Designer Eyeglasses Frames & Prescription Lenses» sin el nombre: quien buscaba «house of eyeglasses» no la reconocía. Las demás páginas llevan el nombre al final.
+
+## SEO (11/09)
+- `producto.html` NO lleva canónica fija (`canonical: js` en su cabecera): `js/pages/producto.js` escribe canonical + og:url + título «Marca Modelo Color Código Eyeglasses» + JSON-LD Product (envío, devoluciones, fotos `assets/p/<SKU>.webp`) cuando conoce el armazón.
+- Un catálogo que NO SE PUDO LEER no es «no existe»: `hoeCatalog.unknown(sku)` / `reset()`; la ficha reintenta y nunca se marca `noindex` por un fallo de carga (11/06: 276 fichas vivas quedaron fuera de Google por eso). `noindex` solo para SKU inexistente o sin stock.
+- Hechos de envío y devoluciones del JSON-LD = los de `legal.html` §6–§7 (gratis EE. UU., 5–10 días hábiles, 30 días): si cambian allí, cambian en `producto.js`.
