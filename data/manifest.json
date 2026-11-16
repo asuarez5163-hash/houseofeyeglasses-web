@@ -1,13 +1,13 @@
 {
- "v": "2026-11-16T11:07:49Z",
- "total": 6750,
+ "v": "2026-11-16T23:13:37Z",
+ "total": 6756,
  "chunks": {
-  "men": "data/c/men.bccfdae7.json",
-  "women": "data/c/women.801eadcf.json",
-  "kids": "data/c/kids.7102397a.json",
+  "men": "data/c/men.dde25615.json",
+  "women": "data/c/women.0eb52422.json",
+  "kids": "data/c/kids.f1651d19.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.591c9afe.json",
+ "search": "data/s/index.dd067238.json",
  "featured": [
   "HOE-K-58",
   "HOE-W-4026",
@@ -119,6 +119,7 @@
    "Lucky Brand",
    "M Missoni",
    "MCM",
+   "Maison Margiela",
    "Marc Jacobs",
    "Marc Jacobs Runway",
    "Marchon",
@@ -236,7 +237,8 @@
   "lensColor": [
    "clear",
    "blue-light",
-   "tinted"
+   "tinted",
+   "mirror"
   ],
   "price": [
    37,
@@ -289,8 +291,8 @@
  },
  "tryon": {
   "kids": "data/t/kids.ed958a4d.json",
-  "men": "data/t/men.65cabf9d.json",
-  "women": "data/t/women.3effa8ec.json"
+  "men": "data/t/men.622f72e6.json",
+  "women": "data/t/women.2f3e17a7.json"
  },
  "pages": 1
 }
