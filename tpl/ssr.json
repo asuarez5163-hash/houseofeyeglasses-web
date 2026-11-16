@@ -1247,6 +1247,204 @@
 "groups"
 ]
 },
+"nombres": [
+[
+"Tommy Hilfiger",
+"TH 1749",
+"0FLL00",
+"Tommy Hilfiger TH 1749",
+"FLL"
+],
+[
+"Tommy Hilfiger",
+"TH 1749",
+"00Z300",
+"Tommy Hilfiger TH 1749",
+"0Z3"
+],
+[
+"Hugo Boss",
+"BOSS 1006/IT",
+"0FLL00",
+"Hugo Boss BOSS 1006/IT",
+"FLL"
+],
+[
+"David Beckham",
+"DB 1122",
+"01ED00",
+"David Beckham DB 1122",
+"1ED"
+],
+[
+"Adensco",
+"AD 115",
+"000300",
+"Adensco AD 115",
+"003"
+],
+[
+"M Missoni",
+"MMI 0093",
+"035J00",
+"M Missoni MMI 0093",
+"35J"
+],
+[
+"Jones New York",
+"J 525",
+"0BLA00",
+"Jones New York J 525",
+"BLA"
+],
+[
+"Flexon",
+"FLEXON W3012",
+"505",
+"Flexon W3012",
+"505"
+],
+[
+"Carrera",
+"CARRERA 1107/V",
+"0PJP00",
+"Carrera 1107/V",
+"PJP"
+],
+[
+"Nike",
+"NIKE 7254",
+"001",
+"Nike 7254",
+"001"
+],
+[
+"Dior",
+"DIOR MINI CD O S2F",
+"B0I0",
+"Dior MINI CD O S2F",
+"B0I0"
+],
+[
+"Flexon",
+"flexon  E1146 ",
+"033",
+"Flexon E1146",
+"033"
+],
+[
+"Chloé",
+"CHLOÉ CH0228O",
+"006",
+"Chloé CH0228O",
+"006"
+],
+[
+"Dolce & Gabbana",
+"DOLCE & GABBANA DG3345",
+"501",
+"Dolce & Gabbana DG3345",
+"501"
+],
+[
+"Nike",
+"NIKE7166",
+"001",
+"Nike NIKE7166",
+"001"
+],
+[
+"Dior",
+"DIORBLACKSUITO R3U",
+"10A0",
+"Dior DIORBLACKSUITO R3U",
+"10A0"
+],
+[
+"Flexon",
+"FLEXON",
+"210",
+"Flexon FLEXON",
+"210"
+],
+[
+"Gucci",
+"GG1737O",
+"002",
+"Gucci GG1737O",
+"002"
+],
+[
+"Kate Spade",
+"KS 4",
+"0807",
+"Kate Spade KS 4",
+"0807"
+],
+[
+"Kate Spade",
+"KS 4",
+"0FLL0",
+"Kate Spade KS 4",
+"0FLL0"
+],
+[
+"Kate Spade",
+"KS 4",
+"0fll00",
+"Kate Spade KS 4",
+"0fll00"
+],
+[
+"Kate Spade",
+"KS 4",
+"1FLL00",
+"Kate Spade KS 4",
+"1FLL00"
+],
+[
+"Kate Spade",
+"KS 4",
+"0FLL000",
+"Kate Spade KS 4",
+"0FLL000"
+],
+[
+"Kate Spade",
+"KS 4",
+" 0FLL00",
+"Kate Spade KS 4",
+" 0FLL00"
+],
+[
+"Kate Spade",
+"KS 4",
+"0FLL00\n",
+"Kate Spade KS 4",
+"0FLL00\n"
+],
+[
+"Kate Spade",
+"KS 4",
+"000000",
+"Kate Spade KS 4",
+"000"
+],
+[
+null,
+"W3012",
+null,
+"W3012",
+""
+],
+[
+"",
+"",
+"",
+"",
+""
+]
+],
 "shapeOrder": [
 "round",
 "square",
@@ -1361,5 +1559,5 @@
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261115a"
+"v": "20261116a"
 }

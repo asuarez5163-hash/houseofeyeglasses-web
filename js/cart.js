@@ -60,7 +60,17 @@
   const total = () => get().items.reduce((a, i) => a + (Number(i.price) || 0), 0);
   const price = n => (window.hoeCatalog ? window.hoeCatalog.price(n) : '$' + n);
   const colorOf = it => { const c = it.colorName; return (c && typeof c === 'object' ? (c[L()] || c.en) : c) || T('color.' + it.colorKey); };
-  const lineImg = it => `<span class="cart-mini-img" role="img" aria-label="${esc(it.name)}" style="background-image:url('${esc(it.img)}')"></span>`;
+  // the name a line SHOWS (cart page, this drawer, pago.html) = the frame's title in the Google/Meta feed, in English whatever the
+  // language (hoeCatalog.feedTitle): Meta checks the cart against its catalog. Made from the line itself: its name (hoeCatalog.name
+  // of the frame), the colour in English (colorName.en = colRaw.en or the key, as the feed) and the supplier's code; sunglasses =
+  // SKU HOE-S-… (the Central gives S only to sunglasses). it.name stays as it is (Analytics, the WhatsApp note); the order sent to
+  // the Worker carries no name
+  const title = it => {
+    const K = window.hoeCatalog, c = it.colorName;
+    if (!K || !K.feedTitle) return String(it.name || '');
+    return K.feedTitle(it.name, (c && typeof c === 'object' ? c.en : c) || it.colorKey || '', it.cc, K.catOf(it.sku) === 'sun');
+  };
+  const lineImg = it => `<span class="cart-mini-img" role="img" aria-label="${esc(title(it))}" style="background-image:url('${esc(it.img)}')"></span>`;
 
   // the lens options are the single source (js/data/lenses.js); the cart only keeps ids
   const lensName = (kind, id) => {
@@ -102,11 +112,11 @@
       <li class="cart-mini-line" data-id="${esc(it.id)}">
         <span class="cart-mini-art">${lineImg(it)}</span>
         <span class="cart-mini-meta">
-          <b style="font-size:calc(var(--fs-title, 21px) - 2px)">${esc(it.name)}</b>
+          <b style="font-size:calc(var(--fs-title, 21px) - 2px)">${esc(title(it))}</b>
           <span>${esc(colorOf(it))} · ${esc(T('band.' + it.band))} · ${esc(useLine(it))}</span>
           <span class="cart-mini-price">${price(it.price)} · ${esc(T('prod.included'))}</span>
         </span>
-        <button type="button" class="cart-mini-x" data-remove="${esc(it.id)}" aria-label="${esc(T('cart.remove'))}: ${esc(it.name)}">
+        <button type="button" class="cart-mini-x" data-remove="${esc(it.id)}" aria-label="${esc(T('cart.remove'))}: ${esc(title(it))}">
           <svg viewBox="0 0 16 16" aria-hidden="true"><path d="m3 3 10 10M13 3 3 13"/></svg>
         </button>
       </li>`).join('')}</ul>
@@ -145,5 +155,5 @@
   };
   const order = sid => fetchJson(API + '/pedido?s=' + encodeURIComponent(sid), { method: 'GET' }, 20000);
 
-  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, lensName, rxLine, fill, useLine, ship, setShip, pdText, rxIssues, pdMissing, proofMissing, fileMissing, dropFiles, dropped: () => dropped, KEY, API, config, pay, order };
+  window.hoeCart = { get, add, remove, update, clear, count, total, price, colorOf, title, lensName, rxLine, fill, useLine, ship, setShip, pdText, rxIssues, pdMissing, proofMissing, fileMissing, dropFiles, dropped: () => dropped, KEY, API, config, pay, order };
 })();

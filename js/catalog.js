@@ -16,6 +16,8 @@
 //   photo(f, k)       → 'assets/p/<SKU>.webp' (k = 0) · 'assets/p/<SKU>-2.webp' (k = 1): las fotos limpias 800 × 800 (vistas 1 y 2)
 //   size(l, b, t)     → { lens, bridge, temple, total, band }   (UNA fórmula: total = 2·lente + puente + HINGE; talla.js la usa)
 //   price(n)          → "$129" en el idioma activo · colorHex(key) → hex de manifest.colors · name(f) → "Marca Modelo"
+//                       (modelo sin la marca repetida: model(b, n)) · ccShort(cc) → el código de color como se busca ("0FLL00" → "FLL")
+//                       feedTitle(nombre, color, cc, sol) → el título del armazón en el feed de Google/Meta (nombre de la línea del carrito)
 //   colorName(f)      → texto del color en el idioma activo · catOf(sku) → 'men' | 'women' | 'kids' | 'sun' | null
 //   url(f[, query])   → la página del armazón: '<marca>-<modelo>-<color>-<sku>.html' si el Central ya publicó las páginas
 //                       estáticas (manifest.pages), si no 'producto.html?id=<SKU>' · slug(b, n, cc, id) → ese nombre sin .html
@@ -143,11 +145,42 @@ window.hoeCatalog = (() => {
   };
   // a static frame page brings its own record (and the colours it paints): no chunk is downloaded for it
   const adopt = (rec, colors) => { S.pages = true; if (colors) S.colors = Object.assign(S.colors || {}, colors); return prep(rec, catOf(rec && rec.id) || 'men'); };
-  const name = f => `${f.b || ''} ${f.n || ''}`.trim();
+  // ---- the model and the colour code AS PEOPLE SEARCH THEM (what the page SHOWS; the address and the mpn keep the
+  // supplier's own text: slug() and url() always get f.n and f.cc as they are). ONE rule per side: this one and
+  // lib/optica/normalize.py (modelo_limpio, cc_corto) on the Central; build.py (NAME_CASES) checks both answer the same
+  // cases and passes them to the Central in tpl/ssr.json → "nombres".
+  //   ccShort('0FLL00') → 'FLL' · ccShort('00Z300') → '0Z3' (Safilo and the like: 0 + colour + 00) · any other code as it is
+  //   model('Flexon', 'FLEXON W3012') → 'W3012' (the model starts with the whole brand and a space: not said twice)
+  const CC6 = /^0([0-9A-Z]{3})00$/;
+  const ccShort = cc => { const s = cc == null ? '' : String(cc); const m = CC6.exec(s); return m ? m[1] : s; };
+  const model = (b, n) => {
+    const B = String(b || '').trim(), N = String(n || '').trim();
+    if (!B || N.slice(0, B.length).toLowerCase() !== B.toLowerCase() || !/^\s/.test(N.slice(B.length))) return N;
+    return N.slice(B.length).trim() || N;
+  };
+  const name = f => `${String(f.b || '').trim()} ${model(f.b, f.n)}`.trim();
+  // ---- the frame's title in the shopping feeds, as the Central writes it (lib/optica/google_feed.py: fila → title, then
+  // para_meta for Meta's catalog): "<name()> <colour> <ccShort()> Eyeglasses Frame" (or "… Sunglasses"), the colour in ENGLISH
+  // (the feeds are in English: colRaw.en, else the colour key), every run of spaces folded to one and cut as _limpio does it
+  // (colour 100 characters, title 150) and «prescription » taken out (Meta's rule; Google's title only differs when a name
+  // carries that word). The cart shows it as the name of each line (hoeCart.title, js/cart.js): Meta checks that the name a
+  // buyer sees in the cart is the title of its catalog («A product name was incorrect»). Python's whitespace, \w and code-point
+  // slicing, so both sides cut and fold the same text the same way.
+  //   feedTitle('Burberry BE2422F', 'Black', '3001', false) → 'Burberry BE2422F Black 3001 Eyeglasses Frame'
+  const WS = '[\\t-\\r\\x1c-\\x20\\x85\\xa0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000]';
+  const SPACES = new RegExp(WS + '+');
+  const PRESC = new RegExp('prescription' + WS + '+', 'giu');
+  const WORD = /[\p{L}\p{N}_]/u;
+  const fold = (s, n) => { const t = String(s == null ? '' : s).split(SPACES).filter(Boolean).join(' '); return t.length > n ? Array.from(t).slice(0, n).join('') : t; };
+  const feedTitle = (nm, colour, cc, sun) => {
+    const t = fold(`${nm == null ? '' : nm} ${fold(colour, 100)} ${ccShort(cc)} ${sun ? 'Sunglasses' : 'Eyeglasses Frame'}`, 150);
+    // \bprescription\s+ (re.I): the word only where no letter, digit or _ comes right before it
+    return fold(t.replace(PRESC, (m, at, s) => (WORD.test(Array.from(s.slice(Math.max(0, at - 2), at)).pop() || '') ? m : '')), 150);
+  };
   const colorName = f => { const r = f && f.colRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('color.' + (f && f.col)) : (f && f.col)) || ''; };
   const lensName = f => { const r = f && f.lcRaw; const L = lang(); return (r && (r[L] || r.en)) || (window.hoeT ? window.hoeT('lc.' + (f && f.lc)) : (f && f.lc)) || ''; };
 
-  return { manifest, chunk, all, byId, unknown, reset, featured, search, img, photo, sprite, size, price, colorHex, name, colorName, lensName, catOf, slug, url, adopt, hasPages, HINGE, BANDS, get m() { return S.m; }, _s: S };
+  return { manifest, chunk, all, byId, unknown, reset, featured, search, img, photo, sprite, size, price, colorHex, name, model, ccShort, feedTitle, colorName, lensName, catOf, slug, url, adopt, hasPages, HINGE, BANDS, get m() { return S.m; }, _s: S };
 })();
 window.hoeFrameById = id => window.hoeCatalog.byId(id);
 window.hoeFrameSize = f => `${f.size.lens} □ ${f.size.bridge} — ${f.size.temple}`;

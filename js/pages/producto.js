@@ -83,6 +83,10 @@
 
   function init(frame) {
   const name = CAT.name(frame);
+  // what the page SHOWS: the colour code and the model as people search them ('0FLL00' → 'FLL', 'FLEXON W3012' of Flexon →
+  // 'W3012'; js/catalog.js, the Central's rule). The address, the mpn and the cart keep the supplier's text (frame.n, frame.cc)
+  const cc = CAT.ccShort(frame.cc);
+  const model = CAT.model(frame.b, frame.n);
   const inStock = Number(frame.st) > 0;
   // the frame's own address: its static page when this is one, else the old ?id= (which only lives until it forwards there)
   const url = SITE + (own ? CAT.slug(frame.b, frame.n, frame.cc, frame.id) + '.html' : 'producto.html?id=' + encodeURIComponent(frame.id));
@@ -147,7 +151,7 @@
   // (producto.css pdp-focus), so nothing ever shows and then hides. View 2 loads when its tab is first shown (or the pointer
   // reaches the tabs); view 3 only lives in the sprite. A photo that cannot be read falls back to the sprite's square.
   const photoLabel = i => `${name} · ${fill(T('prod.photo'), { k: i + 1, n: frame.ph })}`;
-  const photoAlt = i => (i ? photoLabel(i) : [name, CAT.colorName(frame), frame.cc].filter(Boolean).join(' '));
+  const photoAlt = i => (i ? photoLabel(i) : [name, CAT.colorName(frame), cc].filter(Boolean).join(' '));
   const spriteView = i => `<div class="pdp-img" role="img" aria-label="${esc(photoLabel(i))}" style="${CAT.sprite(frame, i)}"></div>`;
   function renderViews() {
     ['1', '2', '3'].forEach((k, i) => {
@@ -172,7 +176,7 @@
           if (!i && img.complete && !img.naturalWidth) toSprite();
         }
       }
-      $('.pdp-plate-l', fig).textContent = `${CAT.colorName(frame)} · ${frame.cc}`;
+      $('.pdp-plate-l', fig).textContent = `${CAT.colorName(frame)} · ${cc}`;
       $('.pdp-plate-r', fig).textContent = `${mm()} · ${frame.size.total} mm`;
     });
     $('#pdp-art-side').innerHTML = window.hoeTempleSVG(window.hoeFrameSize(frame), null, { marks: true });
@@ -234,12 +238,12 @@
      ========================================================= */
   const sizeLine = () => `${T('band.' + frame.size.band)} · ${mm()}`;
   const sibs = () => [{ id: frame.id, col: frame.col, cc: frame.cc, self: true }, ...(frame.v || [])];
-  const sibName = s => (s.self ? CAT.colorName(frame) : T('color.' + s.col)) + (s.cc ? ` · ${s.cc}` : '');
+  const sibName = s => (s.self ? CAT.colorName(frame) : T('color.' + s.col)) + (s.cc ? ` · ${CAT.ccShort(s.cc)}` : '');
   const twin = (own && typeof own.twin === 'string' && own.twin) || '';
   const detailLink = k => (!own ? '' : k === 'prod.d.brand' ? own.brand : (own.styles && own.styles[k.slice(7)])) || '';   // 'prod.d.shape' → own.styles.shape
   function renderBuy() {
     $('#pdp-name').textContent = name;
-    const head = { name, color: CAT.colorName(frame), cc: frame.cc || '', kind: T(isSun ? 'prod.kindSun' : 'prod.kind'), price: CAT.price(frame.p), size: twin };
+    const head = { name, color: CAT.colorName(frame), cc, kind: T(isSun ? 'prod.kindSun' : 'prod.kind'), price: CAT.price(frame.p), size: twin };
     // a frame with a twin (same model and colour, another size) says its size in the title: the Central decides (pdp-data.twin)
     document.title = fill(T(twin ? 'prod.metaTwin' : 'prod.meta'), head).replace(/\s{2,}/g, ' ');
     setHead('meta[property="og:title"]', 'content', document.title);
@@ -249,7 +253,7 @@
     const who = isSun ? T('prod.kickerSun') : T('gender.' + (['men', 'women', 'kids', 'unisex'].includes(frame.g) ? frame.g : 'unisex'));
     $('#pdp-kicker').textContent = [who, T('mat.' + frame.mat)].join(' · ');
     $('#pdp-price-v').textContent = CAT.price(frame.p);
-    $('#pdp-color-name').textContent = `${CAT.colorName(frame)} · ${frame.cc}`;
+    $('#pdp-color-name').textContent = `${CAT.colorName(frame)} · ${cc}`;
     $('#pdp-swatches').innerHTML = sibs().map((s, i) =>
       `<a role="radio" aria-checked="${s.self}" tabindex="${i === 0 ? 0 : -1}" href="${esc(CAT.url({ id: s.id, b: frame.b, n: frame.n, cc: s.cc }))}" style="--c:${CAT.colorHex(s.col)}" aria-label="${esc(sibName(s))}" data-sku="${esc(s.id)}"${s.self ? ' aria-current="page"' : ''}></a>`).join('');
     $('#pdp-size').innerHTML = `<span class="pdp-size-band">${esc(T('band.' + frame.size.band))}</span><span aria-hidden="true">·</span><b class="pdp-size-mm">${mm()}</b>`;
@@ -258,7 +262,7 @@
     stock.classList.toggle('is-out', !inStock);
     cta.disabled = !inStock; $('#cfg-add').disabled = !inStock;
     $('#pdp-details').innerHTML = [
-      ['prod.d.brand', frame.b], ['prod.d.model', frame.n], ['prod.d.colorCode', frame.cc], ['prod.d.color', CAT.colorName(frame)], ['prod.d.lens', CAT.lensName(frame)],
+      ['prod.d.brand', frame.b], ['prod.d.model', model], ['prod.d.colorCode', cc], ['prod.d.color', CAT.colorName(frame)], ['prod.d.lens', CAT.lensName(frame)],
       ['prod.d.material', T('mat.' + frame.mat)], ['prod.d.shape', T(window.HOE_SHAPE_LABEL[frame.sh] || 'shape.rect')], ['prod.d.rim', T('rim.' + frame.rim)],
       ['prod.d.size', `${sizeLine()} · ${frame.size.total} mm`], ['prod.d.incl', T('prod.d.inclText')],
     // the brand links to its page (<brand>-eyeglasses.html) and the shape, material, rim and colour to their style pages
@@ -280,10 +284,10 @@
     const size = `${frame.size.lens}-${frame.size.bridge}-${frame.size.temple}`;
     el.textContent = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Product',
-      name: [name, color, frame.cc, kind, twin].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '),
+      name: [name, color, cc, kind, twin].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '),
       brand: { '@type': 'Brand', name: frame.b }, category: kind, color, material: ['acetate', 'metal', 'titanium', 'tr90'].includes(frame.mat) ? T('mat.' + frame.mat) : undefined,
       size, inProductGroupWithID: frame.m || undefined,
-      description: fill(T('prod.ld'), { brand: frame.b, model: frame.n, kind: kind.toLowerCase(), color, cc: frame.cc ? fill(T('prod.ldCc'), { cc: frame.cc }) : '', size }),
+      description: fill(T('prod.ld'), { brand: frame.b, model, kind: kind.toLowerCase(), color, cc: cc ? fill(T('prod.ldCc'), { cc }) : '', size }),
       image: photos, url,
       offers: {
         '@type': 'Offer', url, priceCurrency: 'USD', price: Number(frame.p) || 0,

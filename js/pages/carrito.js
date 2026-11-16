@@ -1,5 +1,6 @@
 // Carrito (carrito.html): una línea por paquete desde js/cart.js (localStorage 'hoe-cart'): la foto del armazón (vista 1 del
-// sprite) sobre loseta --paper, nombre, color · código · medida, precio real, "Lentes: uso · material", "Receta: OD/OI" con
+// sprite) sobre loseta --paper, nombre (= título del armazón en el feed de Google/Meta, en inglés: hoeCart.title; Meta lo compara
+// con su catálogo), color · código · medida, precio real, "Lentes: uso · material", "Receta: OD/OI" con
 // Editar (vuelve a producto.html?id=<sku>&edit=&step=3: el paso 3 es la receta), Quitar con confirmación en línea; a la derecha el resumen (armazones ·
 // lentes · envío · TOTAL real) y un solo botón: hoeCart.pay() → el Central cobra el precio del Central y abre Stripe Checkout;
 // si el cobro está apagado o el Central no contesta, el mismo botón abre el aviso honesto (WhatsApp con SKU · nombre · color ·
@@ -71,9 +72,9 @@
     const tier = it.use === 'progressive' ? find('tiers', it.tier || 'estandar') : null;
     const lenses = [loc(use).name, tier ? loc(tier).name : '', loc(mat).name, ...extras].filter(Boolean).join(' · ');
     return `<li class="cart-line" data-id="${esc(it.id)}">
-      <div class="cart-line-art"><span class="cart-line-img" role="img" aria-label="${esc(it.name)}" style="background-image:url('${esc(it.img)}')"></span></div>
+      <div class="cart-line-art"><span class="cart-line-img" role="img" aria-label="${esc(C.title(it))}" style="background-image:url('${esc(it.img)}')"></span></div>
       <div class="cart-line-main">
-        <div class="cart-line-top"><span class="cart-line-name">${esc(it.name)}</span><span class="cart-line-price">${C.price(it.price)}</span></div>
+        <div class="cart-line-top"><span class="cart-line-name">${esc(C.title(it))}</span><span class="cart-line-price">${C.price(it.price)}</span></div>
         <p class="cart-line-meta">${esc(C.colorOf(it))}${it.cc ? ` · ${esc(it.cc)}` : ''} · ${esc(T('band.' + it.band))} · ${esc(sizeOf(it))}</p>
         <p class="cart-line-meta"><span class="k">${T('cart.lenses')}:</span> ${esc(lenses)} · ${esc(T('prod.included'))}</p>
         <p class="cart-line-meta cart-line-rx"><span class="k">${T('cart.rx')}:</span> <b>${esc(rxText(it))}</b> <a class="cart-line-edit" href="${esc(editHref(it, 3))}">${T('cart.edit')}</a></p>

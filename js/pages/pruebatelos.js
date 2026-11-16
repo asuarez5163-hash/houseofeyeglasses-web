@@ -95,7 +95,7 @@ dbg('module ok: three ' + THREE.REVISION + ', mediapipe import ok');
     stripT.hidden = strip.length < 2;
     stripEl.innerHTML = strip.map(f => `<button class="ty-tile${f.id === frame.id ? ' is-on' : ''}" type="button" data-id="${esc(f.id)}" aria-pressed="${f.id === frame.id}" aria-label="${esc(fill(T('tryon.tile'), { name: CAT.name(frame) }))}">
         <span class="ty-img"><img src="${imgUrl(f, tryon.get(f.id))}" alt="" loading="lazy" decoding="async"></span>
-        <small><b>${esc(f.b || '')}</b> ${esc(f.n || '')} · ${esc(CAT.colorName(f))}</small></button>`).join('');
+        <small><b>${esc(f.b || '')}</b> ${esc(CAT.model(f.b, f.n))} · ${esc(CAT.colorName(f))}</small></button>`).join('');
     document.title = `${CAT.name(frame)} — ${T('tryon.h1')} · House of Eyeglasses`;
   }
   renderNow();
