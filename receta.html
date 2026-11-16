@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>What the Numbers on Your Prescription Mean — House of Eyeglasses</title>
-  <meta name="description" content="What OD, OS, SPH, CYL, AXIS, ADD and PD mean on your eyeglass prescription, a free sign checker that stays on your device, and how to measure your PD at home.">
+  <title>How to Read an Eyeglass Prescription: What the Numbers Mean | House of Eyeglasses</title>
+  <meta name="description" content="How to read an eyeglass prescription: what OD, OS, OU, SPH, CYL, AXIS, ADD, prism and PD mean, a free sign checker that stays on your device, and how to measure your PD at home.">
   <meta name="theme-color" content="#0b0b0d">
   <link rel="canonical" href="https://houseofeyeglasses.com/receta.html">
   <link rel="alternate" hreflang="en" href="https://houseofeyeglasses.com/receta.html">
@@ -13,8 +13,8 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="House of Eyeglasses">
   <meta property="og:locale" content="en_US">
-  <meta property="og:title" content="What the Numbers on Your Prescription Mean — House of Eyeglasses">
-  <meta property="og:description" content="What OD, OS, SPH, CYL, AXIS, ADD and PD mean on your eyeglass prescription, a free sign checker that stays on your device, and how to measure your PD at home.">
+  <meta property="og:title" content="How to Read an Eyeglass Prescription: What the Numbers Mean | House of Eyeglasses">
+  <meta property="og:description" content="How to read an eyeglass prescription: what OD, OS, OU, SPH, CYL, AXIS, ADD, prism and PD mean, a free sign checker that stays on your device, and how to measure your PD at home.">
   <meta property="og:url" content="https://houseofeyeglasses.com/receta.html">
   <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -28,6 +28,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=20261115a">
   <link rel="stylesheet" href="css/pages/receta.css?v=20261115a">
+  <link rel="stylesheet" href="css/pages/marca.css?v=20261115a">
+  <link rel="stylesheet" href="css/pages/tipo.css?v=20261115a">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0LM7KG67S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-V0LM7KG67S");</script>
   <script>
@@ -107,11 +109,12 @@
       <div class="rx-hero-head">
         <div class="page-head offset-1">
           <p class="kicker" data-i18n="receta.kicker">Your prescription</p>
-          <h1 id="rx-title" class="rx-h1" data-i18n-html="receta.title">What the numbers on your prescription mean</h1>
+          <h1 id="rx-title" class="rx-h1" data-i18n-html="rx2.h1">How to read your eyeglass prescription: what the numbers mean</h1>
           <p class="lead" data-i18n="receta.lead">Learn what each number means, check that you copied it right, and see which lenses fit it. Then measure your PD at home with a ruler.</p>
         </div>
         <nav class="rx-toc offset-1" aria-label="On this page" data-i18n-aria="receta.toc">
           <ul>
+            <li><a class="link-arrow" href="#abbreviations"><span data-i18n="receta.toc1">How to read it</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></a></li>
             <li><a class="link-arrow" href="#understand"><span data-i18n="receta.toc2">Understand my prescription</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></a></li>
             <li><a class="link-arrow" href="#send"><span data-i18n="receta.toc3">Ways to send it</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></a></li>
             <li><a class="link-arrow" href="#pd"><span data-i18n="receta.toc4">Measure your PD</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></a></li>
@@ -194,6 +197,57 @@
           </div>
         </div>
       </div>
+      </div>
+    </section>
+
+    <!-- 01b every term written out (11/16, js/i18n/guias.js → rx2.*): the same terms as the sample paper, readable without a click.
+         Plain rows (tipo.css); nothing here carries data-term / data-col, so js/pages/receta.js never touches it -->
+    <section class="sec sec--tight tp-body" id="abbreviations" aria-label="Every abbreviation" data-i18n-aria="rx2.kicker">
+      <div class="rx-head page-head offset-1">
+        <p class="kicker" data-i18n="rx2.kicker">Every abbreviation</p>
+        <p class="lead" data-i18n="rx2.lead">How to read an eyeglass prescription, line by line: what each letter and number means.</p>
+      </div>
+      <div class="tp-rows offset-1">
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.od.h">OD: right eye</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.od.p"><p>OD is short for oculus dexter, Latin for right eye. Everything on the OD line is for your right eye. Some prescriptions write RE or R instead.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.os.h">OS: left eye</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.os.p"><p>OS is short for oculus sinister, the left eye. Some prescriptions write LE or L, and prescriptions in Spanish often write OI (ojo izquierdo).</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.ou.h">OU: both eyes</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.ou.p"><p>OU (oculus uterque) means both eyes. A value written once next to OU, often the ADD, is the same for the right and the left eye.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.sph.h">SPH: sphere</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.sph.p"><p>The main power of the lens, in diopters. A minus sign (−) corrects nearsightedness: far is blurry. A plus sign (+) corrects farsightedness. The bigger the number, the stronger the lens; PL or plano means zero. More in <a href="nearsighted-vs-farsighted.html">nearsighted vs farsighted</a>.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.cyl.h">CYL: cylinder</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.cyl.p"><p>Extra power for astigmatism, in diopters, when the eye is shaped a little more like a football than a basketball. Blank or 0.00 means no astigmatism. It can be written with a minus or a plus sign; both are valid. See <a href="glasses-for-astigmatism.html">glasses for astigmatism</a>.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.axis.h">AXIS: direction</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.axis.p"><p>The direction of the astigmatism correction, from 1 to 180 degrees. It only appears with a CYL value, and it is a direction, not a strength: 180 is not stronger than 90. Many prescriptions write it after an ×, as in −0.75 × 180.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.add.h">ADD: reading addition</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.add.p"><p>Extra magnifying power for close-up, always a plus number, usually between +0.75 and +3.00. It is common after 40 and often written once for both eyes. With an ADD, <a href="progressive-glasses.html">progressive lenses</a> give you far and near in one pair.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.prism.h">PRISM: prism and base</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.prism.p"><p>A correction that shifts the image, for eyes that don’t line up and see double. It comes with a base direction: BU (up), BD (down), BI (in) or BO (out). Most prescriptions leave it blank. Our lens step has no prism field, so if yours has one, contact us before you order.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.pd.h">PD: pupillary distance</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.pd.p"><p>The distance between the centers of your pupils, in millimeters, used to center each lens in front of your eye. It can be one number (63) or two, one per eye (31.5/31.5). Many prescriptions leave it out: <a href="#pd">measure it at home</a>.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.exp.h">Expiration date</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.exp.p"><p>Glasses prescriptions expire, usually one or two years after the exam, depending on your state and your doctor. We can only make lenses from a prescription that has not expired. See <a href="how-long-is-a-prescription-valid.html">how long a prescription is valid</a>.</p></div>
+        </div>
       </div>
     </section>
 
@@ -455,6 +509,25 @@
       </form>
     </section>
 
+    <!-- the eye care guides (11/16, js/i18n/guias.js) -->
+    <section class="sec sec--tight tp-more" aria-labelledby="gd-more-title">
+      <div class="page-head offset-1">
+        <p class="kicker" data-i18n="gd.more.kicker">Guides</p>
+        <h2 id="gd-more-title" data-i18n="gd.more.title">Eye care guides</h2>
+      </div>
+      <ul class="brandp-list offset-1">
+          <li><a href="signs-you-need-glasses.html"><span data-i18n="gd.n.signs">Signs you need glasses</span></a></li>
+          <li><a href="how-often-eye-exam.html"><span data-i18n="gd.n.exam">How often to get an eye exam</span></a></li>
+          <li><a href="how-long-is-a-prescription-valid.html"><span data-i18n="gd.n.rx-valid">How long a prescription is valid</span></a></li>
+          <li><span aria-current="page"><span data-i18n="gd.n.rx">How to read your prescription</span></span></li>
+          <li><a href="nearsighted-vs-farsighted.html"><span data-i18n="gd.n.near-far">Nearsighted vs farsighted</span></a></li>
+          <li><a href="glasses-for-astigmatism.html"><span data-i18n="gd.n.astig">Glasses for astigmatism</span></a></li>
+          <li><a href="prescription-glasses-cost.html"><span data-i18n="gd.n.cost">What prescription glasses cost</span></a></li>
+          <li><a href="contacts-vs-glasses.html"><span data-i18n="gd.n.contacts-vs">Contact lenses vs glasses</span></a></li>
+          <li><a href="glasses-after-lasik.html"><span data-i18n="gd.n.lasik">Glasses after LASIK</span></a></li>
+      </ul>
+    </section>
+
     <!-- disclaimer -->
     <section class="sec rx-disc" aria-labelledby="disc-title">
       <div class="rx-disc-inner" data-reveal-self>
@@ -625,6 +698,7 @@
   <script src="js/i18n.js?v=20261115a"></script>
   <script src="js/i18n/receta.js?v=20261115a"></script>
   <script src="js/i18n/fijas2.js?v=20261115a"></script>
+  <script src="js/i18n/guias.js?v=20261115a"></script>
   <script src="js/catalog.js?v=20261115a"></script>
   <script src="js/data/search.js?v=20261115a"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

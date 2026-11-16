@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Qué significan los números de tu receta — House of Eyeglasses</title>
-  <meta name="description" content="Qué significan OD, OS, SPH, CYL, AXIS, ADD y DP en tu receta de lentes, un verificador de signos gratis que se queda en tu dispositivo y cómo medir tu DP en casa.">
+  <title>Cómo leer una receta de espejuelos: qué significan los números | House of Eyeglasses</title>
+  <meta name="description" content="Cómo leer una receta de espejuelos: qué significan OD, OS, OU, SPH, CYL, AXIS, ADD, prisma y DP, un verificador de signos gratis que se queda en tu dispositivo y cómo medir tu DP en casa.">
   <meta name="theme-color" content="#0b0b0d">
   <link rel="canonical" href="https://houseofeyeglasses.com/receta.es.html">
   <link rel="alternate" hreflang="en" href="https://houseofeyeglasses.com/receta.html">
@@ -13,8 +13,8 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="House of Eyeglasses">
   <meta property="og:locale" content="es_US">
-  <meta property="og:title" content="Qué significan los números de tu receta — House of Eyeglasses">
-  <meta property="og:description" content="Qué significan OD, OS, SPH, CYL, AXIS, ADD y DP en tu receta de lentes, un verificador de signos gratis que se queda en tu dispositivo y cómo medir tu DP en casa.">
+  <meta property="og:title" content="Cómo leer una receta de espejuelos: qué significan los números | House of Eyeglasses">
+  <meta property="og:description" content="Cómo leer una receta de espejuelos: qué significan OD, OS, OU, SPH, CYL, AXIS, ADD, prisma y DP, un verificador de signos gratis que se queda en tu dispositivo y cómo medir tu DP en casa.">
   <meta property="og:url" content="https://houseofeyeglasses.com/receta.es.html">
   <meta property="og:image" content="https://houseofeyeglasses.com/assets/brand/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -28,6 +28,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css?v=20261115a">
   <link rel="stylesheet" href="css/pages/receta.css?v=20261115a">
+  <link rel="stylesheet" href="css/pages/marca.css?v=20261115a">
+  <link rel="stylesheet" href="css/pages/tipo.css?v=20261115a">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-V0LM7KG67S"></script>
   <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date());gtag("config","G-V0LM7KG67S");</script>
   <script>
@@ -107,11 +109,12 @@
       <div class="rx-hero-head">
         <div class="page-head offset-1">
           <p class="kicker" data-i18n="receta.kicker">Tu receta</p>
-          <h1 id="rx-title" class="rx-h1" data-i18n-html="receta.title">Qué significan los números de tu receta</h1>
+          <h1 id="rx-title" class="rx-h1" data-i18n-html="rx2.h1">Cómo leer tu receta de espejuelos: qué significan los números</h1>
           <p class="lead" data-i18n="receta.lead">Entiende qué significa cada número, confirma que lo copiaste bien y mira qué lentes le van. Después, mide tu distancia pupilar en casa con una regla.</p>
         </div>
         <nav class="rx-toc offset-1" aria-label="En esta página" data-i18n-aria="receta.toc">
           <ul>
+            <li><a class="link-arrow" href="#abbreviations"><span data-i18n="receta.toc1">Cómo leerla</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></a></li>
             <li><a class="link-arrow" href="#understand"><span data-i18n="receta.toc2">Entiende tu receta</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></a></li>
             <li><a class="link-arrow" href="#send"><span data-i18n="receta.toc3">Cómo enviárnosla</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></a></li>
             <li><a class="link-arrow" href="#pd"><span data-i18n="receta.toc4">Mide tu distancia pupilar</span><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v13M5.5 11.5 10 16l4.5-4.5"/></svg></a></li>
@@ -194,6 +197,57 @@
           </div>
         </div>
       </div>
+      </div>
+    </section>
+
+    <!-- 01b every term written out (11/16, js/i18n/guias.js → rx2.*): the same terms as the sample paper, readable without a click.
+         Plain rows (tipo.css); nothing here carries data-term / data-col, so js/pages/receta.js never touches it -->
+    <section class="sec sec--tight tp-body" id="abbreviations" aria-label="Cada abreviatura" data-i18n-aria="rx2.kicker">
+      <div class="rx-head page-head offset-1">
+        <p class="kicker" data-i18n="rx2.kicker">Cada abreviatura</p>
+        <p class="lead" data-i18n="rx2.lead">Cómo leer una receta de espejuelos, línea por línea: qué significa cada letra y cada número.</p>
+      </div>
+      <div class="tp-rows offset-1">
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.od.h">OD: ojo derecho</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.od.p"><p>OD viene del latín oculus dexter: ojo derecho. Todo lo de la línea OD es para tu ojo derecho. Algunas recetas escriben RE, R o D.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.os.h">OS: ojo izquierdo</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.os.p"><p>OS viene de oculus sinister: ojo izquierdo. Algunas recetas escriben LE o L, y las recetas en español suelen escribir OI (ojo izquierdo).</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.ou.h">OU: los dos ojos</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.ou.p"><p>OU (oculus uterque) quiere decir los dos ojos. Un valor escrito una sola vez junto a OU, muchas veces la ADD, es el mismo para el ojo derecho y el izquierdo.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.sph.h">SPH: esfera</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.sph.p"><p>La graduación principal del lente, en dioptrías. El signo menos (−) corrige la miopía: lo lejano se ve borroso. El signo más (+) corrige la hipermetropía. Mientras más alto el número, más fuerte el lente; PL o plano significa cero. Más en <a href="nearsighted-vs-farsighted.es.html">miopía o hipermetropía</a>.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.cyl.h">CYL: cilindro</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.cyl.p"><p>Graduación extra para el astigmatismo, en dioptrías, cuando el ojo tiene una forma un poco más parecida a un balón de fútbol americano que a una pelota. Vacío o 0.00 significa sin astigmatismo. Puede escribirse con signo menos o más; los dos son válidos. Mira <a href="glasses-for-astigmatism.es.html">espejuelos para el astigmatismo</a>.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.axis.h">AXIS: eje</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.axis.p"><p>La dirección de la corrección del astigmatismo, de 1 a 180 grados. Solo aparece junto a un valor de CYL, y es una dirección, no una fuerza: 180 no es más fuerte que 90. Muchas recetas la escriben después de una ×, como en −0.75 × 180.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.add.h">ADD: adición para leer</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.add.p"><p>Aumento extra para ver de cerca, siempre un número positivo, casi siempre entre +0.75 y +3.00. Es común después de los 40 y muchas veces se escribe una sola vez para los dos ojos. Con ADD, los <a href="progressive-glasses.es.html">lentes progresivos</a> te dan lejos y cerca en un solo par.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.prism.h">PRISM: prisma y base</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.prism.p"><p>Una corrección que desplaza la imagen, para ojos que no se alinean y ven doble. Lleva una dirección de base: BU (arriba), BD (abajo), BI (adentro) o BO (afuera). La mayoría de las recetas lo dejan vacío. Nuestro paso de lentes no tiene campo para prisma, así que si la tuya lo trae, escríbenos antes de pedir.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.pd.h">PD: distancia pupilar</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.pd.p"><p>La distancia entre los centros de tus pupilas, en milímetros, que sirve para centrar cada lente frente a tu ojo. Puede ser un número (63) o dos, uno por ojo (31.5/31.5). Muchas recetas no la traen: <a href="#pd">mídela en casa</a>.</p></div>
+        </div>
+        <div class="tp-row">
+          <h2 data-i18n="rx2.t.exp.h">Fecha de vencimiento</h2>
+          <div class="tp-txt" data-i18n-html="rx2.t.exp.p"><p>Las recetas de espejuelos vencen, casi siempre uno o dos años después del examen, según tu estado y tu doctor. Solo podemos hacer lentes con una receta que no haya vencido. Mira <a href="how-long-is-a-prescription-valid.es.html">cuánto tiempo vale una receta</a>.</p></div>
+        </div>
       </div>
     </section>
 
@@ -455,6 +509,25 @@
       </form>
     </section>
 
+    <!-- the eye care guides (11/16, js/i18n/guias.js) -->
+    <section class="sec sec--tight tp-more" aria-labelledby="gd-more-title">
+      <div class="page-head offset-1">
+        <p class="kicker" data-i18n="gd.more.kicker">Guías</p>
+        <h2 id="gd-more-title" data-i18n="gd.more.title">Guías de salud visual</h2>
+      </div>
+      <ul class="brandp-list offset-1">
+          <li><a href="signs-you-need-glasses.es.html"><span data-i18n="gd.n.signs">Señales de que necesitas espejuelos</span></a></li>
+          <li><a href="how-often-eye-exam.es.html"><span data-i18n="gd.n.exam">Cada cuánto hacerte un examen de la vista</span></a></li>
+          <li><a href="how-long-is-a-prescription-valid.es.html"><span data-i18n="gd.n.rx-valid">Cuánto tiempo vale una receta</span></a></li>
+          <li><span aria-current="page"><span data-i18n="gd.n.rx">Cómo leer tu receta</span></span></li>
+          <li><a href="nearsighted-vs-farsighted.es.html"><span data-i18n="gd.n.near-far">Miopía o hipermetropía</span></a></li>
+          <li><a href="glasses-for-astigmatism.es.html"><span data-i18n="gd.n.astig">Espejuelos para el astigmatismo</span></a></li>
+          <li><a href="prescription-glasses-cost.es.html"><span data-i18n="gd.n.cost">Cuánto cuestan los espejuelos con receta</span></a></li>
+          <li><a href="contacts-vs-glasses.es.html"><span data-i18n="gd.n.contacts-vs">Lentes de contacto o espejuelos</span></a></li>
+          <li><a href="glasses-after-lasik.es.html"><span data-i18n="gd.n.lasik">Espejuelos después del LASIK</span></a></li>
+      </ul>
+    </section>
+
     <!-- disclaimer -->
     <section class="sec rx-disc" aria-labelledby="disc-title">
       <div class="rx-disc-inner" data-reveal-self>
@@ -625,6 +698,7 @@
   <script src="js/i18n.js?v=20261115a"></script>
   <script src="js/i18n/receta.js?v=20261115a"></script>
   <script src="js/i18n/fijas2.js?v=20261115a"></script>
+  <script src="js/i18n/guias.js?v=20261115a"></script>
   <script src="js/catalog.js?v=20261115a"></script>
   <script src="js/data/search.js?v=20261115a"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
