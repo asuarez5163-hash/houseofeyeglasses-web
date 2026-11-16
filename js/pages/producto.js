@@ -88,13 +88,17 @@
   const url = SITE + (own ? CAT.slug(frame.b, frame.n, frame.cc, frame.id) + '.html' : 'producto.html?id=' + encodeURIComponent(frame.id));
   // the clean square photos the Central publishes for Google (assets/p/<SKU>.webp, 800 × 800; -2 = second view): link
   // previews and Google's product results show the frame alone, never the stacked sprite
-  const photos = [SITE + 'assets/p/' + encodeURIComponent(frame.id) + '.webp'].concat(frame.ph > 1 ? [SITE + 'assets/p/' + encodeURIComponent(frame.id) + '-2.webp'] : []);
+  // The route of each photo is decided by the Central (pdp-data.photos: -hd names when the supplier's original is >= 1200 px,
+  // else today's 800 px names); without it, today's names.
+  const photoRel = i => (own && own.photos && own.photos[i]) || ('assets/p/' + encodeURIComponent(frame.id) + (i ? '-2' : '') + '.webp');
+  const photoSide = i => (/-hd(-2)?\.webp$/.test(photoRel(i)) ? 1200 : 800);
+  const photos = [SITE + photoRel(0)].concat(frame.ph > 1 ? [SITE + photoRel(1)] : []);
   putHead('link', 'rel', 'canonical', 'href', url);
   putHead('meta', 'property', 'og:url', 'content', url);
   setHead('meta[property="og:type"]', 'content', 'product');
   setHead('meta[property="og:image"]', 'content', photos[0]);
-  setHead('meta[property="og:image:width"]', 'content', '800');
-  setHead('meta[property="og:image:height"]', 'content', '800');
+  setHead('meta[property="og:image:width"]', 'content', String(photoSide(0)));
+  setHead('meta[property="og:image:height"]', 'content', String(photoSide(0)));
   if (!inStock) noindex();
   try { localStorage.setItem('hoe-view-' + frame.id, String(Number(localStorage.getItem('hoe-view-' + frame.id) || 0) + 1)); } catch (e) { /* per visit */ }
 
@@ -156,7 +160,7 @@
       else {
         let img = $('img.pdp-img', art);
         if (!img) {
-          art.innerHTML = `<img class="pdp-img" src="${esc(CAT.photo(frame, i))}" alt="" width="800" height="800"${i ? ' loading="lazy"' : ' fetchpriority="high"'} decoding="async">`;
+          art.innerHTML = `<img class="pdp-img" src="${esc(photoRel(i))}" alt="" width="${photoSide(i)}" height="${photoSide(i)}"${i ? ' loading="lazy"' : ' fetchpriority="high"'} decoding="async">`;
           img = art.firstChild;
         }
         img.alt = photoAlt(i);
@@ -203,7 +207,7 @@
   // the other views are fetched once the pointer (or the focus, or a finger) reaches the tabs: the second photo, and the
   // sprite when there is a third
   const thumbs = $('.pdp-thumbs');
-  const warmViews = () => { if (frame.ph > 1 && !$('#pdp-view-2 .pdp-art').dataset.sprite) preload(CAT.photo(frame, 1)); if (frame.ph > 2) preload(CAT.img(frame)); };
+  const warmViews = () => { if (frame.ph > 1 && !$('#pdp-view-2 .pdp-art').dataset.sprite) preload(photoRel(1)); if (frame.ph > 2) preload(CAT.img(frame)); };
   if (thumbs) ['pointerenter', 'focusin', 'touchstart'].forEach(ev => thumbs.addEventListener(ev, warmViews, { once: true, passive: true }));
   // a colour sibling under the pointer shows its front photo in view 1; leaving brings this frame's back
   const firstImg = () => $('#pdp-view-1 .pdp-img');
