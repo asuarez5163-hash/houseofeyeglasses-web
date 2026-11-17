@@ -727,9 +727,12 @@
 "tile.men": "Men",
 "tile.sun": "Sunglasses",
 "tile.women": "Women",
+"tp.n.ar": "Anti-glare glasses",
 "tp.n.blue": "Blue light glasses",
 "tp.n.computer": "Computer glasses",
+"tp.n.hi": "High-index lenses",
 "tp.n.photo": "Photochromic glasses",
+"tp.n.poly": "Polycarbonate lenses",
 "tp.n.prog": "Progressive glasses",
 "tp.n.rx": "Prescription glasses",
 "tp.n.single": "Single vision glasses",
@@ -1202,9 +1205,12 @@
 "tile.men": "Hombre",
 "tile.sun": "Lentes de sol",
 "tile.women": "Mujer",
+"tp.n.ar": "Espejuelos antirreflejo",
 "tp.n.blue": "Espejuelos con filtro de luz azul",
 "tp.n.computer": "Espejuelos para computadora",
+"tp.n.hi": "Lentes de alto índice",
 "tp.n.photo": "Espejuelos fotocromáticos",
+"tp.n.poly": "Lentes de policarbonato",
 "tp.n.prog": "Espejuelos progresivos",
 "tp.n.rx": "Espejuelos con receta",
 "tp.n.single": "Espejuelos monofocales",
@@ -1569,5 +1575,5 @@ null,
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261117c"
+"v": "20261117d"
 }

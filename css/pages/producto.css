@@ -57,6 +57,13 @@ html.gs .pdp-view:not([hidden]) { animation: none; }                            
 .pdp-tryon:active { transform: scale(.96); }
 .pdp-tryon:focus-visible { outline: 2px solid var(--ink-paper); outline-offset: 2px; }
 
+/* lens options (11/17): the ten lens pages from every frame page, hairline chips under the buy area */
+.pdp-lensnav { display: grid; gap: 14px; padding-bottom: var(--sec-y); }
+.pdp-lenslist { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.pdp-lenslist a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border: 1px solid var(--line); color: var(--ink); font-size: 14px; text-decoration: none; transition: border-color .2s, color .2s; }
+@media (hover: hover) and (pointer: fine) { .pdp-lenslist a:hover { border-color: var(--gold); color: var(--gold); } }
+.pdp-lenslist a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
 /* =========================================================
    2 · buy column
    ========================================================= */
