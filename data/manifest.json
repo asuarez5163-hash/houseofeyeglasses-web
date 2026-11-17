@@ -1,13 +1,13 @@
 {
- "v": "2026-11-17T11:07:02Z",
- "total": 6726,
+ "v": "2026-11-17T19:54:43Z",
+ "total": 6815,
  "chunks": {
-  "men": "data/c/men.692a063f.json",
-  "women": "data/c/women.4776469e.json",
-  "kids": "data/c/kids.c3071a14.json",
+  "men": "data/c/men.7b3e4398.json",
+  "women": "data/c/women.7e4e9649.json",
+  "kids": "data/c/kids.2c801ca2.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.6b4dd8c9.json",
+ "search": "data/s/index.8e0f6ce0.json",
  "featured": [
   "HOE-K-58",
   "HOE-W-4026",
@@ -291,8 +291,8 @@
  },
  "tryon": {
   "kids": "data/t/kids.ed958a4d.json",
-  "men": "data/t/men.b7dfac31.json",
-  "women": "data/t/women.b2286e34.json"
+  "men": "data/t/men.60f2cbb4.json",
+  "women": "data/t/women.566fea46.json"
  },
  "pages": 1
 }
