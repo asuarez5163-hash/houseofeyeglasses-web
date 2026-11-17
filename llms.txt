@@ -8,8 +8,8 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 - [All brands](https://houseofeyeglasses.com/brands.html): every brand carried, with the number of frames in stock and a page per brand
 - [All styles](https://houseofeyeglasses.com/styles.html): eyeglasses by shape, material, rim and color, with the number of frames in stock and a page per style
 - [Designer Eyeglasses Frames](https://houseofeyeglasses.com/catalogo.html): Shop designer eyeglasses frames from 150+ brands by brand, shape, material, color and size. Add prescription lenses to any frame. Free U.S. shipping.
-- [Men’s Eyeglasses](https://houseofeyeglasses.com/men.html): Men’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. An optician in Tampa checks every prescription.
-- [Women’s Eyeglasses](https://houseofeyeglasses.com/women.html): Women’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. An optician in Tampa checks every prescription.
+- [Men’s Eyeglasses](https://houseofeyeglasses.com/men.html): Men’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. A licensed optician checks every prescription.
+- [Women’s Eyeglasses](https://houseofeyeglasses.com/women.html): Women’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. A licensed optician checks every prescription.
 - [Kids’ Eyeglasses](https://houseofeyeglasses.com/kids.html): Kids’ prescription eyeglasses: flexible frames for small faces with impact-resistant lenses made to the prescription, and free U.S. shipping.
 - [Virtual Try-On](https://houseofeyeglasses.com/pruebatelos.html): Try our frames on with your camera or a photo. The frame sits on your face in 3D, with the temples behind your ears. Nothing leaves your device.
 
@@ -27,6 +27,7 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 
 ## Guides
 - [How to Read an Eyeglass Prescription: What the Numbers Mean](https://houseofeyeglasses.com/receta.html): How to read an eyeglass prescription: what OD, OS, OU, SPH, CYL, AXIS, ADD, prism and PD mean, a free sign checker that stays on your device, and how to measure your PD at home.
+- [Measure Your PD Online](https://houseofeyeglasses.com/pd.html): Measure your pupillary distance (PD) online with your camera, or with a ruler and a mirror. Free, no app, and no photo leaves your device. Single and dual PD. The camera measurement runs in the browser (the iris is the ruler); it gives the distance PD to about ±2 mm.
 - [Lens Options](https://houseofeyeglasses.com/lentes.html): Compare lens types, materials and coatings, see who each one is for, and find the right lens thickness for your prescription.
 - [Find Your Fit: Frame Size Guide](https://houseofeyeglasses.com/talla.html): Work out your frame size from the three numbers on the glasses you own, or measure your face with a card. Standard or low nose bridge, and the frame shapes that suit your face.
 - [Style Quiz](https://houseofeyeglasses.com/quiz.html): Six quick questions to find the frame shapes, materials, colors and lenses that suit you. No sign-up needed.

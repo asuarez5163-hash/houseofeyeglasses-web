@@ -137,6 +137,37 @@
     rx: loadRx(editing && editing.rx),
     done: { 1: !!(editing && ship0), 2: !!editing, 3: !!editing, 4: !!editing },
   };
+  // ---- the PD measured on pd.html (11/17): «Use this PD» writes localStorage hoe-pd = { od, os, total, at, src }. It is used
+  // for 7 days and only to fill PD boxes that are still EMPTY (a PD typed here or coming from the cart always wins).
+  // Leaving for pd.html from the "?" card keeps this configurator in sessionStorage (hoe-pd-draft, this frame only, 3 h), so
+  // the visitor comes back to step 3 with what they had chosen; the PD then fills in from hoe-pd.
+  const has = k => T(k) !== k;                                         // js/i18n/pd.js is there (the page's template loads it)
+  const mmStr = n => String(Math.round(Number(n) * 10) / 10);
+  let draft = null, pdSaved = null;
+  try {
+    const d = JSON.parse(sessionStorage.getItem('hoe-pd-draft') || 'null');
+    sessionStorage.removeItem('hoe-pd-draft');
+    if (d && d.sku === frame.id && !editing && Date.now() - Number(d.t) < 3 * 3600e3) draft = d;
+  } catch (e) { draft = null; }
+  if (draft) {
+    if (OPTS.uses.some(u => u.id === draft.use) && !(isSun && draft.use === 'office')) state.use = draft.use;
+    state.rx = loadRx(draft.rx);
+    if (typeof draft.material === 'string') state.material = draft.material;            // renderLens() checks it against the list
+    if (typeof draft.tier === 'string') state.tier = draft.tier;                         // idem
+    if (Array.isArray(draft.extras)) state.extras = new Set(draft.extras.filter(x => OPTS.coatings.some(c => c.id === x) && !LOCKED.includes(x)));
+    state.done[1] = !!(draft.done && draft.done[1] && state.zip);
+    state.done[2] = !!(draft.done && draft.done[2]);
+  }
+  try {
+    const s = has('pdm.prod.noteCam') ? JSON.parse(localStorage.getItem('hoe-pd') || 'null') : null;
+    const age = s ? Date.now() - Number(s.at) : NaN, pd = state.rx.pd;
+    if (s && age > -6e4 && age < 7 * 864e5 && !pd.od && !pd.os && !pd.total) {
+      const od = Number(s.od), os = Number(s.os), tot = Number(s.total);
+      if (s.od != null && s.os != null && od >= 20 && od <= 45 && os >= 20 && os <= 45 && od + os >= 40 && od + os <= 80) {
+        Object.assign(pd, { kind: 'two', od: mmStr(od), os: mmStr(os), total: mmStr(od + os) }); pdSaved = s;
+      } else if (tot >= 40 && tot <= 80) { Object.assign(pd, { kind: 'one', total: mmStr(tot) }); pdSaved = s; }
+    }
+  } catch (e) { pdSaved = null; }
 
   /* =========================================================
      Gallery: the sprite's views (1 · 2 · 3) and the temple drawing ("Size")
@@ -465,13 +496,16 @@
     </div>`;
   };
   // PD: the visitor measures it (nobody measures it for them: the shop is online only). Two boxes, one per eye (from the nose to each pupil);
-  // "I only have one number" keeps the single total. The "?" teaches how to measure it, with a mirror or with someone's help.
+  // "I only have one number" keeps the single total. The "?" teaches how to measure it, with a mirror or with someone's help,
+  // and links to the camera tool (pd.html); a PD filled in from it says so under the hint until the visitor types.
+  const pdDate = at => { try { return new Date(Number(at)).toLocaleDateString(L() === 'es' ? 'es-US' : 'en-US', { month: 'short', day: 'numeric' }); } catch (e) { return ''; } };
+  const pdNote = () => (!pdSaved ? '' : `<p class="rxf-pd-note" id="rx-pd-note">${esc(fill(T(pdSaved.src === 'camera' ? 'pdm.prod.noteCam' : 'pdm.prod.noteMan'), { date: pdDate(pdSaved.at) }))}</p>`);
   const pdBlock = () => {
     const pd = state.rx.pd, one = pd.kind === 'one';
     const box = (id, key, label, ph) => `<div class="rx-field rxf-pd-f"><label for="${id}">${label}</label><span class="rxf-pd-mm"><input class="rx-input rxf-pd-in" id="${id}" data-pd="${key}" type="text" inputmode="decimal" maxlength="4" autocomplete="off" placeholder="${ph}" value="${esc(pd[key])}"><span aria-hidden="true">mm</span></span></div>`;
     return `<div class="rxf-pd" role="group" aria-labelledby="rx-pd-lbl">
         <span class="rxf-pd-lbl" id="rx-pd-lbl">${T('rx.pd')}<button type="button" class="pd-help" id="pd-help" aria-label="${T('pd.helpAria')}" aria-expanded="false" aria-controls="pd-pop"><span aria-hidden="true">?</span></button></span>
-        <p class="rxf-pd-hint">${T('rx.pdHint')}</p>
+        <p class="rxf-pd-hint">${T('rx.pdHint')}</p>${pdNote()}
         <div class="rxf-pd-vals" id="rx-pd-vals">
           <div class="rxf-pd-row">${one ? box('rx-pd', 'total', T('rx.pdTotal'), '63') : box('rx-pd-od', 'od', T('rx.pdRight'), '31.5') + box('rx-pd-os', 'os', T('rx.pdLeft'), '31.5')}</div>
           <button type="button" class="link-u rxf-pd-switch" id="pd-switch">${T(one ? 'rx.pdTwoLink' : 'rx.pdOneLink')}</button>
@@ -618,7 +652,10 @@
   bodyEl(3).addEventListener('input', e => {
     const el = e.target;
     if (el.dataset.f === 'axis') { const clean = el.value.replace(/\D/g, '').slice(0, 3); if (clean !== el.value) el.value = clean; state.rx[el.dataset.eye].axis = clean; }
-    if (el.dataset.pd) { const clean = el.value.replace(/[^\d.,]/g, '').slice(0, 4); if (clean !== el.value) el.value = clean; state.rx.pd[el.dataset.pd] = clean; }
+    if (el.dataset.pd) {
+      const clean = el.value.replace(/[^\d.,]/g, '').slice(0, 4); if (clean !== el.value) el.value = clean; state.rx.pd[el.dataset.pd] = clean;
+      if (pdSaved) { pdSaved = null; const n = $('#rx-pd-note'); if (n) n.remove(); }   // typed by hand: no longer the measured one
+    }
     if (el.dataset.doc) {
       const clean = el.dataset.doc === 'phone' ? el.value.replace(/[^\d+\-() ]/g, '').slice(0, 16) : el.value.slice(0, 40);
       if (clean !== el.value) el.value = clean;
@@ -665,7 +702,17 @@
       <li>${T('pd.s1')}</li><li>${T('pd.s2')}</li><li>${T('pd.s3')}</li>
     </ol>
     <p class="pd-sum"><b>31.5 + 31.5 = 63 mm</b><span>${T('pd.sum')}</span></p>
-    <a class="link-u pd-more" href="receta.html#pd" target="_blank" rel="noopener">${T('pd.more')}</a>`;
+    ${camLink()}<a class="link-u pd-more" href="receta.html#pd" target="_blank" rel="noopener">${T('pd.more')}</a>`;
+  // the camera tool: pd.html?back=<this frame's page> brings the visitor back here (a page being edited from the cart keeps
+  // its ?edit= only in this tab, so there the tool opens in a new one, without the way back)
+  const pdHere = () => { const h = location.pathname.split('/').pop() || ''; return own && /^[A-Za-z0-9][A-Za-z0-9._-]*\.html$/.test(h) && h !== 'producto.html' ? h : ''; };
+  const camLink = () => (!has('pdm.prod.cam') ? '' : editing || !pdHere()
+    ? `<a class="link-u pd-cam" id="pd-cam" href="pd.html"${editing ? ' target="_blank" rel="noopener"' : ''}>${T('pdm.prod.cam')}</a>`
+    : `<a class="link-u pd-cam" id="pd-cam" href="pd.html?back=${encodeURIComponent(pdHere())}">${T('pdm.prod.cam')}</a>`);
+  document.addEventListener('click', e => {
+    if (editing || !(e.target.closest && e.target.closest('#pd-cam'))) return;
+    try { sessionStorage.setItem('hoe-pd-draft', JSON.stringify({ sku: frame.id, t: Date.now(), use: state.use, rx: state.rx, material: state.material, tier: state.tier, extras: [...state.extras], done: state.done })); } catch (err) { /* the PD still comes back; only these choices are lost */ }
+  });
   function placePop() {
     if (!pop || pop.hidden || !popBtn) return;
     const r = popBtn.getBoundingClientRect(), vw = window.innerWidth, vh = window.innerHeight, m = 12;
@@ -987,5 +1034,6 @@
   renderViews(); renderBuy(); renderMore();
   renderZip(); renderUse(); renderRx(); renderLens(); renderBar();   // the steps are rendered closed, ready for a click on any row
   if ((q.get('step') || editing) && inStock) openCfg(Math.min(4, Number(q.get('step')) || 1));
+  else if (draft && inStock) { renderSummaries(); openCfg(3); }      // back from pd.html: the prescription step, its PD filled in
   }
 })();

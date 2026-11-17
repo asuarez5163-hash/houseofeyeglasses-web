@@ -11,7 +11,7 @@ Object.assign(window.HOE_I18N.en, {
   "cart.protoLead": "Online checkout is not open yet. Send us your selection on WhatsApp and we reserve it at these prices; an optician confirms your prescription before the lab starts.",
   "cart.protoWa": "Reserve on WhatsApp", "cart.protoBack": "Back to the cart",
   "cart.next.title": "What happens next",
-  "cart.next.1": "We receive your order", "cart.next.2": "An optician in Tampa checks your prescription", "cart.next.3": "Your glasses are ready in a few business days",
+  "cart.next.1": "We receive your order", "cart.next.2": "A licensed optician checks your prescription", "cart.next.3": "Your glasses are ready in a few business days",
   "cart.seen": "Frames you looked at", "cart.seenAll": "See all frames",
   // C-cine: page head, the summary column and the empty state
   "cart.kicker": "Your selection", "cart.count": "{n} frames · with your lenses", "cart.count1": "1 frame · with your lenses",
@@ -42,7 +42,7 @@ Object.assign(window.HOE_I18N.es, {
   "cart.protoLead": "El pago en línea todavía no está abierto. Mándanos tu selección por WhatsApp y te la apartamos a estos precios; un óptico confirma tu receta antes de que el laboratorio empiece.",
   "cart.protoWa": "Apartar por WhatsApp", "cart.protoBack": "Volver al carrito",
   "cart.next.title": "Qué pasa después",
-  "cart.next.1": "Recibimos tu pedido", "cart.next.2": "Un óptico en Tampa revisa tu receta", "cart.next.3": "Tus lentes quedan listos en pocos días hábiles",
+  "cart.next.1": "Recibimos tu pedido", "cart.next.2": "Un óptico con licencia revisa tu receta", "cart.next.3": "Tus lentes quedan listos en pocos días hábiles",
   "cart.seen": "Armazones que viste", "cart.seenAll": "Ver todos los armazones",
   "cart.kicker": "Tu selección", "cart.count": "{n} armazones · con tus lentes", "cart.count1": "1 armazón · con tus lentes",
   "cart.summary": "Resumen", "cart.sumFrames": "Armazones", "cart.sumLenses": "Lentes", "cart.sumLensesV": "En el precio de cada par",

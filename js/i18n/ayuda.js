@@ -32,7 +32,7 @@ Object.assign(window.HOE_I18N.en, {
   "ayuda.q.rxExpired": "Can I use an expired prescription?",
   "ayuda.a.rxExpired": "Your eye doctor sets an expiration date because vision can change over time. If yours has expired, we recommend a new eye exam before you order; if you're not sure, contact us.",
   "ayuda.q.pd": "What is PD and how do I measure it?",
-  "ayuda.a.pd": "PD (pupillary distance) is the space in millimeters between the centers of your pupils, and it tells the lab where to center each lens. Many eye doctors write it on the prescription; if yours doesn't have it, measure it with a millimeter ruler in front of a mirror, or ask your eye doctor. Two numbers, like 31.5/32, are a dual PD (one per eye): send us both.",
+  "ayuda.a.pd": "PD (pupillary distance) is the space in millimeters between the centers of your pupils, and it tells the lab where to center each lens. Many eye doctors write it on the prescription; if yours doesn't have it, <a href=\"pd.html\">measure it online with your camera</a>, with a millimeter ruler in front of a mirror, or ask your eye doctor. Two numbers, like 31.5/32, are a dual PD (one per eye): send us both.",
 
   // Lenses & coatings
   "ayuda.q.lensTypes": "Single vision, progressive or Office Lens: which do I need?",
@@ -111,7 +111,7 @@ Object.assign(window.HOE_I18N.es, {
   "ayuda.q.rxExpired": "¿Puedo usar una receta vencida?",
   "ayuda.a.rxExpired": "Tu médico de la vista le pone fecha de vencimiento porque la vista cambia con el tiempo. Si la tuya ya venció, te recomendamos un examen de la vista nuevo antes de pedir; si tienes dudas, escríbenos.",
   "ayuda.q.pd": "¿Qué es la distancia pupilar (DP) y cómo la mido?",
-  "ayuda.a.pd": "La distancia pupilar (DP, o PD en inglés) es la separación en milímetros entre el centro de tus pupilas, y le dice al laboratorio dónde centrar cada lente. Muchos médicos de la vista la anotan en la receta; si la tuya no la trae, mídela con una regla en milímetros frente a un espejo o pídesela a tu médico. Dos números, como 31.5/32, son una DP dual (uno por ojo): mándanos los dos.",
+  "ayuda.a.pd": "La distancia pupilar (DP, o PD en inglés) es la separación en milímetros entre el centro de tus pupilas, y le dice al laboratorio dónde centrar cada lente. Muchos médicos de la vista la anotan en la receta; si la tuya no la trae, <a href=\"pd.html\">mídela en línea con tu cámara</a>, con una regla en milímetros frente a un espejo o pídesela a tu médico. Dos números, como 31.5/32, son una DP dual (uno por ojo): mándanos los dos.",
 
   "ayuda.q.lensTypes": "¿Monofocales, progresivos o lente de oficina: cuáles necesito?",
   "ayuda.a.lensTypes": "Los monofocales tienen una sola graduación en todo el lente, para lejos o para cerca. Los progresivos combinan zonas para lejos, computadora y lectura sin línea visible y necesitan un valor ADD en tu receta; el lente de oficina es para el escritorio: nítido para la computadora y para leer, sin zona de lejos, y también necesita ADD. Más detalles en la <a href=\"lentes.html\">guía de lentes</a>.",

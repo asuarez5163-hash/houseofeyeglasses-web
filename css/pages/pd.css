@@ -1,0 +1,115 @@
+/* Medidor de DP (pd.html, 11/17): the page reuses the guide pages' mold (tipo.css rows, ayuda.css .faq, marca.css
+   .brandp-list); this sheet is only the tool. Three columns on a wide screen with the camera IN THE MIDDLE (the camera of a
+   laptop sits at the top centre of the screen: looking at the stage then means looking along the camera's vertical, so the
+   eyes don't swing sideways and shift the numbers per eye); stage on top on a tablet; one column on a phone. The stage is
+   the try-on's dark 3:4 plate (pruebatelos.css). Flat: hairlines, gold as a thread. Prefix pdm- */
+.pd [hidden] { display: none !important; }
+.pdm-backline { margin: 2px 0 0; }
+
+.pdm { max-width: var(--maxw); margin: 0 auto; padding: clamp(36px, 4.5vw, 64px) var(--gutter) var(--sec-y-sm); }
+.pdm-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 400px) minmax(0, 1fr); grid-template-areas: "prep stage live"; gap: clamp(24px, 3vw, 48px); align-items: start; }
+.pdm-prep { grid-area: prep; min-width: 0; }
+.pdm-stage { grid-area: stage; }
+.pdm-live { grid-area: live; min-width: 0; }
+
+/* ---------- before you start ---------- */
+.pdm-steps { list-style: none; margin: 14px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.pdm-steps li { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 14px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--line); font-size: 15px; line-height: 1.5; color: var(--ink-2); text-wrap: pretty; }
+.pdm-steps svg, .pdm-priv svg { width: 22px; height: 22px; fill: none; stroke: var(--gold); stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.pdm-priv { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 14px; align-items: start; margin: 16px 0 0; font-size: var(--fs-small); line-height: 1.5; color: var(--ink-3); }
+.pdm-priv svg { stroke: var(--ink-3); }
+
+/* ---------- the stage ---------- */
+.pdm-stage { position: relative; width: 100%; aspect-ratio: 3 / 4; background: var(--bg-2); border: 1px solid var(--line-2); overflow: hidden; }
+.pdm-stage canvas { display: block; width: 100%; height: 100%; object-fit: cover; background: #000; }
+.pdm-stage.is-idle canvas { display: none; }
+.pdm-veil { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; padding: 24px; text-align: center; }
+.pdm-veil p { margin: 0; max-width: 34ch; font: 300 var(--fs-body)/1.5 var(--font-ui); color: var(--ink-2); text-wrap: pretty; }
+.pdm-stage.is-error .pdm-veil p { color: var(--ink); }
+.pdm-face { width: 72px; height: 72px; fill: none; stroke: var(--ink-3); stroke-width: 1.2; }
+.pdm-face .pdm-face-mid { stroke: var(--gold); stroke-dasharray: 3 3; }
+.pdm-veil-btns { display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.pdm-veil .btn:disabled { opacity: .5; cursor: progress; }
+.pdm-tap { position: relative; }
+.pdm-tap::after { content: ""; position: absolute; inset: -12px -6px; }       /* a 44 px tap zone, nothing drawn */
+
+.pdm-look { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; margin: 0; padding: 7px 12px; background: rgba(11, 11, 13, .66); font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+.pdm-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gold); animation: pdm-pulse 1.6s ease-out infinite; }
+@keyframes pdm-pulse { from { box-shadow: 0 0 0 0 rgba(201, 163, 90, .6); } to { box-shadow: 0 0 0 12px rgba(201, 163, 90, 0); } }
+.pdm-msg { position: absolute; left: 0; right: 0; bottom: 0; margin: 0; padding: 32px 16px 14px; font: 400 15px/1.4 var(--font-ui); color: var(--ink); text-align: center; text-wrap: balance; background: linear-gradient(180deg, transparent, rgba(11, 11, 13, .9) 48%); }
+.pdm-msg:empty { display: none; }
+
+/* ---------- live checks + takes ---------- */
+.pdm-checks { list-style: none; margin: 14px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.pdm-checks li { display: flex; align-items: center; gap: 12px; min-height: 44px; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink-3); transition: color .2s; }
+.pdm-checks li small { margin-left: auto; font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pdm-tick { flex: none; position: relative; width: 16px; height: 16px; border: 1px solid var(--line); border-radius: 50%; transition: border-color .2s, background-color .2s; }
+.pdm-checks li[data-ok="0"] { color: var(--ink-2); }
+.pdm-checks li[data-ok="0"] .pdm-tick { border: 1px dashed var(--ink-2); }
+.pdm-checks li[data-ok="1"] { color: var(--ink); }
+.pdm-checks li[data-ok="1"] .pdm-tick { border-color: var(--gold); background: var(--gold); }
+.pdm-checks li[data-ok="1"] .pdm-tick::after { content: ""; position: absolute; left: 4.5px; top: 1.5px; width: 4px; height: 8px; border: solid var(--bg); border-width: 0 1.5px 1.5px 0; transform: rotate(45deg); }
+.pdm-takes { margin-top: 22px; }
+.pdm-takes-h { display: flex; justify-content: space-between; gap: 12px; margin: 0 0 10px; font: 500 var(--fs-caps)/1.2 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--ink-2); }
+.pdm-takes-h span:last-child { color: var(--ink); font-variant-numeric: tabular-nums; }
+.pdm-bar { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.pdm-bar span { height: 3px; background: var(--line); overflow: hidden; }
+.pdm-bar i { display: block; height: 100%; background: var(--gold); transform: scaleX(0); transform-origin: left center; transition: transform .12s linear; }
+
+/* ---------- the result ---------- */
+.pdm-res { outline: none; }
+.pdm-big { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin: 10px 0 0; }
+.pdm-big b { font: 200 clamp(56px, 3rem + 3vw, 88px)/1 var(--font-ui); letter-spacing: -.02em; color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.pdm-big span { font-size: 18px; color: var(--ink-2); }
+.pdm-big small { font-size: 15px; color: var(--gold); font-variant-numeric: tabular-nums; }
+.pdm-mono { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin: 18px 0 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.pdm-mono div { padding: 12px 0; min-width: 0; }
+.pdm-mono div + div { padding-left: 16px; border-left: 1px solid var(--line); }
+.pdm-mono dt { font: 500 var(--fs-caps)/1.3 var(--font-ui); letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); }
+.pdm-mono dd { margin: 6px 0 0; font: 300 24px/1.1 var(--font-ui); color: var(--ink); font-variant-numeric: lining-nums tabular-nums; }
+.pdm-note, .pdm-pro { margin: 14px 0 0; font-size: var(--fs-small); line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+.pdm-pro { padding-left: 12px; border-left: 1px solid var(--gold); }
+.pdm-acts { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; margin-top: 22px; }
+.pdm-saved { margin: 14px 0 0; font-size: var(--fs-small); line-height: 1.5; color: var(--ink); }
+
+/* ---------- typed PD ---------- */
+.pdm-man-sec { padding-top: 0; }
+.pdm-man { max-width: 62ch; padding-top: clamp(28px, 3.4vw, 48px); border-top: 1px solid var(--gold); }
+.pdm-man h2 { margin: 0; font: 300 clamp(24px, 1.1rem + 1vw, 32px)/1.15 var(--font-ui); letter-spacing: -.005em; color: var(--ink); }
+.pdm-man-lead { margin: 10px 0 0; max-width: 54ch; color: var(--ink-2); text-wrap: pretty; }
+.pdm-fields { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 16px 20px; margin-top: 22px; }
+.pdm-f { display: grid; gap: 8px; }
+.pdm-f label { font: 500 var(--fs-caps)/1.3 var(--font-ui); letter-spacing: .12em; text-transform: uppercase; color: var(--ink-2); }
+.pdm-mm { display: inline-flex; align-items: center; gap: 8px; font-size: var(--fs-small); color: var(--ink-3); }
+.pdm-in { width: 96px; height: 48px; margin: 0; padding: 0 12px; border: 1px solid var(--line); border-radius: 0; background: var(--bg-3); font: 400 18px/1 var(--font-ui); color: var(--ink); font-variant-numeric: tabular-nums; caret-color: var(--gold); -webkit-appearance: none; appearance: none; transition: border-color .2s, box-shadow .2s; }
+.pdm-in::placeholder { color: var(--ink-3); opacity: 1; }
+@media (hover: hover) and (pointer: fine) { .pdm-in:hover { border-color: rgba(201, 163, 90, .5); } }
+.pdm-in:focus-visible { outline: none; border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+.pdm-in[aria-invalid="true"] { border-color: #e08a80; box-shadow: inset 0 0 0 1px #e08a80; }
+.pdm-or { margin: 0; padding-bottom: 15px; font-size: var(--fs-small); color: var(--ink-3); }
+.pdm-err { margin: 14px 0 0; padding-left: 12px; border-left: 1px solid #e08a80; font-size: var(--fs-small); color: #e08a80; }
+
+/* ---------- the ruler row (the steps are receta.html's) ---------- */
+.pd .tp-txt h3 { margin: 24px 0 8px; font: 500 var(--fs-caps)/1.3 var(--font-ui); letter-spacing: var(--track-caps); text-transform: uppercase; color: var(--gold); }
+.pdm-howto { display: grid; gap: 8px; margin: 0; padding-left: 1.3em; }
+.pdm-howto li { text-wrap: pretty; }
+.pdm-howto li::marker { color: var(--gold); font-weight: 500; }
+.pd .tp-txt ol + p { margin-top: 20px; }
+
+@media (max-width: 1099px) {
+  .pdm-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-areas: "stage stage" "prep live"; }
+  .pdm-stage { justify-self: center; max-width: 440px; }
+}
+@media (max-width: 860px) {
+  .pdm-man.offset-1 { margin-left: 0; }
+}
+@media (max-width: 700px) {
+  .pdm-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "prep" "stage" "live"; gap: 28px; }
+  .pdm-stage { width: min(100%, max(260px, calc((100svh - 150px) * .75))); }
+  .pdm-steps li { padding: 11px 0; }
+  .pdm-acts .btn { width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .pdm-dot { animation: none; }
+  .pdm-bar i, .pdm-checks li, .pdm-tick, .pdm-in { transition: none; }
+}

@@ -18,7 +18,7 @@ Object.assign(window.HOE_I18N.en, {
 
   "catpage.meta.men": "Men’s Eyeglasses — Designer Frames for Men | House of Eyeglasses",
   "catpage.men.title": "Men’s glasses",
-  "catpage.men.lead": "Optical frames in metal, titanium and acetate, fitted by an optician in Tampa and delivered anywhere in the U.S.",
+  "catpage.men.lead": "Optical frames in metal, titanium and acetate, fitted by a licensed optician and delivered anywhere in the U.S.",
 
   "catpage.meta.women": "Women’s Eyeglasses — Designer Frames for Women | House of Eyeglasses",
   "catpage.women.title": "Women’s glasses",
@@ -62,7 +62,7 @@ Object.assign(window.HOE_I18N.es, {
 
   "catpage.meta.men": "Lentes para hombre — House of Eyeglasses",
   "catpage.men.title": "Lentes para hombre",
-  "catpage.men.lead": "Armazones ópticos de metal, titanio y acetato, ajustados por un óptico en Tampa y enviados a todo Estados Unidos.",
+  "catpage.men.lead": "Armazones ópticos de metal, titanio y acetato, ajustados por un óptico con licencia y enviados a todo Estados Unidos.",
 
   "catpage.meta.women": "Lentes para mujer — House of Eyeglasses",
   "catpage.women.title": "Lentes para mujer",

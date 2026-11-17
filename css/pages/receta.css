@@ -10,8 +10,8 @@
 .rx .sec--tight { padding-top: var(--sec-y-sm); padding-bottom: var(--sec-y-sm); }
 .rx [id] { scroll-margin-top: calc(var(--header-h, 72px) + 20px); }
 .rx .text-btn { min-height: 44px; }
-.rx-explain-text a, .rx-hint a, .rx-flags a { color: var(--gold); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; transition: color .2s; }
-.rx-explain-text a:hover, .rx-hint a:hover, .rx-flags a:hover { color: var(--ink); }
+.rx-explain-text a, .rx-hint a, .rx-flags a, .rx-pdg-note a { color: var(--gold); text-decoration: underline; text-decoration-color: var(--gold); text-underline-offset: 3px; transition: color .2s; }
+.rx-explain-text a:hover, .rx-hint a:hover, .rx-flags a:hover, .rx-pdg-note a:hover { color: var(--ink); }
 
 /* ---------- intro: the head, then the paper on the left and its explanation on the right ---------- */
 .rx-hero { display: grid; gap: var(--block); }
