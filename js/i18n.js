@@ -2,7 +2,7 @@
 window.HOE_I18N = {
   en: {
     // ---- home (C-cine) ----
-    "hero.kicker": "House of Eyeglasses · Tampa, FL",
+    "hero.kicker": "House of Eyeglasses · Online optical store",
     "hero.lead": "Frames fitted by an optician. Lenses made to your prescription. Delivered anywhere in the U.S.",
     "hero.how": "How it works", "hero.scroll": "Scroll",
     "cats.kicker": "Shop by", "cats.title": "Who are the glasses for?",
@@ -62,7 +62,7 @@ window.HOE_I18N = {
     "lens.ar": "Anti-reflective coating",
     "index.docTitle": "House of Eyeglasses — Designer Frames & Prescription Lenses",
     "nf.title": "This page doesn’t exist", "nf.lead": "The address may be wrong, or the page moved. Everything we offer is one tap away from the home page.", "nf.home": "Back to the home page",
-    "foot.line": "An optical shop in Tampa. Lenses made to your prescription.",
+    "foot.line": "An online optical shop. Lenses made to your prescription.",
     "fit.title": "Find your fit",
     "soon.wa": "Tell me on WhatsApp",
     "foot.shop": "Shop", "foot.help": "Help", "foot.learn": "Learn", "foot.ship": "Shipping", "foot.returns": "Returns",
@@ -92,7 +92,7 @@ window.HOE_I18N = {
   },
   es: {
     // ---- portada (C-cine) ----
-    "hero.kicker": "House of Eyeglasses · Tampa, FL",
+    "hero.kicker": "House of Eyeglasses · Óptica online",
     "hero.lead": "Armazones ajustados por un óptico. Lentes hechos a tu receta. Enviamos a todo Estados Unidos.",
     "hero.how": "Cómo funciona", "hero.scroll": "Desliza",
     "cats.kicker": "Comprar por", "cats.title": "¿Para quién son los lentes?",
@@ -150,9 +150,9 @@ window.HOE_I18N = {
     footer: "Pie de página", "best.all": "Ver todos los armazones",
     "prod.lenses": "Elegir lentes", "prod.fav": "Guardar en favoritos", "prod.color": "Color",
     "lens.ar": "Antirreflejo",
-    "index.docTitle": "House of Eyeglasses — Óptica en Tampa: lentes de receta, de sol y de contacto",
+    "index.docTitle": "House of Eyeglasses — Óptica online: lentes de receta, de sol y de contacto",
     "nf.title": "Esta página no existe", "nf.lead": "La dirección puede estar mal escrita o la página cambió de lugar. Todo lo que ofrecemos está a un toque desde la portada.", "nf.home": "Volver a la portada",
-    "foot.line": "Óptica en Tampa. Lentes hechos con tu receta.",
+    "foot.line": "Óptica online. Lentes hechos con tu receta.",
     "fit.title": "Encuentra tu medida",
     "soon.wa": "Avísame por WhatsApp",
     "foot.shop": "Tienda", "foot.help": "Ayuda", "foot.learn": "Aprende", "foot.ship": "Envíos", "foot.returns": "Devoluciones",

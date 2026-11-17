@@ -483,7 +483,7 @@
 "foot.frames": "Frames",
 "foot.help": "Help",
 "foot.learn": "Learn",
-"foot.line": "An optical shop in Tampa. Lenses made to your prescription.",
+"foot.line": "An online optical shop. Lenses made to your prescription.",
 "foot.privacy": "Privacy Policy",
 "foot.privacyS": "Privacy",
 "foot.returns": "Returns",
@@ -499,7 +499,7 @@
 "gender.women": "Women",
 "hero.cta": "See the frames",
 "hero.how": "How it works",
-"hero.kicker": "House of Eyeglasses · Tampa, FL",
+"hero.kicker": "House of Eyeglasses · Online optical store",
 "hero.lead": "Frames fitted by an optician. Lenses made to your prescription. Delivered anywhere in the U.S.",
 "hero.scroll": "Scroll",
 "hero.title": "Quality Eyewear<br>for Every Moment",
@@ -956,7 +956,7 @@
 "foot.frames": "Armazones",
 "foot.help": "Ayuda",
 "foot.learn": "Aprende",
-"foot.line": "Óptica en Tampa. Lentes hechos con tu receta.",
+"foot.line": "Óptica online. Lentes hechos con tu receta.",
 "foot.privacy": "Política de privacidad",
 "foot.privacyS": "Privacidad",
 "foot.returns": "Devoluciones",
@@ -972,7 +972,7 @@
 "gender.women": "Mujer",
 "hero.cta": "Ver armazones",
 "hero.how": "Cómo funciona",
-"hero.kicker": "House of Eyeglasses · Tampa, FL",
+"hero.kicker": "House of Eyeglasses · Óptica online",
 "hero.lead": "Armazones ajustados por un óptico. Lentes hechos a tu receta. Enviamos a todo Estados Unidos.",
 "hero.scroll": "Desliza",
 "hero.title": "Espejuelos de calidad<br>para cada momento",
@@ -980,7 +980,7 @@
 "home.samples": "Más vendidos",
 "home.samplesAll": "Ver todos los armazones",
 "home.samplesLead": "Los armazones que más se llevan, listos para tus lentes graduados.",
-"index.docTitle": "House of Eyeglasses — Óptica en Tampa: lentes de receta, de sol y de contacto",
+"index.docTitle": "House of Eyeglasses — Óptica online: lentes de receta, de sol y de contacto",
 "language": "Idioma",
 "lc.blue-light": "Filtro de luz azul",
 "lc.clear": "Transparente",
@@ -1565,5 +1565,5 @@ null,
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261117a"
+"v": "20261117b"
 }

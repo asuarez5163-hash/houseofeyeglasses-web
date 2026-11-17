@@ -75,7 +75,7 @@ Object.assign(window.HOE_I18N.en, {
   "ayuda.c.lead": "Email, call or message us on WhatsApp. Hablamos español.",
   "ayuda.c.email": "Email",
   "ayuda.c.phone": "Phone",
-  "ayuda.c.wa": "WhatsApp", "ayuda.c.address": "Address",
+  "ayuda.c.wa": "WhatsApp",
   "ayuda.c.tip": "About an order? Include your order number and the email you used.",
   "ayuda.c.safe": "We will never ask for your full card number by email, phone or WhatsApp."
 });
@@ -149,7 +149,7 @@ Object.assign(window.HOE_I18N.es, {
   "ayuda.c.lead": "Escríbenos, llámanos o mándanos un WhatsApp.",
   "ayuda.c.email": "Correo",
   "ayuda.c.phone": "Teléfono",
-  "ayuda.c.wa": "WhatsApp", "ayuda.c.address": "Dirección",
+  "ayuda.c.wa": "WhatsApp",
   "ayuda.c.tip": "¿Es sobre un pedido? Incluye tu número de pedido y el correo que usaste.",
   "ayuda.c.safe": "Nunca te pediremos el número completo de tu tarjeta por correo, teléfono ni WhatsApp."
 });
