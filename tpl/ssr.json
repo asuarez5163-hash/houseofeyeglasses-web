@@ -608,6 +608,7 @@
 "pd.sum": "Right + left is your total PD (an adult averages about 63 mm).",
 "pd.title": "How to measure your PD",
 "pdm.prod.cam": "Measure it with your camera",
+"pdm.prod.camBtn": "No PD? Measure it with your camera",
 "pdm.prod.noteCam": "Measured with your camera on {date}",
 "pdm.prod.noteMan": "Saved from the PD tool on {date}",
 "popular": "Guides & tools",
@@ -650,6 +651,7 @@
 "prod.stock": "In stock",
 "prod.trust": "If the prescription isn’t right, we remake it free",
 "prod.tryon": "Try them on with your camera",
+"prod.tryonShort": "Try on",
 "prod.view.size": "Size",
 "prod.views": "Views",
 "prod.who.kids": "Sized for kids.",
@@ -1081,6 +1083,7 @@
 "pd.sum": "Derecho + izquierdo es tu DP total (un adulto promedia unos 63 mm).",
 "pd.title": "Cómo medir tu DP",
 "pdm.prod.cam": "Mídela con tu cámara",
+"pdm.prod.camBtn": "¿No tienes tu DP? Mídela con tu cámara",
 "pdm.prod.noteCam": "Medida con tu cámara el {date}",
 "pdm.prod.noteMan": "Guardada desde la herramienta de DP el {date}",
 "popular": "Guías y herramientas",
@@ -1123,6 +1126,7 @@
 "prod.stock": "En existencia",
 "prod.trust": "Si la graduación no está bien, la rehacemos gratis",
 "prod.tryon": "Pruébatelos con tu cámara",
+"prod.tryonShort": "Pruébatelos",
 "prod.view.size": "Medida",
 "prod.views": "Vistas",
 "prod.who.kids": "A la medida de los niños.",
@@ -1565,5 +1569,5 @@ null,
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261117b"
+"v": "20261117c"
 }

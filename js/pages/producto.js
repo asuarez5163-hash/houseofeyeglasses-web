@@ -505,7 +505,7 @@
     const box = (id, key, label, ph) => `<div class="rx-field rxf-pd-f"><label for="${id}">${label}</label><span class="rxf-pd-mm"><input class="rx-input rxf-pd-in" id="${id}" data-pd="${key}" type="text" inputmode="decimal" maxlength="4" autocomplete="off" placeholder="${ph}" value="${esc(pd[key])}"><span aria-hidden="true">mm</span></span></div>`;
     return `<div class="rxf-pd" role="group" aria-labelledby="rx-pd-lbl">
         <span class="rxf-pd-lbl" id="rx-pd-lbl">${T('rx.pd')}<button type="button" class="pd-help" id="pd-help" aria-label="${T('pd.helpAria')}" aria-expanded="false" aria-controls="pd-pop"><span aria-hidden="true">?</span></button></span>
-        <p class="rxf-pd-hint">${T('rx.pdHint')}</p>${pdNote()}
+        <p class="rxf-pd-hint">${T('rx.pdHint')}</p>${pdNote()}${camBtn()}
         <div class="rxf-pd-vals" id="rx-pd-vals">
           <div class="rxf-pd-row">${one ? box('rx-pd', 'total', T('rx.pdTotal'), '63') : box('rx-pd-od', 'od', T('rx.pdRight'), '31.5') + box('rx-pd-os', 'os', T('rx.pdLeft'), '31.5')}</div>
           <button type="button" class="link-u rxf-pd-switch" id="pd-switch">${T(one ? 'rx.pdTwoLink' : 'rx.pdOneLink')}</button>
@@ -706,11 +706,12 @@
   // the camera tool: pd.html?back=<this frame's page> brings the visitor back here (a page being edited from the cart keeps
   // its ?edit= only in this tab, so there the tool opens in a new one, without the way back)
   const pdHere = () => { const h = location.pathname.split('/').pop() || ''; return own && /^[A-Za-z0-9][A-Za-z0-9._-]*\.html$/.test(h) && h !== 'producto.html' ? h : ''; };
-  const camLink = () => (!has('pdm.prod.cam') ? '' : editing || !pdHere()
-    ? `<a class="link-u pd-cam" id="pd-cam" href="pd.html"${editing ? ' target="_blank" rel="noopener"' : ''}>${T('pdm.prod.cam')}</a>`
-    : `<a class="link-u pd-cam" id="pd-cam" href="pd.html?back=${encodeURIComponent(pdHere())}">${T('pdm.prod.cam')}</a>`);
+  const camHref = () => (editing || !pdHere() ? `href="pd.html"${editing ? ' target="_blank" rel="noopener"' : ''}` : `href="pd.html?back=${encodeURIComponent(pdHere())}"`);
+  const camLink = () => (!has('pdm.prod.cam') ? '' : `<a class="link-u pd-cam" id="pd-cam" data-pd-cam ${camHref()}>${T('pdm.prod.cam')}</a>`);
+  // 11/17: the same tool as a visible button right in the PD block (the "?" link stays for whoever opens it)
+  const camBtn = () => (!has('pdm.prod.camBtn') ? '' : `<a class="rxf-pd-cam" data-pd-cam ${camHref()}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8h4l2-3h6l2 3h4v11H3z"/><circle cx="12" cy="13" r="3.5"/></svg><span>${T('pdm.prod.camBtn')}</span></a>`);
   document.addEventListener('click', e => {
-    if (editing || !(e.target.closest && e.target.closest('#pd-cam'))) return;
+    if (editing || !(e.target.closest && e.target.closest('[data-pd-cam]'))) return;
     try { sessionStorage.setItem('hoe-pd-draft', JSON.stringify({ sku: frame.id, t: Date.now(), use: state.use, rx: state.rx, material: state.material, tier: state.tier, extras: [...state.extras], done: state.done })); } catch (err) { /* the PD still comes back; only these choices are lost */ }
   });
   function placePop() {

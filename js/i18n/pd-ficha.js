@@ -4,11 +4,13 @@
 window.HOE_I18N = window.HOE_I18N || { en: {}, es: {} };
 Object.assign(window.HOE_I18N.en, {
   "pdm.prod.cam": "Measure it with your camera",
+  "pdm.prod.camBtn": "No PD? Measure it with your camera",
   "pdm.prod.noteCam": "Measured with your camera on {date}",
   "pdm.prod.noteMan": "Saved from the PD tool on {date}",
 });
 Object.assign(window.HOE_I18N.es, {
   "pdm.prod.cam": "Mídela con tu cámara",
+  "pdm.prod.camBtn": "¿No tienes tu DP? Mídela con tu cámara",
   "pdm.prod.noteCam": "Medida con tu cámara el {date}",
   "pdm.prod.noteMan": "Guardada desde la herramienta de DP el {date}",
 });
