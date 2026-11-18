@@ -370,6 +370,7 @@
 "cfg.edit": "Edit",
 "cfg.errZip": "Type the 5-digit ZIP code where we ship.",
 "cfg.errZipState": "Choose your state.",
+"cfg.excl": "Light-responsive and sun tint don’t go on the same lens (one darkens by itself in the sun, the other stays dark), so we took off {x}.",
 "cfg.extraTitle": "Treatments",
 "cfg.lead": "Four short steps. A licensed optician checks everything before the lab starts.",
 "cfg.matTitle": "Lens material",
@@ -661,7 +662,7 @@
 "prod.plateSide": "Inside the temple · your size",
 "prod.soo": "Sold out",
 "prod.stock": "In stock",
-"prod.trust": "If the prescription isn’t right, we remake it free",
+"prod.trust": "If we make an error filling your prescription, we remake it free",
 "prod.tryon": "Try them on with your camera",
 "prod.tryonShort": "Try on",
 "prod.view.size": "Size",
@@ -860,6 +861,7 @@
 "cfg.edit": "Editar",
 "cfg.errZip": "Escribe el código postal (5 dígitos) donde enviamos.",
 "cfg.errZipState": "Elige tu estado.",
+"cfg.excl": "El fotocromático y el tinte de sol no van en el mismo lente (uno se oscurece solo al sol, el otro queda siempre oscuro), así que quitamos {x}.",
 "cfg.extraTitle": "Tratamientos",
 "cfg.lead": "Cuatro pasos cortos. Un óptico con licencia revisa todo antes de que el laboratorio empiece.",
 "cfg.matTitle": "Material del lente",
@@ -1151,7 +1153,7 @@
 "prod.plateSide": "Por dentro de la patilla · tu medida",
 "prod.soo": "Agotado",
 "prod.stock": "En existencia",
-"prod.trust": "Si la graduación no está bien, la rehacemos gratis",
+"prod.trust": "Si cometemos un error al hacer tu receta, la rehacemos gratis",
 "prod.tryon": "Pruébatelos con tu cámara",
 "prod.tryonShort": "Pruébatelos",
 "prod.view.size": "Medida",
@@ -1603,5 +1605,5 @@ null,
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261118a"
+"v": "20261118b"
 }

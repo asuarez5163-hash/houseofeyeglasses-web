@@ -111,6 +111,9 @@
   const editId = q.get('edit');
   const editing = editId && window.hoeCart ? window.hoeCart.get().items.find(i => i.id === editId && i.sku === frame.id) : null;
   const LOCKED = [];   // no coating is automatic any more: the frame's sample lenses have anti-reflective + scratch, but the prescription lens is new, so they are chosen (and priced) in step 4
+  // treatments that do not go on the same lens: a light-responsive lens darkens by itself in the sun, a sun tint stays dark
+  // (Armando 11/18, after the E2E audit: both could be ordered together). Choosing one takes the other off.
+  const EXCLUSIVE = [['light-responsive', 'tint']];
 
   const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'own', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, file: null, confirm: false });
   const loadRx = src => {   // a saved package (maybe from an older shape of the form) → today's shape
@@ -799,6 +802,8 @@
       demoRest();
       return;
     }
+    // an older cart line (before 11/18) could carry both halves of an exclusive pair: keep the first (light-responsive)
+    for (const [a, b] of EXCLUSIVE) if (state.extras.has(a) && state.extras.has(b)) state.extras.delete(b);
     const mats = MATERIALS(), rec = recommended();
     if (!state.material || !mats.some(m => m.id === state.material)) state.material = rec.id;
     if (!(OPTS.tiers || []).some(t => t.id === state.tier)) state.tier = 'estandar';
@@ -809,6 +814,7 @@
       + mats.map(m => opt('radio', 'material', Object.assign({}, m, { desc: true, withFor: true, price: piezaPrecio(m.id) }), m.id === state.material, rec.id === m.id)).join('')
       + `<p class="cfg-group">${T('cfg.extraTitle')}</p>`
       + EXTRAS().map(c => opt('checkbox', 'coat', Object.assign({}, c, { price: piezaPrecio(c.id), desc: true }), state.extras.has(c.id), false, DEMO_OF[c.id] || '')).join('')
+      + `<p class="cfg-incl" id="cfg-excl" role="status" hidden></p>`
       ;
     $('#cfg-add > span').textContent = T('cfg.addToCart');
     demoRest();
@@ -816,7 +822,21 @@
   bodyEl(4).addEventListener('change', e => {
     if (e.target.name === 'material') { state.material = e.target.value; renderBar(); }
     if (e.target.name === 'tier') { state.tier = e.target.value; renderBar(); }
-    if (e.target.name === 'coat') { e.target.checked ? state.extras.add(e.target.value) : state.extras.delete(e.target.value); renderBar(); }
+    if (e.target.name === 'coat') {
+      const id = e.target.value, note = $('#cfg-excl');
+      if (note) note.hidden = true;
+      if (e.target.checked) {
+        state.extras.add(id);
+        // the one it cannot go with leaves the lens, and a line says why (Armando 11/18: «que se excluyan»)
+        for (const other of EXCLUSIVE.flatMap(p => (p.includes(id) ? p.filter(x => x !== id) : [])).filter(x => state.extras.has(x))) {
+          state.extras.delete(other);
+          const box = opts4.querySelector(`input[name="coat"][value="${other}"]`); if (box) box.checked = false;
+          const c = (OPTS.coatings || []).find(x => x.id === other);
+          if (note) { note.textContent = T('cfg.excl').replace('{x}', c ? loc(c).name : other); note.hidden = false; }
+        }
+      } else state.extras.delete(id);
+      renderBar();
+    }
     renderSummaries();
     demoRest();
   });

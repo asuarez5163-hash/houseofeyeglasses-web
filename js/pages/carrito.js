@@ -1,6 +1,6 @@
 // Carrito (carrito.html): una línea por paquete desde js/cart.js (localStorage 'hoe-cart'): la foto del armazón (vista 1 del
 // sprite) sobre loseta --paper, nombre (= título del armazón en el feed de Google/Meta, en inglés: hoeCart.title; Meta lo compara
-// con su catálogo), color · código · medida, precio real, "Lentes: uso · material", "Receta: OD/OI" con
+// con su catálogo), color · código · medida, precio real, "Lentes: uso · material · tratamientos", "Receta: OD/OI" con
 // Editar (vuelve a producto.html?id=<sku>&edit=&step=3: el paso 3 es la receta), Quitar con confirmación en línea; a la derecha el resumen (armazones ·
 // lentes · envío · TOTAL real) y un solo botón: hoeCart.pay() → el Central cobra el precio del Central y abre Stripe Checkout;
 // si el cobro está apagado o el Central no contesta, el mismo botón abre el aviso honesto (WhatsApp con SKU · nombre · color ·
@@ -21,7 +21,6 @@
   const OPTS = window.HOE_LENS_OPTIONS || { uses: [], materials: [], coatings: [] };
   const loc = o => (o && (o[L()] || o.en)) || { name: '' };
   const find = (kind, id) => (OPTS[kind] || []).find(x => x.id === id);
-  const LOCKED = new Set(['anti-reflective', 'scratch']);
   const MINUS = '−';
   const s = v => (!v || Number(v) === 0 ? '0.00' : (Number(v) > 0 ? '+' : MINUS) + Math.abs(Number(v)).toFixed(2));
 
@@ -68,7 +67,9 @@
   const sizeOf = it => (it.size ? `${it.size.lens} □ ${it.size.bridge} ${it.size.temple}` : '');
   function line(it) {
     const use = find('uses', it.use), mat = find('materials', it.material);
-    const extras = (it.coatings || []).filter(id => !LOCKED.has(id)).map(id => find('coatings', id)).filter(Boolean).map(c => loc(c).name);
+    // every coating in the line is one the customer chose and pays for (since 11/04 none is included: js/pages/producto.js
+    // LOCKED = []), so all of them are listed; before 11/18 anti-reflective and scratch were hidden here as if included
+    const extras = (it.coatings || []).map(id => find('coatings', id)).filter(Boolean).map(c => loc(c).name);
     const tier = it.use === 'progressive' ? find('tiers', it.tier || 'estandar') : null;
     const lenses = [loc(use).name, tier ? loc(tier).name : '', loc(mat).name, ...extras].filter(Boolean).join(' · ');
     return `<li class="cart-line" data-id="${esc(it.id)}">

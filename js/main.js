@@ -250,6 +250,27 @@
   const emptyEl = document.getElementById('search-empty');
   const norm = t => (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9. ]+/g, ' ');
   let frameIdx = null;                                    // [{ s: SKU, t: "Brand Model code colour" }], from hoeCatalog.search()
+  // a frame result links to the frame's OWN static page (11/18, pending since 11/17): the search index only has the SKU, so the
+  // page name comes from the same small maps the old address producto.html?id= uses (data/r/<letter>-<hundreds>.json, written by
+  // the Central on every export: src/inline/producto-vieja.html). Until a map arrives — or for a SKU in none — the link is the old
+  // address, which still forwards to the static page. A map is asked once per visit; the links already drawn are updated in place.
+  const pageOf = new Map(), mapsAsked = new Set();
+  const frameUrl = sku => pageOf.get(sku) || 'producto.html?id=' + encodeURIComponent(sku);
+  function askPages(skus) {
+    if (!window.fetch) return;
+    for (const sku of skus) {
+      const m = /^HOE-([MWKS])-(\d{1,6})$/.exec(sku || '');
+      if (!m || pageOf.has(sku)) continue;
+      const key = m[1].toLowerCase() + '-' + Math.floor(Number(m[2]) / 100);
+      if (mapsAsked.has(key)) continue;
+      mapsAsked.add(key);
+      fetch('data/r/' + key + '.json?v=' + Math.floor(Date.now() / 36e5)).then(r => (r.ok ? r.json() : null)).then(map => {
+        if (!map || typeof map !== 'object') return;
+        for (const [k, v] of Object.entries(map)) if (typeof v === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*\.html$/.test(v)) pageOf.set(k, v);
+        resultsEl?.querySelectorAll('li.is-frame a[data-sku]').forEach(a => { const to = pageOf.get(a.dataset.sku); if (to) a.setAttribute('href', to); });
+      }).catch(() => { /* no map: the old address still forwards */ });
+    }
+  }
   function searchFrames(words) {
     if (!frameIdx || !words.length) return [];
     const hits = [];
@@ -261,7 +282,9 @@
       if (hay.startsWith(words[0])) score += 1;
       hits.push({ it, score });
     }
-    return hits.sort((a, b) => b.score - a.score).slice(0, 5).map(r => ({ url: 'producto.html?id=' + encodeURIComponent(r.it.s), en: r.it.t, es: r.it.t, k: '', frame: true }));
+    const top = hits.sort((a, b) => b.score - a.score).slice(0, 5);
+    askPages(top.map(r => r.it.s));
+    return top.map(r => ({ url: frameUrl(r.it.s), sku: r.it.s, en: r.it.t, es: r.it.t, k: '', frame: true }));
   }
   function searchItems(q) {
     const idx = window.HOE_SEARCH || [];
@@ -281,7 +304,7 @@
     if (!resultsEl) return;
     const q = qInput.value.trim();
     const items = searchItems(q);
-    resultsEl.innerHTML = items.map((it, i) => `<li role="option" id="sr-${i}"${it.frame ? ' class="is-frame"' : ''}><a href="${it.url}">${esc(it[lang] || it.en)}</a></li>`).join('');
+    resultsEl.innerHTML = items.map((it, i) => `<li role="option" id="sr-${i}"${it.frame ? ' class="is-frame"' : ''}><a href="${it.url}"${it.sku ? ` data-sku="${esc(it.sku)}"` : ''}>${esc(it[lang] || it.en)}</a></li>`).join('');
     emptyEl.hidden = items.length > 0;
     if (!items.length) emptyEl.textContent = tr('search.none').replace('{q}', q);
     qInput.setAttribute('aria-expanded', String(items.length > 0));
