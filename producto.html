@@ -18,6 +18,43 @@
   <link rel="icon" href="favicon.ico" sizes="32x32">
   <link rel="icon" type="image/png" sizes="192x192" href="assets/brand/favicon-192.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/brand/apple-touch-icon.png">
+  <script>
+    // 11/17 · The OLD address producto.html?id=<SKU> goes straight to the frame's own static page. The Central writes, on
+    // every export, small maps data/r/<letter>-<hundreds>.json ({"HOE-W-1707": "<brand>-<model>-<colour>-hoe-w-1707.html"},
+    // about 100 frames each: lib/optica/paginas.py → escribir_redirecciones), with every frame that HAS a static page: in
+    // stock, sold out (its "Sold out" page) or gone. This asks for ONE of them (a few KB, the hour in the query skips the CDN
+    // like data/manifest.json does) as soon as the <head> is read, sets the canonical to that page and replaces the address;
+    // before, the page had to download the whole category (1.1–1.8 MB) first, and a sold-out frame got noindex instead of
+    // its page. A SKU without a static page is not in any map: js/pages/producto.js then says "not found" (noindex), as
+    // always. Only in producto.html: build.py leaves this out of tpl/producto.html, so the static pages never redirect.
+    (function () {
+      try {
+        if (!/(^|\/)producto\.html$/.test(location.pathname) || !window.fetch || !window.URLSearchParams) return;
+        var q = new URLSearchParams(location.search);
+        var id = (q.get('id') || '').trim().toUpperCase();
+        var m = /^HOE-([MWKS])-(\d{1,6})$/.exec(id);
+        if (!m) return;
+        // what travels along: the cart's edit / step, and the campaign and click tags the analytics read on landing
+        var keep = [];
+        q.forEach(function (v, k) {
+          if (v && (k === 'edit' || k === 'step' || /^utm_[a-z]+$/.test(k) || /^(gclid|gbraid|wbraid|fbclid|msclkid|srsltid)$/.test(k))) {
+            keep.push(encodeURIComponent(k) + '=' + encodeURIComponent(v));
+          }
+        });
+        fetch('data/r/' + m[1].toLowerCase() + '-' + Math.floor(Number(m[2]) / 100) + '.json?v=' + Math.floor(Date.now() / 36e5))
+          .then(function (r) { return r.ok ? r.json() : null; })
+          .then(function (map) {
+            var to = map && map[id];
+            if (typeof to !== 'string' || !/^[a-z0-9]+(?:-[a-z0-9]+)*\.html$/.test(to)) return;
+            var link = document.querySelector('link[rel="canonical"]');
+            if (!link) { link = document.createElement('link'); link.rel = 'canonical'; document.head.appendChild(link); }
+            link.href = 'https://houseofeyeglasses.com/' + to;
+            location.replace(to + (keep.length ? '?' + keep.join('&') : '') + location.hash);
+          })
+          .catch(function () { /* no map: js/pages/producto.js still forwards (or says "not found") as before */ });
+      } catch (e) { /* never break the page */ }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet">
