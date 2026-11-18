@@ -12,6 +12,7 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 - [Women’s Eyeglasses](https://houseofeyeglasses.com/women.html): Women’s prescription eyeglasses: designer frames in stock with lenses made to your prescription and free U.S. shipping. A licensed optician checks every prescription.
 - [Kids’ Eyeglasses](https://houseofeyeglasses.com/kids.html): Kids’ prescription eyeglasses: flexible frames for small faces with impact-resistant lenses made to the prescription, and free U.S. shipping.
 - [Virtual Try-On](https://houseofeyeglasses.com/pruebatelos.html): Try our frames on with your camera or a photo. The frame sits on your face in 3D, with the temples behind your ears. Nothing leaves your device.
+- [Popular Eyeglasses Frames](https://houseofeyeglasses.com/popular-frames.html): The eyeglasses frames people found most often on Google over the last 28 days, all new and in stock.
 
 ## Prescription lenses (one page per lens type; the lens prices shown on them are added to the price of the frame)
 - [Prescription Glasses Online](https://houseofeyeglasses.com/prescription-glasses.html): Order prescription glasses online: thousands of designer frames in stock, with single vision, progressive or office lenses made to your prescription. Free U.S. shipping.
