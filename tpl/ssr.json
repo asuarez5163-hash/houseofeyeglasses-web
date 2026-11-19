@@ -18,6 +18,538 @@
 }
 ],
 "estilos": {
+"combos": {
+"groups": [
+[
+"gender",
+"est2.g.gender"
+],
+[
+"colorshape",
+"est2.g.colorshape"
+],
+[
+"build",
+"est2.g.build"
+],
+[
+"size",
+"est2.g.size"
+],
+[
+"kids",
+"est2.g.kids"
+],
+[
+"brand",
+"est2.g.brand"
+]
+],
+"min": 8,
+"vals": [
+{
+"file": "mens-rimless-glasses.html",
+"group": "gender",
+"n": "est2.n.mens-rimless",
+"q": "cat=men&rim=rimless",
+"t": "est2.t.mens-rimless",
+"where": {
+"cat": "men",
+"rim": "rimless"
+},
+"word": "mens-rimless"
+},
+{
+"file": "womens-rimless-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-rimless",
+"q": "cat=women&rim=rimless",
+"t": "est2.t.womens-rimless",
+"where": {
+"cat": "women",
+"rim": "rimless"
+},
+"word": "womens-rimless"
+},
+{
+"file": "mens-black-glasses.html",
+"group": "gender",
+"n": "est2.n.mens-black",
+"q": "cat=men&color=black",
+"t": "est2.t.mens-black",
+"where": {
+"cat": "men",
+"col": "black"
+},
+"word": "mens-black"
+},
+{
+"file": "womens-black-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-black",
+"q": "cat=women&color=black",
+"t": "est2.t.womens-black",
+"where": {
+"cat": "women",
+"col": "black"
+},
+"word": "womens-black"
+},
+{
+"file": "mens-clear-glasses.html",
+"group": "gender",
+"n": "est2.n.mens-clear",
+"q": "cat=men&color=transparent",
+"t": "est2.t.mens-clear",
+"where": {
+"cat": "men",
+"col": "transparent"
+},
+"word": "mens-clear"
+},
+{
+"file": "womens-clear-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-clear",
+"q": "cat=women&color=transparent",
+"t": "est2.t.womens-clear",
+"where": {
+"cat": "women",
+"col": "transparent"
+},
+"word": "womens-clear"
+},
+{
+"file": "womens-white-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-white",
+"q": "cat=women&color=white",
+"t": "est2.t.womens-white",
+"where": {
+"cat": "women",
+"col": "white"
+},
+"word": "womens-white"
+},
+{
+"file": "mens-half-rim-glasses.html",
+"group": "gender",
+"n": "est2.n.mens-half-rim",
+"q": "cat=men&rim=half",
+"t": "est2.t.mens-half-rim",
+"where": {
+"cat": "men",
+"rim": "half"
+},
+"word": "mens-half-rim"
+},
+{
+"file": "womens-half-rim-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-half-rim",
+"q": "cat=women&rim=half",
+"t": "est2.t.womens-half-rim",
+"where": {
+"cat": "women",
+"rim": "half"
+},
+"word": "womens-half-rim"
+},
+{
+"file": "mens-titanium-glasses.html",
+"group": "gender",
+"n": "est2.n.mens-titanium",
+"q": "cat=men&material=titanium",
+"t": "est2.t.mens-titanium",
+"where": {
+"cat": "men",
+"mat": "titanium"
+},
+"word": "mens-titanium"
+},
+{
+"file": "womens-titanium-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-titanium",
+"q": "cat=women&material=titanium",
+"t": "est2.t.womens-titanium",
+"where": {
+"cat": "women",
+"mat": "titanium"
+},
+"word": "womens-titanium"
+},
+{
+"file": "mens-tr90-glasses.html",
+"group": "gender",
+"n": "est2.n.mens-tr90",
+"q": "cat=men&material=tr90",
+"t": "est2.t.mens-tr90",
+"where": {
+"cat": "men",
+"mat": "tr90"
+},
+"word": "mens-tr90"
+},
+{
+"file": "womens-tr90-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-tr90",
+"q": "cat=women&material=tr90",
+"t": "est2.t.womens-tr90",
+"where": {
+"cat": "women",
+"mat": "tr90"
+},
+"word": "womens-tr90"
+},
+{
+"file": "womens-tortoise-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-tortoise",
+"q": "cat=women&color=tortoise",
+"t": "est2.t.womens-tortoise",
+"where": {
+"cat": "women",
+"col": "tortoise"
+},
+"word": "womens-tortoise"
+},
+{
+"file": "mens-tortoise-glasses.html",
+"group": "gender",
+"n": "est2.n.mens-tortoise",
+"q": "cat=men&color=tortoise",
+"t": "est2.t.mens-tortoise",
+"where": {
+"cat": "men",
+"col": "tortoise"
+},
+"word": "mens-tortoise"
+},
+{
+"file": "womens-red-glasses.html",
+"group": "gender",
+"n": "est2.n.womens-red",
+"q": "cat=women&color=red",
+"t": "est2.t.womens-red",
+"where": {
+"cat": "women",
+"col": "red"
+},
+"word": "womens-red"
+},
+{
+"file": "black-round-glasses.html",
+"group": "colorshape",
+"n": "est2.n.black-round",
+"q": "color=black&shape=round",
+"t": "est2.t.black-round",
+"where": {
+"col": "black",
+"sh": "round"
+},
+"word": "black-round"
+},
+{
+"file": "clear-round-glasses.html",
+"group": "colorshape",
+"n": "est2.n.clear-round",
+"q": "color=transparent&shape=round",
+"t": "est2.t.clear-round",
+"where": {
+"col": "transparent",
+"sh": "round"
+},
+"word": "clear-round"
+},
+{
+"file": "gold-round-glasses.html",
+"group": "colorshape",
+"n": "est2.n.gold-round",
+"q": "color=gold&shape=round",
+"t": "est2.t.gold-round",
+"where": {
+"col": "gold",
+"sh": "round"
+},
+"word": "gold-round"
+},
+{
+"file": "black-cat-eye-glasses.html",
+"group": "colorshape",
+"n": "est2.n.black-cat-eye",
+"q": "color=black&shape=cateye",
+"t": "est2.t.black-cat-eye",
+"where": {
+"col": "black",
+"sh": "cateye"
+},
+"word": "black-cat-eye"
+},
+{
+"file": "clear-cat-eye-glasses.html",
+"group": "colorshape",
+"n": "est2.n.clear-cat-eye",
+"q": "color=transparent&shape=cateye",
+"t": "est2.t.clear-cat-eye",
+"where": {
+"col": "transparent",
+"sh": "cateye"
+},
+"word": "clear-cat-eye"
+},
+{
+"file": "red-cat-eye-glasses.html",
+"group": "colorshape",
+"n": "est2.n.red-cat-eye",
+"q": "color=red&shape=cateye",
+"t": "est2.t.red-cat-eye",
+"where": {
+"col": "red",
+"sh": "cateye"
+},
+"word": "red-cat-eye"
+},
+{
+"file": "pink-cat-eye-glasses.html",
+"group": "colorshape",
+"n": "est2.n.pink-cat-eye",
+"q": "color=pink&shape=cateye",
+"t": "est2.t.pink-cat-eye",
+"where": {
+"col": "pink",
+"sh": "cateye"
+},
+"word": "pink-cat-eye"
+},
+{
+"file": "gold-cat-eye-glasses.html",
+"group": "colorshape",
+"n": "est2.n.gold-cat-eye",
+"q": "color=gold&shape=cateye",
+"t": "est2.t.gold-cat-eye",
+"where": {
+"col": "gold",
+"sh": "cateye"
+},
+"word": "gold-cat-eye"
+},
+{
+"file": "black-rectangle-glasses.html",
+"group": "colorshape",
+"n": "est2.n.black-rectangle",
+"q": "color=black&shape=rect",
+"t": "est2.t.black-rectangle",
+"where": {
+"col": "black",
+"sh": "rect"
+},
+"word": "black-rectangle"
+},
+{
+"file": "black-square-glasses.html",
+"group": "colorshape",
+"n": "est2.n.black-square",
+"q": "color=black&shape=square",
+"t": "est2.t.black-square",
+"where": {
+"col": "black",
+"sh": "square"
+},
+"word": "black-square"
+},
+{
+"file": "clear-square-glasses.html",
+"group": "colorshape",
+"n": "est2.n.clear-square",
+"q": "color=transparent&shape=square",
+"t": "est2.t.clear-square",
+"where": {
+"col": "transparent",
+"sh": "square"
+},
+"word": "clear-square"
+},
+{
+"file": "gold-aviator-glasses.html",
+"group": "colorshape",
+"n": "est2.n.gold-aviator",
+"q": "color=gold&shape=aviator",
+"t": "est2.t.gold-aviator",
+"where": {
+"col": "gold",
+"sh": "aviator"
+},
+"word": "gold-aviator"
+},
+{
+"file": "black-aviator-glasses.html",
+"group": "colorshape",
+"n": "est2.n.black-aviator",
+"q": "color=black&shape=aviator",
+"t": "est2.t.black-aviator",
+"where": {
+"col": "black",
+"sh": "aviator"
+},
+"word": "black-aviator"
+},
+{
+"file": "round-metal-glasses.html",
+"group": "build",
+"n": "est2.n.round-metal",
+"q": "shape=round&material=metal",
+"t": "est2.t.round-metal",
+"where": {
+"mat": "metal",
+"sh": "round"
+},
+"word": "round-metal"
+},
+{
+"file": "round-acetate-glasses.html",
+"group": "build",
+"n": "est2.n.round-acetate",
+"q": "shape=round&material=acetate",
+"t": "est2.t.round-acetate",
+"where": {
+"mat": "acetate",
+"sh": "round"
+},
+"word": "round-acetate"
+},
+{
+"file": "metal-cat-eye-glasses.html",
+"group": "build",
+"n": "est2.n.metal-cat-eye",
+"q": "material=metal&shape=cateye",
+"t": "est2.t.metal-cat-eye",
+"where": {
+"mat": "metal",
+"sh": "cateye"
+},
+"word": "metal-cat-eye"
+},
+{
+"file": "rimless-rectangle-glasses.html",
+"group": "build",
+"n": "est2.n.rimless-rectangle",
+"q": "rim=rimless&shape=rect",
+"t": "est2.t.rimless-rectangle",
+"where": {
+"rim": "rimless",
+"sh": "rect"
+},
+"word": "rimless-rectangle"
+},
+{
+"file": "small-glasses.html",
+"group": "size",
+"n": "est2.n.small",
+"q": "size=narrow",
+"t": "est2.t.small",
+"where": {
+"band": "narrow"
+},
+"word": "small"
+},
+{
+"file": "wide-glasses.html",
+"group": "size",
+"n": "est2.n.wide",
+"q": "size=wide",
+"t": "est2.t.wide",
+"where": {
+"band": "wide"
+},
+"word": "wide"
+},
+{
+"file": "extra-wide-glasses.html",
+"group": "size",
+"n": "est2.n.extra-wide",
+"q": "size=xwide",
+"t": "est2.t.extra-wide",
+"where": {
+"band": "xwide"
+},
+"word": "extra-wide"
+},
+{
+"file": "kids-flexible-glasses.html",
+"group": "kids",
+"n": "est2.n.kids-flexible",
+"q": "cat=kids&material=tr90",
+"t": "est2.t.kids-flexible",
+"where": {
+"cat": "kids",
+"mat": "tr90"
+},
+"word": "kids-flexible"
+},
+{
+"file": "gucci-cat-eye-glasses.html",
+"group": "brand",
+"n": "est2.n.gucci-cat-eye",
+"q": "brand=Gucci&shape=cateye",
+"t": "est2.t.gucci-cat-eye",
+"where": {
+"b": "Gucci",
+"sh": "cateye"
+},
+"word": "gucci-cat-eye"
+},
+{
+"file": "gucci-square-glasses.html",
+"group": "brand",
+"n": "est2.n.gucci-square",
+"q": "brand=Gucci&shape=square",
+"t": "est2.t.gucci-square",
+"where": {
+"b": "Gucci",
+"sh": "square"
+},
+"word": "gucci-square"
+},
+{
+"file": "tom-ford-cat-eye-glasses.html",
+"group": "brand",
+"n": "est2.n.tom-ford-cat-eye",
+"q": "brand=Tom%20Ford&shape=cateye",
+"t": "est2.t.tom-ford-cat-eye",
+"where": {
+"b": "Tom Ford",
+"sh": "cateye"
+},
+"word": "tom-ford-cat-eye"
+},
+{
+"file": "versace-cat-eye-glasses.html",
+"group": "brand",
+"n": "est2.n.versace-cat-eye",
+"q": "brand=Versace&shape=cateye",
+"t": "est2.t.versace-cat-eye",
+"where": {
+"b": "Versace",
+"sh": "cateye"
+},
+"word": "versace-cat-eye"
+},
+{
+"file": "tom-ford-round-glasses.html",
+"group": "brand",
+"n": "est2.n.tom-ford-round",
+"q": "brand=Tom%20Ford&shape=round",
+"t": "est2.t.tom-ford-round",
+"where": {
+"b": "Tom Ford",
+"sh": "round"
+},
+"word": "tom-ford-round"
+}
+]
+},
 "fams": [
 {
 "attr": "sh",
@@ -435,6 +967,113 @@
 "drawer.lenses": "Lenses education",
 "drawer.rx": "Read your prescription",
 "drawer.wa": "Help on WhatsApp",
+"est2.and": " and ",
+"est2.g.brand": "By brand and shape",
+"est2.g.build": "By material, rim and shape",
+"est2.g.colorshape": "By color and shape",
+"est2.g.gender": "For men and for women",
+"est2.g.kids": "For kids",
+"est2.g.size": "By size",
+"est2.h.lenses": "Lenses for these frames",
+"est2.h.more": "More styles",
+"est2.h.related": "Related styles",
+"est2.item": "{name} ({n})",
+"est2.lead.brands": "By {nb} brands: {list}.",
+"est2.lead.brandsTop": "By {nb} brands, including {list}.",
+"est2.lead.end": "Add your prescription lenses in four short steps; standard shipping in the U.S. is free.",
+"est2.lead.facet": "{label}: {list}.",
+"est2.lead.front": "Each one is {a} to {b} mm across the front, our {band} fit.",
+"est2.lead.lens": "Lens widths from {a} to {b} mm.",
+"est2.lead.lens1": "Lens width {a} mm.",
+"est2.lead.models": "{m} {brand} models.",
+"est2.lead.n": "{n} frames in stock, {price}.",
+"est2.lead.shown": "Here are {shown} of them.",
+"est2.n.black-aviator": "Black aviator glasses",
+"est2.n.black-cat-eye": "Black cat-eye glasses",
+"est2.n.black-rectangle": "Black rectangle glasses",
+"est2.n.black-round": "Black round glasses",
+"est2.n.black-square": "Black square glasses",
+"est2.n.clear-cat-eye": "Clear cat-eye glasses",
+"est2.n.clear-round": "Clear round glasses",
+"est2.n.clear-square": "Clear square glasses",
+"est2.n.extra-wide": "Extra-wide glasses frames",
+"est2.n.gold-aviator": "Gold aviator glasses",
+"est2.n.gold-cat-eye": "Gold cat-eye glasses",
+"est2.n.gold-round": "Gold round glasses",
+"est2.n.gucci-cat-eye": "Gucci cat-eye glasses",
+"est2.n.gucci-square": "Gucci square glasses",
+"est2.n.kids-flexible": "Flexible glasses for kids",
+"est2.n.mens-black": "Black glasses for men",
+"est2.n.mens-clear": "Clear glasses for men",
+"est2.n.mens-half-rim": "Half-rim glasses for men",
+"est2.n.mens-rimless": "Rimless glasses for men",
+"est2.n.mens-titanium": "Titanium glasses for men",
+"est2.n.mens-tortoise": "Tortoise glasses for men",
+"est2.n.mens-tr90": "TR-90 glasses for men",
+"est2.n.metal-cat-eye": "Metal cat-eye glasses",
+"est2.n.pink-cat-eye": "Pink cat-eye glasses",
+"est2.n.red-cat-eye": "Red cat-eye glasses",
+"est2.n.rimless-rectangle": "Rimless rectangle glasses",
+"est2.n.round-acetate": "Round acetate glasses",
+"est2.n.round-metal": "Round metal glasses",
+"est2.n.small": "Small glasses frames",
+"est2.n.tom-ford-cat-eye": "Tom Ford cat-eye glasses",
+"est2.n.tom-ford-round": "Tom Ford round glasses",
+"est2.n.versace-cat-eye": "Versace cat-eye glasses",
+"est2.n.wide": "Wide glasses frames",
+"est2.n.womens-black": "Black glasses for women",
+"est2.n.womens-clear": "Clear glasses for women",
+"est2.n.womens-half-rim": "Half-rim glasses for women",
+"est2.n.womens-red": "Red glasses for women",
+"est2.n.womens-rimless": "Rimless glasses for women",
+"est2.n.womens-titanium": "Titanium glasses for women",
+"est2.n.womens-tortoise": "Tortoise glasses for women",
+"est2.n.womens-tr90": "TR-90 glasses for women",
+"est2.n.womens-white": "White glasses for women",
+"est2.price.one": "all at {min}",
+"est2.price.range": "from {min} to {max}",
+"est2.t.black-aviator": "Black Aviator Glasses — Black Aviator Eyeglass Frames | House of Eyeglasses",
+"est2.t.black-cat-eye": "Black Cat-Eye Glasses — Black Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.black-rectangle": "Black Rectangle Glasses — Rectangular Black Eyeglass Frames | House of Eyeglasses",
+"est2.t.black-round": "Black Round Glasses — Round Black Eyeglass Frames | House of Eyeglasses",
+"est2.t.black-square": "Black Square Glasses — Square Black Eyeglass Frames | House of Eyeglasses",
+"est2.t.clear-cat-eye": "Clear Cat-Eye Glasses — Transparent Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.clear-round": "Clear Round Glasses — Round Transparent Eyeglass Frames | House of Eyeglasses",
+"est2.t.clear-square": "Clear Square Glasses — Square Transparent Eyeglass Frames | House of Eyeglasses",
+"est2.t.extra-wide": "Extra-Wide Glasses Frames — Glasses for Big Heads | House of Eyeglasses",
+"est2.t.gold-aviator": "Gold Aviator Glasses — Gold Aviator Eyeglass Frames | House of Eyeglasses",
+"est2.t.gold-cat-eye": "Gold Cat-Eye Glasses — Gold Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.gold-round": "Gold Round Glasses — Round Gold Eyeglass Frames | House of Eyeglasses",
+"est2.t.gucci-cat-eye": "Gucci Cat-Eye Glasses — Gucci Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.gucci-square": "Gucci Square Glasses — Gucci Square Eyeglass Frames | House of Eyeglasses",
+"est2.t.kids-flexible": "Flexible Glasses for Kids — TR-90 Kids’ Eyeglass Frames | House of Eyeglasses",
+"est2.t.mens-black": "Black Glasses for Men — Men’s Black Eyeglass Frames | House of Eyeglasses",
+"est2.t.mens-clear": "Clear Glasses for Men — Men’s Transparent Eyeglass Frames | House of Eyeglasses",
+"est2.t.mens-half-rim": "Half-Rim Glasses for Men — Men’s Semi-Rimless Eyeglass Frames | House of Eyeglasses",
+"est2.t.mens-rimless": "Rimless Glasses for Men — Men’s Rimless Eyeglass Frames | House of Eyeglasses",
+"est2.t.mens-titanium": "Titanium Glasses for Men — Men’s Titanium Eyeglass Frames | House of Eyeglasses",
+"est2.t.mens-tortoise": "Tortoise Glasses for Men — Men’s Tortoiseshell Eyeglass Frames | House of Eyeglasses",
+"est2.t.mens-tr90": "TR-90 Glasses for Men — Men’s Flexible TR-90 Eyeglass Frames | House of Eyeglasses",
+"est2.t.metal-cat-eye": "Metal Cat-Eye Glasses — Metal Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.pink-cat-eye": "Pink Cat-Eye Glasses — Pink Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.red-cat-eye": "Red Cat-Eye Glasses — Red Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.rimless-rectangle": "Rimless Rectangle Glasses — Rectangular Rimless Eyeglass Frames | House of Eyeglasses",
+"est2.t.round-acetate": "Round Acetate Glasses — Round Acetate Eyeglass Frames | House of Eyeglasses",
+"est2.t.round-metal": "Round Metal Glasses — Round Metal Eyeglass Frames | House of Eyeglasses",
+"est2.t.small": "Small Glasses Frames — Narrow Eyeglasses for Small Faces | House of Eyeglasses",
+"est2.t.tom-ford-cat-eye": "Tom Ford Cat-Eye Glasses — Tom Ford Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.tom-ford-round": "Tom Ford Round Glasses — Tom Ford Round Eyeglass Frames | House of Eyeglasses",
+"est2.t.versace-cat-eye": "Versace Cat-Eye Glasses — Versace Cat-Eye Eyeglass Frames | House of Eyeglasses",
+"est2.t.wide": "Wide Glasses Frames — Eyeglasses for Wide Faces | House of Eyeglasses",
+"est2.t.womens-black": "Black Glasses for Women — Women’s Black Eyeglass Frames | House of Eyeglasses",
+"est2.t.womens-clear": "Clear Glasses for Women — Women’s Transparent Eyeglass Frames | House of Eyeglasses",
+"est2.t.womens-half-rim": "Half-Rim Glasses for Women — Women’s Semi-Rimless Eyeglass Frames | House of Eyeglasses",
+"est2.t.womens-red": "Red Glasses for Women — Women’s Red Eyeglass Frames | House of Eyeglasses",
+"est2.t.womens-rimless": "Rimless Glasses for Women — Women’s Rimless Eyeglass Frames | House of Eyeglasses",
+"est2.t.womens-titanium": "Titanium Glasses for Women — Women’s Titanium Eyeglass Frames | House of Eyeglasses",
+"est2.t.womens-tortoise": "Tortoise Glasses for Women — Women’s Tortoiseshell Eyeglass Frames | House of Eyeglasses",
+"est2.t.womens-tr90": "TR-90 Glasses for Women — Women’s Flexible TR-90 Eyeglass Frames | House of Eyeglasses",
+"est2.t.womens-white": "White Glasses for Women — Women’s White Eyeglass Frames | House of Eyeglasses",
 "estilo.all": "See all {n} in the catalog",
 "estilo.allStyles": "All styles",
 "estilo.desc": "{name}: {n} frames, new and in stock, from {min} with free U.S. shipping. Add prescription lenses made to your prescription; a licensed optician checks every prescription.",
@@ -926,6 +1565,113 @@
 "drawer.lenses": "Guía de lentes",
 "drawer.rx": "Leer tu receta",
 "drawer.wa": "Ayuda por WhatsApp",
+"est2.and": " y ",
+"est2.g.brand": "Por marca y forma",
+"est2.g.build": "Por material, aro y forma",
+"est2.g.colorshape": "Por color y forma",
+"est2.g.gender": "Para hombre y para mujer",
+"est2.g.kids": "Para niños",
+"est2.g.size": "Por tamaño",
+"est2.h.lenses": "Lentes para estos armazones",
+"est2.h.more": "Más estilos",
+"est2.h.related": "Estilos relacionados",
+"est2.item": "{name} ({n})",
+"est2.lead.brands": "De {nb} marcas: {list}.",
+"est2.lead.brandsTop": "De {nb} marcas, entre ellas {list}.",
+"est2.lead.end": "Agrega tus lentes graduados en cuatro pasos cortos; el envío estándar en EE. UU. es gratis.",
+"est2.lead.facet": "{label}: {list}.",
+"est2.lead.front": "Cada uno mide de {a} a {b} mm de frente, nuestro ajuste {band}.",
+"est2.lead.lens": "Lentes de {a} a {b} mm de ancho.",
+"est2.lead.lens1": "Lentes de {a} mm de ancho.",
+"est2.lead.models": "{m} modelos de {brand}.",
+"est2.lead.n": "{n} armazones en existencia, {price}.",
+"est2.lead.shown": "Aquí van {shown}.",
+"est2.n.black-aviator": "Espejuelos de aviador negros",
+"est2.n.black-cat-eye": "Espejuelos ojo de gato negros",
+"est2.n.black-rectangle": "Espejuelos rectangulares negros",
+"est2.n.black-round": "Espejuelos redondos negros",
+"est2.n.black-square": "Espejuelos cuadrados negros",
+"est2.n.clear-cat-eye": "Espejuelos ojo de gato transparentes",
+"est2.n.clear-round": "Espejuelos redondos transparentes",
+"est2.n.clear-square": "Espejuelos cuadrados transparentes",
+"est2.n.extra-wide": "Armazones extra anchos",
+"est2.n.gold-aviator": "Espejuelos de aviador dorados",
+"est2.n.gold-cat-eye": "Espejuelos ojo de gato dorados",
+"est2.n.gold-round": "Espejuelos redondos dorados",
+"est2.n.gucci-cat-eye": "Espejuelos Gucci ojo de gato",
+"est2.n.gucci-square": "Espejuelos Gucci cuadrados",
+"est2.n.kids-flexible": "Espejuelos flexibles para niños",
+"est2.n.mens-black": "Espejuelos negros para hombre",
+"est2.n.mens-clear": "Espejuelos transparentes para hombre",
+"est2.n.mens-half-rim": "Espejuelos de medio aro para hombre",
+"est2.n.mens-rimless": "Espejuelos sin aro para hombre",
+"est2.n.mens-titanium": "Espejuelos de titanio para hombre",
+"est2.n.mens-tortoise": "Espejuelos de carey para hombre",
+"est2.n.mens-tr90": "Espejuelos de TR-90 para hombre",
+"est2.n.metal-cat-eye": "Espejuelos ojo de gato de metal",
+"est2.n.pink-cat-eye": "Espejuelos ojo de gato color rosa",
+"est2.n.red-cat-eye": "Espejuelos ojo de gato rojos",
+"est2.n.rimless-rectangle": "Espejuelos rectangulares sin aro",
+"est2.n.round-acetate": "Espejuelos redondos de acetato",
+"est2.n.round-metal": "Espejuelos redondos de metal",
+"est2.n.small": "Armazones pequeños",
+"est2.n.tom-ford-cat-eye": "Espejuelos Tom Ford ojo de gato",
+"est2.n.tom-ford-round": "Espejuelos Tom Ford redondos",
+"est2.n.versace-cat-eye": "Espejuelos Versace ojo de gato",
+"est2.n.wide": "Armazones anchos",
+"est2.n.womens-black": "Espejuelos negros para mujer",
+"est2.n.womens-clear": "Espejuelos transparentes para mujer",
+"est2.n.womens-half-rim": "Espejuelos de medio aro para mujer",
+"est2.n.womens-red": "Espejuelos rojos para mujer",
+"est2.n.womens-rimless": "Espejuelos sin aro para mujer",
+"est2.n.womens-titanium": "Espejuelos de titanio para mujer",
+"est2.n.womens-tortoise": "Espejuelos de carey para mujer",
+"est2.n.womens-tr90": "Espejuelos de TR-90 para mujer",
+"est2.n.womens-white": "Espejuelos blancos para mujer",
+"est2.price.one": "todos a {min}",
+"est2.price.range": "desde {min} hasta {max}",
+"est2.t.black-aviator": "Espejuelos de aviador negros — Armazones de aviador | House of Eyeglasses",
+"est2.t.black-cat-eye": "Espejuelos ojo de gato negros — Armazones ojo de gato | House of Eyeglasses",
+"est2.t.black-rectangle": "Espejuelos rectangulares negros — Armazones rectangulares | House of Eyeglasses",
+"est2.t.black-round": "Espejuelos redondos negros — Armazones redondos | House of Eyeglasses",
+"est2.t.black-square": "Espejuelos cuadrados negros — Armazones cuadrados | House of Eyeglasses",
+"est2.t.clear-cat-eye": "Espejuelos ojo de gato transparentes — Armazones ojo de gato | House of Eyeglasses",
+"est2.t.clear-round": "Espejuelos redondos transparentes — Armazones redondos | House of Eyeglasses",
+"est2.t.clear-square": "Espejuelos cuadrados transparentes — Armazones cuadrados | House of Eyeglasses",
+"est2.t.extra-wide": "Armazones extra anchos — Espejuelos para cabezas grandes | House of Eyeglasses",
+"est2.t.gold-aviator": "Espejuelos de aviador dorados — Armazones de aviador | House of Eyeglasses",
+"est2.t.gold-cat-eye": "Espejuelos ojo de gato dorados — Armazones ojo de gato | House of Eyeglasses",
+"est2.t.gold-round": "Espejuelos redondos dorados — Armazones redondos | House of Eyeglasses",
+"est2.t.gucci-cat-eye": "Espejuelos Gucci ojo de gato — Armazones Gucci | House of Eyeglasses",
+"est2.t.gucci-square": "Espejuelos Gucci cuadrados — Armazones Gucci | House of Eyeglasses",
+"est2.t.kids-flexible": "Espejuelos flexibles para niños — Armazones de TR-90 para niños | House of Eyeglasses",
+"est2.t.mens-black": "Espejuelos negros para hombre — Armazones negros | House of Eyeglasses",
+"est2.t.mens-clear": "Espejuelos transparentes para hombre — Armazones transparentes | House of Eyeglasses",
+"est2.t.mens-half-rim": "Espejuelos de medio aro para hombre — Armazones de medio aro | House of Eyeglasses",
+"est2.t.mens-rimless": "Espejuelos sin aro para hombre — Armazones sin aro | House of Eyeglasses",
+"est2.t.mens-titanium": "Espejuelos de titanio para hombre — Armazones de titanio | House of Eyeglasses",
+"est2.t.mens-tortoise": "Espejuelos de carey para hombre — Armazones de carey | House of Eyeglasses",
+"est2.t.mens-tr90": "Espejuelos de TR-90 para hombre — Armazones flexibles de TR-90 | House of Eyeglasses",
+"est2.t.metal-cat-eye": "Espejuelos ojo de gato de metal — Armazones ojo de gato de metal | House of Eyeglasses",
+"est2.t.pink-cat-eye": "Espejuelos ojo de gato color rosa — Armazones ojo de gato | House of Eyeglasses",
+"est2.t.red-cat-eye": "Espejuelos ojo de gato rojos — Armazones ojo de gato | House of Eyeglasses",
+"est2.t.rimless-rectangle": "Espejuelos rectangulares sin aro — Armazones sin aro | House of Eyeglasses",
+"est2.t.round-acetate": "Espejuelos redondos de acetato — Armazones redondos de acetato | House of Eyeglasses",
+"est2.t.round-metal": "Espejuelos redondos de metal — Armazones redondos de metal | House of Eyeglasses",
+"est2.t.small": "Armazones pequeños — Espejuelos angostos para caras pequeñas | House of Eyeglasses",
+"est2.t.tom-ford-cat-eye": "Espejuelos Tom Ford ojo de gato — Armazones Tom Ford | House of Eyeglasses",
+"est2.t.tom-ford-round": "Espejuelos Tom Ford redondos — Armazones Tom Ford | House of Eyeglasses",
+"est2.t.versace-cat-eye": "Espejuelos Versace ojo de gato — Armazones Versace | House of Eyeglasses",
+"est2.t.wide": "Armazones anchos — Espejuelos para caras anchas | House of Eyeglasses",
+"est2.t.womens-black": "Espejuelos negros para mujer — Armazones negros | House of Eyeglasses",
+"est2.t.womens-clear": "Espejuelos transparentes para mujer — Armazones transparentes | House of Eyeglasses",
+"est2.t.womens-half-rim": "Espejuelos de medio aro para mujer — Armazones de medio aro | House of Eyeglasses",
+"est2.t.womens-red": "Espejuelos rojos para mujer — Armazones rojos | House of Eyeglasses",
+"est2.t.womens-rimless": "Espejuelos sin aro para mujer — Armazones sin aro | House of Eyeglasses",
+"est2.t.womens-titanium": "Espejuelos de titanio para mujer — Armazones de titanio | House of Eyeglasses",
+"est2.t.womens-tortoise": "Espejuelos de carey para mujer — Armazones de carey | House of Eyeglasses",
+"est2.t.womens-tr90": "Espejuelos de TR-90 para mujer — Armazones flexibles de TR-90 | House of Eyeglasses",
+"est2.t.womens-white": "Espejuelos blancos para mujer — Armazones blancos | House of Eyeglasses",
 "estilo.all": "Ver los {n} en el catálogo",
 "estilo.allStyles": "Todos los estilos",
 "estilo.desc": "{name}: {n} armazones nuevos y en existencia, desde {min} con envío gratis en EE. UU. Agrega lentes graduados hechos a tu receta; un óptico con licencia revisa cada receta.",
