@@ -1,0 +1,15 @@
+/* Medidor de DP v2 (11/19, SIN PUBLICAR: solo con pd.html?pd=v2; js/pages/pd.js la carga junto a js/pages/pd2.js).
+   Solo lo que v2 añade: «Who are you measuring?» (dos botones con aria-pressed, zona de toque ≥ 44 px), la nota de
+   las dos reglas y el aviso «Measuring a child?». Mismo lenguaje que pd.css: filas con hairline, oro para lo elegido. */
+.pdm-who { margin: 18px 0 0; }
+.pdm-who .kicker { margin: 0; }
+.pdm-who-b { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); margin-top: 10px; border: 1px solid var(--line); }
+.pdm-who-b button { min-height: 44px; margin: 0; padding: 8px 10px; border: 0; border-radius: 0; background: transparent; font: 400 15px/1.25 var(--font-ui); color: var(--ink-2); cursor: pointer; transition: color .2s, box-shadow .2s; }
+.pdm-who-b button + button { border-left: 1px solid var(--line); }
+.pdm-who-b button[aria-pressed="true"] { color: var(--ink); box-shadow: inset 0 -2px 0 var(--gold); }
+@media (hover: hover) and (pointer: fine) { .pdm-who-b button:hover { color: var(--ink); } }
+.pdm-who-b button:focus-visible { outline: 1px solid var(--gold); outline-offset: -1px; }
+.pdm-split { padding-left: 12px; border-left: 1px solid var(--line-2); }
+.pdm-kid { margin: 14px 0 0; font-size: var(--fs-small); line-height: 1.55; color: var(--ink); text-wrap: pretty; }
+.pdm-kid .text-btn { color: var(--gold); }
+@media (prefers-reduced-motion: reduce) { .pdm-who-b button { transition: none; } }

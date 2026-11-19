@@ -28,7 +28,7 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 
 ## Guides
 - [How to Read an Eyeglass Prescription: What the Numbers Mean](https://houseofeyeglasses.com/receta.html): How to read an eyeglass prescription: what OD, OS, OU, SPH, CYL, AXIS, ADD, prism and PD mean, a free sign checker that stays on your device, and how to measure your PD at home.
-- [Measure Your PD Online](https://houseofeyeglasses.com/pd.html): Measure your pupillary distance (PD) online with your camera, or with a ruler and a mirror. Free, no app, and no photo leaves your device. Single and dual PD. The camera measurement runs in the browser (the iris is the ruler); it gives the distance PD to about ±2 mm.
+- [Measure Your PD Online](https://houseofeyeglasses.com/pd.html): Measure your pupillary distance (PD) online with your camera, or with a ruler and a mirror. Free, no app, and no photo leaves your device. Single and dual PD. The camera measurement runs in the browser with two rulers (the iris and the proportions of the face); it gives the distance PD to about ±2.5 mm for an adult, ±3 mm for a child.
 - [Lens Options](https://houseofeyeglasses.com/lentes.html): Compare lens types, materials and coatings, see who each one is for, and find the right lens thickness for your prescription.
 - [Find Your Fit: Frame Size Guide](https://houseofeyeglasses.com/talla.html): Work out your frame size from the three numbers on the glasses you own, or measure your face with a card. Standard or low nose bridge, and the frame shapes that suit your face.
 - [Style Quiz](https://houseofeyeglasses.com/quiz.html): Six quick questions to find the frame shapes, materials, colors and lenses that suit you. No sign-up needed.
