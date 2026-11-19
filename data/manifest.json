@@ -1,13 +1,13 @@
 {
- "v": "2026-11-19T11:01:53Z",
- "total": 6810,
+ "v": "2026-11-19T23:05:32Z",
+ "total": 6904,
  "chunks": {
-  "men": "data/c/men.4ef316cb.json",
-  "women": "data/c/women.ec66142c.json",
-  "kids": "data/c/kids.3835ba7e.json",
+  "men": "data/c/men.b994cba9.json",
+  "women": "data/c/women.4b5beff4.json",
+  "kids": "data/c/kids.acb1bf21.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.9d9574bb.json",
+ "search": "data/s/index.76f030c5.json",
  "featured": [
   "HOE-K-58",
   "HOE-W-4026",
@@ -17,10 +17,10 @@
   "HOE-M-924",
   "HOE-W-928",
   "HOE-M-896",
-  "HOE-M-752",
+  "HOE-M-3370",
   "HOE-W-1144",
   "HOE-W-3007",
-  "HOE-W-816"
+  "HOE-M-750"
  ],
  "facets": {
   "brand": [
@@ -141,7 +141,6 @@
    "Nine West",
    "No 21 by Linda Farrow",
    "ONeill",
-   "Oakley",
    "Off-White",
    "Palm Angels",
    "Pepe Jeans",
@@ -161,7 +160,6 @@
    "Rag & Bone",
    "Ralph Lauren",
    "Ralph by Ralph Lauren",
-   "Ray Ban",
    "Rims",
    "Roberto Cavalli",
    "Roxy",
@@ -291,8 +289,8 @@
  },
  "tryon": {
   "kids": "data/t/kids.5e4725f4.json",
-  "men": "data/t/men.c5a86e54.json",
-  "women": "data/t/women.39c36ed3.json"
+  "men": "data/t/men.ce96efa8.json",
+  "women": "data/t/women.00370b43.json"
  },
  "pages": 1
 }
