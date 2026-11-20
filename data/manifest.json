@@ -1,13 +1,13 @@
 {
- "v": "2026-11-20T11:01:28Z",
- "total": 6892,
+ "v": "2026-11-20T23:03:57Z",
+ "total": 6910,
  "chunks": {
-  "men": "data/c/men.05d89a9c.json",
-  "women": "data/c/women.b4a54811.json",
-  "kids": "data/c/kids.80c62501.json",
+  "men": "data/c/men.286e10e5.json",
+  "women": "data/c/women.8af445f3.json",
+  "kids": "data/c/kids.470447e2.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.3dde8f97.json",
+ "search": "data/s/index.21c01a60.json",
  "featured": [
   "HOE-K-58",
   "HOE-W-4026",
@@ -18,9 +18,9 @@
   "HOE-W-928",
   "HOE-M-896",
   "HOE-M-3370",
+  "HOE-M-3464",
   "HOE-W-1144",
-  "HOE-W-3007",
-  "HOE-M-750"
+  "HOE-W-3007"
  ],
  "facets": {
   "brand": [
@@ -289,8 +289,8 @@
  },
  "tryon": {
   "kids": "data/t/kids.5e4725f4.json",
-  "men": "data/t/men.d0be0cdb.json",
-  "women": "data/t/women.f7c2d44d.json"
+  "men": "data/t/men.238c5fe4.json",
+  "women": "data/t/women.709d045f.json"
  },
  "pages": 1
 }
