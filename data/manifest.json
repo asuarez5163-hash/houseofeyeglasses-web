@@ -1,13 +1,13 @@
 {
- "v": "2026-11-19T23:05:32Z",
+ "v": "2026-11-20T02:53:37Z",
  "total": 6904,
  "chunks": {
   "men": "data/c/men.b994cba9.json",
-  "women": "data/c/women.4b5beff4.json",
+  "women": "data/c/women.6dd26885.json",
   "kids": "data/c/kids.acb1bf21.json",
   "sun": "data/c/sun.97d170e1.json"
  },
- "search": "data/s/index.76f030c5.json",
+ "search": "data/s/index.cf4d96e2.json",
  "featured": [
   "HOE-K-58",
   "HOE-W-4026",
