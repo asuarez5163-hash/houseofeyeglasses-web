@@ -1,0 +1,45 @@
+/* Sunglasses storefront: quiet audience controls, real solar inventory, then prescription guidance. */
+.sun-shop { padding-top: clamp(56px, 7vw, 104px); }
+.sun-shop .sec-head { align-items: end; }
+.sun-shop .page-head .lead { max-width: 58ch; }
+.sun-shop__bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 20px 32px;
+  margin-top: var(--block); padding: 14px 0; border-top: 1px solid var(--gold); border-bottom: 1px solid var(--line);
+}
+.sun-filters { display: flex; flex-wrap: wrap; align-items: center; gap: 4px clamp(18px, 2.4vw, 36px); }
+.sun-filter {
+  position: relative; min-height: 42px; padding: 0; border: 0; background: transparent; color: var(--ink-3);
+  font: 400 var(--fs-small)/1 var(--font-ui); letter-spacing: .08em; text-transform: uppercase; cursor: pointer;
+  transition: color .2s var(--ease-out);
+}
+.sun-filter::after {
+  content: ""; position: absolute; right: 0; bottom: 3px; left: 0; height: 1px; background: var(--gold);
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform .25s var(--ease-out);
+}
+.sun-filter[aria-pressed="true"] { color: var(--ink); }
+.sun-filter[aria-pressed="true"]::after { transform: scaleX(1); }
+.sun-filter:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+@media (hover: hover) { .sun-filter:hover { color: var(--ink); } }
+.sun-count { flex: none; margin: 0; color: var(--ink-3); font-size: var(--fs-small); font-variant-numeric: tabular-nums; }
+.sun-grid { margin-top: clamp(32px, 4vw, 56px); }
+.sun-rx .page-head { max-width: 66ch; margin-bottom: var(--block); }
+.sun-rx .tp-price { margin-top: 18px; }
+.sun-rx .tp-cta { margin-top: 22px; }
+
+@media (max-width: 860px) {
+  .sun-shop .sec-head { gap: 22px; }
+  .sun-shop .sec-head .link-arrow { align-self: start; }
+  .sun-shop__bar { align-items: flex-start; flex-direction: column; gap: 8px; padding-block: 10px 14px; }
+  .sun-filters { width: 100%; justify-content: space-between; gap: 2px 12px; }
+  .sun-filter { min-height: 44px; font-size: 11px; }
+  .sun-rx .offset-1 { min-width: 0; margin-left: 0; }
+  .sun-rx .btn { min-width: 0; white-space: normal; line-height: 1.25; text-align: center; }
+}
+@media (max-width: 390px) {
+  .sun-filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sun-filter { text-align: left; }
+  .sun-filter::after { right: auto; width: 42px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sun-filter, .sun-filter::after { transition: none; }
+}
