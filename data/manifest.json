@@ -1,11 +1,11 @@
 {
- "v": "2026-11-22T22:42:10Z",
+ "v": "2026-11-23T10:00:19Z",
  "total": 13342,
  "chunks": {
   "men": "data/c/men.9afec63a.json",
-  "women": "data/c/women.b4911560.json",
+  "women": "data/c/women.248bbab0.json",
   "kids": "data/c/kids.1e6af41a.json",
-  "sun": "data/c/sun.9d22d4c5.json"
+  "sun": "data/c/sun.5e70dcc7.json"
  },
  "search": "data/s/index.fa48cc10.json",
  "featured": [
@@ -325,7 +325,8 @@
  "tryon": {
   "kids": "data/t/kids.436aeba3.json",
   "men": "data/t/men.efeb66f1.json",
-  "women": "data/t/women.229068b0.json"
+  "sun": "data/t/sun.68434d32.json",
+  "women": "data/t/women.119f2dba.json"
  },
  "pages": 1
 }
