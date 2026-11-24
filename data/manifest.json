@@ -1,11 +1,11 @@
 {
- "v": "2026-11-23T23:04:07Z",
+ "v": "2026-11-24T10:00:24Z",
  "total": 13078,
  "chunks": {
-  "men": "data/c/men.c66d2f90.json",
-  "women": "data/c/women.c9fc8da6.json",
+  "men": "data/c/men.f7f8eb39.json",
+  "women": "data/c/women.d9cb9eb6.json",
   "kids": "data/c/kids.a21fcf29.json",
-  "sun": "data/c/sun.5eaa8770.json"
+  "sun": "data/c/sun.26a831c3.json"
  },
  "search": "data/s/index.1f44a4e3.json",
  "featured": [
@@ -324,10 +324,9 @@
  },
  "tryon": {
   "kids": "data/t/kids.10b1abf1.json",
-  "men": "data/t/men.80e1f5f3.json",
-  "sun": "data/t/sun.68434d32.json",
-  "women": "data/t/women.5488a91e.json"
+  "men": "data/t/men.cb9e6afa.json",
+  "sun": "data/t/sun.230b2074.json",
+  "women": "data/t/women.cb093582.json"
  },
  "pages": 1
 }
-
