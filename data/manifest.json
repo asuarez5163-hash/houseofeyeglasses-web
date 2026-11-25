@@ -1,13 +1,13 @@
 {
- "v": "2026-11-24T11:02:47Z",
- "total": 13053,
+ "v": "2026-11-24T23:08:11Z",
+ "total": 13136,
  "chunks": {
-  "men": "data/c/men.287d915b.json",
-  "women": "data/c/women.2631cb07.json",
-  "kids": "data/c/kids.6606efec.json",
-  "sun": "data/c/sun.c457b18d.json"
+  "men": "data/c/men.b3d09cec.json",
+  "women": "data/c/women.9a629af4.json",
+  "kids": "data/c/kids.3c82d782.json",
+  "sun": "data/c/sun.4b49e763.json"
  },
- "search": "data/s/index.31d06f56.json",
+ "search": "data/s/index.88a66b6d.json",
  "featured": [
   "HOE-K-58",
   "HOE-S-174",
@@ -178,6 +178,7 @@
    "Prive Revaux",
    "Pucci",
    "Pure",
+   "Quay",
    "Quiksilver",
    "RETROSUPERFUTURE",
    "Rag & Bone",
@@ -324,9 +325,9 @@
  },
  "tryon": {
   "kids": "data/t/kids.10b1abf1.json",
-  "men": "data/t/men.5c5d06d5.json",
+  "men": "data/t/men.91f47b08.json",
   "sun": "data/t/sun.230b2074.json",
-  "women": "data/t/women.3e523c22.json"
+  "women": "data/t/women.738aa637.json"
  },
  "pages": 1
 }
