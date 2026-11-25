@@ -37,6 +37,15 @@
   'use strict';
   const main = document.querySelector('main.pd');
   if (!main) return;
+  // v2 (11/19, SIN publicar): pd.html?pd=v2 hands the page to js/pages/pd2.js (two rulers: the iris + the face geometry),
+  // with its dictionary and stylesheet, same ?v= as this file; this file then does nothing. Switching v2 on for everyone
+  // = pd.html loads those three instead of this file (E-tryon/test/calib1117/PD-V2.md).
+  if (/[?&]pd=v2(?:&|$)/.test(location.search)) {
+    const q = (((document.currentScript && document.currentScript.src) || '').split('?')[1] || '').replace(/^(.)/, '?$1');
+    const css = document.createElement('link'); css.rel = 'stylesheet'; css.href = 'css/pages/pd2.css' + q; document.head.appendChild(css);
+    ['js/i18n/pd2.js', 'js/pages/pd2.js'].forEach(src => { const s = document.createElement('script'); s.src = src + q; s.async = false; document.body.appendChild(s); });
+    return;
+  }
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const T = k => (window.hoeT ? window.hoeT(k) : k);

@@ -3,7 +3,7 @@ window.HOE_I18N = {
   en: {
     // ---- home (C-cine) ----
     "hero.kicker": "House of Eyeglasses · Online optical store",
-    "hero.lead": "Frames fitted by an optician. Lenses made to your prescription. Delivered anywhere in the U.S.",
+    "hero.lead": "150+ brands, single-vision & no-line progressives from $89. Checked by a licensed optician with free U.S. shipping.",
     "hero.how": "How it works", "hero.scroll": "Scroll",
     "cats.kicker": "Shop by", "cats.title": "Who are the glasses for?",
     "tile.men": "Men", "tile.women": "Women", "tile.kids": "Kids", "tile.sun": "Sunglasses", "tile.contacts": "Contact lenses",
@@ -24,7 +24,7 @@ window.HOE_I18N = {
     searchPh: "Search lenses, prescriptions, sizes…", popular: "Guides & tools",
     "nav.men": "Shop Men", "nav.women": "Shop Women", "nav.kids": "Shop Kids",
     "nav.sun": "Sunglasses", "nav.contacts": "Contacts",
-    "hero.title": "Quality Eyewear<br>for Every Moment",
+    "hero.title": "Prescription Glasses<br>&amp; Designer Frames",
     "hero.cta": "See the frames", "cat.contacts": "Contact Lenses",
     "trust.label": "Our promise",
     "drawer.lenses": "Lenses education",
@@ -93,7 +93,7 @@ window.HOE_I18N = {
   es: {
     // ---- portada (C-cine) ----
     "hero.kicker": "House of Eyeglasses · Óptica online",
-    "hero.lead": "Armazones ajustados por un óptico. Lentes hechos a tu receta. Enviamos a todo Estados Unidos.",
+    "hero.lead": "Más de 150 marcas, monofocales y progresivos sin línea desde $89. Revisados por un óptico con licencia y envío gratis en EE. UU.",
     "hero.how": "Cómo funciona", "hero.scroll": "Desliza",
     "cats.kicker": "Comprar por", "cats.title": "¿Para quién son los lentes?",
     "tile.men": "Hombre", "tile.women": "Mujer", "tile.kids": "Niños", "tile.sun": "Lentes de sol", "tile.contacts": "Lentes de contacto",
@@ -114,7 +114,7 @@ window.HOE_I18N = {
     searchPh: "Busca lentes, recetas, medidas…", popular: "Guías y herramientas",
     "nav.men": "Hombre", "nav.women": "Mujer", "nav.kids": "Niños",
     "nav.sun": "Lentes de sol", "nav.contacts": "Lentes de contacto",
-    "hero.title": "Espejuelos de calidad<br>para cada momento",
+    "hero.title": "Espejuelos con Receta<br>y Armazones de Marca",
     "hero.cta": "Ver armazones", "cat.contacts": "Lentes de contacto",
     "trust.label": "Nuestra promesa",
     "drawer.lenses": "Guía de lentes",

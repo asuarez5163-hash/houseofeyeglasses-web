@@ -1148,9 +1148,11 @@
 "hero.cta": "See the frames",
 "hero.how": "How it works",
 "hero.kicker": "House of Eyeglasses · Online optical store",
-"hero.lead": "Frames fitted by an optician. Lenses made to your prescription. Delivered anywhere in the U.S.",
+"hero.lead": "150+ brands, single-vision & no-line progressives from $89. Checked by a licensed optician with free U.S. shipping.",
 "hero.scroll": "Scroll",
-"hero.title": "Quality Eyewear<br>for Every Moment",
+"hero.title": "Prescription Glasses<br>&amp; Designer Frames",
+"home.gd.cost": "Prescription glasses cost",
+"home.gd.lenses": "Lens thickness & coatings",
 "home.lensLinks": "Shop by lens",
 "home.lx.office": "Office lenses",
 "home.pop.adensco": "Adensco eyeglasses",
@@ -1754,9 +1756,11 @@
 "hero.cta": "Ver armazones",
 "hero.how": "Cómo funciona",
 "hero.kicker": "House of Eyeglasses · Óptica online",
-"hero.lead": "Armazones ajustados por un óptico. Lentes hechos a tu receta. Enviamos a todo Estados Unidos.",
+"hero.lead": "Más de 150 marcas, monofocales y progresivos sin línea desde $89. Revisados por un óptico con licencia y envío gratis en EE. UU.",
 "hero.scroll": "Desliza",
-"hero.title": "Espejuelos de calidad<br>para cada momento",
+"hero.title": "Espejuelos con Receta<br>y Armazones de Marca",
+"home.gd.cost": "Cuánto cuestan los espejuelos",
+"home.gd.lenses": "Grosor y tratamientos",
 "home.lensLinks": "Comprar por lente",
 "home.lx.office": "Lentes de oficina",
 "home.pop.adensco": "Espejuelos Adensco",
@@ -2369,5 +2373,5 @@ null,
 "brand-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-hoe-m-99999"
 ]
 ],
-"v": "20261123a"
+"v": "20261125a"
 }

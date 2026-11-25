@@ -23,6 +23,8 @@ Object.assign(window.HOE_I18N.en, {
   "home.pop.mb": "Montblanc eyeglasses",
   "home.pop.ii": "Italia Independent eyeglasses",
   "home.pop.browm": "Browline frames for men",
+  "home.gd.cost": "Prescription glasses cost",
+  "home.gd.lenses": "Lens thickness & coatings",
 });
 Object.assign(window.HOE_I18N.es, {
   "pop.meta": "Armazones populares — Espejuelos graduados en existencia | House of Eyeglasses",
@@ -38,4 +40,6 @@ Object.assign(window.HOE_I18N.es, {
   "home.pop.mb": "Espejuelos Montblanc",
   "home.pop.ii": "Espejuelos Italia Independent",
   "home.pop.browm": "Armazones browline para hombre",
+  "home.gd.cost": "Cuánto cuestan los espejuelos",
+  "home.gd.lenses": "Grosor y tratamientos",
 });
