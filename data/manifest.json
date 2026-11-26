@@ -1,26 +1,26 @@
 {
- "v": "2026-11-25T23:12:45Z",
- "total": 13217,
+ "v": "2026-11-26T08:52:06Z",
+ "total": 13214,
  "chunks": {
-  "men": "data/c/men.a39d0665.json",
-  "women": "data/c/women.fc74f64a.json",
-  "kids": "data/c/kids.0560449f.json",
-  "sun": "data/c/sun.ec58db4e.json"
+  "men": "data/c/men.47c96640.json",
+  "women": "data/c/women.a02d7aac.json",
+  "kids": "data/c/kids.c3540c92.json",
+  "sun": "data/c/sun.65e77cfd.json"
  },
- "search": "data/s/index.09c64407.json",
+ "search": "data/s/index.795000e3.json",
  "featured": [
   "HOE-K-58",
-  "HOE-S-174",
-  "HOE-S-3377",
   "HOE-W-4026",
-  "HOE-S-2077",
-  "HOE-S-3430",
   "HOE-W-155",
   "HOE-M-72",
-  "HOE-S-3133",
-  "HOE-S-2903",
-  "HOE-S-3359",
-  "HOE-W-1084"
+  "HOE-W-1084",
+  "HOE-M-924",
+  "HOE-W-928",
+  "HOE-M-896",
+  "HOE-M-3370",
+  "HOE-W-1144",
+  "HOE-M-3464",
+  "HOE-W-3007"
  ],
  "facets": {
   "brand": [
@@ -269,7 +269,6 @@
    "clear",
    "blue-light",
    "tinted",
-   "polarized",
    "mirror",
    "photochromic",
    "other"
@@ -324,10 +323,10 @@
   }
  },
  "tryon": {
-  "kids": "data/t/kids.10b1abf1.json",
-  "men": "data/t/men.cdcb00b9.json",
-  "sun": "data/t/sun.2947f5a9.json",
-  "women": "data/t/women.a0e3366b.json"
+  "kids": "data/t/kids.89dd654f.json",
+  "men": "data/t/men.afe48322.json",
+  "sun": "data/t/sun.ad1b4a60.json",
+  "women": "data/t/women.c413107e.json"
  },
  "pages": 1
 }
