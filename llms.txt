@@ -18,13 +18,35 @@ Every frame has its own page with brand, model, color code, size in millimetres,
 - [Buy Prescription Glasses Online](https://houseofeyeglasses.com/prescription-glasses.html): Order prescription glasses online: thousands of designer frames in stock, with single vision, progressive or office lenses made to your prescription. Free U.S. shipping.
 - [Progressive Glasses Online (From $89)](https://houseofeyeglasses.com/progressive-glasses.html): Order no-line progressive glasses online from $89 (Standard, Premium $169, Ultimate $299). Far, computer & reading vision in one pair. Free U.S. shipping.
 - [Single Vision Glasses Online](https://houseofeyeglasses.com/single-vision-glasses.html): Single vision glasses online: one clear power for distance or for reading, in any of our designer frames, made to your prescription. Free U.S. shipping.
-- [Sunglasses Online](https://houseofeyeglasses.com/sunglasses.html): Shop real in-stock sunglasses for women, men and kids. Wear them as supplied or choose prescription lenses. Free U.S. shipping.
 - [Blue Light Glasses Online](https://houseofeyeglasses.com/blue-light-glasses.html): Blue light glasses online: add a blue-light filter to prescription lenses in any of our designer frames. Made to your prescription, with free U.S. shipping.
 - [Computer Glasses Online](https://houseofeyeglasses.com/computer-glasses.html): Computer glasses online: office lenses made to your prescription, sharp for the screen and for reading, in any of our designer frames. Free U.S. shipping.
 - [Photochromic Glasses Online](https://houseofeyeglasses.com/photochromic-glasses.html): Photochromic glasses online: light-responsive lenses that are clear indoors and darken in the sun, made to your prescription in any of our designer frames.
 - [High-Index Lenses Online](https://houseofeyeglasses.com/high-index-lenses.html): High-index lenses online: 1.67 and 1.74 lenses that keep a strong prescription thin and light, in any of our designer frames. Made to your prescription. Free U.S. shipping.
 - [Anti-Glare Glasses Online](https://houseofeyeglasses.com/anti-glare-glasses.html): Anti-glare glasses online: add an anti-reflective coating to prescription lenses in any of our designer frames. Fewer reflections at night, on screens and in photos. Free U.S. shipping.
 - [Polycarbonate Lenses](https://houseofeyeglasses.com/polycarbonate-lenses.html): Polycarbonate lenses: light, impact-resistant prescription lenses, included with every pair we make, in any of our designer frames. For adults and kids. Free U.S. shipping.
+
+## Sunglasses (designer sunglasses, new and in stock: each one can be bought with its original sun lenses or with prescription lenses and a sun tint)
+- [Sunglasses Online](https://houseofeyeglasses.com/sunglasses.html): Shop real in-stock sunglasses for women, men and kids. Wear them as supplied or choose prescription lenses. Free U.S. shipping. It links to every sunglasses page below and to one page per sunglasses brand.
+- [Women’s sunglasses](https://houseofeyeglasses.com/womens-sunglasses.html)
+- [Men’s sunglasses](https://houseofeyeglasses.com/mens-sunglasses.html)
+- [Kids’ sunglasses](https://houseofeyeglasses.com/kids-sunglasses.html)
+- [Aviator sunglasses](https://houseofeyeglasses.com/aviator-sunglasses.html)
+- [Cat-eye sunglasses](https://houseofeyeglasses.com/cat-eye-sunglasses.html)
+- [Round sunglasses](https://houseofeyeglasses.com/round-sunglasses.html)
+- [Square sunglasses](https://houseofeyeglasses.com/square-sunglasses.html)
+- [Rectangle sunglasses](https://houseofeyeglasses.com/rectangle-sunglasses.html)
+- [Oval sunglasses](https://houseofeyeglasses.com/oval-sunglasses.html)
+- [Geometric sunglasses](https://houseofeyeglasses.com/geometric-sunglasses.html)
+- [Browline sunglasses](https://houseofeyeglasses.com/browline-sunglasses.html)
+- [Women’s cat-eye sunglasses](https://houseofeyeglasses.com/womens-cat-eye-sunglasses.html)
+- [Women’s aviator sunglasses](https://houseofeyeglasses.com/womens-aviator-sunglasses.html)
+- [Men’s aviator sunglasses](https://houseofeyeglasses.com/mens-aviator-sunglasses.html)
+- [Men’s round sunglasses](https://houseofeyeglasses.com/mens-round-sunglasses.html)
+- [Men’s square sunglasses](https://houseofeyeglasses.com/mens-square-sunglasses.html)
+- [Black sunglasses](https://houseofeyeglasses.com/black-sunglasses.html)
+- [Tortoise sunglasses](https://houseofeyeglasses.com/tortoise-sunglasses.html)
+- [Mirrored sunglasses](https://houseofeyeglasses.com/mirrored-sunglasses.html)
+- One page per sunglasses brand with at least 6 in stock: https://houseofeyeglasses.com/<brand>-sunglasses.html (the eyeglasses of a brand are on <brand>-eyeglasses.html)
 
 ## Guides
 - [How to Read an Eyeglass Prescription: What the Numbers Mean](https://houseofeyeglasses.com/receta.html): How to read an eyeglass prescription: what OD, OS, OU, SPH, CYL, AXIS, ADD, prism and PD mean, a free sign checker that stays on your device, and how to measure your PD at home.

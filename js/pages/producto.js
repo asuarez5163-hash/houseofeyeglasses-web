@@ -114,6 +114,9 @@
   // treatments that do not go on the same lens: a light-responsive lens darkens by itself in the sun, a sun tint stays dark
   // (Armando 11/18, after the E2E audit: both could be ordered together). Choosing one takes the other off.
   const EXCLUSIVE = [['light-responsive', 'tint']];
+  // 11/25 (business rule: sunglasses = frame + sun tint WITH prescription; the store does not sell polarized lenses): no frame
+  // offers «polarized» any more — a sunglass gets the sun tint like any frame. An older cart line that carried it drops it when edited.
+  const OFFERED_NOT = ['polarized'];
 
   const freshRx = () => ({ path: 'now', od: { sph: '0.00', cyl: '0.00', axis: '' }, os: { sph: '0.00', cyl: '0.00', axis: '' }, add: '', pd: { mode: 'own', kind: 'two', od: '', os: '', total: '' }, doc: { name: '', phone: '' }, file: null, confirm: false });
   const loadRx = src => {   // a saved package (maybe from an older shape of the form) → today's shape
@@ -135,7 +138,7 @@
     zip: ship0 ? ship0.zip : '', st: ship0 ? ship0.state : '',
     use: editing ? editing.use : 'single',
     material: editing ? editing.material : null,
-    extras: new Set(editing ? (editing.coatings || []).filter(id => !LOCKED.includes(id)) : []),
+    extras: new Set(editing ? (editing.coatings || []).filter(id => !LOCKED.includes(id) && !OFFERED_NOT.includes(id)) : []),
     tier: editing && editing.tier ? editing.tier : 'estandar',          // nivel del progresivo (Estándar · Premium · Ultimate)
     rx: loadRx(editing && editing.rx),
     done: { 1: !!(editing && ship0), 2: !!editing, 3: !!editing, 4: !!editing },
@@ -157,7 +160,7 @@
     state.rx = loadRx(draft.rx);
     if (typeof draft.material === 'string') state.material = draft.material;            // renderLens() checks it against the list
     if (typeof draft.tier === 'string') state.tier = draft.tier;                         // idem
-    if (Array.isArray(draft.extras)) state.extras = new Set(draft.extras.filter(x => OPTS.coatings.some(c => c.id === x) && !LOCKED.includes(x)));
+    if (Array.isArray(draft.extras)) state.extras = new Set(draft.extras.filter(x => OPTS.coatings.some(c => c.id === x) && !LOCKED.includes(x) && !OFFERED_NOT.includes(x)));
     state.done[1] = !!(draft.done && draft.done[1] && state.zip);
     state.done[2] = !!(draft.done && draft.done[2]);
   }
@@ -776,7 +779,7 @@
     const ids = ['poly-159', 'index-167', 'index-174'];   // polycarbonate first (impact-resistant), then high index by prescription
     return ids.map(id => OPTS.materials.find(m => m.id === id)).filter(Boolean);
   };
-  const EXTRAS = () => ['anti-reflective', 'scratch', 'blue-light', 'light-responsive', isSun ? 'polarized' : 'tint'].map(id => OPTS.coatings.find(c => c.id === id)).filter(Boolean);
+  const EXTRAS = () => ['anti-reflective', 'scratch', 'blue-light', 'light-responsive', 'tint'].map(id => OPTS.coatings.find(c => c.id === id)).filter(Boolean);
   const DEMO_OF = { 'light-responsive': 'sun', 'blue-light': 'blue', 'anti-reflective': 'ar', polarized: 'sun', tint: 'sun' };
   const recommended = () => {
     const mats = MATERIALS();
