@@ -12,7 +12,7 @@
 window.HOE_I18N = window.HOE_I18N || { en: {}, es: {} };
 Object.assign(window.HOE_I18N.en, {
   // ---- the page ----
-  "tp.pd.meta": "Measure Your PD Online — Free Pupillary Distance Tool | House of Eyeglasses",
+  "tp.pd.meta": "Measure Your PD Online — Free Pupillary Distance Tool",
   "tp.pd.kicker": "Free tool",
   "tp.pd.h1": "Measure your PD online",
   "tp.pd.lead": "Your PD (pupillary distance) is the distance between the centers of your pupils, in millimeters. The lab uses it to center each lens in front of your eye. Most adults measure between 50 and 75 mm, about 63 mm on average; kids measure less. Measure yours below with your camera in about a minute, or with a ruler and a mirror.",

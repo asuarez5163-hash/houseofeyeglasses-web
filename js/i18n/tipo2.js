@@ -13,7 +13,7 @@ Object.assign(window.HOE_I18N.en, {
   "tp.rx.r5h": "Material and coatings",
   "tp.rx.r5p": "<p>Every pair starts with <a href=\"polycarbonate-lenses.html\">polycarbonate</a>, a light, impact-resistant material that is included in the price. Stronger prescriptions can move to <a href=\"high-index-lenses.html\">high-index lenses</a> (1.67 or 1.74) to stay thin, and an <a href=\"anti-glare-glasses.html\">anti-reflective coating</a> takes the reflections off the lens.</p>",
 
-  "tp.hi.meta": "High-Index Lenses Online — Thin Glasses for Strong Prescriptions | House of Eyeglasses",
+  "tp.hi.meta": "High-Index Lenses Online: Thin Glasses | House of Eyeglasses",
   "tp.hi.h1": "High-index lenses",
   "tp.hi.lead": "A strong prescription does not have to mean thick, heavy glasses. High-index lenses bend light more, so the same prescription fits in a thinner, lighter lens. We make them in 1.67 and 1.74, for any frame we carry.",
   "tp.hi.price": "High Index 1.67: {index_167} · High Index 1.74: {index_174}, on top of your prescription lenses.",
@@ -35,7 +35,7 @@ Object.assign(window.HOE_I18N.en, {
   "tp.hi.q4": "Can I get high-index progressive lenses?",
   "tp.hi.a4": "Yes. 1.67 and 1.74 are available with single vision, progressive and office lenses. Coatings and filters are chosen in the same step.",
 
-  "tp.ar.meta": "Anti-Glare Glasses Online — Anti-Reflective Prescription Lenses | House of Eyeglasses",
+  "tp.ar.meta": "Anti-Glare Prescription Glasses Online | House of Eyeglasses",
   "tp.ar.h1": "Anti-glare glasses",
   "tp.ar.lead": "Anti-glare glasses are prescription lenses with an anti-reflective coating. It takes the reflections off the lens, so you see more clearly and people see your eyes instead of a shine. We can add it to any pair we make.",
   "tp.ar.price": "Anti-reflective coating: {anti_reflective} · scratch-resistant coating: {scratch}, on top of your prescription lenses.",
@@ -56,7 +56,7 @@ Object.assign(window.HOE_I18N.en, {
   "tp.ar.q4": "How do I clean lenses with an anti-reflective coating?",
   "tp.ar.a4": "Rinse them with water, use a drop of mild dish soap or a lens spray, and dry them with a clean microfiber cloth. Avoid paper towels, your shirt and household glass cleaners.",
 
-  "tp.poly.meta": "Polycarbonate Lenses — Impact-Resistant Prescription Glasses | House of Eyeglasses",
+  "tp.poly.meta": "Polycarbonate Prescription Lenses | House of Eyeglasses",
   "tp.poly.h1": "Polycarbonate lenses",
   "tp.poly.lead": "Polycarbonate is the lens material we start every pair with: light, impact-resistant and thin enough for most prescriptions. It is included in the price of your lenses, in any frame we carry.",
   "tp.poly.price": "Polycarbonate is included: single vision lenses {single} · progressive from {estandar} · office {office}, added to the price of your frame.",

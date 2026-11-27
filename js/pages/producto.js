@@ -319,9 +319,13 @@
     const color = CAT.colorName(frame);
     const kind = T(isSun ? 'prod.kindSun' : 'prod.kind');
     const size = `${frame.size.lens}-${frame.size.bridge}-${frame.size.temple}`;
+    // 11/27: the gtin (UPC) is written only by the Central into the static page (lib/optica/paginas.py, config feed_gtin);
+    // the catalogue does not carry it, so it is kept from the block already there, and only while it is the same frame
+    let gtin;
+    try { const old = JSON.parse(el.textContent || '{}'); if (old.sku === frame.id && /^\d{8,14}$/.test(old.gtin || '')) gtin = old.gtin; } catch (e) { /* no block yet */ }
     el.textContent = JSON.stringify({
       '@context': 'https://schema.org', '@type': 'Product',
-      name: [name, color, cc, kind, twin].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '),
+      name: [name, color, cc, kind, twin].filter(Boolean).join(' '), sku: frame.id, mpn: [frame.n, frame.cc].filter(Boolean).join(' '), gtin,
       brand: { '@type': 'Brand', name: frame.b }, category: kind, color, material: ['acetate', 'metal', 'titanium', 'tr90'].includes(frame.mat) ? T('mat.' + frame.mat) : undefined,
       size, inProductGroupWithID: frame.m || undefined,
       description: fill(T('prod.ld'), { brand: frame.b, model, kind: kind.toLowerCase(), color, cc: cc ? fill(T('prod.ldCc'), { cc }) : '', size }),
